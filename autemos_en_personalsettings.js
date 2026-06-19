@@ -1,0 +1,170 @@
+// Autemos Documentation — Personal Settings English Translations
+window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
+  "personalsettings-overview": `
+  <span class="section-label">Getting Started</span>
+  <h1>Personal Settings</h1>
+  <p>The <strong>Personal Settings</strong> module allows users to manage their own account information and personal certificate configurations. It is accessible via the <strong>user avatar in the top right</strong> of the platform.</p>
+  <div class="screenshot-wrap">
+    <img alt="Personal Settings overview" src="./autemos_personalsettings_screenshots/image_1.png"/>
+    <div class="screenshot-caption">Personal Settings — accessible via the user avatar in the top right.</div>
+  </div>
+  <h2>Features</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Personal Profile Information</h3><p>Overview of your own account details.</p></div>
+    <div class="concept-card"><h3>Personal Runtime Certificates</h3><p>Management of individual mTLS certificates.</p></div>
+    <div class="concept-card"><h3>Personal Certificate Sources</h3><p>Your own file system or vault sources.</p></div>
+    <div class="concept-card"><h3>mTLS Client Certificates</h3><p>Secure client authentication against protected applications.</p></div>
+  </div>
+  <h2>Available Actions</h2>
+  <ul class="feature-list">
+    <li>Open personal settings</li>
+    <li>View profile information</li>
+    <li>Manage personal certificates</li>
+    <li>Manage personal runtime sources</li>
+    <li>Log out from the platform</li>
+  </ul>
+`,
+  "personalsettings-profile": `
+  <span class="section-label">Getting Started</span>
+  <h1>Profile</h1>
+  <p>The <strong>Profile</strong> section displays the information of the currently logged-in user. This information is <strong>read-only</strong> and represents the active user account within the platform.</p>
+  <div class="screenshot-wrap">
+    <img alt="Profile section" src="./autemos_personalsettings_screenshots/image_2.png"/>
+    <div class="screenshot-caption">Profile — read-only overview of the active user account.</div>
+  </div>
+  <h2>The Profile Contains</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Field</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Username</strong></td><td>Unique login name</td></tr>
+        <tr><td><strong>Email Address</strong></td><td>User's contact email</td></tr>
+        <tr><td><strong>First Name</strong></td><td>User's first name</td></tr>
+        <tr><td><strong>Last Name</strong></td><td>User's last name</td></tr>
+        <tr><td><strong>Assigned Roles</strong></td><td>System-wide and project-based roles</td></tr>
+        <tr><td><strong>Internal User ID</strong></td><td>Unique platform ID</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>When to Use</h2>
+  <ul class="feature-list">
+    <li>Verify the active user account</li>
+    <li>Check roles and permissions</li>
+    <li>View account information</li>
+    <li>Analyze permission issues</li>
+  </ul>
+`,
+  "personalsettings-certificates": `
+  <span class="section-label">Certificates &amp; Sources</span>
+  <h1>Certificates</h1>
+  <div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+    <div style="flex:1;min-width:0">
+      <p>The <strong>Certificates</strong> section manages personal runtime certificate configurations. Certificates are stored <strong>separately from shared project configurations</strong>.</p>
+      <h2 style="margin-top:20px">It Enables</h2>
+      <ul class="feature-list">
+        <li>Storage of personal mTLS certificates</li>
+        <li>Configuration of personal runtime file or vault sources</li>
+        <li>Use of individual certificates for secure API communication</li>
+        <li>Testing of mTLS-protected applications with personal identity</li>
+      </ul>
+    </div>
+    <div class="screenshot-wrap" style="flex:0 0 340px;margin:0">
+      <img alt="Certificates section" src="./autemos_personalsettings_screenshots/image_3.png"/>
+      <div class="screenshot-caption">Add Certificate Source — add runtime source for personal certificates.</div>
+    </div>
+  </div>
+`,
+  "personalsettings-sources": `
+  <span class="section-label">Certificates &amp; Sources</span>
+  <h1>Personal Sources</h1>
+  <div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+    <div style="flex:1;min-width:0">
+      <p>Personal Sources define <strong>user-specific runtime storage locations</strong> for certificates and secure files.</p>
+      <h2 style="margin-top:20px">Useful When</h2>
+      <ul class="feature-list">
+        <li>Users should not use global/shared certificate sources</li>
+        <li>Personal vault credentials are required</li>
+        <li>Team-independent certificate management is needed</li>
+      </ul>
+    </div>
+    <div class="screenshot-wrap" style="flex:0 0 340px;margin:0">
+      <img alt="Personal Sources" src="./autemos_personalsettings_screenshots/image_4.png"/>
+      <div class="screenshot-caption">Add Personal Certificate — add personal certificate with source selection.</div>
+    </div>
+  </div>
+  <h2>Supported Source Types</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>File System Source</h3><p>Local directory as source.</p></div>
+    <div class="concept-card"><h3>Shared File Shares</h3><p>Network share or mounted path.</p></div>
+    <div class="concept-card"><h3>Vault-based Sources</h3><p>Secure vault connection for credentials.</p></div>
+  </div>
+  <h2>Configuration Parameters</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Name of the runtime source</td></tr>
+        <tr><td><strong>Description</strong></td><td>Optional description</td></tr>
+        <tr><td><strong>Source Type</strong></td><td>Type of runtime source</td></tr>
+        <tr><td><strong>Share Root Path</strong></td><td>Base directory or runtime path</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="example-block">
+    <h3>Example — File Share Configuration</h3>
+    <div class="param-table-wrap"><table class="param-table"><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
+      <tr><td><strong>Source Type</strong></td><td><code>File System Source</code></td></tr>
+      <tr><td><strong>Share Root Path</strong></td><td><code>/certs</code></td></tr>
+    </tbody></table></div>
+    <p style="margin-top:12px">This allows certificate profiles to use relative file paths within the defined root directory.</p>
+  </div>
+`,
+  "personalsettings-personal-certs": `
+  <span class="section-label">Certificates &amp; Sources</span>
+  <h1>Personal Certificates</h1>
+  <p>Personal Certificates are used for <strong>secure client authentication</strong> against mTLS-protected applications. Certificates reference a runtime source and can optionally be password-protected.</p>
+  <h2>Supported Certificate Formats</h2>
+  <ul class="feature-list">
+    <li><strong>PKCS#12</strong> (<code>.p12</code> / <code>.pfx</code>)</li>
+  </ul>
+  <h2>Certificate Configuration</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Name of the certificate profile</td></tr>
+        <tr><td><strong>Description</strong></td><td>Optional description</td></tr>
+        <tr><td><strong>Certificate Source</strong></td><td>Reference to the runtime source</td></tr>
+        <tr><td><strong>Certificate Type</strong></td><td>Certificate format</td></tr>
+        <tr><td><strong>Certificate File</strong></td><td>Uploaded certificate file</td></tr>
+        <tr><td><strong>Password</strong></td><td>Optional certificate password</td></tr>
+        <tr><td><strong>Allowed Origins</strong></td><td>Allowed target domains</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Allowed Origins</h2>
+  <p>Allowed Origins restrict the use of a certificate to defined target systems. Example: <code>https://example.com</code>. This increases security by allowing certificates to be used only for approved domains.</p>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Security note —</strong> Certificates and secrets are processed securely at runtime.
+  </div>
+  <h2>Best Practices</h2>
+  <ul class="best-practices">
+    <li>Use separate certificates per environment</li>
+    <li>Restrict Allowed Origins as much as possible</li>
+    <li>Do not share personal certificates</li>
+    <li>Protect certificates with a password</li>
+    <li>Rotate certificates regularly</li>
+  </ul>
+`,
+  "personalsettings-logout": `
+  <span class="section-label">Account</span>
+  <h1>Logout</h1>
+  <p>Users can log out from the platform directly via the <strong>avatar menu in the top right</strong>.</p>
+  <h2>On Logout</h2>
+  <ul class="feature-list">
+    <li>The current session is terminated</li>
+    <li>The active user context is cleared</li>
+    <li>The user returns to the login screen</li>
+  </ul>
+`,
+});

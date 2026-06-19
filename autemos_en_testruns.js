@@ -1,0 +1,453 @@
+window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
+  "testruns-overview": `
+  <div class="section-intro">
+    <span class="section-label">Test Runs</span>
+    <h1>Test Runs</h1>
+    <p>The Test Runs module provides centralized visibility into automated test executions, execution history, workflow stability, and debugging information. It gives teams everything they need to monitor, investigate, and improve their automated test workflows.</p>
+  </div>
+
+  <h2>What the module offers</h2>
+  <ul class="feature-list">
+    <li>Monitor execution health across all workflows</li>
+    <li>Analyze workflow stability and pass rate trends</li>
+    <li>Investigate individual failures with step-by-step traces</li>
+    <li>Detect flaky automation before it causes problems</li>
+    <li>Review detailed execution traces with screenshots</li>
+    <li>Verify automatic self-healing activity and results</li>
+  </ul>
+
+  <h2>Module sections</h2>
+  <div class="area-grid">
+    <div class="area-card">
+      <h3>Test Run Overview</h3>
+      <p>Central entry point for all executed workflows and historical runs, organized by workflow and individual run.</p>
+    </div>
+    <div class="area-card">
+      <h3>Test Details Page</h3>
+      <p>Workflow-level execution analysis, including pass rates, duration trends, flaky scores, and complete execution history.</p>
+    </div>
+    <div class="area-card">
+      <h3>Run Details Page</h3>
+      <p>Complete step-by-step execution view for a single run — including screenshots, errors, and healing details.</p>
+    </div>
+  </div>
+`,
+  "test-run-overview": `
+  <div class="node-header">
+    <div>
+      <h1>Test Run Overview</h1>
+      <span class="badge badge-testruns">Test Runs</span>
+    </div>
+  </div>
+  <p>The Test Run Overview is the central entry point for all executed workflows and historical runs. It gives teams a view of execution health and enables quick navigation to individual runs or workflow details.</p>
+
+  <h2>When to use</h2>
+  <ul class="feature-list">
+    <li>Monitor the overall health of your automation suite</li>
+    <li>Identify which workflows are failing or becoming unstable</li>
+    <li>Navigate to a specific execution for investigation</li>
+    <li>Filter runs by status, environment, or time range</li>
+  </ul>
+
+  <p>The overview is divided into two tabs: <strong>Tests</strong> (aggregated workflow-level analysis) and <strong>Runs</strong> (overview of individual executions).</p>
+
+  <!-- TESTS TAB -->
+  <h2 id="tests-tab">Tests Tab</h2>
+  <p>The Tests tab focuses on workflow stability and historical execution quality. It helps users identify:</p>
+  <ul class="feature-list">
+    <li>Unstable workflows and flaky automation</li>
+    <li>Execution trends over time</li>
+    <li>Long-term quality indicators</li>
+  </ul>
+
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_testruns/image_1.png" alt="Tests Tab">
+    <div class="screenshot-caption">Tests tab — workflow-level analysis with pass rates, duration, and stability indicators.</div>
+  </div>
+
+  <h3>Available columns</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Column</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Test</strong></td><td>Name of the workflow</td></tr>
+        <tr><td><strong>Pass Rate</strong></td><td>Percentage of successful executions</td></tr>
+        <tr><td><strong>Duration</strong></td><td>Average execution duration</td></tr>
+        <tr><td><strong>Runs</strong></td><td>Total number of executions</td></tr>
+        <tr><td><strong>Status</strong></td><td>Current workflow state</td></tr>
+        <tr><td><strong>Last Runs</strong></td><td>Visualization of the most recent execution trend</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Flaky label</h3>
+  <p>Tests detected as unstable are automatically marked with a <strong>Flaky</strong> label. The flaky score is calculated based on pass/fail transitions, inconsistent execution behavior, and unstable execution history — allowing teams to quickly identify automation that requires stabilization.</p>
+
+  <h3>Workflow status</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Status</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><span class="status-pill pill-passed">Passed</span></td><td>Recent executions completed successfully</td></tr>
+        <tr><td><span class="status-pill pill-failed">Failed</span></td><td>Last execution failed</td></tr>
+        <tr><td><span class="status-pill pill-running">Running</span></td><td>Workflow is currently executing</td></tr>
+        <tr><td><span class="status-pill pill-aborted">Aborted</span></td><td>Workflow execution stopped manually or externally</td></tr>
+        <tr><td><span class="status-pill pill-broken">Broken</span></td><td>Workflow continuously failed across multiple executions</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- RUNS TAB -->
+  <h2 id="runs-tab">Runs Tab</h2>
+  <p>The Runs tab displays all individual workflow executions. This view focuses on:</p>
+  <ul class="feature-list">
+    <li>Results and status of individual executions</li>
+    <li>Environments and browsers or devices used</li>
+    <li>Runtime analysis and duration</li>
+    <li>Healing visibility per execution</li>
+  </ul>
+
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_testruns/image_2.png" alt="Runs Tab">
+    <div class="screenshot-caption">Runs tab — list of individual executions with environment, browser, duration, and healing indicators.</div>
+  </div>
+
+  <h3>Available columns</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Column</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Run</strong></td><td>Name of the executed workflow</td></tr>
+        <tr><td><strong>Executed At</strong></td><td>Execution timestamp</td></tr>
+        <tr><td><strong>Status</strong></td><td>Execution result</td></tr>
+        <tr><td><strong>Tests</strong></td><td>Number of tests executed</td></tr>
+        <tr><td><strong>Duration</strong></td><td>Total runtime</td></tr>
+        <tr><td><strong>Environment</strong></td><td>Execution environment</td></tr>
+        <tr><td><strong>Browser</strong></td><td>Browser or device used</td></tr>
+        <tr><td><strong>Actions</strong></td><td>Open execution details</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Healing indicator</h3>
+  <p>A purple heart icon next to a run indicates that self-healing was applied during the execution. The number indicates how many healing operations took place.</p>
+  <div class="example-block">
+    <h3>Examples</h3>
+    <div class="param-table-wrap">
+      <table class="param-table">
+        <thead><tr><th>Indicator</th><th>Meaning</th></tr></thead>
+        <tbody>
+          <tr><td><span class="healing-icon">&#x1F49C; 1</span></td><td>One selector or workflow step was automatically healed</td></tr>
+          <tr><td><span class="healing-icon">&#x1F49C; 3</span></td><td>Three healing operations occurred during this execution</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <p>This provides immediate visibility into workflow resilience and automatic recovery behavior, without needing to open the full execution report.</p>
+
+  <!-- SEARCH & FILTERING -->
+  <h2 id="search-filtering">Search and filtering</h2>
+  <p>The Test Run Overview supports multiple filter and search functions to quickly find specific runs or workflows.</p>
+
+  <h3>Search</h3>
+  <p>Users can search by workflow name, run name, or run ID.</p>
+
+  <h3>Status filter</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Filter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>All Status</td><td>Display all executions</td></tr>
+        <tr><td>Passed</td><td>Display only successful executions</td></tr>
+        <tr><td>Failed</td><td>Display only failed executions</td></tr>
+        <tr><td>Running</td><td>Display currently active executions</td></tr>
+        <tr><td>Aborted</td><td>Display aborted executions</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Environment filter</h3>
+  <p>Filter executions by environment to isolate environment-specific issues. Examples: <code>staging</code>, <code>production</code>, <code>mobile-device-farm</code>.</p>
+
+  <h3>Time range filter</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Time range</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Last 7 days</td><td>Most recent execution activity</td></tr>
+        <tr><td>Last 30 days</td><td>Mid-term analysis</td></tr>
+        <tr><td>Last 90 days</td><td>Long-term stability review</td></tr>
+        <tr><td>All time</td><td>Complete execution history</td></tr>
+      </tbody>
+    </table>
+  </div>
+`,
+  "test-details": `
+  <div class="node-header">
+    <div>
+      <h1>Test Details Page</h1>
+      <span class="badge badge-testruns">Test Runs</span>
+    </div>
+  </div>
+  <p>The Test Details Page provides workflow-level execution analysis and historical trends for a specific workflow. It gives teams the insights needed to understand long-term automation stability and investigate recurring issues.</p>
+  <h2>When to use</h2>
+  <ul class="feature-list">
+    <li>Analyze the stability of a specific workflow over time</li>
+    <li>Review the complete execution history of a workflow</li>
+    <li>Investigate recurring or sporadic failures</li>
+    <li>Monitor flaky behavior and track improvements</li>
+  </ul>
+
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_testruns/image_3.png" alt="Test Details Page">
+    <div class="screenshot-caption">Test Details Page — workflow-level analysis with metrics, pass rate, and execution timeline.</div>
+  </div>
+
+  <!-- AVAILABLE METRICS -->
+  <h2 id="available-metrics">Available metrics</h2>
+  <p>The top section of the Test Details Page displays key performance indicators for the selected workflow.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Metric</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Total Runs</strong></td><td>Total number of workflow executions</td></tr>
+        <tr><td><strong>Pass Rate</strong></td><td>Percentage of successful executions</td></tr>
+        <tr><td><strong>Avg Duration</strong></td><td>Average runtime across all executions</td></tr>
+        <tr><td><strong>Last Green</strong></td><td>Timestamp of the most recent successful execution</td></tr>
+        <tr><td><strong>Flaky Score</strong></td><td>Workflow stability indicator based on pass/fail transitions</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- EXECUTION HISTORY -->
+  <h2 id="execution-history">Execution history</h2>
+  <p>The execution timeline visualizes historical workflow behavior using colored status indicators, making patterns and instability phases recognizable at a glance.</p>
+
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_testruns/image_4.png" alt="Execution History Timeline">
+    <div class="screenshot-caption">Execution history — colored timeline with passed, failed, and skipped executions over time.</div>
+  </div>
+
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Color</th><th>Meaning</th></tr></thead>
+      <tbody>
+        <tr><td><span class="status-pill pill-passed">Green</span></td><td>Passed</td></tr>
+        <tr><td><span class="status-pill pill-failed">Red</span></td><td>Failed</td></tr>
+        <tr><td><span class="status-pill pill-aborted">Gray</span></td><td>Skipped</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <p>This visualization helps users quickly identify unstable execution phases, recurring failures, stability improvements, and execution trends.</p>
+
+  <h3>Historical run list</h3>
+  <p>Below the timeline, all historical executions of the selected workflow are listed. Each entry includes:</p>
+  <ul class="feature-list">
+    <li>Execution date and time</li>
+    <li>Status result</li>
+    <li>Retry information</li>
+    <li>Runtime duration</li>
+    <li>Environment and browser</li>
+    <li>Unique run ID</li>
+  </ul>
+
+  <!-- EXECUTION POPUP -->
+  <h2 id="execution-popup">Test Execution Details Pop-Up</h2>
+  <p>Clicking the eye icon on an execution row opens the Test Execution Details dialog — a compact summary providing quick access to key execution information before opening the full report.</p>
+
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Field</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Status</strong></td><td>Execution result</td></tr>
+        <tr><td><strong>Duration</strong></td><td>Runtime duration</td></tr>
+        <tr><td><strong>Browser</strong></td><td>Execution browser</td></tr>
+        <tr><td><strong>Environment</strong></td><td>Selected execution environment</td></tr>
+        <tr><td><strong>Run ID</strong></td><td>Unique execution identifier</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_testruns/image_5.png" alt="Test Execution Details Pop-Up">
+    <div class="screenshot-caption">Test Execution Details Pop-Up — compact summary before navigating to the full run report.</div>
+  </div>
+
+  <div class="tip">
+    <span class="tip-icon">&#x1F4A1;</span>
+    Users can navigate directly from the pop-up to the full execution report by using the <strong>View Full Run Details</strong> button — without returning to the overview.
+  </div>
+`,
+  "run-details": `
+  <div class="node-header">
+    <div>
+      <h1>Run Details Page</h1>
+      <span class="badge badge-testruns">Test Runs</span>
+    </div>
+  </div>
+  <p>The Run Details Page provides a complete step-by-step execution view for a single workflow run. It is the primary tool for debugging, root cause analysis, and healing investigation.</p>
+  <h2>When to use</h2>
+  <ul class="feature-list">
+    <li>Debug a failed execution to identify the root cause</li>
+    <li>Review each workflow step and its result</li>
+    <li>Validate screenshots to assess UI state during execution</li>
+    <li>Verify self-healing behavior and repaired selectors</li>
+  </ul>
+
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_testruns/image_6.png" alt="Run Details Page">
+    <div class="screenshot-caption">Run Details Page — complete step-by-step execution report for a single workflow run.</div>
+  </div>
+
+  <!-- EXECUTION SUMMARY -->
+  <h2 id="execution-summary">Execution summary</h2>
+  <p>The top section of the Run Details Page displays a high-level summary of the execution.</p>
+  <ul class="feature-list">
+    <li>Workflow name and execution timestamp</li>
+    <li>Total duration and overall execution status</li>
+    <li>Browser or device used</li>
+    <li>Execution environment</li>
+    <li>Overall pass rate for this run</li>
+  </ul>
+
+  <!-- STEP FLOW -->
+  <h2 id="step-flow">Test Case execution flow</h2>
+  <p>All workflow steps are displayed chronologically, providing complete visibility into execution behavior.</p>
+
+  <p>Each step includes:</p>
+  <ul class="feature-list">
+    <li>Node type and action description</li>
+    <li>Execution duration per step</li>
+    <li>Execution result (passed / failed)</li>
+    <li>Step screenshots</li>
+    <li>Technical details for debugging</li>
+  </ul>
+
+  <h3>Screenshots</h3>
+  <p>Execution screenshots are automatically captured during workflow execution. They help users visualize workflow progress, investigate failures, validate UI behavior, and analyze execution context. Screenshot visibility and scaling can be adjusted directly in the report.</p>
+
+  <div class="screenshot-pair">
+    <div class="screenshot-wrap">
+      <img src="./autemos_images_testruns/image_7.png" alt="Step Screenshots — desktop">
+      <div class="screenshot-caption">Desktop step screenshot</div>
+    </div>
+    <div class="screenshot-wrap">
+      <img src="./autemos_images_testruns/image_8.png" alt="Step Screenshots — mobile">
+      <div class="screenshot-caption">Mobile step screenshot</div>
+    </div>
+  </div>
+
+  <!-- ERROR DETAILS -->
+  <h2 id="error-details">Error details</h2>
+  <p>Failed workflow steps display detailed technical error information to simplify debugging and root cause analysis.</p>
+
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Error type</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td>Missing element</td><td>The target element was not found in the DOM</td></tr>
+        <tr><td>Selector failure</td><td>The configured selector did not match an element</td></tr>
+        <tr><td>Timeout exception</td><td>The step exceeded the configured timeout</td></tr>
+        <tr><td>Execution stack trace</td><td>Full technical trace for advanced debugging</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_testruns/image_9.png" alt="Error Details">
+    <div class="screenshot-caption">Error details — technical error information for failed workflow steps.</div>
+  </div>
+
+  <!-- HEALING DETAILS -->
+  <h2 id="healing-details">Healing details</h2>
+  <p>When self-healing was applied during execution, the report displays detailed healing information for each repaired step.</p>
+
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_testruns/image_10.png" alt="Healing Details">
+    <div class="screenshot-caption">Healing details — original selector, repaired selector, and confidence score for each healed step.</div>
+  </div>
+
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Field</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Healed Step</strong></td><td>The workflow step that required automatic repair</td></tr>
+        <tr><td><strong>Old</strong></td><td>Originally failing selector</td></tr>
+        <tr><td><strong>New</strong></td><td>Automatically repaired selector</td></tr>
+        <tr><td><strong>Confidence</strong></td><td>Reliability score of the healing result</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h3>Healing confidence</h3>
+  <p>The confidence score indicates how reliable the automatic repair is. Higher confidence scores represent stronger selector similarity, more reliable healing candidates, and greater execution stability going forward.</p>
+
+  <div class="tip">
+    <span class="tip-icon">&#x26A0;&#xFE0F;</span>
+    Always review healing results before promoting workflows to production. A low confidence score may indicate that the repaired selector requires manual validation.
+  </div>
+`,
+  "use-cases": `
+  <div class="section-intro">
+    <h1>Common use cases</h1>
+    <p>The most common scenarios for using the Test Runs module — and which view is used for each.</p>
+  </div>
+
+  <h2>Workflow stability analysis</h2>
+  <p>Use the <strong>Tests</strong> view to monitor overall automation quality.</p>
+  <ul class="feature-list">
+    <li>Identify workflows marked as flaky</li>
+    <li>Monitor pass rates across the entire automation suite</li>
+    <li>Analyze long-term automation quality trends</li>
+    <li>Prioritize stabilization work by flaky scores</li>
+  </ul>
+
+  <h2>Execution investigation</h2>
+  <p>Use the <strong>Runs</strong> view to review individual executions.</p>
+  <ul class="feature-list">
+    <li>Review results of a specific run</li>
+    <li>Analyze runtime behavior and duration</li>
+    <li>Investigate environment-specific issues</li>
+    <li>Compare results across different browsers or environments</li>
+  </ul>
+
+  <h2>Failure debugging</h2>
+  <p>Use the <strong>Run Details Page</strong> for in-depth investigation of failed executions.</p>
+  <ul class="feature-list">
+    <li>Review screenshots to understand the UI state at the time of failure</li>
+    <li>Inspect failed steps and their technical error output</li>
+    <li>Analyze stack traces for root cause analysis</li>
+    <li>Verify whether self-healing solved or masked the issue</li>
+  </ul>
+
+  <h2>Healing validation</h2>
+  <p>Use healing indicators and healing details to monitor and validate automatic recovery.</p>
+  <ul class="feature-list">
+    <li>Monitor automatic recovery behavior across runs</li>
+    <li>Validate repaired selectors before promoting workflows</li>
+    <li>Analyze workflow resilience over time</li>
+    <li>Identify workflows that rely too frequently on healing</li>
+  </ul>
+`,
+  "best-practices": `
+  <div class="section-intro">
+    <h1>Best Practices</h1>
+    <p>Recommendations to get the most out of the Test Runs module.</p>
+  </div>
+
+  <ul class="best-practices">
+    <li>Monitor flaky workflows regularly — detect instability before it reaches production</li>
+    <li>Investigate broken workflows immediately — continuous failure signals a fundamental problem</li>
+    <li>Review healing results before workflow promotion — low confidence scores require manual validation</li>
+    <li>Use execution history instead of isolated failures — a single failure may be noise; a pattern is a signal</li>
+    <li>Analyze screenshots when debugging — visual context is faster than reading logs</li>
+    <li>Filter executions by environment when troubleshooting — isolate environment-specific issues</li>
+    <li>Use the run ID to communicate with team members about specific executions</li>
+    <li>Set up status-based filtering to focus daily reviews on Failed and Broken workflows</li>
+  </ul>
+
+  <div class="tip">
+    <span class="tip-icon">&#x1F4A1;</span>
+`,
+});

@@ -1,0 +1,319 @@
+window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
+  "codegen-overview": `
+<span class="section-label">Getting Started</span>
+<h1>Code Generation</h1>
+<p>The Code Generation Hub enables teams to automatically generate reusable automation code from Autemos workflows and PageObjects. It bridges the gap between visual low-code test design and developer-driven source code management — producing production-ready automation frameworks aligned with your existing technology stack.</p>
+<div class="screenshot-wrap">
+  <img alt="Code Generation Hub dashboard overview" src="./autemos_code_generation_screenshots/image_1.png"/>
+  <div class="screenshot-caption">Code Generation Hub — Dashboard with an at-a-glance overview of Framework, Project Structure and Sync Profiles.</div>
+</div>
+<h2>Core Capabilities</h2>
+<div class="concept-grid">
+  <div class="concept-card">
+    <h3>Automatic Code Generation</h3>
+    <p>Generate reusable automation code directly from test workflows, PageObjects, field definitions and actions.</p>
+  </div>
+  <div class="concept-card">
+    <h3>Framework-Compliant Output</h3>
+    <p>Generated code follows framework conventions, project structure rules, naming standards and template definitions.</p>
+  </div>
+  <div class="concept-card">
+    <h3>Git Synchronization</h3>
+    <p>Push generated code directly to GitHub, GitLab or Bitbucket repositories — with branch management and history tracking.</p>
+  </div>
+  <div class="concept-card">
+    <h3>Sync Profiles</h3>
+    <p>Create reusable synchronization configurations for automated, event-driven or scheduled code delivery.</p>
+  </div>
+</div>
+<h2>Supported Frameworks &amp; Languages</h2>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Languages</th><th>Frameworks</th><th>Test Runners</th><th>Git Providers</th></tr></thead>
+    <tbody>
+      <tr><td>Java, TypeScript, Python, C#</td><td>Selenium, Playwright, Appium</td><td>TestNG, JUnit, Vitest, Jest</td><td>GitHub, GitLab, Bitbucket</td></tr>
+    </tbody>
+  </table>
+</div>
+<h2>Code Generation Workflow</h2>
+<div class="steps">
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h3>Configure Framework &amp; Project</h3><p>Run the setup wizard to select language, framework, package namespace and Git connection.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h3>Define Project Structure</h3><p>Set output paths for test files, PageObjects and configuration using dynamic placeholders.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h3>Configure Templates</h3><p>Define class structures, method implementations and framework syntax via the Template Manager.</p></div></div>
+  <div class="step"><div class="step-num">4</div><div class="step-content"><h3>Select Workflows &amp; PageObjects</h3><p>Choose which test workflows and PageObjects to include. Referenced PageObjects are detected automatically.</p></div></div>
+  <div class="step"><div class="step-num">5</div><div class="step-content"><h3>Generate &amp; Deliver</h3><p>Download as a ZIP package or push directly to the Git repository. Automate the process with Sync Profiles.</p></div></div>
+</div>
+`,
+  "codegen-dashboard": `
+<span class="section-label">Getting Started</span>
+<h1>Dashboard</h1>
+<p>The Dashboard provides a centralized overview of the current code generation configuration. It shows the status of all three core configuration areas at a glance and allows direct access for editing each one.</p>
+<div class="concept-grid">
+  <div class="concept-card">
+    <h3>Framework Overview</h3>
+    <p>Displays the selected language, framework configuration and package namespace. Shows <strong>Configured</strong> once setup is complete.</p>
+  </div>
+  <div class="concept-card">
+    <h3>Project Structure Overview</h3>
+    <p>Shows the configured output paths for tests, PageObjects and configuration files with a live count of mapped files.</p>
+  </div>
+  <div class="concept-card">
+    <h3>Sync Profiles Overview</h3>
+    <p>Lists existing synchronization profiles, their status, and provides a shortcut to create new profiles.</p>
+  </div>
+</div>
+`,
+  "codegen-setup": `
+<span class="section-label">Configuration</span>
+<h1>Setup</h1>
+<p>The Setup section configures the technical foundation of the generated automation project. It places Framework Settings and Git Connection side by side and includes a Danger Zone for resetting the configuration.</p>
+<div class="screenshot-wrap">
+  <img alt="Setup tab — Framework Settings and Git Connection" src="./autemos_code_generation_screenshots/image_3.png"/>
+  <div class="screenshot-caption">Setup tab — Framework Settings (left) and Git Connection (right) configured side by side.</div>
+</div>
+<h2>Framework Settings</h2>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Setting</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Language</strong></td><td>Programming language (Java, TypeScript, Python, C#)</td></tr>
+      <tr><td><strong>Framework</strong></td><td>Automation framework (Selenium, Playwright, Appium)</td></tr>
+      <tr><td><strong>Package Name</strong></td><td>Root package namespace (e.g. <code>ch.eribank.test</code>)</td></tr>
+      <tr><td><strong>Base URL</strong></td><td>Default application URL for the generated project</td></tr>
+      <tr><td><strong>Test Runner</strong></td><td>Test execution engine (TestNG, JUnit, Vitest, Jest)</td></tr>
+    </tbody>
+  </table>
+</div>
+<h2>Git Connection</h2>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Field</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Provider</strong></td><td>Git provider — GitHub, GitLab or Bitbucket</td></tr>
+      <tr><td><strong>Repository URL</strong></td><td>Target repository for code synchronization</td></tr>
+      <tr><td><strong>Access Token</strong></td><td>Personal access token used for authentication</td></tr>
+      <tr><td><strong>Default Branch</strong></td><td>Branch used for synchronization (e.g. <code>main</code>)</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>Use <strong>Test Connection</strong> to validate repository access, authentication, branch availability and write permissions before enabling synchronization.</p>
+<div class="tip"><span class="tip-icon">💡</span>The <strong>Danger Zone</strong> at the end of Setup allows resetting the project configuration. This removes framework settings and restarts the wizard — templates and project structure are preserved.</div>
+
+<h2 id="codegen-wizard">Setup Wizard</h2>
+<p>New projects use a guided 4-step wizard to configure the code generation foundation.</p>
+<div class="screenshot-pair">
+  <div class="screenshot-wrap">
+    <img alt="Wizard Step 1 — Platform selection" src="./autemos_code_generation_screenshots/image_9.png"/>
+    <div class="screenshot-caption">Step 1 — Choose a platform: Web, Mobile or Web + Mobile.</div>
+  </div>
+  <div class="screenshot-wrap">
+    <img alt="Wizard Step 2 — Framework selection" src="./autemos_code_generation_screenshots/image_10.png"/>
+    <div class="screenshot-caption">Step 2 — Select the automation framework combination.</div>
+  </div>
+</div>
+<div class="screenshot-pair">
+  <div class="screenshot-wrap">
+    <img alt="Wizard Step 3 — Project Details" src="./autemos_code_generation_screenshots/image_11.png"/>
+    <div class="screenshot-caption">Step 3 — Enter the package name and base URL for the project.</div>
+  </div>
+  <div class="screenshot-wrap">
+    <img alt="Wizard Step 4 — Review Configuration" src="./autemos_code_generation_screenshots/image_12.png"/>
+    <div class="screenshot-caption">Step 4 — Review the complete configuration before finalizing setup.</div>
+  </div>
+</div>
+`,
+  "codegen-structure": `
+<span class="section-label">Configuration</span>
+<h1>Project Structure</h1>
+<p>The Project Structure section defines how generated files are organized in the target repository. Output paths use dynamic placeholders that are resolved at generation time.</p>
+<div class="screenshot-wrap">
+  <img alt="Project Structure — folder path configuration and folder tree preview" src="./autemos_code_generation_screenshots/image_4.png"/>
+  <div class="screenshot-caption">Project Structure — Configure output paths and preview the generated folder tree before generation.</div>
+</div>
+<h2>Configurable Output Paths</h2>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Path</th><th>Example</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Test Output Path</strong></td><td><code>src/test/java/{packagePath}/</code></td><td>Where test class files are generated</td></tr>
+      <tr><td><strong>PageObject Output Path</strong></td><td><code>src/main/java/{packagePath}/pages/</code></td><td>Where PageObject class files are generated</td></tr>
+      <tr><td><strong>Config Output Path</strong></td><td><em>optional</em></td><td>Where supporting configuration files are placed</td></tr>
+    </tbody>
+  </table>
+</div>
+<h2>Dynamic Placeholders</h2>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Placeholder</th><th>Resolved Value</th></tr></thead>
+    <tbody>
+      <tr><td><code>{packagePath}</code></td><td>Package name as a directory path (e.g. <code>ch/eribank/test</code>)</td></tr>
+      <tr><td><code>{TestName}</code></td><td>Name of the generated test class</td></tr>
+      <tr><td><code>{PageName}</code></td><td>Name of the generated PageObject class</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>A live <strong>folder tree preview</strong> visualizes the complete generated project structure based on the current path configuration — before any code is generated.</p>
+`,
+  "codegen-templates": `
+<span class="section-label">Configuration</span>
+<h1>Templates</h1>
+<p>Templates define the exact code structure that Autemos generates for each framework and field type. They control class structures, method implementations, imports, framework syntax and field interaction methods.</p>
+<div class="screenshot-wrap">
+  <img alt="Templates — Method Templates by Field Type" src="./autemos_code_generation_screenshots/image_5.png"/>
+  <div class="screenshot-caption">Templates — Method Templates grouped by Field Type (LINK, TEXT, BUTTON, etc.) with the available methods.</div>
+</div>
+<h2>Main Templates</h2>
+<p>Main templates define the top-level class structure for each generated file type:</p>
+<ul class="feature-list">
+  <li>Test class structure</li>
+  <li>PageObject classes</li>
+  <li>Configuration files</li>
+  <li>Utility classes</li>
+</ul>
+<h2>Method Templates by Field Type</h2>
+<p>Every field type provided by PageObjects has its own interaction methods. These are generated based on the field type and the selected framework:</p>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Method</th><th>Purpose</th><th>Example Field Types</th></tr></thead>
+    <tbody>
+      <tr><td><code>click()</code></td><td>Trigger a click interaction</td><td>Link, Button</td></tr>
+      <tr><td><code>getText()</code></td><td>Read text content</td><td>Link, Text</td></tr>
+      <tr><td><code>getHref()</code></td><td>Read hyperlink URL</td><td>Link</td></tr>
+      <tr><td><code>type()</code></td><td>Enter text into a field</td><td>Input</td></tr>
+      <tr><td><code>select()</code></td><td>Select a dropdown value</td><td>Dropdown</td></tr>
+    </tbody>
+  </table>
+</div>
+<h2>Code Template Management</h2>
+<div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:20px">
+  <div style="flex:1;min-width:0">
+    <p>The <strong>Code Template Manager</strong> is a separate global feature that acts as the central engine behind code generation. It allows teams to:</p>
+    <ul class="feature-list" style="margin-top:12px">
+      <li>Customize templates for any language and framework combination</li>
+      <li>Define organizational coding standards</li>
+      <li>Create reusable generation logic</li>
+      <li>Manage field-specific interaction methods</li>
+    </ul>
+    <p style="margin-top:12px">Access via the <strong>Edit in Template Manager</strong> button in the Templates tab or through the global sidebar navigation.</p>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 300px;margin:0">
+    <img alt="Code Template Management — template editor" src="./autemos_code_generation_screenshots/image_13.png"/>
+    <div class="screenshot-caption">Code Template Management — Edit templates, node templates, methods &amp; field types.</div>
+  </div>
+</div>
+`,
+  "codegen-sync-profiles": `
+<span class="section-label">Automation</span>
+<h1>Sync Profiles</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:24px">
+  <div style="flex:1;min-width:0">
+    <p>Sync Profiles allow teams to automate recurring synchronization workflows. A profile defines which workflows and PageObjects to synchronize, the target Git branch, trigger conditions and scheduling behavior — all stored as a reusable configuration.</p>
+    <ul class="feature-list" style="margin-top:12px">
+      <li>Select which workflows and PageObjects to synchronize</li>
+      <li>Define a dedicated target Git branch per profile</li>
+      <li>Configure scheduled or event-driven sync triggers</li>
+      <li>Optionally create a pull request automatically after each sync</li>
+      <li>Enable or disable profiles independently</li>
+    </ul>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 280px;margin:0">
+    <img alt="New Sync Profile dialog — workflow and PageObject selection" src="./autemos_code_generation_screenshots/image_7.png"/>
+    <div class="screenshot-caption">New Sync Profile — Select workflows and PageObjects to include.</div>
+  </div>
+</div>
+<h2>Profile Configuration</h2>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Setting</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Tests (Workflows)</strong></td><td>Select which workflows to include. Referenced PageObjects are detected automatically.</td></tr>
+      <tr><td><strong>Page Objects</strong></td><td>Automatically selected from workflow references or added manually.</td></tr>
+      <tr><td><strong>Git Target Branch</strong></td><td>Dedicated branch for this profile (e.g. <code>codegen/profile-name-sync</code>)</td></tr>
+      <tr><td><strong>Schedule</strong></td><td>Enable periodic synchronization (nightly, daily, etc.)</td></tr>
+      <tr><td><strong>Event Triggers</strong></td><td>Synchronize automatically when specific events occur</td></tr>
+      <tr><td><strong>Auto-create PR</strong></td><td>Automatically open a pull request for review after each sync</td></tr>
+      <tr><td><strong>Active</strong></td><td>Enable or disable the profile independently</td></tr>
+    </tbody>
+  </table>
+</div>
+<h2>Event-Driven Triggers</h2>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Trigger</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Run on Workflow Save</strong></td><td>Synchronize automatically when a workflow is changed and saved</td></tr>
+      <tr><td><strong>Run on Successful Test Run</strong></td><td>Synchronize after a successful execution — keeps the repository continuously up to date</td></tr>
+    </tbody>
+  </table>
+</div>
+<div class="tip"><span class="tip-icon">💡</span>Enable <strong>Auto-create PR</strong> together with event triggers to enforce a code review for every automatically generated change — ideal for CI/CD pipelines that require controlled merges.</div>
+`,
+  "codegen-generate": `
+<span class="section-label">Automation</span>
+<h1>Generate</h1>
+<p>The Generate tab enables manual, on-demand code generation. Select workflows and PageObjects to include, choose the output format and generate immediately.</p>
+<div class="screenshot-wrap">
+  <img alt="Generate tab — workflow and PageObject selection with download options" src="./autemos_code_generation_screenshots/image_8.png"/>
+  <div class="screenshot-caption">Generate tab — Select tests and PageObjects, then preview, download as ZIP or push to Git.</div>
+</div>
+<h2>Selection</h2>
+<ul class="feature-list">
+  <li>Select individual workflows in the <strong>Tests</strong> panel — or use <strong>Select All</strong></li>
+  <li>Referenced PageObjects are detected automatically when a workflow is selected</li>
+  <li>Additional PageObjects can be added manually from the <strong>Page Objects</strong> panel</li>
+</ul>
+<h2>Generation Options</h2>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Option</th><th>Description</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Include Test Files</strong></td><td>Generate executable test class files for the selected workflows</td></tr>
+      <tr><td><strong>Include Config Files</strong></td><td>Generate framework configuration and supporting assets</td></tr>
+    </tbody>
+  </table>
+</div>
+<h2>Output Options</h2>
+<div class="concept-grid">
+  <div class="concept-card">
+    <h3>Preview</h3>
+    <p>Review the generated code before downloading or pushing — verify file names, structure and content.</p>
+  </div>
+  <div class="concept-card">
+    <h3>Generate &amp; Download ZIP</h3>
+    <p>Download the complete generated project as a ZIP archive for local use or manual integration.</p>
+  </div>
+  <div class="concept-card">
+    <h3>Push to Git</h3>
+    <p>Push the generated code directly to the configured Git repository and branch.</p>
+  </div>
+</div>
+`,
+  "codegen-git-sync": `
+<span class="section-label">Automation</span>
+<h1>Git Sync</h1>
+<p>The Git Sync tab provides direct repository management — configure the Git connection, push code manually and view the full synchronization history.</p>
+<div class="screenshot-wrap">
+  <img alt="Git Sync — Configure Git Connection and Sync History" src="./autemos_code_generation_screenshots/image_2.png"/>
+  <div class="screenshot-caption">Git Sync — Configure provider, repository URL, access token and branch. Sync History tracks all previous pushes.</div>
+</div>
+<h2>Git Connection</h2>
+<p>Supported providers: <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Bitbucket</strong>. Configure the repository URL, personal access token and default branch. Use <strong>Test Connection</strong> to validate before saving.</p>
+<h2>Sync History</h2>
+<p>The Sync History provides full transparency for every previous synchronization run:</p>
+<ul class="feature-list">
+  <li>Timestamp of each synchronization</li>
+  <li>Push result (success or failure)</li>
+  <li>Branch used</li>
+  <li>Error details for debugging</li>
+</ul>
+<h2>External Integration &amp; CI/CD</h2>
+<p>Code generation and synchronization can also be triggered externally via API. This supports integration with:</p>
+<ul class="feature-list">
+  <li>GitLab CI Pipelines</li>
+  <li>Jenkins Jobs</li>
+  <li>GitHub Actions Workflows</li>
+  <li>Custom deployment pipelines</li>
+</ul>
+<div class="tip"><span class="tip-icon">💡</span>Combine external API triggers with Sync Profiles for a fully automated code generation pipeline — generate, push and open a PR automatically as part of every deployment cycle.</div>
+`,
+});

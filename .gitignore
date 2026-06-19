@@ -1,0 +1,17 @@
+### Logs ###
+logs/
+*.log
+/web/output/
+
+### IntelliJ IDEA ###
+*.iws
+*.iml
+*.ipr
+.idea/
+.mvn/
+
+### VS Code ###
+.vscode/
+
+### Mac OS ###
+.DS_Store
