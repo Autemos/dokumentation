@@ -81,10 +81,10 @@ aside::-webkit-scrollbar-thumb{background:#2A2E3A;border-radius:4px}
 
 /* MAIN */
 main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100vh - var(--header-h));padding:0}
-.content-wrap{max-width:860px;margin:0 auto;padding:40px 48px 80px}
+.content-wrap{max-width:1200px;margin:0 auto;padding:28px 48px 56px}
 
 /* SECTIONS */
-.doc-section{margin-bottom:64px;padding-bottom:64px}
+.doc-section{margin-bottom:40px;padding-bottom:40px}
 /* Sub-sections (start with h2 instead of h1) — reduced spacing within same chapter */
 .doc-section:has(> h2:first-child),
 .doc-section:has(> .section-label + h2){margin-bottom:24px;padding-bottom:0}
@@ -94,7 +94,7 @@ main{margin-left:var(--sidebar-w);margin-top:var(--header-h);min-height:calc(100
 /* Sub-section followed by a NEW main chapter (h1 section) — add top spacing to the new chapter */
 .doc-section:has(> h2:first-child) + .doc-section:not(:has(> h2:first-child)):not(:has(> .section-label + h2)),
 .doc-section:has(> .section-label + h2) + .doc-section:not(:has(> h2:first-child)):not(:has(> .section-label + h2)){
-  margin-top:60px;padding-top:0
+  margin-top:40px;padding-top:0
 }
 
 /* NODE HEADER */
@@ -211,6 +211,11 @@ mark{background:#FEF3C7;color:inherit;border-radius:2px}
 /* Inline code */
 code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6px;font-size:13px;font-family:monospace;color:#334155}
 
+/* Command / code block */
+.cmd-block{background:#0F121A;border:1px solid #2A2E3A;border-radius:8px;padding:12px;color:#C4C9D6;font-size:13px;line-height:1.6;overflow-x:auto;margin:16px 0}
+.cmd-block .cmd-comment{color:#6B7280}
+pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
+
 /* Table of node categories hero */
 .category-pills{display:flex;flex-wrap:wrap;gap:8px;margin:20px 0}
 
@@ -317,6 +322,13 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 .module-tab.active-personalsettings{background:rgba(217,70,239,.15);color:#F5D0FE}
 .module-tab.active-personalsettings .module-tab-dot{background:#D946EF}
 .result-module.mod-personalsettings{background:rgba(217,70,239,.2);color:#F5D0FE}
+
+.badge-onpremise{background:#FFF7ED;color:#9A3412;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.3px}
+.dot-onpremise{background:#F97316}
+#sidebar[data-module="onpremise"] .nav-link.active{background:rgba(249,115,22,.15);border-left-color:#F97316;color:#E2E8F0}
+.module-tab.active-onpremise{background:rgba(249,115,22,.15);color:#FED7AA}
+.module-tab.active-onpremise .module-tab-dot{background:#F97316}
+.result-module.mod-onpremise{background:rgba(249,115,22,.2);color:#FED7AA}
 
 /* Unified Management color (Indigo) — applies to all Management modules */
 .badge-mgmt{background:#EEF2FF;color:#3730A3;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.3px}
@@ -650,6 +662,14 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
       <button class="module-tab" id="tab-grid" onclick="switchModule('grid')"><span class="module-tab-dot"></span>Grid Dashboard</button>
       <button class="module-tab" id="tab-personalsettings" onclick="switchModule('personalsettings')"><span class="module-tab-dot"></span>Personal Settings</button>
       <button class="module-tab" id="tab-settings" onclick="switchModule('settings')"><span class="module-tab-dot"></span>Global Settings</button>
+    </div>
+  </div>
+  <div class="module-section" data-section="deployment">
+    <button class="module-section-header" onclick="toggleSection('deployment')">
+      <span>Deployment</span><span class="module-section-arrow">▾</span>
+    </button>
+    <div class="module-section-items">
+      <button class="module-tab" id="tab-onpremise" onclick="switchModule('onpremise')"><span class="module-tab-dot"></span>On-Premise Stack</button>
     </div>
   </div>
 </div>
@@ -1043,6 +1063,33 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
   </div>
 </div>
 
+<!-- NAV: ON-PREMISE STACK -->
+<div class="nav-group hidden" id="nav-onpremise">
+  <div class="nav-section">
+    <span class="nav-section-title">Erste Schritte</span>
+    <a class="nav-link" href="#onpremise-overview"><span class="nav-dot dot-onpremise"></span>Übersicht</a>
+    <a class="nav-link" href="#onpremise-architecture"><span class="nav-dot dot-onpremise"></span>Architektur</a>
+  </div>
+  <div class="nav-section">
+    <span class="nav-section-title">Installation</span>
+    <a class="nav-link" href="#onpremise-requirements"><span class="nav-dot dot-onpremise"></span>Systemvoraussetzungen</a>
+    <a class="nav-link" href="#onpremise-installation"><span class="nav-dot dot-onpremise"></span>Installation</a>
+    <a class="nav-link" href="#onpremise-access"><span class="nav-dot dot-onpremise"></span>Zugriff &amp; URLs</a>
+  </div>
+  <div class="nav-section">
+    <span class="nav-section-title">LLM-Anbindung</span>
+    <a class="nav-link" href="#onpremise-llm"><span class="nav-dot dot-onpremise"></span>OpenAI-kompatible Schnittstelle</a>
+    <a class="nav-link" href="#onpremise-llm-setup"><span class="nav-dot dot-onpremise"></span>Einrichtung in der UI</a>
+    <a class="nav-link" href="#onpremise-warmup"><span class="nav-dot dot-onpremise"></span>Modell vorwärmen</a>
+  </div>
+  <div class="nav-section">
+    <span class="nav-section-title">Betrieb</span>
+    <a class="nav-link" href="#onpremise-config"><span class="nav-dot dot-onpremise"></span>Konfiguration &amp; Secrets</a>
+    <a class="nav-link" href="#onpremise-operations"><span class="nav-dot dot-onpremise"></span>Betrieb</a>
+    <a class="nav-link" href="#onpremise-troubleshooting"><span class="nav-dot dot-onpremise"></span>Troubleshooting</a>
+  </div>
+</div>
+
 <!-- NAV: EXECUTIVE DASHBOARD -->
 <div class="nav-group hidden" id="nav-executive">
   <div class="nav-section">
@@ -1398,7 +1445,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
     <h1 style="margin-top:0">Error Handling &amp; Soft Verify</h1>
     <p>Workflows unterstützen flexible Fehlerbehandlungsstrategien.</p>
     <h2>Standardverhalten</h2>
-    <p>Standardmäßig stoppt ein Workflow die Ausführung, wenn ein Schritt fehlschlägt. Dies ist die sicherste Option und stellt sicher, dass Probleme sofort sichtbar werden.</p>
+    <p>Standardmässig stoppt ein Workflow die Ausführung, wenn ein Schritt fehlschlägt. Dies ist die sicherste Option und stellt sicher, dass Probleme sofort sichtbar werden.</p>
     <h2>Soft Verify</h2>
     <p>Bei Verwendung von Soft Verify werden Fehler protokolliert und die Ausführung fortgesetzt. Dies ist nützlich, wenn mehrere Validierungen ausgeführt werden sollen und Sie ein vollständiges Testergebnis anstelle eines vorzeitigen Abbruchs wünschen.</p>
   </div>
@@ -1459,7 +1506,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <section class="doc-section" id="related-modules">
 <span class="section-label">Erste Schritte</span>
 <h1>Verwandte Module</h1>
-<p>Test Workflows sind Teil eines größeren Ökosystems innerhalb von Autemos.</p>
+<p>Test Workflows sind Teil eines grösseren Ökosystems innerhalb von Autemos.</p>
 <div class="module-grid">
 <div class="module-card">
 <strong>Page Object Repository</strong>
@@ -1495,7 +1542,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <h1>Open Browser</h1>
 <span class="badge badge-browser">Browser</span>
 </div>
-</div><p>Der Open Browser-Node startet eine neue Browser-Instanz für die Ausführung webbasierter Testschritte. Er definiert den Ausführungskontext, einschließlich der Zielplattform und ob der Browser im Headless-Modus läuft.</p><h2>Wann verwenden</h2><ul class="feature-list">
+</div><p>Der Open Browser-Node startet eine neue Browser-Instanz für die Ausführung webbasierter Testschritte. Er definiert den Ausführungskontext, einschliesslich der Zielplattform und ob der Browser im Headless-Modus läuft.</p><h2>Wann verwenden</h2><ul class="feature-list">
 <li>Start eines Web-Test-Workflows</li>
 <li>Definition der Ausführungsumgebung für browserbasiertes Testen</li>
 <li>Ausführung von Tests auf einer bestimmten Plattform oder Konfiguration</li>
@@ -1637,7 +1684,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <h1>Close Browser</h1>
 <span class="badge badge-browser">Browser</span>
 </div>
-</div><p>Der Close Browser-Node beendet die aktive Browser-Session. Er wird typischerweise am Ende eines Test Workflows verwendet, um Ressourcen freizugeben und die Ausführung abzuschließen.</p><h2>Wann verwenden</h2><ul class="feature-list">
+</div><p>Der Close Browser-Node beendet die aktive Browser-Session. Er wird typischerweise am Ende eines Test Workflows verwendet, um Ressourcen freizugeben und die Ausführung abzuschliessen.</p><h2>Wann verwenden</h2><ul class="feature-list">
 <li>Beenden eines Web-Test-Workflows</li>
 <li>Freigabe von Browser-Ressourcen nach der Ausführung</li>
 <li>Sicherstellen eines sauberen Test-Lebenszyklus für wiederholte oder geplante Ausführungen</li>
@@ -1656,7 +1703,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 </div>
 <h2>Verhalten</h2>
 <ul class="feature-list">
-<li>Schließt die aktive Browser-Session und beendet alle Interaktionen</li>
+<li>Schliesst die aktive Browser-Session und beendet alle Interaktionen</li>
 <li>Gibt zugehörige Ressourcen frei</li>
 <li>Wenn <strong>Keep Alive</strong> aktiviert ist: Die Browser-Session bleibt offen — nützlich für Debugging oder manuelle Inspektion</li>
 </ul>
@@ -1667,7 +1714,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
 </div>
 <div class="example-block">
-<h3>Beispiel — Browser am Ende des Workflows schließen</h3>
+<h3>Beispiel — Browser am Ende des Workflows schliessen</h3>
 <div class="param-table-wrap">
 <table class="param-table">
 <thead><tr><th>Parameter</th><th>Wert</th></tr></thead>
@@ -1682,7 +1729,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <ul class="best-practices">
 <li>Platzieren Sie diesen Node am Ende Ihres Workflows</li>
 <li>Verwenden Sie <code>Keep Alive = true</code> nur beim Debugging</li>
-<li>Schließen Sie Sessions bei automatisierten Runs immer, um Ressourcenlecks zu vermeiden</li>
+<li>Schliessen Sie Sessions bei automatisierten Runs immer, um Ressourcenlecks zu vermeiden</li>
 </ul>
 </section>
 <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -2069,10 +2116,10 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <h1>Press Key</h1>
 <span class="badge badge-interaction">UI Interaction</span>
 </div>
-</div><p>Der Press Key-Node sendet einen Tastendruck an ein ausgewähltes UI-Element. Er wird für tastaturgesteuerte Interaktionen wie das Absenden von Formularen, das Wechseln zwischen Feldern, das Schließen von Dialogen oder das Auslösen von Tastenkombinationen verwendet.</p><h2>Wann verwenden</h2><ul class="feature-list">
+</div><p>Der Press Key-Node sendet einen Tastendruck an ein ausgewähltes UI-Element. Er wird für tastaturgesteuerte Interaktionen wie das Absenden von Formularen, das Wechseln zwischen Feldern, das Schliessen von Dialogen oder das Auslösen von Tastenkombinationen verwendet.</p><h2>Wann verwenden</h2><ul class="feature-list">
 <li>Formular mit Enter absenden</li>
 <li>Mit Tab zum nächsten Feld wechseln</li>
-<li>Dialog mit Escape schließen</li>
+<li>Dialog mit Escape schliessen</li>
 <li>Barrierefreiheit oder Tastaturnavigation testen</li>
 </ul><div class="tip"><span class="tip-icon">💡</span>Wenn die Aktion zuverlässig mit einem <a href="#click">Click</a>-Node ausgeführt werden kann, bevorzugen Sie Click für bessere Lesbarkeit.</div></div><div class="screenshot-wrap">
 <img alt="Press Key configuration" src="./autemos_images/image21.png"/>
@@ -2260,7 +2307,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <ul class="best-practices">
 <li>Bevorzugen Sie die Auswahl nach sichtbarem Text, wenn der Wert für Benutzer bedeutsam ist</li>
 <li>Verwenden Sie Bindings, wenn Dropdown-Werte aus Testdaten kommen sollen</li>
-<li>Vermeiden Sie index-basierte Auswahl, außer wenn die Reihenfolge der Optionen stabil ist</li>
+<li>Vermeiden Sie index-basierte Auswahl, ausser wenn die Reihenfolge der Optionen stabil ist</li>
 <li>Fügen Sie nach der Auswahl einen Assert- oder Soft Verify-Node hinzu, um zu bestätigen, dass der Wert angewendet wurde</li>
 </ul>
 </section>
@@ -2311,7 +2358,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <p>Screenshot-Datei, gespeichert als Teil der Testausführungsergebnisse.</p>
 <h2>Fehlerbehandlung</h2>
 <ul class="feature-list">
-<li>Schlägt typischerweise nicht fehl, außer wenn die Screenshot-Aufnahme nicht möglich ist</li>
+<li>Schlägt typischerweise nicht fehl, ausser wenn die Screenshot-Aufnahme nicht möglich ist</li>
 <li>Kann mit Soft Verify kombiniert werden, wenn in Validierungsabläufen verwendet</li>
 <li>Hat keinen Einfluss auf den Anwendungszustand</li>
 </ul>
@@ -2431,7 +2478,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <ul class="feature-list">
 <li>Wechselt den Ausführungskontext zur angegebenen aktiven Session</li>
 <li>Alle nachfolgenden Nodes werden innerhalb der ausgewählten Session ausgeführt</li>
-<li>Erstellt oder schließt keine Sessions — wechselt nur zwischen bestehenden</li>
+<li>Erstellt oder schliesst keine Sessions — wechselt nur zwischen bestehenden</li>
 <li>Schlägt fehl, wenn die Ziel-Session nicht existiert oder nicht aktiv ist</li>
 </ul>
 <h2>Ausgabe</h2>
@@ -2492,14 +2539,14 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <thead><tr><th>Option</th><th>Beschreibung</th></tr></thead>
 <tbody>
 <tr><td><code>frame</code></td><td>Wechselt den Ausführungskontext in den angegebenen iframe</td></tr>
-<tr><td><code>parent</code></td><td>Wechselt den Ausführungskontext zurück zum übergeordneten (äußeren) Frame</td></tr>
+<tr><td><code>parent</code></td><td>Wechselt den Ausführungskontext zurück zum übergeordneten (äusseren) Frame</td></tr>
 </tbody>
 </table>
 </div>
 <h2>Verhalten</h2>
 <div class="concept-grid">
 <div class="concept-card"><h3>Switch To Frame</h3><p>Wartet, bis der iframe verfügbar ist, und wechselt den Ausführungskontext hinein. Alle nachfolgenden Aktionen werden innerhalb des iframes ausgeführt.</p></div>
-<div class="concept-card"><h3>Switch To Parent</h3><p>Wechselt den Ausführungskontext zurück zum übergeordneten (äußeren) Frame. Erforderlich, um weiterhin mit Elementen außerhalb des iframes zu interagieren.</p></div>
+<div class="concept-card"><h3>Switch To Parent</h3><p>Wechselt den Ausführungskontext zurück zum übergeordneten (äusseren) Frame. Erforderlich, um weiterhin mit Elementen ausserhalb des iframes zu interagieren.</p></div>
 </div>
 <h2>Ausgabe</h2>
 <p>Keine Ausgabe.</p>
@@ -2534,10 +2581,10 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <h1>Exit Frame</h1>
 <span class="badge badge-session">Session Control</span>
 </div>
-</div><p>Der Exit Frame-Node wechselt den Ausführungskontext vom aktuellen iframe zurück zu einem übergeordneten Dokument. Er wird verwendet, um einen iframe zu verlassen und weiterhin mit Elementen außerhalb davon zu interagieren.</p><h2>Wann verwenden</h2><ul class="feature-list">
+</div><p>Der Exit Frame-Node wechselt den Ausführungskontext vom aktuellen iframe zurück zu einem übergeordneten Dokument. Er wird verwendet, um einen iframe zu verlassen und weiterhin mit Elementen ausserhalb davon zu interagieren.</p><h2>Wann verwenden</h2><ul class="feature-list">
 <li>Interaktionen innerhalb eines iframes wurden abgeschlossen</li>
 <li>Sie müssen zur Hauptseite oder einem übergeordneten Frame zurückkehren</li>
-<li>Elemente außerhalb des iframes sind nach dem Wechsel in einen Frame nicht zugänglich</li>
+<li>Elemente ausserhalb des iframes sind nach dem Wechsel in einen Frame nicht zugänglich</li>
 </ul><div class="tip"><span class="tip-icon">💡</span>Wenn Elemente plötzlich nach der Arbeit innerhalb eines iframes nicht gefunden werden können, müssen Sie wahrscheinlich den Frame verlassen.</div></div><div class="screenshot-wrap">
 <img alt="Exit Frame configuration" src="./autemos_images/image28.png"/>
 <div class="screenshot-caption">Exit Frame Konfiguration — zum Top-Level-Dokument oder eine Ebene nach oben verlassen.</div>
@@ -2723,7 +2770,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <ul class="best-practices">
 <li>Bevorzugen Sie richtungsbasierte Swipes für Stabilität und Lesbarkeit</li>
 <li>Verwenden Sie Koordinaten nur wenn nötig</li>
-<li>Vermeiden Sie fest codierte Koordinaten über verschiedene Geräte hinweg — Bildschirmgrößen variieren</li>
+<li>Vermeiden Sie fest codierte Koordinaten über verschiedene Geräte hinweg — Bildschirmgrössen variieren</li>
 <li>Halten Sie die Swipe-Dauer realistisch (zu schnell oder langsam kann das Verhalten beeinflussen)</li>
 <li>Kombinieren Sie mit Assertions, um das erwartete Ergebnis zu überprüfen (z. B. Inhalt sichtbar)</li>
 </ul>
@@ -3068,7 +3115,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <tr><td><code>equals</code></td><td>Werte müssen exakt übereinstimmen</td></tr>
 <tr><td><code>notEquals</code></td><td>Werte müssen unterschiedlich sein</td></tr>
 <tr><td><code>contains</code></td><td>Wert muss die erwartete Eingabe enthalten</td></tr>
-<tr><td><code>greaterThan</code></td><td>Numerischer Vergleich: größer als</td></tr>
+<tr><td><code>greaterThan</code></td><td>Numerischer Vergleich: grösser als</td></tr>
 <tr><td><code>lessThan</code></td><td>Numerischer Vergleich: kleiner als</td></tr>
 <tr><td><code>isEmpty</code></td><td>Wert ist leer</td></tr>
 <tr><td><code>isNotEmpty</code></td><td>Wert ist nicht leer</td></tr>
@@ -3161,7 +3208,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <h2>Best Practices</h2>
 <ul class="best-practices">
 <li>Aussagekräftige Variablennamen verwenden (z. B. user, order, item)</li>
-<li>Iterationen bei großen Datensätzen begrenzen</li>
+<li>Iterationen bei grossen Datensätzen begrenzen</li>
 <li>Mit Assertions kombinieren, um jede Iteration zu validieren</li>
 <li>Schleifenlogik einfach und lesbar halten</li>
 <li>Tief verschachtelte Schleifen vermeiden — sie sind schwer zu warten und zu debuggen</li>
@@ -3207,7 +3254,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
 </div>
 <div class="warn-box">
-<strong>Häufige Fehler:</strong> Wait statt echter Validierung zu verwenden, große Verzögerungen einzubauen, um instabile Tests zu "reparieren", oder mehrere Wait-Nodes zu verketten, führt zu langsamer und unzuverlässiger Ausführung. Statt <code>Wait 5000ms</code> bevorzugen Sie <code>Assert element is visible</code>.
+<strong>Häufige Fehler:</strong> Wait statt echter Validierung zu verwenden, grosse Verzögerungen einzubauen, um instabile Tests zu "reparieren", oder mehrere Wait-Nodes zu verketten, führt zu langsamer und unzuverlässiger Ausführung. Statt <code>Wait 5000ms</code> bevorzugen Sie <code>Assert element is visible</code>.
   </div>
 <div class="example-block">
 <h3>Beispiel — 1 Sekunde warten</h3>
@@ -3628,7 +3675,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 </table>
 </div>
 <h2>Output</h2>
-<p>Keine Ausgabe. Die Datensatzsperre wird gemäß dem ausgewählten Scope aufgehoben oder freigegeben.</p>
+<p>Keine Ausgabe. Die Datensatzsperre wird gemäss dem ausgewählten Scope aufgehoben oder freigegeben.</p>
 <div class="meta-grid">
 <div class="meta-card"><div class="meta-label">Input Variables</div><div class="meta-value"><span class="meta-pill pill-yes">Yes</span></div></div>
 <div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
@@ -3713,7 +3760,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <li>Stabile Run IDs über zusammenhängende Workflow-Ausführungen hinweg verwenden</li>
 <li>Attempt IDs für denselben asynchronen Ausführungsfluss konsistent halten</li>
 <li>Dieselbe Store As-Variablennamenskonvention im gesamten Workflow verwenden</li>
-<li>Mit Release Test Data kombinieren, um Datensatzsperren ordnungsgemäß zu bereinigen</li>
+<li>Mit Release Test Data kombinieren, um Datensatzsperren ordnungsgemäss zu bereinigen</li>
 </ul>
 </section>
 <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -3783,7 +3830,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <h2>Unterstützte Methoden</h2>
 <p>GET, POST, PUT, PATCH, DELETE — sowie andere Standard-HTTP-Methoden, die von der aufgerufenen API unterstützt werden.</p>
 <h2>Ausgabe</h2>
-<p>Der Node stellt Zugriff auf die API-Antwort bereit, einschließlich Statuscode, Header und Response-Body. Antwortwerte können extrahiert und in nachfolgenden Workflow-Schritten wiederverwendet werden.</p>
+<p>Der Node stellt Zugriff auf die API-Antwort bereit, einschliesslich Statuscode, Header und Response-Body. Antwortwerte können extrahiert und in nachfolgenden Workflow-Schritten wiederverwendet werden.</p>
 <div class="meta-grid">
 <div class="meta-card"><div class="meta-label">Input Variables</div><div class="meta-value"><span class="meta-pill pill-yes">Yes</span></div></div>
 <div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-yes">Yes</span></div></div>
@@ -4131,7 +4178,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <li>Sichtbare Zeilen vor der Interaktion reduzieren</li>
 <li>Aktive Tabellenfilter löschen</li>
 <li>Tabellen für Find Row- oder Click Row-Operationen vorbereiten</li>
-</ul><div class="tip"><span class="tip-icon">💡</span>Dieser Node ermöglicht Workflows das effiziente Arbeiten mit <strong>großen und dynamischen</strong> Geschäftstabellen.</div></div><div class="screenshot-wrap">
+</ul><div class="tip"><span class="tip-icon">💡</span>Dieser Node ermöglicht Workflows das effiziente Arbeiten mit <strong>grossen und dynamischen</strong> Geschäftstabellen.</div></div><div class="screenshot-wrap">
 <img alt="Filter Table configuration" src="./autemos_images/image48.png"/>
 <div class="screenshot-caption">Filter Table-Konfiguration — Filtermodus, Geschäftsspalte und Filterwert auswählen.</div>
 </div>
@@ -4388,9 +4435,9 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <h2>Best Practices</h2>
 <ul class="best-practices">
 <li>Load more once für präzise Kontrolle über jeden Ladeschritt verwenden</li>
-<li>Load all rows nur bei überschaubarer Tabellengröße verwenden</li>
+<li>Load all rows nur bei überschaubarer Tabellengrösse verwenden</li>
 <li>Scroll to matching row bevorzugen, wenn nach einem bekannten Geschäftsdatensatz gesucht wird</li>
-<li>Das Laden aller Zeilen bei sehr großen Datensätzen vermeiden, sofern nicht notwendig</li>
+<li>Das Laden aller Zeilen bei sehr grossen Datensätzen vermeiden, sofern nicht notwendig</li>
 <li>Mit Check Table State oder Find Row für zuverlässige Validierung kombinieren</li>
 </ul>
 </section>
@@ -4523,7 +4570,7 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 <li>Geschäftsbedingungen gegenüber Zeilenpositionen bevorzugen</li>
 <li>Read matching rows für die erweiterte Zeilenverarbeitung verwenden</li>
 <li>Verify presence vor der Zeileninteraktion verwenden</li>
-<li>Mit Filter Table für große Datensätze kombinieren</li>
+<li>Mit Filter Table für grosse Datensätze kombinieren</li>
 </ul>
 </section>
 <!-- ═══════════════════════════════════════════════════════════════ -->
@@ -10315,6 +10362,372 @@ code{background:#F1F5F9;border:1px solid #E2E8F0;border-radius:4px;padding:2px 6
 </div><!-- /content-wrap -->
 </div><!-- /module-templates -->
 
+<!-- ═══════════════ MODULE: ON-PREMISE STACK ═══════════════ -->
+<div id="module-onpremise" class="module-content" style="display:none">
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="onpremise-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>On-Premise Stack</h1>
+  <p>Autemos lässt sich vollständig <strong>im eigenen Haus betreiben</strong> — auf einem einzelnen Notebook, auf einem Server im Firmennetz oder in einer streng abgeschotteten Umgebung ohne Internetzugang. Der komplette Stack läuft als Docker-Compose-Verbund: Anwendung, Datenbank, Browser-Grid und optional ein lokales Sprachmodell. Es besteht <strong>keine Abhängigkeit zu externen Diensten</strong>.</p>
+  <h2>Betriebsmodelle</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Einzelplatz</h3><p>Der gesamte Stack läuft auf einem Notebook. Zugriff über <code>localhost</code>. Ideal für Evaluierung, Schulungen und Demos.</p></div>
+    <div class="concept-card"><h3>Server im Firmennetz</h3><p>Der Stack läuft zentral auf einem Server, mehrere Anwender greifen per Browser zu. Erfordert das Anpassen von zwei URLs in der Konfiguration.</p></div>
+    <div class="concept-card"><h3>Air-Gap / Offline</h3><p>Installation ohne jeden Internetzugang aus einem vorbereiteten Bundle. Alle Container-Images und das LLM-Modell sind darin bereits enthalten.</p></div>
+    <div class="concept-card"><h3>Hybrid-LLM</h3><p>Der Stack läuft lokal, die KI-Funktionen nutzen einen bereits vorhandenen LLM-Dienst — lokal, im Netz oder als Cloud-Endpoint.</p></div>
+  </div>
+  <h2>Lieferumfang</h2>
+  <p>Die Auslieferung erfolgt als Ordner <code>autemos-offline/</code>, der alles Nötige mitbringt:</p>
+  <ul class="feature-list">
+    <li>Alle Container-Images als Archivdateien im Unterordner <code>images/</code></li>
+    <li>Die fertige <code>docker-compose.yml</code> sowie die Konfigurationsdatei <code>.env</code> mit bereits generierten Passwörtern</li>
+    <li>Das lokale Sprachmodell im Unterordner <code>ollama-data/</code></li>
+    <li>Hilfsskripte zum Laden der Images und zum Vorwärmen des Modells — jeweils für Linux/macOS und für Windows</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">💡</span>Da alle Images mitgeliefert werden, benötigt das Zielsystem <strong>zu keinem Zeitpunkt</strong> eine Verbindung zu einer Container-Registry oder zum Internet.</div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="onpremise-architecture" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Architektur</h1>
+  <p>Der Stack besteht aus mehreren Containern, die untereinander über ein internes Docker-Netzwerk kommunizieren. Nach aussen sind nur wenige Ports veröffentlicht.</p>
+  <h2>Komponenten</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Komponente</th><th>Aufgabe</th><th>Port (Host)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Frontend</strong></td><td>Weboberfläche von Autemos. Dient zugleich als Einstiegspunkt und leitet Anfragen an Backend und Worker weiter.</td><td><code>3000</code></td></tr>
+        <tr><td><strong>Backend</strong></td><td>Zentrale Anwendungslogik: Projekte, Workflows, Testläufe, Einstellungen, LLM-Anbindung.</td><td>intern</td></tr>
+        <tr><td><strong>Java-Worker</strong></td><td>Führt die Testworkflows aus und steuert die Browser im Grid.</td><td>über <code>/worker</code></td></tr>
+        <tr><td><strong>PostgreSQL</strong></td><td>Datenbank für alle Projekt-, Test- und Konfigurationsdaten. Liegt in einem Docker-Volume.</td><td>intern</td></tr>
+        <tr><td><strong>Selenium Grid Hub</strong></td><td>Verteilt Testsitzungen auf die verfügbaren Browser-Nodes.</td><td><code>4444</code></td></tr>
+        <tr><td><strong>Chrome-Nodes</strong></td><td>Zwei statische Browser-Nodes für die Testausführung.</td><td>über den Hub</td></tr>
+        <tr><td><strong>Ollama</strong></td><td>Lokaler LLM-Dienst für KI-Funktionen wie Feldgenerierung, AI-Recorder und Auto-Healing.</td><td><code>11434</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Interne Namen und externe Adressen</h2>
+  <p>Innerhalb des Compose-Verbunds erreichen sich die Container über ihren <strong>Dienstnamen</strong>, nicht über <code>localhost</code>. Das ist die häufigste Fehlerquelle bei der Konfiguration.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Blickwinkel</th><th>Adresse für Ollama</th></tr></thead>
+      <tbody>
+        <tr><td>Aus einem Container heraus (z. B. Backend)</td><td><code>http://ollama:11434</code></td></tr>
+        <tr><td>Vom Host-System / aus dem Browser</td><td><code>http://localhost:11434</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning"><span class="tip-icon">⚠️</span><strong>localhost bedeutet im Container etwas anderes.</strong> Trägt man in einer Einstellung, die vom Backend ausgewertet wird, <code>localhost</code> ein, zeigt das auf den Backend-Container selbst — nicht auf den Host und nicht auf einen anderen Dienst.</div>
+  <h2>Skalierung des Grids</h2>
+  <p>Die beiden mitgelieferten Chrome-Nodes laufen dauerhaft und unabhängig. Zusätzlich kann Autemos bei Bedarf weitere Nodes dynamisch starten; dafür wird der Docker-Socket verwendet. Steht dieser nicht zur Verfügung, bleiben die statischen Nodes davon unberührt und die Testausführung funktioniert weiterhin.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Der Status des Grids inklusive aller Nodes und laufender Sessions ist in der Anwendung unter <a href="#grid-overview"><strong>Grid Dashboard</strong></a> einsehbar.</div>
+</section>
+
+<!-- REQUIREMENTS -->
+<section id="onpremise-requirements" class="doc-section">
+  <span class="section-label">Installation</span>
+  <h1>Systemvoraussetzungen</h1>
+  <p>Der Stack stellt keine besonderen Anforderungen an das Betriebssystem — entscheidend sind Docker, die Prozessorarchitektur und ausreichend Arbeitsspeicher für das gewünschte Sprachmodell.</p>
+  <h2>Basis</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Anforderung</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Docker</strong></td><td>Docker Desktop oder Docker Engine, installiert und gestartet — inklusive <strong>Docker Compose v2</strong>.</td></tr>
+        <tr><td><strong>Architektur</strong></td><td><strong>x86-64 / amd64</strong>. Die Images sind für amd64 gebaut.</td></tr>
+        <tr><td><strong>Speicherplatz</strong></td><td>Rund <strong>30 GB</strong> frei für die geladenen Images und die Anwendungsdaten.</td></tr>
+        <tr><td><strong>Arbeitsspeicher</strong></td><td>Abhängig vom Sprachmodell — siehe unten. Ohne lokales LLM deutlich weniger.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning"><span class="tip-icon">⚠️</span><strong>Apple Silicon wird nicht unterstützt.</strong> Der Stack läuft ausschliesslich auf amd64-Systemen, nicht auf arm64-Maschinen wie Macs mit M-Prozessor.</div>
+  <h2>Arbeitsspeicher für das lokale Sprachmodell</h2>
+  <p>Wird das mitgelieferte Modell <code>qwen3-coder:30b</code> mit 32k Kontext auf der CPU betrieben, sind <strong>rund 24 GB RAM oder mehr</strong> erforderlich. Eine GPU wird empfohlen, ist aber nicht zwingend.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Kleinere Modelle wie <code>qwen2.5-coder:7b</code> sind spürbar schneller und genügsamer. Für den <a href="#recorder-ai"><strong>AI-Recorder</strong></a> sind sie allerdings <strong>zu schwach</strong> — dort liefert erst ein grösseres Modell brauchbare Ergebnisse.</div>
+  <p>Alternativ lässt sich das lokale Modell ganz weglassen und stattdessen ein bereits vorhandener LLM-Dienst anbinden. Der RAM-Bedarf des Stacks sinkt dann erheblich — siehe <a href="#onpremise-llm">OpenAI-kompatible Schnittstelle</a>.</p>
+</section>
+
+<!-- INSTALLATION -->
+<section id="onpremise-installation" class="doc-section">
+  <span class="section-label">Installation</span>
+  <h1>Installation</h1>
+  <p>Die Installation besteht aus drei Schritten: Bundle auf das Zielsystem bringen, Images in Docker laden, Stack starten.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Bundle auf das Zielsystem kopieren</h3>
+        <p>Den kompletten Ordner <code>autemos-offline/</code> per USB-Datenträger oder Netzwerkfreigabe auf den Zielrechner übertragen, anschliessend eine Konsole <strong>in diesem Ordner</strong> öffnen.</p>
+        <pre class="cmd-block"><code>cd autemos-offline</code></pre>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Container-Images laden</h3>
+        <p>Das mitgelieferte Skript importiert alle Archivdateien aus <code>images/</code> in die lokale Docker-Installation.</p>
+        <pre class="cmd-block"><span class="cmd-comment"># Linux / macOS / Git Bash</span>
+<code>./load-images.sh</code>
+
+<span class="cmd-comment"># Windows PowerShell</span>
+<code>.\load-images.ps1</code></pre>
+        <p>Alternativ lassen sich die Archive einzeln laden: <code>docker load -i images/&lt;datei&gt;.tar</code> für jede Datei im Ordner.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Stack starten</h3>
+        <p>Die danebenliegende Datei <code>.env</code> wird automatisch eingelesen. Beim <strong>ersten</strong> Start dauert es einen Moment, bis alle Dienste bereit sind — es laufen Datenbankmigrationen und Healthchecks.</p>
+        <pre class="cmd-block"><code>docker compose up -d</code></pre>
+        <p>Soll der Stack auf einem Server statt lokal laufen, müssen vorher zwei URLs angepasst werden — siehe <a href="#onpremise-access">Zugriff &amp; URLs</a>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Status prüfen</h3>
+        <p>Alle Dienste sollten den Status <code>running</code> bzw. <code>healthy</code> erreichen.</p>
+        <pre class="cmd-block"><code>docker compose ps
+docker compose logs -f</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section id="onpremise-access" class="doc-section">
+  <span class="section-label">Installation</span>
+  <h1>Zugriff &amp; URLs</h1>
+  <p>Nach dem Start sind die folgenden Oberflächen erreichbar:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Dienst</th><th>URL</th><th>Zweck</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Autemos UI</strong></td><td><code>http://localhost:3000</code></td><td>Die Anwendung selbst</td></tr>
+        <tr><td><strong>Selenium Grid</strong></td><td><code>http://localhost:4444/ui</code></td><td>Grid-Konsole zur Kontrolle der Browser-Nodes</td></tr>
+        <tr><td><strong>Ollama</strong></td><td><code>http://localhost:11434</code></td><td>Endpoint des lokalen Sprachmodells</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Erstanmeldung</h2>
+  <p>Die Anmeldung erfolgt mit dem vorkonfigurierten Administratorkonto, Standard-Benutzername <code>admin</code>.</p>
+  <div class="warning"><span class="tip-icon">⚠️</span><strong>Passwort unmittelbar nach der ersten Anmeldung ändern.</strong> Das ausgelieferte Standardkonto ist bei jeder Installation identisch aufgebaut und darf im laufenden Betrieb nicht mit dem Auslieferungspasswort bestehen bleiben.</div>
+  <p>Weitere Konten werden anschliessend regulär über das Modul <a href="#users-overview"><strong>Users</strong></a> angelegt.</p>
+  <h2>Betrieb auf einem Server</h2>
+  <p>Läuft der Stack nicht lokal, sondern auf einem Server, auf den andere Rechner per Browser zugreifen, müssen in der Datei <code>.env</code> <strong>vor dem ersten Start</strong> zwei Einträge von <code>localhost</code> auf den Servernamen oder die Server-IP umgestellt werden:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Eintrag</th><th>Bedeutung</th><th>Beispiel</th></tr></thead>
+      <tbody>
+        <tr><td><code>FRONTEND_BASE_URL</code></td><td>Adresse, unter der Anwender die Oberfläche aufrufen</td><td><code>http://192.168.1.50:3000</code></td></tr>
+        <tr><td><code>WORKER_EXTERNAL_URL</code></td><td>Adresse, unter der der Worker von aussen erreichbar ist</td><td><code>http://192.168.1.50:3000/worker</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><span class="tip-icon">💡</span>Wird die Anpassung nachgeholt, genügt es, die Werte in der <code>.env</code> zu ändern und <code>docker compose up -d</code> erneut auszuführen.</div>
+</section>
+
+<!-- LLM: OPENAI-COMPATIBLE -->
+<section id="onpremise-llm" class="doc-section">
+  <span class="section-label">LLM-Anbindung</span>
+  <h1>OpenAI-kompatible Schnittstelle</h1>
+  <p>Autemos spricht Sprachmodelle nicht über proprietäre Protokolle an, sondern über eine <strong>OpenAI-kompatible Schnittstelle</strong>. Anbindbar ist damit jeder Dienst, der dieses verbreitete API-Schema bedient — unabhängig davon, ob er im Stack mitläuft, im Firmennetz steht oder als Cloud-Endpoint bereitgestellt wird.</p>
+  <h2>Mögliche Gegenstellen</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Ollama im Stack</h3><p>Der mitgelieferte Container. Keine weitere Infrastruktur nötig, keine Daten verlassen das System.</p></div>
+    <div class="concept-card"><h3>Ollama als eigener Dienst</h3><p>Eine bereits vorhandene Ollama-Installation auf dem Host oder auf einem anderen Rechner im Netz.</p></div>
+    <div class="concept-card"><h3>Firmeninternes LLM-Gateway</h3><p>Ein zentral betriebener Dienst mit OpenAI-kompatiblem Endpoint, an dem sich mehrere Anwendungen bedienen.</p></div>
+    <div class="concept-card"><h3>Cloud-Endpoint</h3><p>Zum Beispiel Azure AI Foundry oder ein vergleichbarer Anbieter. Sinnvoll, wenn keine lokale Rechenleistung bereitsteht.</p></div>
+  </div>
+  <h2>Welche URL gehört ins Feld „LLM Server URL"?</h2>
+  <p>Die einzutragende Adresse hängt davon ab, <strong>wo der Dienst läuft</strong> — und zwar aus Sicht des Backends, das die Anfragen stellt.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Betriebsart</th><th>LLM Server URL</th><th>Hinweis</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Ollama im mitgelieferten Stack</strong></td><td><code>http://ollama:11434</code></td><td>Interner Dienstname des Containers</td></tr>
+        <tr><td><strong>Ollama als lokaler Dienst</strong>, ohne Container-Trennung</td><td><code>http://localhost:11434</code></td><td>Nur korrekt, wenn Dienst und Backend denselben Netzwerkkontext teilen</td></tr>
+        <tr><td><strong>Ollama auf einem anderen Rechner</strong></td><td><code>http://&lt;hostname-oder-ip&gt;:11434</code></td><td>Port muss von aussen erreichbar sein</td></tr>
+        <tr><td><strong>Cloud- oder Gateway-Endpoint</strong></td><td>Vollständige Basis-URL des Anbieters, z. B. <code>https://api.openai.com/v1</code></td><td>Adresse und Pfad exakt so übernehmen, wie vom Anbieter dokumentiert</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning"><span class="tip-icon">⚠️</span>Läuft Ollama <strong>im Compose-Stack</strong>, ist <code>http://localhost:11434</code> an dieser Stelle <strong>falsch</strong>. Aus Sicht des Backend-Containers verweist <code>localhost</code> auf den Container selbst. Korrekt ist hier ausschliesslich der Dienstname <code>http://ollama:11434</code>.</div>
+  <h2>API-Key</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Gegenstelle</th><th>API-Key</th></tr></thead>
+      <tbody>
+        <tr><td>Lokales Ollama</td><td>Feld leer lassen — es findet keine Authentifizierung statt</td></tr>
+        <tr><td>Gateway oder Cloud-Endpoint</td><td>Vom Anbieter ausgestellter Schlüssel. Wird verschlüsselt im Backend abgelegt und in der Oberfläche nicht im Klartext angezeigt</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><span class="tip-icon">💡</span>Alle weiteren Parameter der LLM-Anbindung — Temperature, Max Tokens, Rate Limits und Kostengrenzen — sind unter <a href="#settings-llm"><strong>Global Settings → LLM Integration</strong></a> beschrieben.</div>
+</section>
+
+<!-- LLM SETUP -->
+<section id="onpremise-llm-setup" class="doc-section">
+  <span class="section-label">LLM-Anbindung</span>
+  <h1>Einrichtung in der UI</h1>
+  <p>Das mitgelieferte Modell liegt bereits im Ordner <code>ollama-data/</code> und muss nicht heruntergeladen werden. Die Verbindung wird einmalig in der Oberfläche hergestellt.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Einstellungen öffnen</h3>
+        <p>In der Anwendung zu <strong>Global Settings → LLM Integration</strong> wechseln.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>LLM global aktivieren</h3>
+        <p>Die Option <strong>„Enable LLM for field generation globally"</strong> einschalten.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Provider wählen</h3>
+        <p>Als Provider <code>Ollama / OpenAI-compatible</code> auswählen.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Server-URL eintragen</h3>
+        <p>Bei Betrieb im mitgelieferten Stack: <code>http://ollama:11434</code>. Für abweichende Betriebsarten siehe <a href="#onpremise-llm">OpenAI-kompatible Schnittstelle</a>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h3>Modell auswählen</h3>
+        <p>Auf <strong>„Load models"</strong> klicken und aus der Liste <code>qwen3-coder:30b</code> wählen. Den API-Key leer lassen.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h3>Speichern und prüfen</h3>
+        <p>Mit <strong>Save</strong> übernehmen, anschliessend <strong>Test Connection</strong> ausführen. Die Rückmeldung sollte positiv ausfallen.</p>
+      </div>
+    </div>
+  </div>
+  <div class="tip"><span class="tip-icon">💡</span>Vor dem ersten produktiven Aufruf sollte das Modell einmal vorgewärmt werden — siehe <a href="#onpremise-warmup">Modell vorwärmen</a>. Andernfalls kann der erste Aufruf in eine Zeitüberschreitung laufen.</div>
+</section>
+
+<!-- WARMUP -->
+<section id="onpremise-warmup" class="doc-section">
+  <span class="section-label">LLM-Anbindung</span>
+  <h1>Modell vorwärmen</h1>
+  <p>Beim <strong>ersten</strong> Aufruf lädt Ollama das Modell von der Festplatte in den Arbeitsspeicher. Auf der CPU kann das bei einem grossen Modell wie <code>qwen3-coder:30b</code> mehrere Minuten dauern. Damit der erste echte Aufruf aus der Anwendung nicht in eine Zeitüberschreitung läuft, wird das Modell einmal gezielt vorgewärmt.</p>
+  <pre class="cmd-block"><span class="cmd-comment"># Linux / macOS / Git Bash</span>
+<code>./warmup-ollama.sh</code>
+
+<span class="cmd-comment"># Windows PowerShell</span>
+<code>.\warmup-ollama.ps1</code>
+
+<span class="cmd-comment"># Falls die Ausführungsrichtlinie das Skript blockiert:</span>
+<code>powershell -ExecutionPolicy Bypass -File .\warmup-ollama.ps1</code></pre>
+  <p>Das Skript wartet, bis das Modell vollständig geladen ist, gibt die benötigte Dauer aus und prüft abschliessend, dass das Modell tatsächlich im Speicher liegt. Ein <strong>zweiter</strong> Lauf sollte nur noch wenige Sekunden benötigen — dann ist das Modell warm.</p>
+  <h2>Warum das Modell geladen bleibt</h2>
+  <p>Ohne Gegenmassnahme entlädt Ollama ein Modell nach etwa fünf Minuten ohne Anfragen wieder aus dem Speicher; der nächste Aufruf wäre erneut kalt. Im mitgelieferten Stack ist deshalb <code>OLLAMA_KEEP_ALIVE=-1</code> gesetzt — das Modell bleibt nach dem ersten Laden dauerhaft geladen.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Der Wert lässt sich in der <code>.env</code> überschreiben, etwa auf <code>OLLAMA_KEEP_ALIVE=24h</code>, wenn der Speicher nach längerer Inaktivität wieder freigegeben werden soll.</div>
+</section>
+
+<!-- CONFIG -->
+<section id="onpremise-config" class="doc-section">
+  <span class="section-label">Betrieb</span>
+  <h1>Konfiguration &amp; Secrets</h1>
+  <p>Sämtliche Betriebsparameter des Stacks stehen in der Datei <code>.env</code> neben der <code>docker-compose.yml</code>. Sie wird beim Start automatisch eingelesen. Nach einer Änderung genügt ein erneutes <code>docker compose up -d</code>.</p>
+  <h2>Zugangsdaten</h2>
+  <p>Die ausgelieferte <code>.env</code> enthält bereits zufällig generierte Werte für die folgenden Einträge:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Eintrag</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td><code>POSTGRES_PASSWORD</code></td><td>Passwort der Datenbank</td></tr>
+        <tr><td><code>JWT_SECRET</code></td><td>Schlüssel zur Signatur der Anmelde-Tokens</td></tr>
+        <tr><td><code>BACKEND_SERVICE_PASS</code></td><td>Passwort für die interne Dienstkommunikation</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning"><span class="tip-icon">⚠️</span>Für einen produktiven Einsatz sollten diese Werte durch eigene ersetzt und der Stack anschliessend neu gestartet werden. Die <code>.env</code> ist entsprechend zu schützen — sie enthält alle Zugangsdaten im Klartext.</div>
+  <h2>Ports</h2>
+  <p>Sind Ports auf dem Zielsystem bereits belegt, lassen sich die veröffentlichten Ports in der <code>.env</code> anpassen — etwa <code>FRONTEND_PORT</code> oder <code>GRID_HUB_PORT</code>. Danach den Stack neu starten.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Wird <code>FRONTEND_PORT</code> geändert, müssen <code>FRONTEND_BASE_URL</code> und <code>WORKER_EXTERNAL_URL</code> passend nachgezogen werden.</div>
+  <h2>GPU-Nutzung</h2>
+  <p>Standardmässig rechnet Ollama auf der CPU. Steht auf dem Zielsystem eine NVIDIA-GPU zur Verfügung, lässt sich die Inferenz deutlich beschleunigen. Dazu wird das <strong>NVIDIA Container Toolkit</strong> auf dem Host installiert und beim Dienst <code>ollama</code> in der <code>docker-compose.yml</code> eine GPU-Reservierung ergänzt.</p>
+  <h2>Zeitlimit für LLM-Anfragen</h2>
+  <p>Das Zeitlimit für Anfragen an das Sprachmodell steht standardmässig auf <strong>180 Sekunden</strong> — ein Wert, der auch bei CPU-Betrieb tragfähig ist. Benötigt ein grosses Modell auch im warmen Zustand länger, lässt sich der Wert unter <a href="#settings-llm"><strong>Global Settings → LLM Integration</strong></a> erhöhen.</p>
+  <h2>Anderes Sprachmodell</h2>
+  <p>Welches Modell im Bundle enthalten ist, wird <strong>bei dessen Erstellung</strong> festgelegt und lässt sich auf einem Offline-System nicht nachträglich austauschen — dafür wäre ein Download erforderlich. Wird ein kleineres oder grösseres Modell benötigt, ist ein entsprechend erstelltes Bundle anzufordern.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Besteht auf dem Zielsystem doch eine Netzwerkverbindung zu einem LLM-Dienst, lässt sich das mitgelieferte Modell umgehen und stattdessen ein externer Endpoint anbinden — siehe <a href="#onpremise-llm">OpenAI-kompatible Schnittstelle</a>.</div>
+</section>
+
+<!-- OPERATIONS -->
+<section id="onpremise-operations" class="doc-section">
+  <span class="section-label">Betrieb</span>
+  <h1>Betrieb</h1>
+  <p>Der laufende Betrieb erfolgt vollständig über Docker Compose aus dem Bundle-Ordner heraus.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Befehl</th><th>Wirkung</th></tr></thead>
+      <tbody>
+        <tr><td><code>docker compose up -d</code></td><td>Stack starten bzw. nach Konfigurationsänderungen neu anwenden</td></tr>
+        <tr><td><code>docker compose down</code></td><td>Stack stoppen — <strong>alle Daten bleiben erhalten</strong></td></tr>
+        <tr><td><code>docker compose ps</code></td><td>Status aller Dienste anzeigen</td></tr>
+        <tr><td><code>docker compose logs -f</code></td><td>Logs fortlaufend mitlesen</td></tr>
+        <tr><td><code>docker compose down -v</code></td><td><strong>Alles löschen</strong>, einschliesslich des Datenbank-Volumes</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning"><span class="tip-icon">⚠️</span><code>docker compose down -v</code> entfernt das Datenbank-Volume und damit <strong>sämtliche Projekte, Workflows und Testergebnisse unwiderruflich</strong>. Zum normalen Stoppen ist <code>docker compose down</code> ohne <code>-v</code> zu verwenden.</div>
+  <h2>Datenhaltung</h2>
+  <p>Alle Anwendungsdaten liegen in einem Docker-Volume und überstehen Stoppen, Starten und Neustarts des Hosts. Ein Backup des Stacks bedeutet daher im Wesentlichen ein Backup dieses Volumes zuzüglich der Datei <code>.env</code>.</p>
+</section>
+
+<!-- TROUBLESHOOTING -->
+<section id="onpremise-troubleshooting" class="doc-section">
+  <span class="section-label">Betrieb</span>
+  <h1>Troubleshooting</h1>
+  <p>Die folgenden Situationen treten bei der Inbetriebnahme am häufigsten auf.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Symptom</th><th>Ursache</th><th>Abhilfe</th></tr></thead>
+      <tbody>
+        <tr><td>Vorwärmen läuft in eine Zeitüberschreitung, das Modell erscheint nicht als geladen</td><td>Zu wenig freier Arbeitsspeicher auf dem Host</td><td>Speicherbedarf prüfen (siehe unten). Anwendungen schliessen oder ein Bundle mit kleinerem Modell verwenden</td></tr>
+        <tr><td><strong>Test Connection</strong> in der LLM-Konfiguration schlägt fehl</td><td>Falsche Server-URL — meist <code>localhost</code> statt Dienstname</td><td>URL gemäss <a href="#onpremise-llm">Betriebsart</a> korrigieren, im Stack also <code>http://ollama:11434</code></td></tr>
+        <tr><td>Stack startet nicht, Portkonflikt gemeldet</td><td>Ports 3000, 4444 oder 11434 bereits belegt</td><td>Ports in der <code>.env</code> ändern und Stack neu starten</td></tr>
+        <tr><td>Oberfläche vom Arbeitsplatz aus nicht erreichbar</td><td>Der Stack läuft auf einem Server, die URLs stehen noch auf <code>localhost</code></td><td><code>FRONTEND_BASE_URL</code> und <code>WORKER_EXTERNAL_URL</code> anpassen — siehe <a href="#onpremise-access">Zugriff &amp; URLs</a></td></tr>
+        <tr><td>Images lassen sich nicht laden oder Container starten nicht</td><td>Zielsystem ist keine amd64-Maschine</td><td>Auf einem x86-64-System betreiben; arm64 wird nicht unterstützt</td></tr>
+        <tr><td>Erster Aufruf einer KI-Funktion bricht ab, spätere funktionieren</td><td>Modell war noch kalt</td><td>Modell vorwärmen und <code>OLLAMA_KEEP_ALIVE</code> belassen — siehe <a href="#onpremise-warmup">Modell vorwärmen</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Diagnose des LLM-Dienstes</h2>
+  <p>Bleibt unklar, ob das Modell geladen werden konnte, geben die Logs und die Ressourcennutzung des Ollama-Containers Aufschluss:</p>
+  <pre class="cmd-block"><code>docker logs --tail 80 stk_prod_ollama
+docker stats stk_prod_ollama --no-stream</code></pre>
+  <p>Zeigt die Speicherauslastung, dass der Container an eine Grenze stösst, reicht der Arbeitsspeicher für das gewählte Modell nicht aus.</p>
+  <h2>Allgemeine Diagnose</h2>
+  <pre class="cmd-block"><span class="cmd-comment"># Status aller Dienste</span>
+<code>docker compose ps</code>
+
+<span class="cmd-comment"># Logs eines einzelnen Dienstes</span>
+<code>docker compose logs -f &lt;dienstname&gt;</code></pre>
+  <div class="tip"><span class="tip-icon">💡</span>Ergänzend liefert die Anwendung selbst unter <a href="#settings-status"><strong>Global Settings → System Status</strong></a> eine Übersicht über den Zustand der Plattformkomponenten.</div>
+</section>
+
+</div><!-- /content-wrap -->
+</div><!-- /module-onpremise -->
+
 </div>
 </main>
 
@@ -10337,6 +10750,7 @@ const PROJECTS_IDS = new Set(['projects-overview','projects-cards','projects-sea
 const SEARCH_IDS = new Set(['search-overview','search-filters','search-table','search-details','search-cross-project','search-use-cases']);
 const USERS_IDS = new Set(['users-overview','users-list','users-invite','users-edit','users-actions','users-projects','users-use-cases']);
 const TEMPLATES_IDS = new Set(['templates-overview','templates-selection','templates-editor','templates-nodes','templates-methods','templates-config','templates-use-cases']);
+const ONPREMISE_IDS = new Set(['onpremise-overview','onpremise-architecture','onpremise-requirements','onpremise-installation','onpremise-access','onpremise-llm','onpremise-llm-setup','onpremise-warmup','onpremise-config','onpremise-operations','onpremise-troubleshooting']);
 
 let currentModule = 'workflows';
 
@@ -10366,6 +10780,7 @@ function switchModule(module, skipHash) {
   document.getElementById('module-search').style.display = module === 'search' ? '' : 'none';
   document.getElementById('module-users').style.display = module === 'users' ? '' : 'none';
   document.getElementById('module-templates').style.display = module === 'templates' ? '' : 'none';
+  document.getElementById('module-onpremise').style.display = module === 'onpremise' ? '' : 'none';
 
   // Show/hide nav groups
   document.getElementById('nav-workflows').classList.toggle('hidden', module !== 'workflows');
@@ -10385,6 +10800,7 @@ function switchModule(module, skipHash) {
   document.getElementById('nav-search').classList.toggle('hidden', module !== 'search');
   document.getElementById('nav-users').classList.toggle('hidden', module !== 'users');
   document.getElementById('nav-templates').classList.toggle('hidden', module !== 'templates');
+  document.getElementById('nav-onpremise').classList.toggle('hidden', module !== 'onpremise');
 
   // Update tab buttons
   const tabW = document.getElementById('tab-workflows');
@@ -10413,7 +10829,7 @@ function switchModule(module, skipHash) {
   tabPerS.className = 'module-tab' + (module === 'personalsettings' ? ' active-personalsettings' : '');
   const tabExec = document.getElementById('tab-executive');
   tabExec.className = 'module-tab' + (module === 'executive' ? ' active-executive' : '');
-  ['projects','search','users','templates'].forEach(m => {
+  ['projects','search','users','templates','onpremise'].forEach(m => {
     const t = document.getElementById('tab-' + m);
     if (t) t.className = 'module-tab' + (module === m ? ' active-' + m : '');
   });
@@ -10432,7 +10848,8 @@ function switchModule(module, skipHash) {
       settings:'#settings-overview', projectsettings:'#projectsettings-overview',
       personalsettings:'#personalsettings-overview',
       executive:'#executive-overview', projects:'#projects-overview',
-      search:'#search-overview', users:'#users-overview', templates:'#templates-overview' };
+      search:'#search-overview', users:'#users-overview', templates:'#templates-overview',
+      onpremise:'#onpremise-overview' };
     const firstHash = hashMap[module] || '#overview';
     history.pushState(null, '', firstHash);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -10521,6 +10938,9 @@ function routeFromHash() {
   } else if (TESTDATA_IDS.has(hash)) {
     if (currentModule !== 'testdata') switchModule('testdata', true);
     updateActiveNav(hash);
+  } else if (ONPREMISE_IDS.has(hash)) {
+    if (currentModule !== 'onpremise') switchModule('onpremise', true);
+    updateActiveNav(hash);
   } else {
     if (currentModule !== 'workflows') switchModule('workflows', true);
     updateActiveNav(hash);
@@ -10589,6 +11009,7 @@ const MODULE_META = [
   { id: 'search',    label: 'Test Search',          cls: 'mod-mgmt'      },
   { id: 'users',     label: 'User Management',      cls: 'mod-mgmt'      },
   { id: 'templates', label: 'Code Template',        cls: 'mod-mgmt'      },
+  { id: 'onpremise', label: 'On-Premise Stack',     cls: 'mod-onpremise' },
 ];
 
 function getResultTitle(section) {
@@ -10679,7 +11100,8 @@ const MODULE_TO_SECTION = {
   scheduler:'project', codegen:'project', recorder:'project', testdata:'project', projectsettings:'project',
   grid:'settings', personalsettings:'settings', settings:'settings',
   executive:'management', projects:'management', search:'management',
-  users:'management', templates:'management'
+  users:'management', templates:'management',
+  onpremise:'deployment'
 };
 
 function toggleSection(name) {
@@ -10758,6 +11180,7 @@ function buildChatbotIndex() {
     else if (mod.id === 'module-search') modLabel = 'Test Search';
     else if (mod.id === 'module-users') modLabel = 'User Management';
     else if (mod.id === 'module-templates') modLabel = 'Code Template';
+    else if (mod.id === 'module-onpremise') modLabel = 'On-Premise Stack';
     mod.querySelectorAll('.doc-section[id]').forEach(sec => {
       const h1 = sec.querySelector('h1');
       const h2s = Array.from(sec.querySelectorAll('h2')).map(h => h.textContent).join(' ');
@@ -10829,6 +11252,7 @@ function findModuleId(sectionId) {
   if (typeof USERS_IDS !== 'undefined' && USERS_IDS.has(sectionId)) return 'users';
   if (typeof TEMPLATES_IDS !== 'undefined' && TEMPLATES_IDS.has(sectionId)) return 'templates';
   if (typeof TESTDATA_IDS !== 'undefined' && TESTDATA_IDS.has(sectionId)) return 'testdata';
+  if (typeof ONPREMISE_IDS !== 'undefined' && ONPREMISE_IDS.has(sectionId)) return 'onpremise';
   return 'workflows';
 }
 
@@ -10979,6 +11403,7 @@ function escapeHtml(s) {
 <script src="./autemos_en_testdata.js"></script>
 <script src="./autemos_en_projectsettings.js"></script>
 <script src="./autemos_en_personalsettings.js"></script>
+<script src="./autemos_en_onpremise.js"></script>
 <script src="./autemos_en_workflows_1.js"></script>
 <script src="./autemos_en_workflows_2.js"></script>
 <script src="./autemos_en_workflows_3.js"></script>

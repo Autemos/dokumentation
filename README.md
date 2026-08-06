@@ -9,10 +9,10 @@ Static HTML product documentation for the Autemos test automation platform. Bili
 | `autemos.html` | The main documentation file (single-page) |
 | `autemos_favicon.svg` | Favicon |
 | `autemos_bot.png` | "ask Autemos" chatbot avatar |
-| `autemos_en*.js` | English translations (20 files, dynamically loaded) |
+| `autemos_en*.js` | English translations (21 files, dynamically loaded) |
 | `autemos_*` / `Pages_Module_Assets` / `Test_Scheduler_Documentation` (folders) | All module screenshots |
 
-**Total**: 1 HTML + 1 SVG + 1 PNG + 20 JS files + 17 image folders
+**Total**: 1 HTML + 1 SVG + 1 PNG + 21 JS files + 17 image folders
 
 ## 🚀 Deployment
 
@@ -47,10 +47,10 @@ Then open `http://localhost:8080/autemos.html`.
 ## 🌐 Features
 
 - **Bilingual** — DE / EN toggle in header (top-right). State persisted in localStorage.
-- **Sidebar Navigation** — Collapsible groups (Management / Project / Settings). State persisted.
-- **Module Switching** — 16+ modules, each with their own sub-navigation.
+- **Sidebar Navigation** — Collapsible groups (Management / Project / Settings / Deployment). State persisted.
+- **Module Switching** — 18 modules, each with their own sub-navigation.
 - **Cross-module Search** — Magnifier in header searches all modules in both languages.
-- **"ask Autemos" Chatbot** — Floating widget bottom-right. Client-side keyword search across all 198+ sections.
+- **"ask Autemos" Chatbot** — Floating widget bottom-right. Client-side keyword search across all 209 sections.
 - **No external CDN dependencies** for content — only Google Fonts (Inter). Self-contained otherwise.
 
 ## 🛠️ Maintenance
@@ -76,8 +76,8 @@ Modern browsers only (Chrome 105+, Firefox 121+, Safari 15.4+, Edge 105+). Uses 
 
 ## 📊 Stats
 
-- 16+ documented modules
-- 198+ translated sections
+- 18 documented modules
+- 209 translated sections
 - 224+ referenced assets (images, JS files, favicons)
-- ~10,500 lines of HTML (incl. inline CSS / JS)
+- ~11,400 lines of HTML (incl. inline CSS / JS)
 - Single-file deployable
