@@ -1,0 +1,224 @@
+<section class="doc-section" id="jiraxray-overview">
+<span class="section-label">Erste Schritte</span>
+<div class="section-intro"><h1>Jira Xray Integration</h1></div>
+<p>Die Jira Xray Integration verbindet das Testdesign in Jira direkt mit der KI-gestützten Testautomatisierung in Autemos.</p>
+<p>Bestehende Xray Test Cases lassen sich direkt im Autemos <a href="#recorder-overview">Recorder</a> auswählen. Relevante Inhalte wie <strong>manuelle Testschritte, erwartete Ergebnisse und Cucumber-Szenarien</strong> werden nach Autemos übernommen und dienen als Eingabe für die Aufzeichnung.</p>
+<p>Der Recorder arbeitet die importierte Testdefinition Schritt für Schritt ab, während der Fortschritt visuell verfolgt werden kann. Wird der resultierende Test Workflow gespeichert, bleibt er mit dem ursprünglichen Xray Test Case verknüpft.</p>
+<h2>Funktionsumfang</h2>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Test Case auswählen</h3><p>Einen bestehenden Xray Test Case direkt im Recorder auswählen.</p></div>
+  <div class="concept-card"><h3>Testdefinition nutzen</h3><p>Manuelle Testschritte oder Cucumber-Szenarien als Eingabe für die Aufzeichnung verwenden.</p></div>
+  <div class="concept-card"><h3>Automatisch verknüpfen</h3><p>Den gespeicherten Test Workflow automatisch mit dem Xray Test Case verbinden.</p></div>
+  <div class="concept-card"><h3>Kontext anzeigen</h3><p>Zentrale Xray-Metadaten einsehen und den verknüpften Test Case direkt aus dem Workflow öffnen.</p></div>
+</div>
+<div class="warning"><span class="tip-icon">⚠️</span><strong>Die Synchronisation von Test-Run-Ergebnissen mit Jira Xray ist noch nicht verfügbar.</strong> Sie ist für November 2026 geplant und nicht Teil des aktuellen Funktionsumfangs.</div>
+</section>
+
+<section class="doc-section" id="jiraxray-select">
+<span class="section-label">Recorder</span>
+<h1>Xray Test Case im Recorder auswählen</h1>
+<p>Starten Sie eine neue Recorder-Session und öffnen Sie das Panel <strong>Test case</strong>. Suchen und wählen Sie dort den gewünschten Test Case aus dem verbundenen Jira-Xray-Projekt.</p>
+<p>Abhängig vom Xray Test Type importiert Autemos die verfügbare Testdefinition, unter anderem:</p>
+<ul class="feature-list">
+<li>Jira Issue Key und Titel des Test Case</li>
+<li>Beschreibung und relevanter Testkontext</li>
+<li>Manuelle Testschritte, Testdaten und erwartete Ergebnisse</li>
+<li>Cucumber-/Gherkin-Szenarioschritte</li>
+</ul>
+<p>Der Test Case wird damit zur fachlichen Eingabe für die Aufzeichnung. Die Testdefinition muss nicht manuell nach Autemos kopiert werden.</p>
+<div class="screenshot-wrap">
+<img alt="Xray Test Case im Recorder mit manuellen Testschritten" src="./autemos_jiraxray_screenshots/image_1.png"/>
+<div class="screenshot-caption">Xray Test Cases direkt in Autemos auswählen und aufzeichnen.</div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-manual">
+<span class="section-label">Recorder</span>
+<h1>Manuelle Testschritte automatisieren</h1>
+<p>Bei manuellen Xray Test Cases zeigt Autemos die verfügbaren Testschritte in ihrer definierten Reihenfolge an.</p>
+<p>Der AI Recorder arbeitet den Test Schritt für Schritt ab. Während der Aufzeichnung gilt:</p>
+<ul class="feature-list">
+<li>Abgeschlossene Schritte werden visuell markiert</li>
+<li>Der aktuelle Automatisierungsfortschritt bleibt sichtbar</li>
+<li>Offene Schritte lassen sich jederzeit einsehen</li>
+<li>Der AI Chat dokumentiert die Recorder-Aktionen sowie Rückfragen, die eine Eingabe erfordern</li>
+</ul>
+<p>Das schafft Transparenz über den gesamten Automatisierungsprozess und macht nachvollziehbar, wie aus dem ursprünglichen Xray Test Case ein ausführbarer Test Workflow entsteht.</p>
+</section>
+
+<section class="doc-section" id="jiraxray-cucumber">
+<span class="section-label">Recorder</span>
+<h1>Cucumber-Szenarien verwenden</h1>
+<p>Autemos unterstützt auch Xray Test Cases, die als Cucumber-/Gherkin-Szenario beschrieben sind.</p>
+<p>Das Szenario wird im Recorder angezeigt und in seiner ursprünglichen Reihenfolge abgearbeitet, einschliesslich der Schritte:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Schritt</th><th>Bedeutung</th></tr></thead>
+<tbody>
+<tr><td><strong>Given</strong></td><td>Definiert den Ausgangskontext oder die Vorbedingung</td></tr>
+<tr><td><strong>When</strong></td><td>Beschreibt die Benutzeraktion oder das Ereignis</td></tr>
+<tr><td><strong>Then</strong></td><td>Definiert das erwartete Ergebnis</td></tr>
+<tr><td><strong>And</strong></td><td>Ergänzt weiteren Kontext, Aktionen oder Validierungen</td></tr>
+</tbody>
+</table>
+</div>
+<p>Während der Recorder das Szenario automatisiert, werden abgeschlossene Schritte hervorgehoben. Damit lassen sich fachlich lesbare Akzeptanzszenarien unmittelbar als Grundlage für ausführbare Automatisierung nutzen.</p>
+<div class="screenshot-wrap">
+<img alt="Cucumber-Szenario im Recorder mit abgearbeiteten Schritten" src="./autemos_jiraxray_screenshots/image_2.png"/>
+<div class="screenshot-caption">Cucumber-Szenarien importieren und Schritt für Schritt abarbeiten.</div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-progress">
+<span class="section-label">Recorder</span>
+<h1>Visueller Aufzeichnungsfortschritt</h1>
+<p>Der Recorder führt Anwendung, KI-Interaktion und den Kontext des Xray Test Case in einer Ansicht zusammen.</p>
+<p>Während der Aufzeichnung ist nachvollziehbar:</p>
+<ul class="feature-list">
+<li>Die aktuell automatisierte Anwendung</li>
+<li>Aufgezeichnete Browser-, Mobile- oder API-Aktionen</li>
+<li>Die Testschritte beziehungsweise das Cucumber-Szenario</li>
+<li>Die Anzahl abgeschlossener und verbleibender Schritte</li>
+<li>KI-Meldungen, Rückfragen und der aktuelle Verarbeitungsstatus</li>
+</ul>
+<p>Dadurch bleibt der Automatisierungsprozess verständlich, und es kann eingegriffen werden, sobald zusätzliche fachliche Informationen benötigt werden.</p>
+</section>
+
+<section class="doc-section" id="jiraxray-link">
+<span class="section-label">Verknüpfung</span>
+<h1>Test Workflow mit Jira Xray verknüpfen</h1>
+<p>Beim Speichern der Aufzeichnung erstellt Autemos den Test Workflow und verknüpft ihn automatisch mit dem ausgewählten Xray Test Case.</p>
+<p>Die Verknüpfung erhält die Nachvollziehbarkeit zwischen der fachlichen Testdefinition in Jira und ihrer technischen Automatisierung in Autemos. Ein zusätzliches manuelles Mapping nach der Aufzeichnung ist nicht erforderlich.</p>
+<p>Die Verknüpfung ist direkt im Test Workflow sichtbar und lässt sich über die Aktion <strong>Unlink</strong> wieder entfernen, wenn der Workflow nicht mehr mit dem Test Case verbunden sein soll.</p>
+<div class="screenshot-wrap">
+<img alt="Verknüpfter Xray-Kontext im Workflow-Editor" src="./autemos_jiraxray_screenshots/image_4.png"/>
+<div class="screenshot-caption">Verknüpfter Xray-Kontext im Workflow-Editor.</div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-context">
+<span class="section-label">Verknüpfung</span>
+<h1>Verfügbarer Xray-Kontext</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+  <div style="flex:1;min-width:0">
+    <p>Das Xray-Panel im Test Workflow zeigt zentrale Informationen des verknüpften Test Case. Je nach verfügbaren Jira-Daten kann das umfassen:</p>
+    <div class="param-table-wrap">
+    <table class="param-table">
+    <thead><tr><th>Information</th><th>Beschreibung</th></tr></thead>
+    <tbody>
+    <tr><td><strong>Issue Key</strong></td><td>Eindeutiger Bezeichner des Xray Test Case</td></tr>
+    <tr><td><strong>Title</strong></td><td>Name des verknüpften Test Case</td></tr>
+    <tr><td><strong>Test Type</strong></td><td>Xray Test Type, zum Beispiel Manual oder Cucumber</td></tr>
+    <tr><td><strong>Status</strong></td><td>Aktueller Jira-Workflow-Status</td></tr>
+    <tr><td><strong>Assignee</strong></td><td>In Jira zugewiesene Person</td></tr>
+    <tr><td><strong>Priority</strong></td><td>In Jira konfigurierte Priorität</td></tr>
+    <tr><td><strong>Description</strong></td><td>Fachliche Beschreibung oder Szenariokontext</td></tr>
+    <tr><td><strong>Linked on</strong></td><td>Zeitpunkt, zu dem die Verknüpfung erstellt wurde</td></tr>
+    </tbody>
+    </table>
+    </div>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 300px;margin:0">
+    <img alt="Xray-Panel im Test Workflow" src="./autemos_jiraxray_screenshots/image_3.png"/>
+    <div class="screenshot-caption">Jira-Xray-Informationen im Test Workflow.</div>
+  </div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-open">
+<span class="section-label">Verknüpfung</span>
+<h1>In Jira Xray öffnen</h1>
+<p>Der verknüpfte Issue Key bietet direkten Zugriff auf den ursprünglichen Test Case in Jira Xray. Von der Automatisierung in Autemos gelangt man so unmittelbar zum fachlichen Test Case, ohne ihn in Jira erneut suchen zu müssen.</p>
+</section>
+
+<section class="doc-section" id="jiraxray-scope">
+<span class="section-label">Umfang</span>
+<h1>Aktueller Funktionsumfang</h1>
+<p>Die folgende Übersicht zeigt, welche Funktionen heute verfügbar sind:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Funktion</th><th>Verfügbarkeit</th></tr></thead>
+<tbody>
+<tr><td>Xray Test Cases im Recorder auswählen</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Manuelle Testschritte und erwartete Ergebnisse importieren</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Cucumber-/Gherkin-Szenarien importieren</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Visueller Schritt-für-Schritt-Fortschritt</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Gespeicherten Test Workflow automatisch verknüpfen</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Xray-Metadaten im Test Workflow anzeigen</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Test Case direkt in Jira Xray öffnen</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Test-Run-Ergebnisse mit Jira Xray synchronisieren</td><td><span class="meta-pill pill-no">Geplant für November 2026</span></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-planned">
+<span class="section-label">Umfang</span>
+<h1>Geplant: Test-Run-Synchronisation</h1>
+<div class="warning"><span class="tip-icon">⚠️</span><strong>Diese Funktion ist noch nicht verfügbar.</strong> Der folgende Screenshot ist eine Produktvorschau und zeigt keine heute nutzbare Funktionalität. Die Synchronisation ist für November 2026 geplant.</div>
+<p>Die geplante Erweiterung soll einen Autemos Test Run mit dem entsprechenden Ausführungskontext in Jira Xray verbinden und Ausführungsergebnisse in beiden Systemen verfügbar machen.</p>
+<h2>Geplanter Umfang</h2>
+<ul class="feature-list">
+<li>Einen Autemos Test Run mit dem relevanten Jira-Xray-Ausführungskontext verknüpfen und direkte Navigation zwischen beiden Systemen ermöglichen</li>
+<li>Den Gesamtstatus des Test Runs sowie verfügbare Ergebnisse einzelner Testschritte synchronisieren</li>
+<li>Den Synchronisationsstatus und verständliche Fehlerinformationen in Autemos anzeigen</li>
+</ul>
+<div class="screenshot-wrap">
+<img alt="Produktvorschau der geplanten Test-Run-Synchronisation" src="./autemos_jiraxray_screenshots/image_5.png"/>
+<div class="screenshot-caption">Vorschau — Synchronisation von Test-Run-Ergebnissen, geplant für November 2026. Nicht Teil des aktuellen Funktionsumfangs.</div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-use-cases">
+<span class="section-label">Anwendung</span>
+<h1>Typische Anwendungsfälle</h1>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Bestehende manuelle Testfälle automatisieren</h3><p>Vorhandene Xray-Testschritte als Grundlage für einen automatisierten Test Workflow nutzen.</p></div>
+  <div class="concept-card"><h3>Cucumber-Akzeptanztests automatisieren</h3><p>Fachlich lesbare Given-When-Then-Szenarien direkt im Recorder automatisieren.</p></div>
+  <div class="concept-card"><h3>Durchgängige Nachvollziehbarkeit</h3><p>Die Automatisierung dauerhaft mit ihrem ursprünglichen fachlichen Test Case verbunden halten.</p></div>
+  <div class="concept-card"><h3>Zusammenarbeit von Fachbereich und Automatisierung</h3><p>Fachliche Definitionen in Xray pflegen, ausführbare Workflows in Autemos.</p></div>
+  <div class="concept-card"><h3>Integriertes Ausführungsreporting (geplant)</h3><p>Autemos-Ausführungsergebnisse im Reporting-Kontext von Jira Xray verfügbar machen. Geplant für November 2026.</p></div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-best-practices">
+<span class="section-label">Anwendung</span>
+<h1>Best Practices</h1>
+<ul class="best-practices">
+<li>Den Jira Xray Test Case als fachliche Quelle der Testdefinition beibehalten</li>
+<li>Klare, ausführbare Testschritte mit expliziten Aktionen und erwarteten Ergebnissen schreiben</li>
+<li>Cucumber-Szenarien verwenden, wenn fachlich lesbare Akzeptanzkriterien gefordert sind</li>
+<li>Die importierten Schritte vor dem Start der Aufzeichnung prüfen</li>
+<li>Den visuellen Fortschritt beobachten und auf Rückfragen des Recorders reagieren, wenn fachlicher Kontext fehlt</li>
+<li>Den direkten Jira-Link nutzen, um den ursprünglichen Test Case zu prüfen oder zu pflegen</li>
+<li>Einen Workflow nur dann entkoppeln, wenn die Beziehung zum Xray Test Case nicht mehr gültig ist</li>
+</ul>
+</section>
+
+<section class="doc-section" id="jiraxray-related">
+<span class="section-label">Anwendung</span>
+<h1>Verwandte Module</h1>
+<p>Die Jira Xray Integration ist Teil des grösseren Autemos-Ökosystems.</p>
+<div class="module-grid">
+<div class="module-card">
+<strong>Recorder</strong>
+<span>Automatisierte Workflows aus Xray Test Cases erstellen</span>
+</div>
+<div class="module-card">
+<strong>Test Workflows</strong>
+<span>Die resultierende Automatisierung pflegen und ausführen</span>
+</div>
+<div class="module-card">
+<strong>Test Runs</strong>
+<span>Ergebnisse der Workflow-Ausführung einsehen</span>
+</div>
+<div class="module-card">
+<strong>Projects / Jira Configuration</strong>
+<span>Zugriff auf Jira und Xray konfigurieren</span>
+</div>
+<div class="module-card">
+<strong>Collections</strong>
+<span>Zusammengehörige Test Workflows für Ausführung und Reporting organisieren</span>
+</div>
+</div>
+</section>

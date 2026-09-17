@@ -1,4 +1,3 @@
-// Autemos Documentation — Test Data Management English Translations
 window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   "testdata-overview": `
   <span class="section-label">Getting Started</span>

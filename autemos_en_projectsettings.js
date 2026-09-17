@@ -1,4 +1,3 @@
-// Autemos Documentation — Project Settings English Translations
 window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   "projectsettings-overview": `
   <span class="section-label">Getting Started</span>

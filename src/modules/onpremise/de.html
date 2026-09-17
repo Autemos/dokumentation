@@ -1,0 +1,362 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="onpremise-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>On-Premise Stack</h1>
+  <p>Autemos lässt sich vollständig <strong>im eigenen Haus betreiben</strong> — auf einem einzelnen Notebook, auf einem Server im Firmennetz oder in einer streng abgeschotteten Umgebung ohne Internetzugang. Der komplette Stack läuft als Docker-Compose-Verbund: Anwendung, Datenbank, Browser-Grid und optional ein lokales Sprachmodell. Es besteht <strong>keine Abhängigkeit zu externen Diensten</strong>.</p>
+  <h2>Betriebsmodelle</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Einzelplatz</h3><p>Der gesamte Stack läuft auf einem Notebook. Zugriff über <code>localhost</code>. Ideal für Evaluierung, Schulungen und Demos.</p></div>
+    <div class="concept-card"><h3>Server im Firmennetz</h3><p>Der Stack läuft zentral auf einem Server, mehrere Anwender greifen per Browser zu. Erfordert das Anpassen von zwei URLs in der Konfiguration.</p></div>
+    <div class="concept-card"><h3>Air-Gap / Offline</h3><p>Installation ohne jeden Internetzugang aus einem vorbereiteten Bundle. Alle Container-Images und das LLM-Modell sind darin bereits enthalten.</p></div>
+    <div class="concept-card"><h3>Hybrid-LLM</h3><p>Der Stack läuft lokal, die KI-Funktionen nutzen einen bereits vorhandenen LLM-Dienst — lokal, im Netz oder als Cloud-Endpoint.</p></div>
+  </div>
+  <h2>Lieferumfang</h2>
+  <p>Die Auslieferung erfolgt als Ordner <code>autemos-offline/</code>, der alles Nötige mitbringt:</p>
+  <ul class="feature-list">
+    <li>Alle Container-Images als Archivdateien im Unterordner <code>images/</code></li>
+    <li>Die fertige <code>docker-compose.yml</code> sowie die Konfigurationsdatei <code>.env</code> mit bereits generierten Passwörtern</li>
+    <li>Das lokale Sprachmodell im Unterordner <code>ollama-data/</code></li>
+    <li>Hilfsskripte zum Laden der Images und zum Vorwärmen des Modells — jeweils für Linux/macOS und für Windows</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">💡</span>Da alle Images mitgeliefert werden, benötigt das Zielsystem <strong>zu keinem Zeitpunkt</strong> eine Verbindung zu einer Container-Registry oder zum Internet.</div>
+</section>
+
+<!-- ARCHITECTURE -->
+<section id="onpremise-architecture" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Architektur</h1>
+  <p>Der Stack besteht aus mehreren Containern, die untereinander über ein internes Docker-Netzwerk kommunizieren. Nach aussen sind nur wenige Ports veröffentlicht.</p>
+  <h2>Komponenten</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Komponente</th><th>Aufgabe</th><th>Port (Host)</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Frontend</strong></td><td>Weboberfläche von Autemos. Dient zugleich als Einstiegspunkt und leitet Anfragen an Backend und Worker weiter.</td><td><code>3000</code></td></tr>
+        <tr><td><strong>Backend</strong></td><td>Zentrale Anwendungslogik: Projekte, Workflows, Testläufe, Einstellungen, LLM-Anbindung.</td><td>intern</td></tr>
+        <tr><td><strong>Java-Worker</strong></td><td>Führt die Testworkflows aus und steuert die Browser im Grid.</td><td>über <code>/worker</code></td></tr>
+        <tr><td><strong>PostgreSQL</strong></td><td>Datenbank für alle Projekt-, Test- und Konfigurationsdaten. Liegt in einem Docker-Volume.</td><td>intern</td></tr>
+        <tr><td><strong>Selenium Grid Hub</strong></td><td>Verteilt Testsitzungen auf die verfügbaren Browser-Nodes.</td><td><code>4444</code></td></tr>
+        <tr><td><strong>Chrome-Nodes</strong></td><td>Zwei statische Browser-Nodes für die Testausführung.</td><td>über den Hub</td></tr>
+        <tr><td><strong>Ollama</strong></td><td>Lokaler LLM-Dienst für KI-Funktionen wie Feldgenerierung, AI-Recorder und Auto-Healing.</td><td><code>11434</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Interne Namen und externe Adressen</h2>
+  <p>Innerhalb des Compose-Verbunds erreichen sich die Container über ihren <strong>Dienstnamen</strong>, nicht über <code>localhost</code>. Das ist die häufigste Fehlerquelle bei der Konfiguration.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Blickwinkel</th><th>Adresse für Ollama</th></tr></thead>
+      <tbody>
+        <tr><td>Aus einem Container heraus (z. B. Backend)</td><td><code>http://ollama:11434</code></td></tr>
+        <tr><td>Vom Host-System / aus dem Browser</td><td><code>http://localhost:11434</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning"><span class="tip-icon">⚠️</span><strong>localhost bedeutet im Container etwas anderes.</strong> Trägt man in einer Einstellung, die vom Backend ausgewertet wird, <code>localhost</code> ein, zeigt das auf den Backend-Container selbst — nicht auf den Host und nicht auf einen anderen Dienst.</div>
+  <h2>Skalierung des Grids</h2>
+  <p>Die beiden mitgelieferten Chrome-Nodes laufen dauerhaft und unabhängig. Zusätzlich kann Autemos bei Bedarf weitere Nodes dynamisch starten; dafür wird der Docker-Socket verwendet. Steht dieser nicht zur Verfügung, bleiben die statischen Nodes davon unberührt und die Testausführung funktioniert weiterhin.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Der Status des Grids inklusive aller Nodes und laufender Sessions ist in der Anwendung unter <a href="#grid-overview"><strong>Grid Dashboard</strong></a> einsehbar.</div>
+</section>
+
+<!-- REQUIREMENTS -->
+<section id="onpremise-requirements" class="doc-section">
+  <span class="section-label">Installation</span>
+  <h1>Systemvoraussetzungen</h1>
+  <p>Der Stack stellt keine besonderen Anforderungen an das Betriebssystem — entscheidend sind Docker, die Prozessorarchitektur und ausreichend Arbeitsspeicher für das gewünschte Sprachmodell.</p>
+  <h2>Basis</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Anforderung</th><th>Details</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Docker</strong></td><td>Docker Desktop oder Docker Engine, installiert und gestartet — inklusive <strong>Docker Compose v2</strong>.</td></tr>
+        <tr><td><strong>Architektur</strong></td><td><strong>x86-64 / amd64</strong>. Die Images sind für amd64 gebaut.</td></tr>
+        <tr><td><strong>Speicherplatz</strong></td><td>Rund <strong>30 GB</strong> frei für die geladenen Images und die Anwendungsdaten.</td></tr>
+        <tr><td><strong>Arbeitsspeicher</strong></td><td>Abhängig vom Sprachmodell — siehe unten. Ohne lokales LLM deutlich weniger.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning"><span class="tip-icon">⚠️</span><strong>Apple Silicon wird nicht unterstützt.</strong> Der Stack läuft ausschliesslich auf amd64-Systemen, nicht auf arm64-Maschinen wie Macs mit M-Prozessor.</div>
+  <h2>Arbeitsspeicher für das lokale Sprachmodell</h2>
+  <p>Wird das mitgelieferte Modell <code>qwen3-coder:30b</code> mit 32k Kontext auf der CPU betrieben, sind <strong>rund 24 GB RAM oder mehr</strong> erforderlich. Eine GPU wird empfohlen, ist aber nicht zwingend.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Kleinere Modelle wie <code>qwen2.5-coder:7b</code> sind spürbar schneller und genügsamer. Für den <a href="#recorder-ai"><strong>AI-Recorder</strong></a> sind sie allerdings <strong>zu schwach</strong> — dort liefert erst ein grösseres Modell brauchbare Ergebnisse.</div>
+  <p>Alternativ lässt sich das lokale Modell ganz weglassen und stattdessen ein bereits vorhandener LLM-Dienst anbinden. Der RAM-Bedarf des Stacks sinkt dann erheblich — siehe <a href="#onpremise-llm">OpenAI-kompatible Schnittstelle</a>.</p>
+</section>
+
+<!-- INSTALLATION -->
+<section id="onpremise-installation" class="doc-section">
+  <span class="section-label">Installation</span>
+  <h1>Installation</h1>
+  <p>Die Installation besteht aus drei Schritten: Bundle auf das Zielsystem bringen, Images in Docker laden, Stack starten.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Bundle auf das Zielsystem kopieren</h3>
+        <p>Den kompletten Ordner <code>autemos-offline/</code> per USB-Datenträger oder Netzwerkfreigabe auf den Zielrechner übertragen, anschliessend eine Konsole <strong>in diesem Ordner</strong> öffnen.</p>
+        <pre class="cmd-block"><code>cd autemos-offline</code></pre>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>Container-Images laden</h3>
+        <p>Das mitgelieferte Skript importiert alle Archivdateien aus <code>images/</code> in die lokale Docker-Installation.</p>
+        <pre class="cmd-block"><span class="cmd-comment"># Linux / macOS / Git Bash</span>
+<code>./load-images.sh</code>
+
+<span class="cmd-comment"># Windows PowerShell</span>
+<code>.\load-images.ps1</code></pre>
+        <p>Alternativ lassen sich die Archive einzeln laden: <code>docker load -i images/&lt;datei&gt;.tar</code> für jede Datei im Ordner.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Stack starten</h3>
+        <p>Die danebenliegende Datei <code>.env</code> wird automatisch eingelesen. Beim <strong>ersten</strong> Start dauert es einen Moment, bis alle Dienste bereit sind — es laufen Datenbankmigrationen und Healthchecks.</p>
+        <pre class="cmd-block"><code>docker compose up -d</code></pre>
+        <p>Soll der Stack auf einem Server statt lokal laufen, müssen vorher zwei URLs angepasst werden — siehe <a href="#onpremise-access">Zugriff &amp; URLs</a>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Status prüfen</h3>
+        <p>Alle Dienste sollten den Status <code>running</code> bzw. <code>healthy</code> erreichen.</p>
+        <pre class="cmd-block"><code>docker compose ps
+docker compose logs -f</code></pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ACCESS -->
+<section id="onpremise-access" class="doc-section">
+  <span class="section-label">Installation</span>
+  <h1>Zugriff &amp; URLs</h1>
+  <p>Nach dem Start sind die folgenden Oberflächen erreichbar:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Dienst</th><th>URL</th><th>Zweck</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Autemos UI</strong></td><td><code>http://localhost:3000</code></td><td>Die Anwendung selbst</td></tr>
+        <tr><td><strong>Selenium Grid</strong></td><td><code>http://localhost:4444/ui</code></td><td>Grid-Konsole zur Kontrolle der Browser-Nodes</td></tr>
+        <tr><td><strong>Ollama</strong></td><td><code>http://localhost:11434</code></td><td>Endpoint des lokalen Sprachmodells</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Erstanmeldung</h2>
+  <p>Die Anmeldung erfolgt mit dem vorkonfigurierten Administratorkonto, Standard-Benutzername <code>admin</code>.</p>
+  <div class="warning"><span class="tip-icon">⚠️</span><strong>Passwort unmittelbar nach der ersten Anmeldung ändern.</strong> Das ausgelieferte Standardkonto ist bei jeder Installation identisch aufgebaut und darf im laufenden Betrieb nicht mit dem Auslieferungspasswort bestehen bleiben.</div>
+  <p>Weitere Konten werden anschliessend regulär über das Modul <a href="#users-overview"><strong>Users</strong></a> angelegt.</p>
+  <h2>Betrieb auf einem Server</h2>
+  <p>Läuft der Stack nicht lokal, sondern auf einem Server, auf den andere Rechner per Browser zugreifen, müssen in der Datei <code>.env</code> <strong>vor dem ersten Start</strong> zwei Einträge von <code>localhost</code> auf den Servernamen oder die Server-IP umgestellt werden:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Eintrag</th><th>Bedeutung</th><th>Beispiel</th></tr></thead>
+      <tbody>
+        <tr><td><code>FRONTEND_BASE_URL</code></td><td>Adresse, unter der Anwender die Oberfläche aufrufen</td><td><code>http://192.168.1.50:3000</code></td></tr>
+        <tr><td><code>WORKER_EXTERNAL_URL</code></td><td>Adresse, unter der der Worker von aussen erreichbar ist</td><td><code>http://192.168.1.50:3000/worker</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><span class="tip-icon">💡</span>Wird die Anpassung nachgeholt, genügt es, die Werte in der <code>.env</code> zu ändern und <code>docker compose up -d</code> erneut auszuführen.</div>
+</section>
+
+<!-- LLM: OPENAI-COMPATIBLE -->
+<section id="onpremise-llm" class="doc-section">
+  <span class="section-label">LLM-Anbindung</span>
+  <h1>OpenAI-kompatible Schnittstelle</h1>
+  <p>Autemos spricht Sprachmodelle nicht über proprietäre Protokolle an, sondern über eine <strong>OpenAI-kompatible Schnittstelle</strong>. Anbindbar ist damit jeder Dienst, der dieses verbreitete API-Schema bedient — unabhängig davon, ob er im Stack mitläuft, im Firmennetz steht oder als Cloud-Endpoint bereitgestellt wird.</p>
+  <h2>Mögliche Gegenstellen</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Ollama im Stack</h3><p>Der mitgelieferte Container. Keine weitere Infrastruktur nötig, keine Daten verlassen das System.</p></div>
+    <div class="concept-card"><h3>Ollama als eigener Dienst</h3><p>Eine bereits vorhandene Ollama-Installation auf dem Host oder auf einem anderen Rechner im Netz.</p></div>
+    <div class="concept-card"><h3>Firmeninternes LLM-Gateway</h3><p>Ein zentral betriebener Dienst mit OpenAI-kompatiblem Endpoint, an dem sich mehrere Anwendungen bedienen.</p></div>
+    <div class="concept-card"><h3>Cloud-Endpoint</h3><p>Zum Beispiel Azure AI Foundry oder ein vergleichbarer Anbieter. Sinnvoll, wenn keine lokale Rechenleistung bereitsteht.</p></div>
+  </div>
+  <h2>Welche URL gehört ins Feld „LLM Server URL"?</h2>
+  <p>Die einzutragende Adresse hängt davon ab, <strong>wo der Dienst läuft</strong> — und zwar aus Sicht des Backends, das die Anfragen stellt.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Betriebsart</th><th>LLM Server URL</th><th>Hinweis</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Ollama im mitgelieferten Stack</strong></td><td><code>http://ollama:11434</code></td><td>Interner Dienstname des Containers</td></tr>
+        <tr><td><strong>Ollama als lokaler Dienst</strong>, ohne Container-Trennung</td><td><code>http://localhost:11434</code></td><td>Nur korrekt, wenn Dienst und Backend denselben Netzwerkkontext teilen</td></tr>
+        <tr><td><strong>Ollama auf einem anderen Rechner</strong></td><td><code>http://&lt;hostname-oder-ip&gt;:11434</code></td><td>Port muss von aussen erreichbar sein</td></tr>
+        <tr><td><strong>Cloud- oder Gateway-Endpoint</strong></td><td>Vollständige Basis-URL des Anbieters, z. B. <code>https://api.openai.com/v1</code></td><td>Adresse und Pfad exakt so übernehmen, wie vom Anbieter dokumentiert</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning"><span class="tip-icon">⚠️</span>Läuft Ollama <strong>im Compose-Stack</strong>, ist <code>http://localhost:11434</code> an dieser Stelle <strong>falsch</strong>. Aus Sicht des Backend-Containers verweist <code>localhost</code> auf den Container selbst. Korrekt ist hier ausschliesslich der Dienstname <code>http://ollama:11434</code>.</div>
+  <h2>API-Key</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Gegenstelle</th><th>API-Key</th></tr></thead>
+      <tbody>
+        <tr><td>Lokales Ollama</td><td>Feld leer lassen — es findet keine Authentifizierung statt</td></tr>
+        <tr><td>Gateway oder Cloud-Endpoint</td><td>Vom Anbieter ausgestellter Schlüssel. Wird verschlüsselt im Backend abgelegt und in der Oberfläche nicht im Klartext angezeigt</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><span class="tip-icon">💡</span>Alle weiteren Parameter der LLM-Anbindung — Temperature, Max Tokens, Rate Limits und Kostengrenzen — sind unter <a href="#settings-llm"><strong>Global Settings → LLM Integration</strong></a> beschrieben.</div>
+</section>
+
+<!-- LLM SETUP -->
+<section id="onpremise-llm-setup" class="doc-section">
+  <span class="section-label">LLM-Anbindung</span>
+  <h1>Einrichtung in der UI</h1>
+  <p>Das mitgelieferte Modell liegt bereits im Ordner <code>ollama-data/</code> und muss nicht heruntergeladen werden. Die Verbindung wird einmalig in der Oberfläche hergestellt.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <h3>Einstellungen öffnen</h3>
+        <p>In der Anwendung zu <strong>Global Settings → LLM Integration</strong> wechseln.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <h3>LLM global aktivieren</h3>
+        <p>Die Option <strong>„Enable LLM for field generation globally"</strong> einschalten.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <h3>Provider wählen</h3>
+        <p>Als Provider <code>Ollama / OpenAI-compatible</code> auswählen.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <h3>Server-URL eintragen</h3>
+        <p>Bei Betrieb im mitgelieferten Stack: <code>http://ollama:11434</code>. Für abweichende Betriebsarten siehe <a href="#onpremise-llm">OpenAI-kompatible Schnittstelle</a>.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">5</div>
+      <div class="step-content">
+        <h3>Modell auswählen</h3>
+        <p>Auf <strong>„Load models"</strong> klicken und aus der Liste <code>qwen3-coder:30b</code> wählen. Den API-Key leer lassen.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">6</div>
+      <div class="step-content">
+        <h3>Speichern und prüfen</h3>
+        <p>Mit <strong>Save</strong> übernehmen, anschliessend <strong>Test Connection</strong> ausführen. Die Rückmeldung sollte positiv ausfallen.</p>
+      </div>
+    </div>
+  </div>
+  <div class="tip"><span class="tip-icon">💡</span>Vor dem ersten produktiven Aufruf sollte das Modell einmal vorgewärmt werden — siehe <a href="#onpremise-warmup">Modell vorwärmen</a>. Andernfalls kann der erste Aufruf in eine Zeitüberschreitung laufen.</div>
+</section>
+
+<!-- WARMUP -->
+<section id="onpremise-warmup" class="doc-section">
+  <span class="section-label">LLM-Anbindung</span>
+  <h1>Modell vorwärmen</h1>
+  <p>Beim <strong>ersten</strong> Aufruf lädt Ollama das Modell von der Festplatte in den Arbeitsspeicher. Auf der CPU kann das bei einem grossen Modell wie <code>qwen3-coder:30b</code> mehrere Minuten dauern. Damit der erste echte Aufruf aus der Anwendung nicht in eine Zeitüberschreitung läuft, wird das Modell einmal gezielt vorgewärmt.</p>
+  <pre class="cmd-block"><span class="cmd-comment"># Linux / macOS / Git Bash</span>
+<code>./warmup-ollama.sh</code>
+
+<span class="cmd-comment"># Windows PowerShell</span>
+<code>.\warmup-ollama.ps1</code>
+
+<span class="cmd-comment"># Falls die Ausführungsrichtlinie das Skript blockiert:</span>
+<code>powershell -ExecutionPolicy Bypass -File .\warmup-ollama.ps1</code></pre>
+  <p>Das Skript wartet, bis das Modell vollständig geladen ist, gibt die benötigte Dauer aus und prüft abschliessend, dass das Modell tatsächlich im Speicher liegt. Ein <strong>zweiter</strong> Lauf sollte nur noch wenige Sekunden benötigen — dann ist das Modell warm.</p>
+  <h2>Warum das Modell geladen bleibt</h2>
+  <p>Ohne Gegenmassnahme entlädt Ollama ein Modell nach etwa fünf Minuten ohne Anfragen wieder aus dem Speicher; der nächste Aufruf wäre erneut kalt. Im mitgelieferten Stack ist deshalb <code>OLLAMA_KEEP_ALIVE=-1</code> gesetzt — das Modell bleibt nach dem ersten Laden dauerhaft geladen.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Der Wert lässt sich in der <code>.env</code> überschreiben, etwa auf <code>OLLAMA_KEEP_ALIVE=24h</code>, wenn der Speicher nach längerer Inaktivität wieder freigegeben werden soll.</div>
+</section>
+
+<!-- CONFIG -->
+<section id="onpremise-config" class="doc-section">
+  <span class="section-label">Betrieb</span>
+  <h1>Konfiguration &amp; Secrets</h1>
+  <p>Sämtliche Betriebsparameter des Stacks stehen in der Datei <code>.env</code> neben der <code>docker-compose.yml</code>. Sie wird beim Start automatisch eingelesen. Nach einer Änderung genügt ein erneutes <code>docker compose up -d</code>.</p>
+  <h2>Zugangsdaten</h2>
+  <p>Die ausgelieferte <code>.env</code> enthält bereits zufällig generierte Werte für die folgenden Einträge:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Eintrag</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td><code>POSTGRES_PASSWORD</code></td><td>Passwort der Datenbank</td></tr>
+        <tr><td><code>JWT_SECRET</code></td><td>Schlüssel zur Signatur der Anmelde-Tokens</td></tr>
+        <tr><td><code>BACKEND_SERVICE_PASS</code></td><td>Passwort für die interne Dienstkommunikation</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning"><span class="tip-icon">⚠️</span>Für einen produktiven Einsatz sollten diese Werte durch eigene ersetzt und der Stack anschliessend neu gestartet werden. Die <code>.env</code> ist entsprechend zu schützen — sie enthält alle Zugangsdaten im Klartext.</div>
+  <h2>Ports</h2>
+  <p>Sind Ports auf dem Zielsystem bereits belegt, lassen sich die veröffentlichten Ports in der <code>.env</code> anpassen — etwa <code>FRONTEND_PORT</code> oder <code>GRID_HUB_PORT</code>. Danach den Stack neu starten.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Wird <code>FRONTEND_PORT</code> geändert, müssen <code>FRONTEND_BASE_URL</code> und <code>WORKER_EXTERNAL_URL</code> passend nachgezogen werden.</div>
+  <h2>GPU-Nutzung</h2>
+  <p>Standardmässig rechnet Ollama auf der CPU. Steht auf dem Zielsystem eine NVIDIA-GPU zur Verfügung, lässt sich die Inferenz deutlich beschleunigen. Dazu wird das <strong>NVIDIA Container Toolkit</strong> auf dem Host installiert und beim Dienst <code>ollama</code> in der <code>docker-compose.yml</code> eine GPU-Reservierung ergänzt.</p>
+  <h2>Zeitlimit für LLM-Anfragen</h2>
+  <p>Das Zeitlimit für Anfragen an das Sprachmodell steht standardmässig auf <strong>180 Sekunden</strong> — ein Wert, der auch bei CPU-Betrieb tragfähig ist. Benötigt ein grosses Modell auch im warmen Zustand länger, lässt sich der Wert unter <a href="#settings-llm"><strong>Global Settings → LLM Integration</strong></a> erhöhen.</p>
+  <h2>Anderes Sprachmodell</h2>
+  <p>Welches Modell im Bundle enthalten ist, wird <strong>bei dessen Erstellung</strong> festgelegt und lässt sich auf einem Offline-System nicht nachträglich austauschen — dafür wäre ein Download erforderlich. Wird ein kleineres oder grösseres Modell benötigt, ist ein entsprechend erstelltes Bundle anzufordern.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Besteht auf dem Zielsystem doch eine Netzwerkverbindung zu einem LLM-Dienst, lässt sich das mitgelieferte Modell umgehen und stattdessen ein externer Endpoint anbinden — siehe <a href="#onpremise-llm">OpenAI-kompatible Schnittstelle</a>.</div>
+</section>
+
+<!-- OPERATIONS -->
+<section id="onpremise-operations" class="doc-section">
+  <span class="section-label">Betrieb</span>
+  <h1>Betrieb</h1>
+  <p>Der laufende Betrieb erfolgt vollständig über Docker Compose aus dem Bundle-Ordner heraus.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Befehl</th><th>Wirkung</th></tr></thead>
+      <tbody>
+        <tr><td><code>docker compose up -d</code></td><td>Stack starten bzw. nach Konfigurationsänderungen neu anwenden</td></tr>
+        <tr><td><code>docker compose down</code></td><td>Stack stoppen — <strong>alle Daten bleiben erhalten</strong></td></tr>
+        <tr><td><code>docker compose ps</code></td><td>Status aller Dienste anzeigen</td></tr>
+        <tr><td><code>docker compose logs -f</code></td><td>Logs fortlaufend mitlesen</td></tr>
+        <tr><td><code>docker compose down -v</code></td><td><strong>Alles löschen</strong>, einschliesslich des Datenbank-Volumes</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning"><span class="tip-icon">⚠️</span><code>docker compose down -v</code> entfernt das Datenbank-Volume und damit <strong>sämtliche Projekte, Workflows und Testergebnisse unwiderruflich</strong>. Zum normalen Stoppen ist <code>docker compose down</code> ohne <code>-v</code> zu verwenden.</div>
+  <h2>Datenhaltung</h2>
+  <p>Alle Anwendungsdaten liegen in einem Docker-Volume und überstehen Stoppen, Starten und Neustarts des Hosts. Ein Backup des Stacks bedeutet daher im Wesentlichen ein Backup dieses Volumes zuzüglich der Datei <code>.env</code>.</p>
+</section>
+
+<!-- TROUBLESHOOTING -->
+<section id="onpremise-troubleshooting" class="doc-section">
+  <span class="section-label">Betrieb</span>
+  <h1>Troubleshooting</h1>
+  <p>Die folgenden Situationen treten bei der Inbetriebnahme am häufigsten auf.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Symptom</th><th>Ursache</th><th>Abhilfe</th></tr></thead>
+      <tbody>
+        <tr><td>Vorwärmen läuft in eine Zeitüberschreitung, das Modell erscheint nicht als geladen</td><td>Zu wenig freier Arbeitsspeicher auf dem Host</td><td>Speicherbedarf prüfen (siehe unten). Anwendungen schliessen oder ein Bundle mit kleinerem Modell verwenden</td></tr>
+        <tr><td><strong>Test Connection</strong> in der LLM-Konfiguration schlägt fehl</td><td>Falsche Server-URL — meist <code>localhost</code> statt Dienstname</td><td>URL gemäss <a href="#onpremise-llm">Betriebsart</a> korrigieren, im Stack also <code>http://ollama:11434</code></td></tr>
+        <tr><td>Stack startet nicht, Portkonflikt gemeldet</td><td>Ports 3000, 4444 oder 11434 bereits belegt</td><td>Ports in der <code>.env</code> ändern und Stack neu starten</td></tr>
+        <tr><td>Oberfläche vom Arbeitsplatz aus nicht erreichbar</td><td>Der Stack läuft auf einem Server, die URLs stehen noch auf <code>localhost</code></td><td><code>FRONTEND_BASE_URL</code> und <code>WORKER_EXTERNAL_URL</code> anpassen — siehe <a href="#onpremise-access">Zugriff &amp; URLs</a></td></tr>
+        <tr><td>Images lassen sich nicht laden oder Container starten nicht</td><td>Zielsystem ist keine amd64-Maschine</td><td>Auf einem x86-64-System betreiben; arm64 wird nicht unterstützt</td></tr>
+        <tr><td>Erster Aufruf einer KI-Funktion bricht ab, spätere funktionieren</td><td>Modell war noch kalt</td><td>Modell vorwärmen und <code>OLLAMA_KEEP_ALIVE</code> belassen — siehe <a href="#onpremise-warmup">Modell vorwärmen</a></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Diagnose des LLM-Dienstes</h2>
+  <p>Bleibt unklar, ob das Modell geladen werden konnte, geben die Logs und die Ressourcennutzung des Ollama-Containers Aufschluss:</p>
+  <pre class="cmd-block"><code>docker logs --tail 80 stk_prod_ollama
+docker stats stk_prod_ollama --no-stream</code></pre>
+  <p>Zeigt die Speicherauslastung, dass der Container an eine Grenze stösst, reicht der Arbeitsspeicher für das gewählte Modell nicht aus.</p>
+  <h2>Allgemeine Diagnose</h2>
+  <pre class="cmd-block"><span class="cmd-comment"># Status aller Dienste</span>
+<code>docker compose ps</code>
+
+<span class="cmd-comment"># Logs eines einzelnen Dienstes</span>
+<code>docker compose logs -f &lt;dienstname&gt;</code></pre>
+  <div class="tip"><span class="tip-icon">💡</span>Ergänzend liefert die Anwendung selbst unter <a href="#settings-status"><strong>Global Settings → System Status</strong></a> eine Übersicht über den Zustand der Plattformkomponenten.</div>
+</section>
+
+</div><!-- /content-wrap -->

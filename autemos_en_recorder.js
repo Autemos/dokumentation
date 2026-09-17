@@ -233,5 +233,8 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   <div class="concept-card"><h3>Page Object Discovery</h3><p>Automatically generate reusable page structures.</p></div>
   <div class="concept-card"><h3>Regression Testing</h3><p>Quickly turn user flows into regression tests.</p></div>
 </div>
+<h2>Saving as a Test Workflow or Sub-Workflow</h2>
+<p>When saving a recording session, you can choose whether the recorded steps are stored as a <strong>Test Workflow</strong> or as a <strong>Sub-Workflow</strong>.</p>
+<p>A Sub-Workflow is suitable when the recorded process should be used in multiple tests, represents only part of a complete test, requires reusable input parameters or should be maintained centrally. See <a href="#subworkflows-create">Creating and Extracting Sub-Workflows</a> for the other creation paths.</p>
 `,
 });

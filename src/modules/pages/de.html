@@ -1,0 +1,441 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="pages-overview" class="doc-section">
+  <div class="section-intro">
+    <span class="section-label">Pages</span>
+    <h1>Pages, Fields &amp; Table Definitions</h1>
+    <p>Das Pages-Modul bietet zentralisiertes Management für wiederverwendbare technische UI-Elemente, die in automatisierten Workflows verwendet werden. Es fungiert als technische Grundschicht für Workflows, indem es wiederverwendbare PageObjects, Feld-Selektoren und geschäftsfreundliche Table Definitions organisiert.</p>
+  </div>
+  <h2>Was das Modul bietet</h2>
+  <ul class="feature-list">
+    <li>Wiederverwendbare PageObjects für Anwendungsseiten verwalten</li>
+    <li>Zentralisiertes Selector- und Feld-Management</li>
+    <li>Wiederverwendbare Geschäftstabellen-Abstraktionen</li>
+    <li>Selector-Validierung und automatische Wartung</li>
+    <li>Selector- und Caching-Konfiguration auf Projektebene</li>
+  </ul>
+  <h2>Modulstruktur</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Abschnitt</th><th>Zweck</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pages</strong></td><td>Wiederverwendbare PageObjects verwalten</td></tr>
+        <tr><td><strong>Fields</strong></td><td>Zentralisiertes Selector- und Feld-Management</td></tr>
+        <tr><td><strong>Table Definitions</strong></td><td>Wiederverwendbare Geschäftstabellen-Abstraktionen</td></tr>
+        <tr><td><strong>Settings</strong></td><td>Selector- und Caching-Konfiguration auf Projektebene</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Page-Generierung</h2>
+  <p>Pages können entweder automatisch vom AI Recorder während Aufzeichnungssitzungen generiert oder manuell erstellt und gepflegt werden. Ziel ist es, das technische Selector-Management von der Workflow-Logik zu trennen und dabei Wiederverwendbarkeit, Wartbarkeit und skalierbare Automation zu ermöglichen.</p>
+</section>
+
+<!-- PAGES MANAGEMENT -->
+<section id="pages-management" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Pages Management</h1>
+      <span class="badge badge-pages">Pages</span>
+    </div>
+  </div>
+  <p>Der Pages-Bereich ermöglicht Benutzern das Management wiederverwendbarer PageObjects, die Anwendungsseiten, Bildschirme oder Ansichten repräsentieren. Jedes PageObject kann URLs, wiederverwendbare Felder, verknüpfte Table Definitions, Workflow-Referenzen und Nutzungsmetriken enthalten.</p>
+  <div class="screenshot-wrap">
+    <img src="./Pages_Module_Assets/image_1.png" alt="Pages Management overview">
+    <div class="screenshot-caption">Pages Management — Übersicht aller konfigurierten PageObjects mit Metriken und Verwaltungsaktionen.</div>
+  </div>
+  <h2>Dashboard-Metriken</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Metrik</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Total Pages</td><td>Gesamtanzahl konfigurierter Pages</td></tr>
+        <tr><td>Active</td><td>Anzahl aktiver PageObjects</td></tr>
+        <tr><td>Total URLs</td><td>Anzahl verknüpfter URLs</td></tr>
+        <tr><td>Total Usage</td><td>Gesamtnutzungszählung für Felder und Workflows</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Page-Tabelleninformationen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Spalte</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Name</td><td>Eindeutiger PageObject-Name</td></tr>
+        <tr><td>Description</td><td>Optionale Page-Beschreibung</td></tr>
+        <tr><td>URLs</td><td>Verknüpfte URLs</td></tr>
+        <tr><td>Elements</td><td>Anzahl verknüpfter Felder</td></tr>
+        <tr><td>Workflows</td><td>Anzahl verknüpfter Workflows</td></tr>
+        <tr><td>Usage</td><td>Nutzungsstatistiken</td></tr>
+        <tr><td>Status</td><td>Aktiver oder inaktiver Status</td></tr>
+        <tr><td>Updated</td><td>Datum der letzten Änderung</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Verfügbare Aktionen</h2>
+  <ul class="feature-list">
+    <li>Pages nach Name oder URL suchen</li>
+    <li>Neue Pages manuell erstellen</li>
+    <li>Bestehende Page-Konfigurationen bearbeiten</li>
+    <li>Nicht mehr verwendete Pages löschen</li>
+    <li>Verknüpfte Workflows prüfen</li>
+    <li>Technische Code-Ansicht öffnen</li>
+  </ul>
+</section>
+
+<!-- CREATE NEW PAGE -->
+<section id="create-page" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Create New Page</h1>
+      <span class="badge badge-pages">Pages</span>
+    </div>
+  </div>
+  <p>Benutzer können wiederverwendbare PageObjects manuell erstellen. Eine Page repräsentiert eine wiederverwendbare technische Abstraktion eines Anwendungsbildschirms oder -bereichs.</p>
+  <div class="screenshot-wrap">
+    <img src="./Pages_Module_Assets/image_4.png" alt="Create New Page dialog">
+    <div class="screenshot-caption">Create New Page — Konfigurationsdialog zum Definieren eines neuen wiederverwendbaren PageObjects.</div>
+  </div>
+  <h2>Konfigurationsoptionen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Eindeutiger Page-Bezeichner in PascalCase (z. B. LoginPage, DashboardPage)</td></tr>
+        <tr><td><strong>Description</strong></td><td>Optionale Erläuterung zum Zweck der Page</td></tr>
+        <tr><td><strong>URLs</strong></td><td>Eine oder mehrere der Page zugeordnete URLs</td></tr>
+        <tr><td><strong>Status</strong></td><td>PageObject aktivieren oder deaktivieren</td></tr>
+        <tr><td><strong>Locator Strategy</strong></td><td>Locator-basierte Selektoren kompatibel mit XPath und CSS</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip">
+    <span class="tip-icon">&#x1F4A1;</span>
+    Nach der Erstellung können Felder in der Page Details-Ansicht hinzugefügt und verwaltet werden.
+  </div>
+</section>
+
+<!-- PAGE DETAILS -->
+<section id="page-details" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Page Details</h1>
+      <span class="badge badge-pages">Pages</span>
+    </div>
+  </div>
+  <p>Der Page Details-Dialog bietet eine vollständige Übersicht des ausgewählten PageObjects, einschliesslich verknüpfter URLs, verknüpfter Table Definitions, wiederverwendbarer Felder und Workflow-Integrationsaktionen.</p>
+  <h2>Verfügbare Abschnitte</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Abschnitt</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>URL Section</strong></td><td>Alle dem PageObject zugeordneten URLs</td></tr>
+        <tr><td><strong>Definition Tables</strong></td><td>Verknüpfte wiederverwendbare Table Definitions</td></tr>
+        <tr><td><strong>Fields Section</strong></td><td>Alle wiederverwendbaren Selektoren und Felder</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Feldeigenschaften</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Eigenschaft</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Field Name</td><td>Wiederverwendbarer Feld-Bezeichner</td></tr>
+        <tr><td>Locator</td><td>Technischer Selector</td></tr>
+        <tr><td>Context</td><td>Feld-Metadaten</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Verfügbare Aktionen</h2>
+  <ul class="feature-list">
+    <li>Felder zur Page hinzufügen</li>
+    <li>Code aus der Page-Struktur generieren</li>
+    <li>Table Definitions hinzufügen</li>
+    <li>Page-Konfiguration bearbeiten</li>
+  </ul>
+</section>
+
+<!-- FIELDS MANAGEMENT -->
+<section id="fields-management" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Fields Management</h1>
+      <span class="badge badge-pages">Fields</span>
+    </div>
+  </div>
+  <p>Der Fields-Bereich fungiert als zentralisiertes Selector-Repository für alle wiederverwendbaren technischen Elemente. Fields sind wiederverwendbare Selektoren, die über Workflows, Pages und Validierungen hinweg geteilt werden können.</p>
+  <div class="screenshot-wrap">
+    <img src="./Pages_Module_Assets/image_2.png" alt="Fields Management overview">
+    <div class="screenshot-caption">Fields Management — zentralisiertes Repository aller wiederverwendbaren Selektoren mit Validierungsstatus und Nutzungsmetriken.</div>
+  </div>
+  <h2>Dashboard-Metriken</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Metrik</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Total Fields</td><td>Gesamtanzahl der Felder</td></tr>
+        <tr><td>Valid</td><td>Erfolgreich validierte Felder</td></tr>
+        <tr><td>Failed</td><td>Fehlerhafte oder ungültige Felder</td></tr>
+        <tr><td>Pending</td><td>Validierung ausstehend</td></tr>
+        <tr><td>Avg Success Rate</td><td>Durchschnittliche Selector-Erfolgsrate</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Feldinformationen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Spalte</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Page</td><td>Zugeordnete Page</td></tr>
+        <tr><td>Field Name</td><td>Selector-Name</td></tr>
+        <tr><td>Locator</td><td>Technischer Selector</td></tr>
+        <tr><td>Status</td><td>Validierungsstatus</td></tr>
+        <tr><td>Source</td><td>Manuell oder KI-generiert</td></tr>
+        <tr><td>Properties</td><td>Feld-Fähigkeiten</td></tr>
+        <tr><td>Success Rate</td><td>Laufzeit-Erfolgsrate</td></tr>
+        <tr><td>Usage</td><td>Nutzungsstatistiken</td></tr>
+        <tr><td>Updated</td><td>Datum der letzten Änderung</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Filterung &amp; Suche</h2>
+  <p>Benutzer können Felder nach Status, Quelle, Page und Suchbegriff filtern, um bestimmte Selektoren im Projekt schnell zu finden.</p>
+</section>
+
+<!-- EDIT FIELD -->
+<section id="edit-field" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Edit Field Entry</h1>
+      <span class="badge badge-pages">Fields</span>
+    </div>
+  </div>
+  <p>Der Edit Entry-Dialog ermöglicht Benutzern die Pflege wiederverwendbarer Selektoren, die Aktualisierung ihrer Locator-Strategie sowie die Konfiguration von Feldtypen und unterstützten Interaktionen.</p>
+  <div class="screenshot-pair">
+    <div class="screenshot-wrap">
+      <img src="./Pages_Module_Assets/image_5.png" alt="Edit Field Entry dialog">
+      <div class="screenshot-caption">Edit Field — Selector- und Typ-Konfiguration</div>
+    </div>
+    <div class="screenshot-wrap">
+      <img src="./Pages_Module_Assets/image_6.png" alt="Edit Field properties">
+      <div class="screenshot-caption">Edit Field — Kontext- und Methoden-Details</div>
+    </div>
+  </div>
+  <h2>Bearbeitbare Eigenschaften</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Eigenschaft</th><th>Beschreibung</th><th>Beispiele</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Locator</strong></td><td>Technischer Selector zur Element-Identifikation</td><td>XPath, CSS Selector, Appium locator</td></tr>
+        <tr><td><strong>Field Type</strong></td><td>Definiert die Feld-Fähigkeit</td><td>Button, Input, Checkbox, Dropdown, Label</td></tr>
+        <tr><td><strong>Methods</strong></td><td>Unterstützte Interaktionen und Validierungen</td><td>click, getText, isEnabled</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Kontextinformationen</h2>
+  <p>Der Dialog zeigt auch kontextuelle Metadaten an, einschliesslich Sichtbarkeit, Klickbarkeit, Eingabe-Fähigkeit und der zugeordneten URL.</p>
+</section>
+
+<!-- TABLE DEFINITIONS -->
+<section id="table-definitions" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Table Definitions</h1>
+      <span class="badge badge-pages">Table Definitions</span>
+    </div>
+  </div>
+  <p>Table Definitions bieten wiederverwendbare Geschäftsabstraktionen für dynamische Datentabellen. Anstatt technische Selektoren direkt an Workflow-Benutzer weiterzugeben, stellt das System geschäftsfreundliche Tabellenoperationen bereit.</p>
+  <div class="screenshot-wrap">
+    <img src="./Pages_Module_Assets/image_3.png" alt="Table Definitions overview">
+    <div class="screenshot-caption">Table Definitions — Liste aller konfigurierten wiederverwendbaren Tabellenabstraktionen.</div>
+  </div>
+  <h2>Was Table Definitions ermöglichen</h2>
+  <ul class="feature-list">
+    <li>Mit Zeilen, Spalten, Filtern, Sortierung und Paginierung arbeiten</li>
+    <li>Zeilenaktionen ohne technische Komplexität konfigurieren</li>
+    <li>Tabellenlogik über mehrere Workflows hinweg wiederverwenden</li>
+    <li>Technische Selektoren von Geschäftsbenutzern abstrahieren</li>
+  </ul>
+</section>
+
+<!-- TABLE WIZARD -->
+<section id="table-wizard" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Smart Table Definition Wizard</h1>
+      <span class="badge badge-pages">Table Definitions</span>
+    </div>
+  </div>
+  <p>Der Wizard vereinfacht die Erstellung wiederverwendbarer Table Definitions. Er unterstützt Geschäftsabstraktion, technische Selector-Generierung und wiederverwendbare Workflow-Integration. Der Simple Mode konzentriert sich auf die geschäftsseitige Konfiguration und verbirgt technische Implementierungsdetails.</p>
+  <h2>Wizard-Schritte</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Schritt</th><th>Zweck</th></tr></thead>
+      <tbody>
+        <tr><td><strong>1 — Basics</strong></td><td>Allgemeine Tabellenkonfiguration</td></tr>
+        <tr><td><strong>2 — Columns</strong></td><td>Zuordnung von Geschäftsspalten</td></tr>
+        <tr><td><strong>3 — Actions</strong></td><td>Zeilenaktionen und Fähigkeiten</td></tr>
+        <tr><td><strong>4 — Review</strong></td><td>Generierte Vorschau</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <h2 id="wizard-basics">Schritt 1 — Basics</h2>
+  <p>Tabellenname, Beschreibung, unterstützte Plattformen, zugeordnete Page und automatisch generierten Status konfigurieren. Unterstützte Plattformen umfassen Web / Playwright und Mobile / Appium.</p>
+  <div class="screenshot-wrap">
+    <img src="./Pages_Module_Assets/image_7.png" alt="Wizard Step 1 — Basics">
+    <div class="screenshot-caption">Schritt 1 — Basics: allgemeine Tabellenkonfiguration und Plattformauswahl.</div>
+  </div>
+
+  <h2 id="wizard-columns">Schritt 2 — Columns</h2>
+  <p>Wiederverwendbare Geschäftsspalten definieren (z. B. Order Number, Status, Customer, Total, Date). Das System schlägt einen stabilen Row Key vor, der intern für Zeilenreferenzen, wiederverwendbare Kriterien und Workflow-Aktionen verwendet wird.</p>
+  <div class="screenshot-wrap">
+    <img src="./Pages_Module_Assets/image_8.png" alt="Wizard Step 2 — Columns">
+    <div class="screenshot-caption">Schritt 2 — Columns: Zuordnung von Geschäftsspalten und Row-Key-Konfiguration.</div>
+  </div>
+
+  <h2 id="wizard-actions">Schritt 3 — Actions</h2>
+  <p>Unterstützte Tabellenfähigkeiten und optionale wiederverwendbare Zeilenaktionen konfigurieren. Der Wizard zeigt eine Workflow-Vorschau an, die zeigt, wie die Tabelle in Workflow-Nodes erscheinen wird.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Fähigkeit</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Pagination</td><td>Mehrseitige Unterstützung</td></tr>
+        <tr><td>Sorting</td><td>Spaltensortierung</td></tr>
+        <tr><td>Filtering</td><td>Filter-Unterstützung</td></tr>
+        <tr><td>Actions</td><td>Zeilenaktionen</td></tr>
+        <tr><td>Lazy Load</td><td>Unterstützung für endloses Scrollen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="screenshot-wrap">
+    <img src="./Pages_Module_Assets/image_9.png" alt="Wizard Step 3 — Actions">
+    <div class="screenshot-caption">Schritt 3 — Actions: Zeilenaktionen, Fähigkeiten und Workflow-Vorschau.</div>
+  </div>
+
+  <h2 id="wizard-review">Schritt 4 — Review</h2>
+  <p>Der Review-Schritt zeigt die generierte technische Vorschau, die wiederverwendbare Geschäftszuordnung, die Plattform-Kompatibilität und die generierten Selektoren an.</p>
+  <div class="screenshot-wrap">
+    <img src="./Pages_Module_Assets/image_10.png" alt="Wizard Step 4 — Review">
+    <div class="screenshot-caption">Schritt 4 — Review: generierte Tabellendefinitions-Vorschau und Plattform-Kompatibilitätszusammenfassung.</div>
+  </div>
+</section>
+
+<!-- EXPERT MODE -->
+<section id="expert-mode" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Expert Mode</h1>
+      <span class="badge badge-pages">Table Definitions</span>
+    </div>
+  </div>
+  <p>Der Expert Mode legt die vollständige technische JSON-Konfiguration offen, die intern von der Automations-Engine verwendet wird. Dieser Modus richtet sich an erfahrene Benutzer und Entwickler, die direkte Kontrolle über Selektoren und Fähigkeiten benötigen.</p>
+  <div class="screenshot-wrap">
+    <img src="./Pages_Module_Assets/image_11.png" alt="Expert Mode">
+    <div class="screenshot-caption">Expert Mode — vollständige JSON-Konfiguration für Web-Definition, Mobile-Definition und Capabilities.</div>
+  </div>
+  <h2>Technische Konfiguration</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Konfiguration</th><th>Enthält</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Web Definition JSON</strong></td><td>Tabellen-Selektoren, Zeilen-Selektoren, Zellen-Selektoren</td></tr>
+        <tr><td><strong>Mobile Definition JSON</strong></td><td>Appium- und mobile-spezifische Selektoren</td></tr>
+        <tr><td><strong>Capabilities JSON</strong></td><td>Pagination, Filtering, Sorting, Zeilenaktionen, Lazy Loading</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PROJECT SETTINGS -->
+<section id="project-settings" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Project Settings</h1>
+      <span class="badge badge-pages">Settings</span>
+    </div>
+  </div>
+  <p>Der Settings-Bereich steuert das projektweite Selector- und Caching-Verhalten.</p>
+  <div class="screenshot-wrap">
+    <img src="./Pages_Module_Assets/image_12.png" alt="Project Settings">
+    <div class="screenshot-caption">Project Settings — Field-Cache-Konfiguration und Selector-Strategie-Einstellungen.</div>
+  </div>
+  <h2>Field-Cache-Einstellungen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Einstellung</th><th>Zweck</th></tr></thead>
+      <tbody>
+        <tr><td>Enable field caching</td><td>Wiederverwendbare Selektoren für schnellere Ausführung cachen</td></tr>
+        <tr><td>Max Cache Size</td><td>Maximale Anzahl gecachter Einträge</td></tr>
+        <tr><td>Cache Expiration</td><td>Zeitpunkt der automatischen Bereinigung</td></tr>
+        <tr><td>Max Retry Attempts</td><td>Retry-Anzahl für fehlgeschlagene Selektoren</td></tr>
+        <tr><td>Validation Timeout</td><td>Timeout für die Selector-Validierung</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Automatische Wartung</h2>
+  <ul class="feature-list">
+    <li>Automatische Bereinigung veralteter gecachter Selektoren</li>
+    <li>Automatischer Retry fehlgeschlagener Selektoren</li>
+    <li>Locator-basierte Selektoren (XPath/CSS kompatibel) als empfohlene Standardstrategie</li>
+  </ul>
+</section>
+
+<!-- PAGE SETTINGS -->
+<section id="page-settings" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Page Settings</h1>
+      <span class="badge badge-pages">Settings</span>
+    </div>
+  </div>
+  <div class="screenshot-wrap">
+    <img src="./Pages_Module_Assets/image_13.png" alt="Page Settings">
+    <div class="screenshot-caption">Page Settings — seitenspezifische Konfiguration für Screenshots, Validierung und Versionierung.</div>
+  </div>
+  <h2>Page-Konfiguration</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Auto-generate selectors</td><td>Selektoren für Page-Elemente automatisch erstellen</td></tr>
+        <tr><td>Enable screenshots</td><td>Screenshots für PageObjects speichern</td></tr>
+        <tr><td>Screenshot on failure</td><td>Screenshots aufnehmen, wenn Selektoren fehlschlagen</td></tr>
+        <tr><td>Validate selectors</td><td>Selektoren bei der Erstellung validieren</td></tr>
+        <tr><td>Page object versioning</td><td>Eine Historie der Selector-Änderungen pflegen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Benachrichtigungseinstellungen</h2>
+  <p>Optionale Benachrichtigungen können für PageObject-Änderungen, Feld-Alerts, Selector-Fehler und tägliche Aktivitätszusammenfassungen konfiguriert werden.</p>
+</section>
+
+<!-- AI INTEGRATION -->
+<section id="ai-integration" class="doc-section">
+  <div class="section-intro">
+    <h1>KI &amp; Recorder-Integration</h1>
+    <p>Der Recorder und die KI-Komponenten sind tief in das Pages-Modul integriert, um den manuellen Wartungsaufwand zu minimieren und die Workflow-Erstellung zu beschleunigen.</p>
+  </div>
+  <h2>Automatische Generierung</h2>
+  <ul class="feature-list">
+    <li>Pages automatisch aus Aufzeichnungssitzungen erstellen</li>
+    <li>Selektoren generieren und Felder ohne manuelle Eingabe validieren</li>
+    <li>Wiederverwendbare Page-Strukturen aus beobachteten UI-Interaktionen aufbauen</li>
+    <li>Table Definitions basierend auf erkannten Datentabellen vorschlagen</li>
+  </ul>
+  <h2>Wichtige Vorteile</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Vorteil</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Wartbarkeit</strong></td><td>Selektoren und Pages werden zentral gepflegt</td></tr>
+        <tr><td><strong>Wiederverwendbarkeit</strong></td><td>Felder und Tabellen über Workflows und Projekte hinweg wiederverwendet</td></tr>
+        <tr><td><strong>Geschäftsabstraktion</strong></td><td>Workflow-Benutzer interagieren mit Geschäftskonzepten, nicht mit rohen Selektoren</td></tr>
+        <tr><td><strong>KI-unterstützt</strong></td><td>Recorder und KI generieren technische Assets automatisch</td></tr>
+        <tr><td><strong>Skalierbarkeit</strong></td><td>Tausende von Selektoren konsistent über grosse Projekte hinweg verwalten</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div><!-- /content-wrap -->

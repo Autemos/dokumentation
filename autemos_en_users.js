@@ -1,4 +1,3 @@
-// Autemos Documentation — User Management Module English Translations
 window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   "users-overview": `
   <span class="section-label">Getting Started</span>

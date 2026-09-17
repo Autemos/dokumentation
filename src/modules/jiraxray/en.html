@@ -1,0 +1,224 @@
+<section class="doc-section" id="jiraxray-overview">
+<span class="section-label">Getting Started</span>
+<div class="section-intro"><h1>Jira Xray Integration</h1></div>
+<p>The Jira Xray integration connects test design in Jira directly with AI-assisted test automation in Autemos.</p>
+<p>Existing Xray Test Cases can be selected directly in the Autemos <a href="#recorder-overview">Recorder</a>. Relevant content such as <strong>manual test steps, expected results and Cucumber scenarios</strong> is transferred to Autemos and used as input for the recording.</p>
+<p>The Recorder processes the imported test definition step by step while users can visually follow the automation progress. When the resulting Test Workflow is saved, it remains linked to the original Xray Test Case.</p>
+<h2>Capabilities</h2>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Select a Test Case</h3><p>Select an existing Xray Test Case directly in the Recorder.</p></div>
+  <div class="concept-card"><h3>Use the Test Definition</h3><p>Use manual test steps or Cucumber scenarios as recording input.</p></div>
+  <div class="concept-card"><h3>Link Automatically</h3><p>Automatically link the saved Test Workflow to the Xray Test Case.</p></div>
+  <div class="concept-card"><h3>Show Context</h3><p>Display key Xray metadata and open the linked Test Case directly from the workflow.</p></div>
+</div>
+<div class="warning"><span class="tip-icon">⚠️</span><strong>Test Run result synchronization with Jira Xray is not available yet.</strong> It is planned for November 2026 and is not part of the currently available functionality.</div>
+</section>
+
+<section class="doc-section" id="jiraxray-select">
+<span class="section-label">Recorder</span>
+<h1>Select an Xray Test Case in the Recorder</h1>
+<p>Start a new Recorder session and open the <strong>Test case</strong> panel. Search for and select the required Test Case from the connected Jira Xray project.</p>
+<p>Depending on the Xray Test Type, Autemos imports the available test definition, including:</p>
+<ul class="feature-list">
+<li>Jira Issue Key and Test Case title</li>
+<li>Description and relevant test context</li>
+<li>Manual test steps, test data and expected results</li>
+<li>Cucumber / Gherkin scenario steps</li>
+</ul>
+<p>The Test Case becomes the functional input for the recording. Users therefore do not need to copy the test definition manually into Autemos.</p>
+<div class="screenshot-wrap">
+<img alt="Xray Test Case with manual test steps in the Recorder" src="./autemos_jiraxray_screenshots/image_1.png"/>
+<div class="screenshot-caption">Select and record Xray Test Cases directly in Autemos.</div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-manual">
+<span class="section-label">Recorder</span>
+<h1>Automating Manual Test Steps</h1>
+<p>For manual Xray Test Cases, Autemos displays the available test steps in their defined sequence.</p>
+<p>The AI Recorder works through the test step by step. During the recording:</p>
+<ul class="feature-list">
+<li>Completed steps are visually marked</li>
+<li>The current automation progress remains visible</li>
+<li>Open steps can be reviewed at any time</li>
+<li>The AI Chat documents the Recorder actions and any questions that require user input</li>
+</ul>
+<p>This provides transparency throughout the automation process and makes it easier to understand how the original Xray Test Case is translated into an executable Test Workflow.</p>
+</section>
+
+<section class="doc-section" id="jiraxray-cucumber">
+<span class="section-label">Recorder</span>
+<h1>Using Cucumber Scenarios</h1>
+<p>Autemos also supports Xray Test Cases described as Cucumber / Gherkin scenarios.</p>
+<p>The scenario is displayed in the Recorder and processed in its original sequence, including steps such as:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Step</th><th>Meaning</th></tr></thead>
+<tbody>
+<tr><td><strong>Given</strong></td><td>Defines the initial context or precondition</td></tr>
+<tr><td><strong>When</strong></td><td>Describes the user action or event</td></tr>
+<tr><td><strong>Then</strong></td><td>Defines the expected result</td></tr>
+<tr><td><strong>And</strong></td><td>Adds further context, actions or validations</td></tr>
+</tbody>
+</table>
+</div>
+<p>As the Recorder automates the scenario, completed steps are visually highlighted. This allows business-readable acceptance scenarios to be used directly as the basis for executable automation.</p>
+<div class="screenshot-wrap">
+<img alt="Cucumber scenario with completed steps in the Recorder" src="./autemos_jiraxray_screenshots/image_2.png"/>
+<div class="screenshot-caption">Import and process Cucumber scenarios step by step.</div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-progress">
+<span class="section-label">Recorder</span>
+<h1>Visual Recording Progress</h1>
+<p>The Recorder brings the application, AI interaction and Xray Test Case context together in a single view.</p>
+<p>During the recording, users can follow:</p>
+<ul class="feature-list">
+<li>The application currently being automated</li>
+<li>Recorded browser, mobile or API actions</li>
+<li>The Test Case steps or Cucumber scenario</li>
+<li>The number of completed and remaining steps</li>
+<li>AI messages, questions and the current processing status</li>
+</ul>
+<p>This makes the automation process understandable and allows users to intervene when additional functional information is required.</p>
+</section>
+
+<section class="doc-section" id="jiraxray-link">
+<span class="section-label">Linking</span>
+<h1>Linking the Test Workflow to Jira Xray</h1>
+<p>When the recording is saved, Autemos creates the Test Workflow and automatically links it to the selected Xray Test Case.</p>
+<p>The link preserves traceability between the functional test definition in Jira and its technical automation in Autemos. No additional manual mapping is required after the recording.</p>
+<p>The linked relationship is visible directly in the Test Workflow and can be removed using the <strong>Unlink</strong> action if the workflow should no longer be associated with the Test Case.</p>
+<div class="screenshot-wrap">
+<img alt="Linked Xray context in the workflow editor" src="./autemos_jiraxray_screenshots/image_4.png"/>
+<div class="screenshot-caption">Linked Xray context within the workflow editor.</div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-context">
+<span class="section-label">Linking</span>
+<h1>Available Xray Context</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+  <div style="flex:1;min-width:0">
+    <p>The Xray panel in the Test Workflow displays key information from the linked Test Case. Depending on the available Jira data, this can include:</p>
+    <div class="param-table-wrap">
+    <table class="param-table">
+    <thead><tr><th>Information</th><th>Description</th></tr></thead>
+    <tbody>
+    <tr><td><strong>Issue Key</strong></td><td>Unique identifier of the Xray Test Case</td></tr>
+    <tr><td><strong>Title</strong></td><td>Name of the linked Test Case</td></tr>
+    <tr><td><strong>Test Type</strong></td><td>Xray Test Type, for example Manual or Cucumber</td></tr>
+    <tr><td><strong>Status</strong></td><td>Current Jira workflow status</td></tr>
+    <tr><td><strong>Assignee</strong></td><td>Person assigned to the Test Case in Jira</td></tr>
+    <tr><td><strong>Priority</strong></td><td>Priority configured in Jira</td></tr>
+    <tr><td><strong>Description</strong></td><td>Functional description or scenario context</td></tr>
+    <tr><td><strong>Linked on</strong></td><td>Timestamp showing when the relationship was created</td></tr>
+    </tbody>
+    </table>
+    </div>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 300px;margin:0">
+    <img alt="Xray panel in the Test Workflow" src="./autemos_jiraxray_screenshots/image_3.png"/>
+    <div class="screenshot-caption">Jira Xray information displayed in the Test Workflow.</div>
+  </div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-open">
+<span class="section-label">Linking</span>
+<h1>Open in Jira Xray</h1>
+<p>The linked Issue Key provides direct access to the original Test Case in Jira Xray. Users can move from the automation in Autemos to the functional Test Case without searching for it again in Jira.</p>
+</section>
+
+<section class="doc-section" id="jiraxray-scope">
+<span class="section-label">Scope</span>
+<h1>Current Integration Scope</h1>
+<p>The following functionality is currently available:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Capability</th><th>Availability</th></tr></thead>
+<tbody>
+<tr><td>Select Xray Test Cases in the Recorder</td><td><span class="meta-pill pill-yes">Available</span></td></tr>
+<tr><td>Import manual test steps and expected results</td><td><span class="meta-pill pill-yes">Available</span></td></tr>
+<tr><td>Import Cucumber / Gherkin scenarios</td><td><span class="meta-pill pill-yes">Available</span></td></tr>
+<tr><td>Visual step-by-step recording progress</td><td><span class="meta-pill pill-yes">Available</span></td></tr>
+<tr><td>Automatically link a saved Test Workflow</td><td><span class="meta-pill pill-yes">Available</span></td></tr>
+<tr><td>Display Xray metadata in the Test Workflow</td><td><span class="meta-pill pill-yes">Available</span></td></tr>
+<tr><td>Open the Test Case directly in Jira Xray</td><td><span class="meta-pill pill-yes">Available</span></td></tr>
+<tr><td>Synchronize Test Run results with Jira Xray</td><td><span class="meta-pill pill-no">Planned for November 2026</span></td></tr>
+</tbody>
+</table>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-planned">
+<span class="section-label">Scope</span>
+<h1>Planned: Test Run Synchronization</h1>
+<div class="warning"><span class="tip-icon">⚠️</span><strong>This functionality is not available yet.</strong> The screenshot below is a product preview and does not represent functionality that is currently available. Synchronization is planned for November 2026.</div>
+<p>The planned extension is intended to connect an Autemos Test Run with the corresponding execution context in Jira Xray and make execution results available across both systems.</p>
+<h2>Planned Scope</h2>
+<ul class="feature-list">
+<li>Link an Autemos Test Run to the relevant Jira Xray execution context and provide direct navigation between both systems</li>
+<li>Synchronize the overall Test Run status and available results for individual test steps</li>
+<li>Display the synchronization status and understandable error information in Autemos</li>
+</ul>
+<div class="screenshot-wrap">
+<img alt="Product preview of the planned Test Run synchronization" src="./autemos_jiraxray_screenshots/image_5.png"/>
+<div class="screenshot-caption">Preview — Test Run result synchronization, planned for November 2026. Not part of the current scope.</div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-use-cases">
+<span class="section-label">Usage</span>
+<h1>Typical Use Cases</h1>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Automating Existing Manual Test Cases</h3><p>Use existing Xray test steps as the basis for an automated Test Workflow.</p></div>
+  <div class="concept-card"><h3>Automating Cucumber Acceptance Tests</h3><p>Automate business-readable Given, When and Then scenarios directly in the Recorder.</p></div>
+  <div class="concept-card"><h3>Maintaining End-to-End Traceability</h3><p>Keep the automation connected to its original functional Test Case.</p></div>
+  <div class="concept-card"><h3>Business and Automation Collaboration</h3><p>Maintain functional definitions in Xray and executable workflows in Autemos.</p></div>
+  <div class="concept-card"><h3>Integrated Execution Reporting (Planned)</h3><p>Make Autemos execution results available in the Jira Xray reporting context. Planned for November 2026.</p></div>
+</div>
+</section>
+
+<section class="doc-section" id="jiraxray-best-practices">
+<span class="section-label">Usage</span>
+<h1>Best Practices</h1>
+<ul class="best-practices">
+<li>Keep the Jira Xray Test Case as the functional source of the test definition</li>
+<li>Write clear, executable test steps with explicit actions and expected results</li>
+<li>Use Cucumber scenarios when business-readable acceptance criteria are required</li>
+<li>Review the imported steps before starting the recording</li>
+<li>Monitor the visual progress and respond to Recorder questions when functional context is missing</li>
+<li>Use the direct Jira link to review or maintain the original Test Case</li>
+<li>Unlink a workflow only when the relationship to the Xray Test Case is no longer valid</li>
+</ul>
+</section>
+
+<section class="doc-section" id="jiraxray-related">
+<span class="section-label">Usage</span>
+<h1>Related Modules</h1>
+<p>The Jira Xray integration is part of the larger Autemos ecosystem.</p>
+<div class="module-grid">
+<div class="module-card">
+<strong>Recorder</strong>
+<span>Create automated workflows from Xray Test Cases</span>
+</div>
+<div class="module-card">
+<strong>Test Workflows</strong>
+<span>Maintain and execute the resulting automation</span>
+</div>
+<div class="module-card">
+<strong>Test Runs</strong>
+<span>Review workflow execution results</span>
+</div>
+<div class="module-card">
+<strong>Projects / Jira Configuration</strong>
+<span>Configure access to Jira and Xray</span>
+</div>
+<div class="module-card">
+<strong>Collections</strong>
+<span>Organize related Test Workflows for execution and reporting</span>
+</div>
+</div>
+</section>

@@ -1,0 +1,474 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="executive-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Executive Dashboard</h1>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Administrator-Zugriff erforderlich —</strong> Die Konfiguration und Anpassung des Executive Dashboard ist ausschliesslich Benutzern mit Administrator-Rechten vorbehalten. Standardbenutzer können Dashboard-Informationen basierend auf ihren Berechtigungen ansehen, jedoch keine Konfigurationsänderungen durchführen.
+  </div>
+  <p>Das <strong>Executive Dashboard</strong> bietet eine zentrale High-Level-Übersicht über das gesamte Testautomatisierungs-Portfolio innerhalb von Autemos. Es kombiniert Informationen aus Projekten, Testausführungen, Schedules, Infrastruktur sowie AI-/LLM-basierten Funktionen in einer einzigen Management-Ansicht.</p>
+  <div class="screenshot-wrap">
+    <img alt="Executive Dashboard overview" src="./autemos_executivedashboard_screenshots/image_1.png"/>
+    <div class="screenshot-caption">Executive Dashboard — zentrale High-Level-Übersicht über das gesamte Testautomatisierungs-Portfolio.</div>
+  </div>
+  <h2>Zielgruppe</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Executives</h3><p>Strategische Übersicht über Qualität und Automatisierung.</p></div>
+    <div class="concept-card"><h3>QA Manager</h3><p>Portfolio-weite Qualitätssteuerung.</p></div>
+    <div class="concept-card"><h3>Test Leads</h3><p>Teamübergreifende Test-Aktivität.</p></div>
+    <div class="concept-card"><h3>Engineering Manager</h3><p>Release- und Stabilitäts-Entscheidungen.</p></div>
+    <div class="concept-card"><h3>Plattform-Administratoren</h3><p>Globale Infrastruktur-Übersicht.</p></div>
+    <div class="concept-card"><h3>DevOps Teams</h3><p>Pipeline- und Grid-Monitoring.</p></div>
+  </div>
+  <h2>Zweck</h2>
+  <ul class="feature-list">
+    <li>Allgemeine Testqualität überwachen</li>
+    <li>Automatisierungs-KPIs analysieren</li>
+    <li>Flaky bzw. instabile Tests identifizieren</li>
+    <li>Testinfrastruktur überwachen</li>
+    <li>Portfolio-weite Trends analysieren</li>
+    <li>Fehler frühzeitig erkennen</li>
+    <li>AI-/LLM-Kosten überwachen</li>
+    <li>Gesundheitsstatus von Projekten bewerten</li>
+    <li>Release-Entscheidungen verbessern</li>
+  </ul>
+  <h3>Nur Administratoren können:</h3>
+  <ul class="feature-list">
+    <li>Dashboard Widgets konfigurieren</li>
+    <li>Portfolio-Metriken anpassen</li>
+    <li>Globale Dashboard-Einstellungen ändern</li>
+    <li>KPI-Schwellwerte definieren</li>
+    <li>Executive Reporting Views konfigurieren</li>
+    <li>Globale Analytics-Sichtbarkeit verwalten</li>
+    <li>Monitoring- und Governance-Einstellungen definieren</li>
+  </ul>
+</section>
+
+<!-- DASHBOARD BEREICHE -->
+<section id="executive-bereiche" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Dashboard Bereiche</h1>
+  <p>Das Executive Dashboard besteht aus mehreren Analyse- und Monitoring-Bereichen, die zusammen ein vollständiges Bild der Plattform liefern.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Bereich</th><th>Zweck</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Executive Overview</strong></td><td>Zentrale KPIs zur Bewertung der Plattform</td></tr>
+        <tr><td><strong>Portfolio Metrics</strong></td><td>Portfolio-weite Qualitätsmetriken</td></tr>
+        <tr><td><strong>Schedule Status</strong></td><td>Aktive Schedules und automatisierte Ausführungen</td></tr>
+        <tr><td><strong>Pass Rate Trends</strong></td><td>Historische Pass Rate Entwicklung</td></tr>
+        <tr><td><strong>Recent Failures</strong></td><td>Aktuelle fehlgeschlagene Ausführungen</td></tr>
+        <tr><td><strong>Flaky Tests</strong></td><td>Instabile Tests mit Severity-Klassifizierung</td></tr>
+        <tr><td><strong>Project Status</strong></td><td>Qualität und Gesundheit einzelner Projekte</td></tr>
+        <tr><td><strong>Grid Status</strong></td><td>Operativer Zustand der Testinfrastruktur</td></tr>
+        <tr><td><strong>Duration Trends</strong></td><td>Trends der Testausführungsdauer</td></tr>
+        <tr><td><strong>Project Health</strong></td><td>Zusammenfassende Gesundheits-Scores</td></tr>
+        <tr><td><strong>Activity Feed</strong></td><td>Plattformaktivitäten in Echtzeit</td></tr>
+        <tr><td><strong>LLM Cost Analytics</strong></td><td>AI- und LLM-bezogene Betriebskosten</td></tr>
+        <tr><td><strong>Quick Actions</strong></td><td>Schneller Zugriff auf Verwaltungsaktionen</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- EXECUTIVE OVERVIEW -->
+<section id="executive-overview-kpis" class="doc-section">
+  <span class="section-label">Executive KPIs</span>
+  <h1>Executive Overview</h1>
+  <p>Die <strong>Executive Overview</strong> zeigt zentrale KPIs zur Bewertung des allgemeinen Zustands der Testautomatisierungsplattform.</p>
+  <div class="screenshot-wrap">
+    <img alt="Executive Overview KPIs" src="./autemos_executivedashboard_screenshots/image_14.png"/>
+    <div class="screenshot-caption">Executive Overview — zentrale KPIs (Pass Rate, Tests Executed, Coverage, Flaky Rate) auf einen Blick.</div>
+  </div>
+  <h2>Wichtige Kennzahlen</h2>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h3>Pass Rate</h3>
+      <p>Allgemeine Erfolgsquote aller Testausführungen (z. B. <strong>95,2 %</strong>). Bewertet Teststabilität, Release Readiness und Zuverlässigkeit.</p>
+    </div>
+    <div class="concept-card">
+      <h3>Tests Executed</h3>
+      <p>Gesamtanzahl ausgeführter Tests im gewählten Zeitraum — Portfolio-Aktivität und Automatisierungs-Tracking.</p>
+    </div>
+    <div class="concept-card">
+      <h3>Test Coverage</h3>
+      <p>Automatisierungsabdeckung kritischer Geschäftsprozesse und Flows — für Risikoanalyse und Identifikation von Lücken.</p>
+    </div>
+    <div class="concept-card">
+      <h3>Flaky Rate</h3>
+      <p>Anteil instabiler oder inkonsistenter Tests. Hohe Werte deuten auf instabile Umgebungen, Synchronisationsprobleme, schwache Selektoren oder Infrastrukturprobleme hin.</p>
+    </div>
+  </div>
+  <h2>Zeitfilter</h2>
+  <p>Das Executive Dashboard unterstützt konfigurierbare Zeiträume:</p>
+  <div class="screenshot-wrap" style="max-width:380px;margin:16px 0">
+    <img alt="Executive Overview Time Filters" src="./autemos_executivedashboard_screenshots/image_2.png"/>
+    <div class="screenshot-caption">Zeitfilter-Buttons (7 / 14 / 30 Days + Custom).</div>
+  </div>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Filter</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>7 Days</strong></td><td>Kurzfristige Trends</td></tr>
+        <tr><td><strong>14 Days</strong></td><td>Mittelfristige Entwicklung</td></tr>
+        <tr><td><strong>30 Days</strong></td><td>Monatliche Übersicht</td></tr>
+        <tr><td><strong>Custom Range</strong></td><td>Eigener Zeitraum für detaillierte Analysen</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- PORTFOLIO PASS RATE TREND -->
+<section id="executive-trend" class="doc-section">
+  <span class="section-label">Executive KPIs</span>
+  <h1>Portfolio Pass Rate Trend</h1>
+  <p>Visualisiert die Entwicklung der Pass Rate über die Zeit hinweg für das gesamte Portfolio.</p>
+  <div class="screenshot-wrap">
+    <img alt="Portfolio Pass Rate Trend" src="./autemos_executivedashboard_screenshots/image_3.png"/>
+    <div class="screenshot-caption">Portfolio Pass Rate Trend — historische Visualisierung der Erfolgsquote über das gesamte Portfolio.</div>
+  </div>
+  <h2>Unterstützt</h2>
+  <ul class="feature-list">
+    <li>Qualitätsüberwachung</li>
+    <li>Erkennung von Regressionen</li>
+    <li>Stabilitätsanalysen</li>
+    <li>Bewertung der Release-Qualität</li>
+  </ul>
+  <h2>Features</h2>
+  <ul class="feature-list">
+    <li>Historische Visualisierung</li>
+    <li>Trendanalyse</li>
+    <li>Zeitbereichsfilter</li>
+    <li>Vergleichende Qualitätsanalysen</li>
+  </ul>
+</section>
+
+<!-- SCHEDULE STATUS -->
+<section id="executive-schedule" class="doc-section">
+  <span class="section-label">Monitoring</span>
+  <h1>Schedule Status</h1>
+  <p>Zeigt den aktuellen Zustand aller aktiven Schedules und automatisierten Ausführungen.</p>
+  <div class="screenshot-wrap">
+    <img alt="Schedule Status widget" src="./autemos_executivedashboard_screenshots/image_4.png"/>
+    <div class="screenshot-caption">Schedule Status — Übersicht aktiver Schedules, 24h Pass Rate und geplante Ausführungen.</div>
+  </div>
+  <h2>Angezeigte Informationen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Kennzahl</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Active Schedules</strong></td><td>Anzahl aktiver Schedules, Gesamtanzahl konfigurierter Schedules, Ausführungsbereitschaft</td></tr>
+        <tr><td><strong>Pass Rate (24h)</strong></td><td>Erfolgsquote geplanter Ausführungen in den letzten 24 Stunden</td></tr>
+        <tr><td><strong>Upcoming Runs</strong></td><td>Geplante Ausführungen, nächste Startzeiten, Queue-Übersicht</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Vorteile</h2>
+  <ul class="feature-list">
+    <li>Execution Pipelines überwachen</li>
+    <li>Bottlenecks frühzeitig erkennen</li>
+    <li>Kontinuierliche Testaktivität sicherstellen</li>
+  </ul>
+</section>
+
+<!-- RECENT FAILURES -->
+<section id="executive-failures" class="doc-section">
+  <span class="section-label">Monitoring</span>
+  <h1>Recent Failures</h1>
+  <p>Bietet eine schnelle Übersicht über die neuesten fehlgeschlagenen Testausführungen — für schnelle Reaktion auf Incidents.</p>
+  <div class="screenshot-wrap">
+    <img alt="Recent Failures widget" src="./autemos_executivedashboard_screenshots/image_5.png"/>
+    <div class="screenshot-caption">Recent Failures — aktuelle fehlgeschlagene Tests mit Failure-Indikatoren und Status.</div>
+  </div>
+  <h2>Features</h2>
+  <ul class="feature-list">
+    <li>Aktuelle fehlgeschlagene Tests</li>
+    <li>Failure-Indikatoren</li>
+    <li>Ausführungsstatus</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">✅</span>Wenn keine Fehler vorhanden sind, wird ein sauberer Systemstatus angezeigt.</div>
+  <h2>Vorteile</h2>
+  <ul class="feature-list">
+    <li>Schnelle Fehlererkennung</li>
+    <li>Incident-Reaktion</li>
+    <li>Regressionserkennung</li>
+  </ul>
+</section>
+
+<!-- FLAKY TESTS -->
+<section id="executive-flaky" class="doc-section">
+  <span class="section-label">Monitoring</span>
+  <h1>Flaky Tests</h1>
+  <p>Das <strong>Flaky Tests Widget</strong> identifiziert instabile Tests mit inkonsistentem Verhalten und priorisiert sie nach Severity.</p>
+  <div class="screenshot-wrap">
+    <img alt="Flaky Tests widget" src="./autemos_executivedashboard_screenshots/image_6.png"/>
+    <div class="screenshot-caption">Flaky Tests — Liste instabiler Tests mit Severity-Klassifizierung und Stabilitäts-Score.</div>
+  </div>
+  <h2>Angezeigte Informationen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Testname</strong></td><td>Eindeutiger Test-Identifier</td></tr>
+        <tr><td><strong>Fehlerrate</strong></td><td>Anteil fehlgeschlagener Läufe</td></tr>
+        <tr><td><strong>Severity Level</strong></td><td>Kritikalität (Critical / Warning / Low)</td></tr>
+        <tr><td><strong>Letzte Ausführung</strong></td><td>Zeitpunkt des letzten Laufs</td></tr>
+        <tr><td><strong>Stabilitäts-Score</strong></td><td>Zusammenfassende Stabilitätsmetrik</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Severity-Klassifizierung</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Critical</h3><p>Hohe Failure-Rate, dringender Handlungsbedarf.</p></div>
+    <div class="concept-card"><h3>Warning</h3><p>Auffällige Instabilität, sollte überprüft werden.</p></div>
+    <div class="concept-card"><h3>Low</h3><p>Gelegentliche Inkonsistenzen, niedrige Priorität.</p></div>
+  </div>
+  <h2>Vorteile</h2>
+  <ul class="feature-list">
+    <li>Stabilisierung priorisieren</li>
+    <li>Zuverlässigkeit der Tests erhöhen</li>
+    <li>False Positives reduzieren</li>
+    <li>CI/CD-Stabilität verbessern</li>
+  </ul>
+</section>
+
+<!-- PROJECT STATUS -->
+<section id="executive-project-status" class="doc-section">
+  <span class="section-label">Projects &amp; Infrastructure</span>
+  <h1>Project Status</h1>
+  <p>Zeigt den Qualitäts- und Gesundheitsstatus einzelner Projekte — inklusive GO / NO-GO Entscheidungsunterstützung für Release-Freigaben.</p>
+  <div class="screenshot-wrap">
+    <img alt="Project Status widget" src="./autemos_executivedashboard_screenshots/image_7.png"/>
+    <div class="screenshot-caption">Project Status — Pro-Projekt-Übersicht mit Pass Rate, Coverage und GO/NO-GO Status.</div>
+  </div>
+  <h2>Kennzahlen pro Projekt</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Kennzahl</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pass Rate</strong></td><td>Erfolgsquote des Projekts</td></tr>
+        <tr><td><strong>Coverage</strong></td><td>Test-Abdeckung</td></tr>
+        <tr><td><strong>Total Tests</strong></td><td>Gesamtanzahl der Tests</td></tr>
+        <tr><td><strong>Failed Tests</strong></td><td>Anzahl fehlgeschlagener Tests</td></tr>
+        <tr><td><strong>GO / NO-GO Status</strong></td><td>Klare Release-Empfehlung</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>GO / NO-GO Entscheidungsunterstützung</h2>
+  <p>Das Dashboard unterstützt Release-Entscheidungen durch klare Qualitätsindikatoren:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>GO</h3><p>Projekt erfüllt alle Qualitätsschwellen — Release empfohlen.</p></div>
+    <div class="concept-card"><h3>NO-GO</h3><p>Projekt unter Qualitätsschwelle — Release blockiert.</p></div>
+  </div>
+  <p><strong>Verwendet für:</strong> Release Management · Deployment-Freigaben · Executive Reporting</p>
+</section>
+
+<!-- GRID STATUS -->
+<section id="executive-grid" class="doc-section">
+  <span class="section-label">Projects &amp; Infrastructure</span>
+  <h1>Grid Status</h1>
+  <p>Zeigt den operativen Zustand der Testinfrastruktur — Grid Nodes, Sessions und Parallelisierungskapazität.</p>
+  <div class="screenshot-wrap">
+    <img alt="Grid Status widget" src="./autemos_executivedashboard_screenshots/image_8.png"/>
+    <div class="screenshot-caption">Grid Status — Übersicht der Selenium Grid Nodes, Sessions und Auslastung.</div>
+  </div>
+  <h2>Kennzahlen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Kennzahl</th><th>Anzeige</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Nodes</strong></td><td>Gesamtanzahl Grid Nodes, verfügbare Nodes, Offline Nodes</td></tr>
+        <tr><td><strong>Sessions</strong></td><td>Aktive Sessions, Session-Auslastung, Parallelisierungs-Kapazität</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Vorteile</h2>
+  <ul class="feature-list">
+    <li>Identifikation von Infrastruktur-Bottlenecks</li>
+    <li>Erkennung von Ressourcenengpässen</li>
+    <li>Aufdeckung von Grid-Instabilitäten</li>
+  </ul>
+</section>
+
+<!-- DURATION TRENDS -->
+<section id="executive-duration" class="doc-section">
+  <span class="section-label">Projects &amp; Infrastructure</span>
+  <h1>Duration Trends</h1>
+  <p>Analysiert Trends der Testausführungsdauer über die Zeit hinweg — für Performance-Monitoring und Infrastruktur-Planung.</p>
+  <div class="screenshot-wrap">
+    <img alt="Duration Trends widget" src="./autemos_executivedashboard_screenshots/image_9.png"/>
+    <div class="screenshot-caption">Duration Trends — Trendanalyse der Ausführungszeiten zur Performance-Optimierung.</div>
+  </div>
+  <h2>Kennzahlen</h2>
+  <ul class="feature-list">
+    <li>Durchschnittliche Laufzeit</li>
+    <li>Langsamste Ausführungen</li>
+    <li>Zeitliche Veränderungen</li>
+  </ul>
+  <h2>Vorteile</h2>
+  <ul class="feature-list">
+    <li>Performance-Monitoring</li>
+    <li>Optimierung der Ausführungszeiten</li>
+    <li>Infrastrukturplanung</li>
+  </ul>
+</section>
+
+<!-- PROJECT HEALTH -->
+<section id="executive-health" class="doc-section">
+  <span class="section-label">Projects &amp; Infrastructure</span>
+  <h1>Project Health</h1>
+  <p>Das <strong>Project Health Widget</strong> bewertet die Gesamtqualität eines Projekts anhand mehrerer KPIs und liefert einen zusammenfassenden Health Score.</p>
+  <div class="screenshot-wrap">
+    <img alt="Project Health widget" src="./autemos_executivedashboard_screenshots/image_10.png"/>
+    <div class="screenshot-caption">Project Health — Health Score auf Basis von Pass Rate, Flakiness, Coverage und Cost Trends.</div>
+  </div>
+  <h2>Health Metrics</h2>
+  <ul class="feature-list">
+    <li>Pass Rate</li>
+    <li>Flakiness</li>
+    <li>Coverage</li>
+    <li>Cost Trends</li>
+  </ul>
+  <h2>Health Score</h2>
+  <p>Projekte erhalten einen zusammenfassenden Gesundheits-Score (z. B. <strong>4 / 5 Excellent</strong>).</p>
+  <h2>Vorteile</h2>
+  <ul class="feature-list">
+    <li>Executive Visibility</li>
+    <li>Vereinfachte Qualitätsbewertung</li>
+    <li>Portfolio-Priorisierung</li>
+  </ul>
+</section>
+
+<!-- ACTIVITY FEED -->
+<section id="executive-activity" class="doc-section">
+  <span class="section-label">AI &amp; Activity</span>
+  <h1>Activity Feed</h1>
+  <p>Der <strong>Activity Feed</strong> zeigt aktuelle Plattformaktivitäten in Echtzeit — für operative Transparenz und Team Awareness.</p>
+  <div class="screenshot-wrap">
+    <img alt="Activity Feed widget" src="./autemos_executivedashboard_screenshots/image_11.png"/>
+    <div class="screenshot-caption">Activity Feed — Echtzeit-Stream aller Plattformaktivitäten.</div>
+  </div>
+  <h2>Ereignisse</h2>
+  <ul class="feature-list">
+    <li>Schedule-Ausführungen</li>
+    <li>Erfolgreiche Tests</li>
+    <li>Fehlgeschlagene Tests</li>
+    <li>Systemaktionen</li>
+    <li>AI-Aktivitäten</li>
+  </ul>
+  <h2>Vorteile</h2>
+  <ul class="feature-list">
+    <li>Operative Transparenz</li>
+    <li>Echtzeit-Monitoring</li>
+    <li>Team Awareness</li>
+  </ul>
+</section>
+
+<!-- LLM COST ANALYTICS -->
+<section id="executive-llm" class="doc-section">
+  <span class="section-label">AI &amp; Activity</span>
+  <h1>LLM Cost Analytics</h1>
+  <p>Überwacht <strong>AI- und LLM-bezogene Betriebskosten</strong> — für Budgetkontrolle und Optimierung der AI-Effizienz.</p>
+  <div class="screenshot-wrap">
+    <img alt="LLM Cost Analytics widget" src="./autemos_executivedashboard_screenshots/image_12.png"/>
+    <div class="screenshot-caption">LLM Cost Analytics — Tracking täglicher und monatlicher AI-Kosten sowie Nutzungstrends.</div>
+  </div>
+  <h2>Kennzahlen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Kennzahl</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Heutige AI-Kosten</strong></td><td>Tageskosten der AI-Nutzung</td></tr>
+        <tr><td><strong>Monatliche AI-Kosten</strong></td><td>Kumulierte Kosten des aktuellen Monats</td></tr>
+        <tr><td><strong>AI-Nutzungstrends</strong></td><td>Entwicklung der Nutzung über die Zeit</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Vorteile</h2>
+  <ul class="feature-list">
+    <li>AI-Kosten kontrollieren</li>
+    <li>API-Nutzung überwachen</li>
+    <li>AI-Effizienz optimieren</li>
+    <li>Budgetplanung unterstützen</li>
+  </ul>
+</section>
+
+<!-- QUICK ACTIONS -->
+<section id="executive-actions" class="doc-section">
+  <span class="section-label">AI &amp; Activity</span>
+  <h1>Quick Actions</h1>
+  <p>Bietet schnellen Zugriff auf häufig verwendete Verwaltungsaktionen — für effiziente Navigation und administrative Workflows.</p>
+  <div class="screenshot-wrap">
+    <img alt="Quick Actions widget" src="./autemos_executivedashboard_screenshots/image_13.png"/>
+    <div class="screenshot-caption">Quick Actions — Direktzugriff auf Projects, Analytics und administrative Aktionen.</div>
+  </div>
+  <h2>Beispielaktionen</h2>
+  <ul class="feature-list">
+    <li>Browse Projects</li>
+    <li>Open Analytics Dashboard</li>
+    <li>Manage Projects</li>
+  </ul>
+  <h2>Vorteile</h2>
+  <ul class="feature-list">
+    <li>Verbesserte Navigationsgeschwindigkeit</li>
+    <li>Operative Effizienz</li>
+    <li>Optimierte administrative Workflows</li>
+  </ul>
+</section>
+
+<!-- PLATFORM FEATURES -->
+<section id="executive-platform" class="doc-section">
+  <span class="section-label">Plattform &amp; Anwendung</span>
+  <h1>Plattform-Features</h1>
+  <p>Das Executive Dashboard kombiniert drei strategische Plattform-Fähigkeiten: Echtzeit-Monitoring, projektübergreifende Sichtbarkeit und integrierte AI-Analytik.</p>
+  <h2>Echtzeit-Monitoring</h2>
+  <p>Das Executive Dashboard wurde für nahezu Echtzeit-Monitoring entwickelt — mit Live-Updates, dynamischen Kennzahlen und kontinuierlichem Infrastruktur-Monitoring.</p>
+  <h2>Projektübergreifende Sichtbarkeit</h2>
+  <p>Im Gegensatz zu projektbezogenen Dashboards aggregiert das Executive Dashboard globale Daten über:</p>
+  <ul class="feature-list">
+    <li>Alle Projekte</li>
+    <li>Alle Schedules</li>
+    <li>Alle Ausführungen</li>
+    <li>Alle Umgebungen</li>
+    <li>Alle Infrastruktur-Nodes</li>
+  </ul>
+  <h2>AI &amp; Automation Insights</h2>
+  <p>Das Dashboard integriert AI-bezogene Metriken wie:</p>
+  <ul class="feature-list">
+    <li>LLM-Kosten</li>
+    <li>AI-generierte Tests</li>
+    <li>AI-gestützte Ausführungen</li>
+    <li>AI-basierte Qualitätsanalysen</li>
+  </ul>
+  <p>Dadurch entsteht Transparenz über Automatisierungsqualität und AI-Betriebskosten.</p>
+</section>
+
+<!-- ENTERPRISE BENEFITS & USE CASES -->
+<section id="executive-benefits" class="doc-section">
+  <span class="section-label">Plattform &amp; Anwendung</span>
+  <h1>Enterprise Vorteile &amp; Use Cases</h1>
+  <h2>Enterprise Vorteile</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Vorteil</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Executive Visibility</strong></td><td>Management-taugliches Reporting und Qualitätsmonitoring.</td></tr>
+        <tr><td><strong>Schnellere Entscheidungen</strong></td><td>Schnelle Identifikation von Risiken, Fehlern, instabilen Projekten und Infrastrukturproblemen.</td></tr>
+        <tr><td><strong>Höhere Release-Sicherheit</strong></td><td>Release-Governance durch Health Metrics, Pass Rates und GO / NO-GO Indikatoren.</td></tr>
+        <tr><td><strong>Infrastruktur-Transparenz</strong></td><td>Einblicke in Grid-Auslastung, Parallelisierungskapazität und Geräteverfügbarkeit.</td></tr>
+        <tr><td><strong>AI Governance</strong></td><td>Überwachung und Kontrolle von AI-Nutzung und AI-Kosten.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Typische Use Cases</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Release Readiness Monitoring</h3><p>Bewertung, ob Projekte bereit für ein Deployment sind.</p></div>
+    <div class="concept-card"><h3>Portfolio Quality Tracking</h3><p>Überwachung von Qualitätsentwicklungen über alle Automatisierungsinitiativen hinweg.</p></div>
+    <div class="concept-card"><h3>Infrastruktur-Monitoring</h3><p>Überwachung des Selenium Grid und der gesamten Testinfrastruktur.</p></div>
+    <div class="concept-card"><h3>Flaky Test Reduktion</h3><p>Identifikation instabiler Tests zur Verbesserung der CI/CD-Zuverlässigkeit.</p></div>
+    <div class="concept-card"><h3>Executive Reporting</h3><p>Bereitstellung managementfreundlicher Qualitäts- und Automatisierungsmetriken.</p></div>
+  </div>
+</section>
+
+</div><!-- /content-wrap -->

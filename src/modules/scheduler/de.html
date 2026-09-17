@@ -1,0 +1,353 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="scheduler-overview" class="doc-section">
+  <div class="section-intro">
+    <span class="section-label">Scheduler</span>
+    <h1>Test Scheduler</h1>
+    <p>Das Test Scheduler-Modul ermöglicht Teams die Automatisierung und Orchestrierung von Testausführungen über Projekte, Workflows und Environments hinweg. Es bietet zentralisierte Planungsfähigkeiten für wiederkehrende Regressions-Suiten, Smoke Tests, Monitoring-Prüfungen und verkettete Ausführungsflüsse.</p>
+  </div>
+  <h2>Was das Modul bietet</h2>
+  <ul class="feature-list">
+    <li>Zeitbasierte Ausführung mit Cron-Intervallen</li>
+    <li>Ereignisbasierte Ausführung auf Basis von Abhängigkeiten zwischen Schedules</li>
+    <li>Bevorstehende Ausführungen überwachen und historische Läufe prüfen</li>
+    <li>Ausführungseinstellungen und Environments konfigurieren</li>
+    <li>Schedules bei Bedarf manuell auslösen</li>
+    <li>Externe CI/CD-Integration via API</li>
+  </ul>
+  <h2>Modulsektionen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Abschnitt</th><th>Zweck</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Schedules</strong></td><td>Alle geplanten Ausführungen verwalten und konfigurieren</td></tr>
+        <tr><td><strong>Upcoming Runs</strong></td><td>Zukünftige geplante Ausführungen vorschauen</td></tr>
+        <tr><td><strong>History</strong></td><td>Zentralisierte Ausführungshistorie über alle Schedules</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SCHEDULES LIST -->
+<section id="schedules-list" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Schedules</h1>
+      <span class="badge badge-scheduler">Scheduler</span>
+    </div>
+  </div>
+  <p>Der Schedules-Tab bietet eine zentralisierte Übersicht aller konfigurierten Schedules im Projekt. Jede Schedule-Karte zeigt Name, Beschreibung, Ausführungsfrequenz, Zeitzone, verknüpfte Workflows, aktuellen Status und schnelle Aktionssteuerungen an.</p>
+  <div class="screenshot-wrap">
+    <img src="./Test_Scheduler_Documentation/image_1.png" alt="Schedules Overview">
+    <div class="screenshot-caption">Schedules — zentralisierte Übersicht aller konfigurierten Schedules mit Status und schnellen Aktionen.</div>
+  </div>
+  <h2>Verfügbare Aktionen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Aktion</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Run Now</strong></td><td>Führt den Schedule sofort aus</td></tr>
+        <tr><td><strong>Enable / Disable</strong></td><td>Aktiviert oder pausiert den Schedule</td></tr>
+        <tr><td><strong>Edit</strong></td><td>Ändert die Schedule-Konfiguration</td></tr>
+        <tr><td><strong>Delete</strong></td><td>Entfernt den Schedule dauerhaft</td></tr>
+        <tr><td><strong>Open Details</strong></td><td>Öffnet das detaillierte Schedule-Management</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Schedule-Status</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Status</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Active</strong></td><td>Schedule wird automatisch gemäss seinem Intervall ausgeführt</td></tr>
+        <tr><td><strong>Inactive</strong></td><td>Schedule ist pausiert — keine Ausführungen werden ausgelöst</td></tr>
+        <tr><td><strong>Scheduled</strong></td><td>Ausführung ist für zukünftige Ausführung in der Warteschlange</td></tr>
+        <tr><td><strong>Running</strong></td><td>Schedule wird gerade ausgeführt</td></tr>
+        <tr><td><strong>Failed</strong></td><td>Letzte Ausführung fehlgeschlagen</td></tr>
+        <tr><td><strong>Passed</strong></td><td>Letzte Ausführung erfolgreich abgeschlossen</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CREATE SCHEDULE -->
+<section id="create-schedule" class="doc-section">
+  <div class="node-left">
+    <div class="node-header">
+      <div>
+        <h1>Create Schedule</h1>
+        <span class="badge badge-scheduler">Schedules</span>
+      </div>
+    </div>
+    <p>Benutzer können neue Schedules über die Schaltfläche <strong>New Schedule</strong> erstellen. Der Erstellungsdialog unterstützt mehrere Konfigurationsbereiche einschliesslich Name, Trigger-Typ, Frequenz, Zeitzone, Runner und verknüpfte Tests.</p>
+    <h2>Grundkonfiguration</h2>
+    <div class="param-table-wrap">
+      <table class="param-table">
+        <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Schedule Name</strong></td><td>Sichtbarer Name des Schedules (z. B. Nightly Regression Suite)</td></tr>
+          <tr><td><strong>Description</strong></td><td>Optionale Metadaten zur Beschreibung des Zwecks</td></tr>
+          <tr><td><strong>Timezone</strong></td><td>Ausführungs-Zeitzone (z. B. Europe/Zurich)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <h2>Ausführungseinstellungen</h2>
+    <div class="param-table-wrap">
+      <table class="param-table">
+        <thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Runner Type</strong></td><td>Selenium Grid, Cloud Runner, Local Agent</td></tr>
+          <tr><td><strong>Parallelism</strong></td><td>Anzahl gleichzeitiger Testausführungen</td></tr>
+          <tr><td><strong>Max Retries</strong></td><td>Retry-Anzahl für fehlgeschlagene Ausführungen</td></tr>
+          <tr><td><strong>Retry Delay</strong></td><td>Verzögerung zwischen Retry-Versuchen</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="screenshot-wrap">
+    <img src="./Test_Scheduler_Documentation/image_2.png" alt="Create Schedule dialog">
+    <div class="screenshot-caption">Create Schedule-Dialog</div>
+  </div>
+</section>
+
+<!-- TRIGGER TYPES -->
+<section id="trigger-types" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Trigger Types</h1>
+      <span class="badge badge-scheduler">Schedules</span>
+    </div>
+  </div>
+  <p>Der Scheduler unterstützt mehrere Trigger-Strategien, um verschiedenen operativen Anforderungen gerecht zu werden.</p>
+  <h2>Zeitbasiert (Cron)</h2>
+  <p>Schedules werden auf Basis wiederkehrender Zeitintervalle ausgeführt.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Frequenz</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Every 5 min</td><td>Kontinuierliches Monitoring</td></tr>
+        <tr><td>Every 15 min</td><td>Hochfrequente Ausführung</td></tr>
+        <tr><td>Every 30 min</td><td>Standard-Monitoring</td></tr>
+        <tr><td>Hourly</td><td>Periodische Ausführung</td></tr>
+        <tr><td>Daily</td><td>Tägliche Regressions-Läufe</td></tr>
+        <tr><td>Weekly</td><td>Wöchentliche Validierungszyklen</td></tr>
+        <tr><td>Custom</td><td>Benutzerdefinierte Cron-Ausdrücke für präzise Planung</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Ereignisbasiert</h2>
+  <p>Schedules können ausgelöst werden, nachdem ein anderer Schedule erfolgreich abgeschlossen wurde. Dies ermöglicht verkettete Ausführungsflüsse, Abhängigkeits-Orchestrierung und mehrstufige Validierungs-Pipelines.</p>
+  <h2>Headless-Ausführung</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Modus</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Headed</strong></td><td>Browser-UI während der Ausführung sichtbar</td></tr>
+        <tr><td><strong>Headless</strong></td><td>Browser läuft unsichtbar — schnellere Ausführung, geringerer Infrastrukturaufwand</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- UPCOMING RUNS -->
+<section id="upcoming-runs" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Upcoming Runs</h1>
+      <span class="badge badge-scheduler">Monitoring</span>
+    </div>
+  </div>
+  <p>Der Upcoming Runs-Tab bietet Transparenz über zukünftige geplante Ausführungen über alle konfigurierten Schedules hinweg. Benutzer können Läufe für die nächsten 24 Stunden, 48 Stunden oder 7 Tage vorschauen.</p>
+  <div class="screenshot-wrap">
+    <img src="./Test_Scheduler_Documentation/image_3.png" alt="Upcoming Runs">
+    <div class="screenshot-caption">Upcoming Runs — Vorschau aller zukünftigen geplanten Ausführungen mit Zeit- und Workflow-Details.</div>
+  </div>
+  <h2>Angezeigte Informationen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Spalte</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Scheduled Time</td><td>Genauer zukünftiger Ausführungszeitstempel</td></tr>
+        <tr><td>Schedule</td><td>Zugeordneter Schedule-Name</td></tr>
+        <tr><td>Test / Workflow</td><td>Auszuführende Workflow- oder Testnamen</td></tr>
+        <tr><td>Status</td><td>Status der in der Warteschlange befindlichen Ausführung</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- EXECUTION HISTORY -->
+<section id="execution-history" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Execution History</h1>
+      <span class="badge badge-scheduler">Monitoring</span>
+    </div>
+  </div>
+  <p>Der History-Tab bietet eine zentralisierte Übersicht aller historischen Schedule-Ausführungen über das gesamte Projekt. Im Gegensatz zur schedule-spezifischen Laufhistorie aggregiert diese Ansicht Ausführungen aller konfigurierten Schedules in einem einzigen operativen Dashboard.</p>
+  <div class="screenshot-wrap">
+    <img src="./Test_Scheduler_Documentation/image_4.png" alt="Execution History">
+    <div class="screenshot-caption">Ausführungshistorie — zentralisierte Ansicht aller geplanten Laufergebnisse im Projekt.</div>
+  </div>
+  <h2>Historie-Tabelle</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Spalte</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Timestamp</td><td>Datum und Uhrzeit der Ausführung</td></tr>
+        <tr><td>Schedule</td><td>Name des ursprünglichen Schedules</td></tr>
+        <tr><td>Test Name</td><td>Ausgeführter Workflow oder Test</td></tr>
+        <tr><td>Status</td><td>Endgültiges Ausführungsergebnis</td></tr>
+        <tr><td>Duration</td><td>Gesamtausführungszeit</td></tr>
+        <tr><td>Actions</td><td>Detaillierte Ausführungsinformationen aufrufen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Filterung &amp; Suche</h2>
+  <p>Der History-Tab enthält Status-Filter (All, Passed, Failed) und Zeitraum-Filter (Last 24h, Last 7d, Last 30d) für schnellere Untersuchung und Analyse. Die Tabelle unterstützt Paginierung für grosse Ausführungsvolumen.</p>
+  <h2>Anwendungsfälle</h2>
+  <ul class="feature-list">
+    <li>Fehleruntersuchung — wiederkehrende Fehler über Schedules und Workflows hinweg identifizieren</li>
+    <li>Leistungsmonitoring — Trends der Ausführungsdauer über die Zeit verfolgen</li>
+    <li>Regressionsstabilität — langfristige Automationszuverlässigkeit analysieren</li>
+    <li>Operative Auditierung — vollständigen Audit-Trail der automatisierten Ausführungen pflegen</li>
+  </ul>
+</section>
+
+<!-- SCHEDULE DETAILS -->
+<section id="schedule-details" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Schedule Details</h1>
+      <span class="badge badge-scheduler">Schedule Management</span>
+    </div>
+  </div>
+  <p>Das Öffnen eines Schedules bietet detaillierte Verwaltungsfunktionen. Die Detailansicht ist in drei Tabs unterteilt: Tests, Upcoming Runs und Run History.</p>
+</section>
+
+<!-- SCHEDULE TESTS -->
+<section id="schedule-tests" class="doc-section">
+  <h2>Tests</h2>
+  <p>Der Tests-Tab zeigt alle dem Schedule zugewiesenen Workflows an und ermöglicht vollständiges Test-Management innerhalb des Schedules.</p>
+  <div class="screenshot-wrap">
+    <img src="./Test_Scheduler_Documentation/image_6.png" alt="Schedule Tests Tab">
+    <div class="screenshot-caption">Tests-Tab — alle dem Schedule zugewiesenen Workflows mit Abhängigkeiten und Ausführungseinstellungen verwalten.</div>
+  </div>
+  <h3>Test zu Schedule hinzufügen</h3>
+  <div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:20px">
+    <div style="flex:1;min-width:0">
+      <p style="margin-bottom:12px">Tests können dynamisch zu bestehenden Schedules mit vollständigen Konfigurationsoptionen hinzugefügt werden.</p>
+      <div class="param-table-wrap" style="margin:0">
+        <table class="param-table">
+          <thead><tr><th>Option</th><th>Beschreibung</th></tr></thead>
+          <tbody>
+            <tr><td>Workflow</td><td>Den auszuführenden Workflow auswählen</td></tr>
+            <tr><td>Dependency</td><td>Definieren, welcher Test vor diesem abgeschlossen sein muss</td></tr>
+            <tr><td>Retry Behavior</td><td>Retry-Anzahl und Verzögerung für diesen spezifischen Test überschreiben</td></tr>
+            <tr><td>Headless Mode</td><td>Browser ohne sichtbare UI ausführen</td></tr>
+            <tr><td>Variables</td><td>Workflow-Eingabe-/Ausgabe-Variablen zur Parametrisierung synchronisieren</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="screenshot-wrap" style="flex:0 0 280px;margin:0">
+      <img src="./Test_Scheduler_Documentation/image_7.png" alt="Add Test to Schedule">
+      <div class="screenshot-caption">Add Test to Schedule-Dialog</div>
+    </div>
+  </div>
+  <div class="tip">
+    <span class="tip-icon">💡</span>
+    Verwenden Sie <strong>Test Dependencies</strong>, um Ausführungsflüsse zu verketten — beispielsweise: <em>Checkout Flow hängt von Login Flow ab</em>. Dies stellt sicher, dass Authentifizierung und Environment-Vorbereitung vor geschäftskritischen Tests erfolgen.
+  </div>
+</section>
+
+<!-- SCHEDULE UPCOMING -->
+<section id="schedule-upcoming" class="doc-section">
+  <h2>Upcoming Runs</h2>
+  <p>Der Upcoming Runs-Bereich auf Schedule-Ebene zeigt zukünftige Ausführungen nur für den ausgewählten Schedule an und hilft Teams, das Planungsverhalten vor der Ausführung zu validieren.</p>
+  <div class="screenshot-wrap">
+    <img src="./Test_Scheduler_Documentation/image_8.png" alt="Schedule Upcoming Runs">
+    <div class="screenshot-caption">Upcoming Runs (Schedule-Detail) — nächste geplante Ausführungen mit genauen Zeitstempeln und Laufreihenfolge.</div>
+  </div>
+  <h3>Angezeigte Informationen</h3>
+  <ul class="feature-list">
+    <li>Genauer Ausführungszeitstempel</li>
+    <li>Relative Ausführungszeit (z. B. "in 2 Stunden")</li>
+    <li>Laufreihenfolge im Schedule</li>
+    <li>Nächster Ausführungsindikator</li>
+  </ul>
+</section>
+
+<!-- SCHEDULE RUN HISTORY -->
+<section id="schedule-history" class="doc-section">
+  <h2>Run History</h2>
+  <p>Der Run History-Bereich bietet historische Transparenz über alle Ausführungen des ausgewählten Schedules.</p>
+  <div class="screenshot-wrap">
+    <img src="./Test_Scheduler_Documentation/image_9.png" alt="Schedule Run History">
+    <div class="screenshot-caption">Run History — Ausführungs-Timeline für den ausgewählten Schedule mit Status, Dauer und Trigger-Details.</div>
+  </div>
+  <h3>Historie-Informationen</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Date</td><td>Ausführungszeitstempel</td></tr>
+        <tr><td>Trigger</td><td>Ausführungsquelle (geplant, manuell, ereignisbasiert)</td></tr>
+        <tr><td>Status</td><td>Endgültiger Ausführungszustand</td></tr>
+        <tr><td>Tests</td><td>Anzahl ausgeführter Tests</td></tr>
+        <tr><td>Duration</td><td>Gesamtausführungsdauer</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Historie-Filter</h3>
+  <p>Ausführungshistorie nach Status und Zeitraum (Last 24h, Last 7d, Last 30d) filtern, um Vorfälle schnell zu isolieren oder langfristige Trends zu analysieren.</p>
+</section>
+
+<!-- EXTERNAL INTEGRATION -->
+<section id="external-integration" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>External Integration</h1>
+      <span class="badge badge-scheduler">Integration</span>
+    </div>
+  </div>
+  <p>Zusätzlich zur integrierten Planung unterstützt Autemos die Integration mit externen Orchestrierungs- und CI/CD-Plattformen. Dies ermöglicht Organisationen, automatisierte Tests direkt aus bestehenden Delivery-Pipelines auszulösen.</p>
+  <h2>Unterstützte Plattformen</h2>
+  <ul class="feature-list">
+    <li>GitLab CI/CD</li>
+    <li>Jenkins</li>
+    <li>Azure DevOps</li>
+    <li>GitHub Actions</li>
+    <li>Benutzerdefinierte Pipeline-Systeme via API</li>
+  </ul>
+  <h2>API-basierte Ausführung</h2>
+  <p>Autemos stellt APIs bereit, die es externen Systemen ermöglichen, einzelne Tests, vollständige Workflows, Regressions-Suiten und geplante Ausführungsketten auszulösen. Externe Systeme verwalten die Orchestrierung, während Autemos Testausführung, Browser-Automation, Reporting, Self-Healing und Analyse übernimmt.</p>
+  <h2>Häufige Integrationsszenarien</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Szenario</th><th>Ablauf</th></tr></thead>
+      <tbody>
+        <tr><td><strong>CI/CD-Validierung</strong></td><td>GitLab Pipeline → Deployment → Autemos Tests auslösen → Validieren</td></tr>
+        <tr><td><strong>Enterprise-Planung</strong></td><td>Enterprise Scheduler → Autemos API → Automatisierte Ausführung</td></tr>
+        <tr><td><strong>Release Gate</strong></td><td>Build → Deployment auf Staging → Workflow auslösen → Auswerten → Fortfahren oder Stoppen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Interne vs. externe Planung</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Typ</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Intern</strong></td><td>Direkt im Test Scheduler-Modul verwaltet</td></tr>
+        <tr><td><strong>Extern</strong></td><td>Via API aus CI/CD- oder Enterprise-Systemen ausgelöst</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip">
+    <span class="tip-icon">💡</span>
+    Viele Organisationen verwenden einen <strong>hybriden Ansatz</strong> — interne Schedules für wiederkehrendes Monitoring und Regressionstests, externe Trigger für CI/CD und Deployment-Validierung. Beides kann kombiniert werden, während die zentralisierte Berichterstattung in Autemos erhalten bleibt.
+  </div>
+</section>
+
+</div><!-- /content-wrap -->

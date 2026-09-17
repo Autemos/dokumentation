@@ -1,0 +1,291 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="projectsettings-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Project Settings</h1>
+  <p>Das Modul <strong>Project Settings</strong> zentralisiert die administrative Konfiguration eines Projekts. Es ermöglicht Projekt-Ownern und Administratoren die Verwaltung von Projekt-Metadaten, Umgebungen, Mitgliedern, API Keys sowie Authentifizierungs-Konfigurationen und Secrets.</p>
+  <div class="screenshot-wrap">
+    <img alt="Project Settings overview" src="./autemos_projectsettings/image_1.png"/>
+    <div class="screenshot-caption">Project Settings — zentrale Verwaltung aller projektbezogenen Konfigurationen.</div>
+  </div>
+  <h2>Verwaltete Bereiche</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Projekt-Metadaten</h3><p>Name, Beschreibung und Grundkonfiguration des Projekts.</p></div>
+    <div class="concept-card"><h3>Projekt-Umgebungen</h3><p>Applikationen und Environments (TEST / QA / PROD).</p></div>
+    <div class="concept-card"><h3>Mitglieder &amp; Berechtigungen</h3><p>Zugriffe und Rollen pro Projekt.</p></div>
+    <div class="concept-card"><h3>API Keys</h3><p>Programmatischer Zugriff für externe Integrationen.</p></div>
+    <div class="concept-card"><h3>Auth &amp; Secrets</h3><p>Wiederverwendbare Auth-Konfigurationen und verschlüsselte Secrets.</p></div>
+  </div>
+  <p>Das Modul bildet die Grundlage für sichere Zusammenarbeit, Umgebungsmanagement und API-Integrationen innerhalb der Plattform.</p>
+</section>
+
+<!-- GENERAL SETTINGS -->
+<section id="projectsettings-general" class="doc-section">
+  <span class="section-label">Konfiguration</span>
+  <h1>General Settings</h1>
+  <p>Die Sektion <strong>General</strong> enthält die zentrale Projektkonfiguration inklusive Projektname, Beschreibung, Umgebungsverwaltung und Applikations-Katalog.</p>
+  <div class="screenshot-wrap">
+    <img alt="General Settings configuration" src="./autemos_projectsettings/image_2.png"/>
+    <div class="screenshot-caption">General Settings — Projektname, Beschreibung und Applikations-/Environment-Katalog.</div>
+  </div>
+  <h2>Jedes Projekt definiert</h2>
+  <p>Mehrere Anwendungen und Umgebungen, die verwendet werden für:</p>
+  <ul class="feature-list">
+    <li>Test Workflows</li>
+    <li>Recorder Sessions</li>
+    <li>Test Data Bindings</li>
+    <li>API-Ausführungen</li>
+  </ul>
+  <h2>Wann verwenden</h2>
+  <ul class="feature-list">
+    <li>Beim Anlegen einer neuen Projektstruktur</li>
+    <li>Konfiguration von Testumgebungen</li>
+    <li>Verwaltung mehrerer Applikations-URLs</li>
+    <li>Trennung von TEST / QA / PROD Umgebungen</li>
+    <li>Aktualisierung der Projekt-Metadaten</li>
+  </ul>
+  <h2>Project Details</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Project Name</strong></td><td>Name des Projekts</td></tr>
+        <tr><td><strong>Description</strong></td><td>Optionale Projektbeschreibung</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Project Environments</h2>
+  <p>Jede Applikation kann mehrere Umgebungen enthalten. Beispiel:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Application</th><th>Environment</th><th>URL</th></tr></thead>
+      <tbody>
+        <tr><td>Migros</td><td>TEST</td><td><code>https://www.migros.ch/de</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Unterstützte Aktionen</h3>
+  <ul class="feature-list">
+    <li>Applikation hinzufügen</li>
+    <li>Applikation entfernen</li>
+    <li>Environments hinzufügen</li>
+    <li>Environment-URLs definieren</li>
+    <li>Default-Environments konfigurieren</li>
+  </ul>
+  <h2>Verhalten</h2>
+  <ul class="feature-list">
+    <li>Environment-Konfigurationen werden zentral verwaltet</li>
+    <li>Workflows können dynamisch auf Environments referenzieren</li>
+    <li>Recorder- und API-Nodes verwenden die konfigurierten Environment-URLs</li>
+    <li>Änderungen wirken projektweit</li>
+  </ul>
+  <h2>Best Practices</h2>
+  <ul class="best-practices">
+    <li>Klare Naming-Konventionen für Environments verwenden</li>
+    <li>TEST, QA und PROD strikt trennen</li>
+    <li>Keine Produktions-Credentials in Test-Environments nutzen</li>
+    <li>Environment-URLs zentral pflegen</li>
+  </ul>
+</section>
+
+<!-- MEMBERS -->
+<section id="projectsettings-members" class="doc-section">
+  <span class="section-label">Konfiguration</span>
+  <h1>Members</h1>
+  <p>Die Sektion <strong>Members</strong> verwaltet den Projektzugriff und die Benutzerrechte.</p>
+  <div class="screenshot-wrap">
+    <img alt="Members overview" src="./autemos_projectsettings/image_3.png"/>
+    <div class="screenshot-caption">Members — Übersicht aller Projektmitglieder mit ihren Rollen.</div>
+  </div>
+  <h2>Benutzer können</h2>
+  <ul class="feature-list">
+    <li>Projekten zugewiesen werden</li>
+    <li>Aus Projekten entfernt werden</li>
+    <li>Bestimmte Rollen erhalten</li>
+  </ul>
+  <h2>Unterstützte Rollen</h2>
+  <div class="screenshot-wrap">
+    <img alt="Member roles" src="./autemos_projectsettings/image_4.png"/>
+    <div class="screenshot-caption">Rollenzuweisung — OWNER, ADMIN oder MEMBER pro Benutzer.</div>
+  </div>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Rolle</th><th>Berechtigungen</th></tr></thead>
+      <tbody>
+        <tr><td><strong>OWNER</strong></td><td>Vollständige Projektadministration</td></tr>
+        <tr><td><strong>ADMIN</strong></td><td>Workflows, Settings und Benutzer verwalten</td></tr>
+        <tr><td><strong>MEMBER</strong></td><td>Erlaubte Ressourcen ausführen und bearbeiten</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Wann verwenden</h2>
+  <ul class="feature-list">
+    <li>Projektzugriff gewähren</li>
+    <li>Team-Berechtigungen verwalten</li>
+    <li>Tester oder Entwickler onboarden</li>
+    <li>Administrative Zugriffe beschränken</li>
+  </ul>
+  <h2>Verhalten</h2>
+  <ul class="feature-list">
+    <li>Nur zugewiesene Benutzer können auf das Projekt zugreifen</li>
+    <li>Rollen bestimmen die verfügbaren Berechtigungen</li>
+    <li>Owners haben volle administrative Kontrolle</li>
+    <li>Members erhalten begrenzten operativen Zugriff</li>
+  </ul>
+  <h2>Best Practices</h2>
+  <ul class="best-practices">
+    <li>OWNER-Berechtigungen auf wenige Benutzer beschränken</li>
+    <li>MEMBER für Standard-Tester verwenden</li>
+    <li>Projektzugriffe regelmässig prüfen</li>
+    <li>Inaktive Benutzer entfernen</li>
+  </ul>
+</section>
+
+<!-- API KEYS -->
+<section id="projectsettings-apikeys" class="doc-section">
+  <span class="section-label">Integration &amp; Security</span>
+  <h1>API Keys</h1>
+  <p>Die Sektion <strong>API Keys</strong> ermöglicht den sicheren programmatischen Zugriff auf die Plattform. API Keys können für externe Integrationen, CI/CD-Pipelines, Service Accounts und automatisierte Ausführungen verwendet werden.</p>
+  <div class="screenshot-wrap">
+    <img alt="API Keys overview" src="./autemos_projectsettings/image_5.png"/>
+    <div class="screenshot-caption">API Keys — sicherer programmatischer Zugriff für externe Integrationen.</div>
+  </div>
+  <h2>Wann verwenden</h2>
+  <ul class="feature-list">
+    <li>Integration externer Systeme</li>
+    <li>Automatisierte Ausführungen</li>
+    <li>Anbindung an CI/CD-Pipelines</li>
+    <li>Machine-to-Machine-Kommunikation</li>
+  </ul>
+  <h2>Configuration</h2>
+  <div class="screenshot-wrap">
+    <img alt="API Key configuration" src="./autemos_projectsettings/image_6.png"/>
+    <div class="screenshot-caption">API Key Konfiguration — Name, Beschreibung und Ablaufdatum.</div>
+  </div>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Key Name</strong></td><td>Name des API Keys</td></tr>
+        <tr><td><strong>Description</strong></td><td>Optionale Beschreibung zur Verwendung</td></tr>
+        <tr><td><strong>Expires In</strong></td><td>Ablaufdauer in Tagen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Verhalten</h2>
+  <ul class="feature-list">
+    <li>API Keys werden sicher generiert</li>
+    <li>Der vollständige Key wird nur einmalig nach der Erstellung angezeigt</li>
+    <li>Abgelaufene Keys werden automatisch ungültig</li>
+    <li>Keys können jederzeit widerrufen werden</li>
+  </ul>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Sicherheitshinweis —</strong> Der vollständige API Key wird nur einmalig nach der Erstellung angezeigt. Speichere API Keys immer sicher ab.
+  </div>
+  <h2>Best Practices</h2>
+  <ul class="best-practices">
+    <li>Wo möglich Ablaufdaten verwenden</li>
+    <li>Keys regelmässig rotieren</li>
+    <li>Separate Keys pro Integration</li>
+    <li>API Keys niemals öffentlich exponieren</li>
+  </ul>
+</section>
+
+<!-- AUTH & SECRETS -->
+<section id="projectsettings-auth" class="doc-section">
+  <span class="section-label">Integration &amp; Security</span>
+  <h1>Auth &amp; Secrets</h1>
+  <p>Die Sektion <strong>Auth &amp; Secrets</strong> verwaltet wiederverwendbare Authentifizierungs-Konfigurationen und verschlüsselte Secrets.</p>
+  <div class="screenshot-wrap">
+    <img alt="Auth and Secrets overview" src="./autemos_projectsettings/image_7.png"/>
+    <div class="screenshot-caption">Auth &amp; Secrets — wiederverwendbare Auth-Konfigurationen und verschlüsselte Secrets.</div>
+  </div>
+  <h2>Unterstützte Komponenten</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Environment Secrets</h3><p>Verschlüsselte sensitive Werte pro Umgebung.</p></div>
+    <div class="concept-card"><h3>Shared Auth Configurations</h3><p>Wiederverwendbare Authentifizierungs-Setups.</p></div>
+    <div class="concept-card"><h3>OAuth2 Credentials</h3><p>OAuth2-Client-Konfigurationen.</p></div>
+    <div class="concept-card"><h3>Bearer Tokens</h3><p>Token-basierte Authentifizierung.</p></div>
+    <div class="concept-card"><h3>API Keys</h3><p>API-Key-Authentifizierung.</p></div>
+    <div class="concept-card"><h3>Basic Authentication</h3><p>Benutzername / Passwort.</p></div>
+  </div>
+
+  <h2>Environment Secrets</h2>
+  <div class="screenshot-wrap">
+    <img alt="Environment Secrets" src="./autemos_projectsettings/image_8.png"/>
+    <div class="screenshot-caption">Environment Secrets — verschlüsselte sensitive Daten zentral verwaltet.</div>
+  </div>
+  <p>Environment Secrets speichern verschlüsselte sensitive Werte wie Tokens, Passwörter, Client Secrets und API Credentials. Secrets sind <strong>at rest verschlüsselt</strong> und werden nach der Erstellung nie wieder vollständig angezeigt.</p>
+  <h3>Configuration</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Key</strong></td><td>Secret-Identifier</td></tr>
+        <tr><td><strong>Value</strong></td><td>Verschlüsselter Secret-Wert</td></tr>
+        <tr><td><strong>Description</strong></td><td>Optionale Beschreibung</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Verhalten</h3>
+  <ul class="feature-list">
+    <li>Secrets sind sicher verschlüsselt</li>
+    <li>Werte bleiben nach Erstellung verborgen</li>
+    <li>Secrets können über mehrere Auth-Konfigurationen wiederverwendet werden</li>
+    <li>Werden von API Request Nodes und Integrationen verwendet</li>
+  </ul>
+
+  <h2>Auth Configurations</h2>
+  <div class="screenshot-wrap">
+    <img alt="Auth Configurations" src="./autemos_projectsettings/image_9.png"/>
+    <div class="screenshot-caption">Auth Configurations — wiederverwendbare Auth-Setups für API Request Nodes.</div>
+  </div>
+  <p>Auth Configurations bieten wiederverwendbare Authentifizierungs-Setups für <a href="#api-request">API Request</a> Nodes. Unterstützte Authentifizierungs-Typen:</p>
+  <ul class="feature-list">
+    <li>Bearer Token</li>
+    <li>Basic Auth</li>
+    <li>API Key</li>
+    <li>OAuth2 Client Credentials</li>
+  </ul>
+  <h3>Configuration</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Name der Auth-Konfiguration</td></tr>
+        <tr><td><strong>Description</strong></td><td>Optionale Beschreibung</td></tr>
+        <tr><td><strong>Auth Type</strong></td><td>Authentifizierungs-Methode</td></tr>
+        <tr><td><strong>Secret Reference</strong></td><td>Verknüpftes verschlüsseltes Secret</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Verhalten</h3>
+  <ul class="feature-list">
+    <li>Auth-Konfigurationen verwenden zentralisierte Secrets</li>
+    <li>Mehrere Workflows können dieselbe Auth-Config teilen</li>
+    <li>Änderungen wirken automatisch auf alle abhängigen Requests</li>
+    <li>Credentials werden niemals in Workflows offengelegt</li>
+  </ul>
+</section>
+
+<!-- BEST PRACTICES -->
+<section id="projectsettings-best-practices" class="doc-section">
+  <span class="section-label">Anwendung</span>
+  <h1>Best Practices</h1>
+  <p>Wichtigste Empfehlungen für die Verwendung des Project Settings Moduls:</p>
+  <ul class="best-practices">
+    <li>Sensitive Daten immer als <strong>Secrets</strong> speichern</li>
+    <li><strong>Shared Auth Configurations</strong> wiederverwenden</li>
+    <li>Keine Zugangsdaten direkt im Workflow speichern</li>
+    <li>Credentials pro Umgebung trennen</li>
+    <li>Secrets regelmässig rotieren</li>
+    <li>Klare Naming-Konventionen für Environments verwenden</li>
+    <li>OWNER-Berechtigungen auf wenige Benutzer beschränken</li>
+    <li>Projektzugriffe regelmässig prüfen und bereinigen</li>
+    <li>API Keys mit Ablaufdaten versehen</li>
+    <li>Separate API Keys pro Integration verwenden</li>
+  </ul>
+</section>
+
+</div><!-- /content-wrap -->

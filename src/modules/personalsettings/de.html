@@ -1,0 +1,182 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="personalsettings-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Persönliche Einstellungen</h1>
+  <p>Das Modul <strong>Persönliche Einstellungen</strong> ermöglicht Benutzern die Verwaltung ihrer eigenen Kontoinformationen und persönlichen Zertifikatskonfigurationen. Es ist über den <strong>Benutzer-Avatar oben rechts</strong> in der Plattform erreichbar.</p>
+  <div class="screenshot-wrap">
+    <img alt="Personal Settings overview" src="./autemos_personalsettings_screenshots/image_1.png"/>
+    <div class="screenshot-caption">Persönliche Einstellungen — erreichbar über den Benutzer-Avatar oben rechts.</div>
+  </div>
+  <h2>Funktionen</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Persönliche Profilinformationen</h3><p>Übersicht der eigenen Kontodetails.</p></div>
+    <div class="concept-card"><h3>Persönliche Runtime-Zertifikate</h3><p>Verwaltung individueller mTLS-Zertifikate.</p></div>
+    <div class="concept-card"><h3>Persönliche Zertifikatsquellen</h3><p>Eigene File-System- oder Vault-Quellen.</p></div>
+    <div class="concept-card"><h3>mTLS-Client-Zertifikate</h3><p>Sichere Client-Authentifizierung gegenüber geschützten Anwendungen.</p></div>
+  </div>
+  <h2>Verfügbare Aktionen</h2>
+  <ul class="feature-list">
+    <li>Persönliche Einstellungen öffnen</li>
+    <li>Profilinformationen anzeigen</li>
+    <li>Persönliche Zertifikate verwalten</li>
+    <li>Persönliche Runtime-Quellen verwalten</li>
+    <li>Von der Plattform abmelden</li>
+  </ul>
+</section>
+
+<!-- PROFILE -->
+<section id="personalsettings-profile" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Profil</h1>
+  <p>Die Sektion <strong>Profil</strong> zeigt die Informationen des aktuell angemeldeten Benutzers an. Diese Informationen sind <strong>schreibgeschützt</strong> und repräsentieren das aktive Benutzerkonto innerhalb der Plattform.</p>
+  <div class="screenshot-wrap">
+    <img alt="Profile section" src="./autemos_personalsettings_screenshots/image_2.png"/>
+    <div class="screenshot-caption">Profil — schreibgeschützte Übersicht des aktiven Benutzerkontos.</div>
+  </div>
+  <h2>Das Profil enthält</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Benutzername</strong></td><td>Eindeutiger Login-Name</td></tr>
+        <tr><td><strong>E-Mail-Adresse</strong></td><td>Kontakt-E-Mail des Benutzers</td></tr>
+        <tr><td><strong>Vorname</strong></td><td>Vorname des Benutzers</td></tr>
+        <tr><td><strong>Nachname</strong></td><td>Nachname des Benutzers</td></tr>
+        <tr><td><strong>Zugewiesene Rollen</strong></td><td>Systemweite und projektbezogene Rollen</td></tr>
+        <tr><td><strong>Interne Benutzer-ID</strong></td><td>Eindeutige Plattform-ID</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Wann verwenden</h2>
+  <ul class="feature-list">
+    <li>Überprüfung des aktiven Benutzerkontos</li>
+    <li>Kontrolle von Rollen und Berechtigungen</li>
+    <li>Einsicht in Kontoinformationen</li>
+    <li>Analyse von Berechtigungsproblemen</li>
+  </ul>
+</section>
+
+<!-- CERTIFICATES -->
+<section id="personalsettings-certificates" class="doc-section">
+  <span class="section-label">Zertifikate &amp; Quellen</span>
+  <h1>Zertifikate</h1>
+  <div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+    <div style="flex:1;min-width:0">
+      <p>Die Sektion <strong>Zertifikate</strong> verwaltet persönliche Runtime-Zertifikatskonfigurationen. Zertifikate werden <strong>getrennt von gemeinsam genutzten Projektkonfigurationen</strong> gespeichert.</p>
+      <h2 style="margin-top:20px">Sie ermöglicht</h2>
+      <ul class="feature-list">
+        <li>Speicherung persönlicher mTLS-Zertifikate</li>
+        <li>Konfiguration persönlicher Runtime-Dateiquellen oder Vault-Quellen</li>
+        <li>Nutzung individueller Zertifikate für sichere API-Kommunikation</li>
+        <li>Tests von mTLS-geschützten Anwendungen mit persönlicher Identität</li>
+      </ul>
+    </div>
+    <div class="screenshot-wrap" style="flex:0 0 340px;margin:0">
+      <img alt="Certificates section" src="./autemos_personalsettings_screenshots/image_3.png"/>
+      <div class="screenshot-caption">Add Certificate Source — Runtime-Quelle für persönliche Zertifikate hinzufügen.</div>
+    </div>
+  </div>
+</section>
+
+<!-- PERSONAL SOURCES -->
+<section id="personalsettings-sources" class="doc-section">
+  <span class="section-label">Zertifikate &amp; Quellen</span>
+  <h1>Persönliche Quellen</h1>
+  <div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+    <div style="flex:1;min-width:0">
+      <p>Persönliche Quellen definieren <strong>benutzerspezifische Runtime-Speicherorte</strong> für Zertifikate und sichere Dateien.</p>
+      <h2 style="margin-top:20px">Hilfreich wenn</h2>
+      <ul class="feature-list">
+        <li>Benutzer keine globalen/shared Zertifikatsquellen verwenden sollen</li>
+        <li>Persönliche Vault-Zugangsdaten benötigt werden</li>
+        <li>Teamunabhängige Zertifikatsverwaltung erforderlich ist</li>
+      </ul>
+    </div>
+    <div class="screenshot-wrap" style="flex:0 0 340px;margin:0">
+      <img alt="Personal Sources" src="./autemos_personalsettings_screenshots/image_4.png"/>
+      <div class="screenshot-caption">Add Personal Certificate — persönliches Zertifikat hinzufügen mit Source-Auswahl.</div>
+    </div>
+  </div>
+  <h2>Unterstützte Quellentypen</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>File System Source</h3><p>Lokales Verzeichnis als Quelle.</p></div>
+    <div class="concept-card"><h3>Gemeinsame Dateifreigaben</h3><p>Network-Share oder gemounteter Pfad.</p></div>
+    <div class="concept-card"><h3>Vault-basierte Quellen</h3><p>Sichere Vault-Anbindung für Credentials.</p></div>
+  </div>
+  <h2>Konfigurationsparameter</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Name der Runtime-Quelle</td></tr>
+        <tr><td><strong>Beschreibung</strong></td><td>Optionale Beschreibung</td></tr>
+        <tr><td><strong>Source Type</strong></td><td>Typ der Runtime-Quelle</td></tr>
+        <tr><td><strong>Share Root Path</strong></td><td>Basisverzeichnis oder Runtime-Pfad</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="example-block">
+    <h3>Beispiel — File-Share-Konfiguration</h3>
+    <div class="param-table-wrap"><table class="param-table"><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
+      <tr><td><strong>Source Type</strong></td><td><code>File System Source</code></td></tr>
+      <tr><td><strong>Share Root Path</strong></td><td><code>/certs</code></td></tr>
+    </tbody></table></div>
+    <p style="margin-top:12px">Dadurch können Zertifikatsprofile relative Dateipfade innerhalb des definierten Root-Verzeichnisses verwenden.</p>
+  </div>
+</section>
+
+<!-- PERSONAL CERTIFICATES -->
+<section id="personalsettings-personal-certs" class="doc-section">
+  <span class="section-label">Zertifikate &amp; Quellen</span>
+  <h1>Persönliche Zertifikate</h1>
+  <p>Persönliche Zertifikate werden für die <strong>sichere Client-Authentifizierung</strong> gegenüber mTLS-geschützten Anwendungen verwendet. Zertifikate referenzieren eine Runtime-Quelle und können optional mit einem Passwort geschützt werden.</p>
+  <h2>Unterstützte Zertifikatformate</h2>
+  <ul class="feature-list">
+    <li><strong>PKCS#12</strong> (<code>.p12</code> / <code>.pfx</code>)</li>
+  </ul>
+  <h2>Zertifikatskonfiguration</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Name</strong></td><td>Name des Zertifikatsprofils</td></tr>
+        <tr><td><strong>Beschreibung</strong></td><td>Optionale Beschreibung</td></tr>
+        <tr><td><strong>Certificate Source</strong></td><td>Referenz auf die Runtime-Quelle</td></tr>
+        <tr><td><strong>Certificate Type</strong></td><td>Zertifikatsformat</td></tr>
+        <tr><td><strong>Certificate File</strong></td><td>Hochgeladene Zertifikatsdatei</td></tr>
+        <tr><td><strong>Password</strong></td><td>Optionales Zertifikatspasswort</td></tr>
+        <tr><td><strong>Allowed Origins</strong></td><td>Erlaubte Ziel-Domains</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Allowed Origins</h2>
+  <p>Allowed Origins beschränken die Verwendung eines Zertifikats auf definierte Zielsysteme. Beispiel: <code>https://example.com</code>. Dies erhöht die Sicherheit, indem Zertifikate nur für freigegebene Domains verwendet werden dürfen.</p>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Sicherheitshinweis —</strong> Zertifikate und Secrets werden sicher zur Laufzeit verarbeitet.
+  </div>
+  <h2>Best Practices</h2>
+  <ul class="best-practices">
+    <li>Separate Zertifikate pro Umgebung verwenden</li>
+    <li>Allowed Origins möglichst einschränken</li>
+    <li>Persönliche Zertifikate nicht teilen</li>
+    <li>Zertifikate mit Passwort schützen</li>
+    <li>Zertifikate regelmässig rotieren</li>
+  </ul>
+</section>
+
+<!-- LOGOUT -->
+<section id="personalsettings-logout" class="doc-section">
+  <span class="section-label">Account</span>
+  <h1>Logout</h1>
+  <p>Benutzer können sich direkt über das <strong>Avatar-Menü oben rechts</strong> von der Plattform abmelden.</p>
+  <h2>Beim Logout</h2>
+  <ul class="feature-list">
+    <li>Wird die aktuelle Sitzung beendet</li>
+    <li>Wird der aktive Benutzerkontext gelöscht</li>
+    <li>Erfolgt die Rückkehr zum Login-Screen</li>
+  </ul>
+</section>
+
+</div><!-- /content-wrap -->

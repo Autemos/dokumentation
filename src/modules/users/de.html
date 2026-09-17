@@ -1,0 +1,284 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="users-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>User Management</h1>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Nur für Administratoren —</strong> Der Bereich User Management ist ausschliesslich für Administratoren zugänglich. Nur Benutzer mit administrativen Berechtigungen können Benutzer einladen, bearbeiten, deaktivieren, löschen, Projekte zuweisen und Rollen verwalten. Dies gewährleistet eine sichere und zentralisierte Zugriffskontrolle innerhalb der gesamten Autemos Plattform.
+  </div>
+  <p>Das <strong>User Management Menü</strong> ist der zentrale Administrationsbereich zur Verwaltung aller Benutzer innerhalb von Autemos.</p>
+  <h2>Was Administratoren können</h2>
+  <ul class="feature-list">
+    <li>Benutzer erstellen und einladen</li>
+    <li>Benutzerkonten verwalten</li>
+    <li>Projektzugriffe zuweisen</li>
+    <li>Projektrollen konfigurieren</li>
+    <li>Benutzeraktivitäten überwachen</li>
+    <li>Plattformberechtigungen steuern</li>
+  </ul>
+  <h2>Entwickelt für</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Enterprise Access Management</h3><p>Zentrale Kontrolle für grosse Organisationen.</p></div>
+    <div class="concept-card"><h3>Multi-Team-Umgebungen</h3><p>Saubere Trennung mehrerer Teams.</p></div>
+    <div class="concept-card"><h3>Sichere Projektisolation</h3><p>Granulare Zugriffskontrolle pro Projekt.</p></div>
+    <div class="concept-card"><h3>Skalierbare Berechtigungen</h3><p>Auch bei sehr grossen Benutzerzahlen.</p></div>
+  </div>
+  <h2>Zweck</h2>
+  <p>Der Bereich User Management unterstützt Organisationen dabei:</p>
+  <ul class="feature-list">
+    <li>Plattformzugriffe zu kontrollieren</li>
+    <li>Verantwortlichkeiten zu trennen</li>
+    <li>Projektberechtigungen zu verwalten</li>
+    <li>Neue Benutzer einzubinden</li>
+    <li>Inaktive Konten zu deaktivieren</li>
+    <li>Sichere Enterprise-Governance sicherzustellen</li>
+  </ul>
+  <h2>Hauptfunktionen</h2>
+  <ul class="feature-list">
+    <li>Benutzerübersicht</li>
+    <li>Benutzersuche</li>
+    <li>Benutzereinladung</li>
+    <li>Benutzerbearbeitung</li>
+    <li>Projektzuweisung</li>
+    <li>Rollenverwaltung</li>
+    <li>Aktivierung und Deaktivierung von Konten</li>
+    <li>Benutzerlöschung</li>
+  </ul>
+</section>
+
+<!-- USER OVERVIEW -->
+<section id="users-list" class="doc-section">
+  <span class="section-label">Übersicht</span>
+  <h1>User Management Übersicht</h1>
+  <p>Die Hauptübersicht zeigt alle registrierten Benutzer an — mit Dashboard-Statistiken, Suchfunktion und vollständiger Benutzertabelle.</p>
+  <div class="screenshot-wrap">
+    <img alt="User Management overview" src="./autemos_usermanagement_screenshots/image_1.png"/>
+    <div class="screenshot-caption">User Management Übersicht — Dashboard mit Statistiken, Benutzersuche und vollständiger Benutzertabelle.</div>
+  </div>
+  <h2>Dashboard Statistiken</h2>
+  <p>Die oberen Dashboard-Karten bieten eine schnelle Übersicht über die Plattformnutzung:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Total Users</h3><p>Gesamtanzahl aller registrierten Benutzer.</p></div>
+    <div class="concept-card"><h3>Active Users</h3><p>Anzahl aktiver Konten.</p></div>
+    <div class="concept-card"><h3>Administrators</h3><p>Anzahl der Admin-Benutzer.</p></div>
+    <div class="concept-card"><h3>Disabled Users</h3><p>Anzahl deaktivierter Konten.</p></div>
+  </div>
+  <h2>Benutzertabelle</h2>
+  <p>Die Benutzertabelle zeigt alle Benutzer und deren Kontoinformationen:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Spalte</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>User Name</strong></td><td>Vollständiger Name des Benutzers</td></tr>
+        <tr><td><strong>Username</strong></td><td>Eindeutiger Benutzername (Login)</td></tr>
+        <tr><td><strong>Email</strong></td><td>E-Mail-Adresse</td></tr>
+        <tr><td><strong>Role</strong></td><td>Systemweite Rolle (Administrator / User)</td></tr>
+        <tr><td><strong>Status</strong></td><td>Kontostatus (Active / Disabled)</td></tr>
+        <tr><td><strong>Created Date</strong></td><td>Datum der Kontoerstellung</td></tr>
+        <tr><td><strong>Last Login</strong></td><td>Zeitpunkt des letzten Logins</td></tr>
+        <tr><td><strong>Actions Menu</strong></td><td>Direktzugriff auf Benutzeraktionen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Benutzerrollen</h2>
+  <p>Benutzer können unterschiedliche systemweite Rollen besitzen:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Administrator</h3><p>Vollständige Plattform-Verwaltungsrechte.</p></div>
+    <div class="concept-card"><h3>User</h3><p>Standard-Benutzerkonto mit projektbezogenen Rechten.</p></div>
+  </div>
+  <p>Die Rollen definieren <strong>Plattformberechtigungen</strong>, <strong>Verwaltungsfunktionen</strong> und <strong>Zugriffseinschränkungen</strong>.</p>
+  <h2>Benutzerstatus</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Active</h3><p>Benutzer kann sich anmelden und arbeiten.</p></div>
+    <div class="concept-card"><h3>Disabled</h3><p>Benutzer ist gesperrt — kein Login möglich.</p></div>
+  </div>
+  <h2>Suchfunktion</h2>
+  <p>Die Suchleiste ermöglicht Administratoren das schnelle Auffinden von Benutzern. Unterstützte Suchkriterien:</p>
+  <ul class="feature-list">
+    <li>Name</li>
+    <li>Username</li>
+    <li>E-Mail-Adresse</li>
+  </ul>
+</section>
+
+<!-- INVITE USER -->
+<section id="users-invite" class="doc-section">
+  <span class="section-label">Verwaltung</span>
+  <h1>Invite New User</h1>
+  <p>Administratoren können neue Benutzer direkt über das User Management Menü einladen.</p>
+  <div class="screenshot-wrap">
+    <img alt="Invite User dialog" src="./autemos_usermanagement_screenshots/image_2.png"/>
+    <div class="screenshot-caption">Invite User Dialog — Email, Username, Vor- und Nachname für die Einladung neuer Benutzer.</div>
+  </div>
+  <h2>Invite User Dialog</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Email</strong></td><td>E-Mail-Adresse für die Einladung</td></tr>
+        <tr><td><strong>Username</strong></td><td>Eindeutiger Login-Name</td></tr>
+        <tr><td><strong>First Name</strong></td><td>Vorname des Benutzers</td></tr>
+        <tr><td><strong>Last Name</strong></td><td>Nachname des Benutzers</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>SMTP Hinweis —</strong> Falls SMTP nicht konfiguriert ist, zeigt das System eine Warnmeldung an. In diesem Fall können <strong>Einladungs-Emails nicht automatisch versendet</strong> werden, und <strong>Passwort-Reset-Links müssen manuell geteilt</strong> werden. Dadurch werden Administratoren auf unvollständige Benachrichtigungskonfigurationen hingewiesen.
+  </div>
+  <h2>Benutzererstellung</h2>
+  <p>Nach der Einladung:</p>
+  <ul class="feature-list">
+    <li>Wird das Benutzerkonto erstellt</li>
+    <li>Können Login-Daten initialisiert werden</li>
+    <li>Kann der Benutzer Onboarding-Informationen erhalten</li>
+  </ul>
+</section>
+
+<!-- EDIT USER -->
+<section id="users-edit" class="doc-section">
+  <span class="section-label">Verwaltung</span>
+  <h1>Benutzer bearbeiten &amp; Status</h1>
+  <p>Bestehende Benutzer können nachträglich bearbeitet werden, und Administratoren können Konten jederzeit aktivieren oder deaktivieren.</p>
+  <div class="screenshot-wrap">
+    <img alt="Edit User dialog" src="./autemos_usermanagement_screenshots/image_3.png"/>
+    <div class="screenshot-caption">Edit User — bearbeitbare Felder für E-Mail, Vor-/Nachname und User Enabled Status.</div>
+  </div>
+  <h2>Bearbeitbare Felder</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Email</strong></td><td>E-Mail-Adresse aktualisieren</td></tr>
+        <tr><td><strong>First Name</strong></td><td>Vornamen ändern</td></tr>
+        <tr><td><strong>Last Name</strong></td><td>Nachnamen ändern</td></tr>
+        <tr><td><strong>User Enabled Status</strong></td><td>Konto aktivieren oder deaktivieren</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><span class="tip-icon">💡</span><strong>Username Einschränkung —</strong> Der <strong>Username</strong> kann nach der Erstellung nicht mehr geändert werden. Dies gewährleistet konsistente Identitäten, stabile Audit-Daten und sichere Berechtigungsstrukturen.</div>
+  <h2>Benutzer aktivieren / deaktivieren</h2>
+  <p>Administratoren können Benutzer aktivieren oder deaktivieren. Deaktivierte Benutzer:</p>
+  <ul class="feature-list">
+    <li>Können sich nicht mehr anmelden</li>
+    <li>Verlieren den Plattformzugriff</li>
+    <li>Behalten historische Referenzen innerhalb des Systems</li>
+  </ul>
+  <h3>Verwendung</h3>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Temporäre Sperrungen</h3><p>Kurzfristiger Zugriffsentzug.</p></div>
+    <div class="concept-card"><h3>Mitarbeiter-Offboarding</h3><p>Geordneter Austritt mit Datenerhalt.</p></div>
+    <div class="concept-card"><h3>Sicherheitsmassnahmen</h3><p>Sofortige Sperrung bei Compliance-Themen.</p></div>
+  </div>
+</section>
+
+<!-- ACTIONS & DELETE -->
+<section id="users-actions" class="doc-section">
+  <span class="section-label">Verwaltung</span>
+  <h1>User Actions &amp; Löschen</h1>
+  <p>Jede Benutzerzeile besitzt ein <strong>Actions Dropdown Menu</strong> mit allen wichtigen Benutzeraktionen.</p>
+  <h2>Verfügbare Aktionen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Aktion</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Edit</strong></td><td>Benutzerdaten bearbeiten</td></tr>
+        <tr><td><strong>View Projects</strong></td><td>Projektzuweisungen verwalten</td></tr>
+        <tr><td><strong>Disable</strong></td><td>Konto deaktivieren</td></tr>
+        <tr><td><strong>Delete</strong></td><td>Benutzer dauerhaft löschen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Benutzer löschen</h2>
+  <p>Administratoren können Benutzer dauerhaft aus dem System entfernen.</p>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Wichtige Hinweise —</strong> Beim Löschen eines Benutzers werden <strong>Berechtigungen sofort entfernt</strong>. Historische Test-Zuweisungen können erhalten bleiben, und Audit-Logs können weiterhin Referenzen speichern.
+  </div>
+</section>
+
+<!-- PROJECT ASSIGNMENT -->
+<section id="users-projects" class="doc-section">
+  <span class="section-label">Projektzuweisung</span>
+  <h1>Projektzuweisung &amp; Rollen</h1>
+  <p>Benutzer können einem oder mehreren Projekten zugewiesen werden — mit individuellen Projektrollen pro Zuweisung.</p>
+  <div class="screenshot-wrap">
+    <img alt="Manage User Projects" src="./autemos_usermanagement_screenshots/image_5.png"/>
+    <div class="screenshot-caption">Manage User Projects — zentrale Verwaltung aller Projektzuweisungen pro Benutzer.</div>
+  </div>
+  <h2>Manage User Projects</h2>
+  <p>Der Projektdialog ermöglicht Administratoren:</p>
+  <ul class="feature-list">
+    <li>Projekte zuzuweisen</li>
+    <li>Projekte zu entfernen</li>
+    <li>Projektrollen zu verwalten</li>
+    <li>Aktuelle Zuweisungen einzusehen</li>
+  </ul>
+  <h2>Assigned Projects Ansicht</h2>
+  <div class="screenshot-wrap">
+    <img alt="Assigned Projects view" src="./autemos_usermanagement_screenshots/image_6.png"/>
+    <div class="screenshot-caption">Assigned Projects — bereits zugewiesene Projekte mit aktuellen Rollen und Zuweisungsdaten.</div>
+  </div>
+  <p>Der Tab <strong>Assigned Projects</strong> zeigt:</p>
+  <ul class="feature-list">
+    <li>Zugewiesene Projekte</li>
+    <li>Aktuelle Projektrollen</li>
+    <li>Zuweisungsdaten</li>
+    <li>Projekt-Owner Informationen</li>
+  </ul>
+  <h2>Available Projects Ansicht</h2>
+  <p>Der Tab <strong>Available Projects</strong> zeigt Projekte, die dem Benutzer noch nicht zugewiesen wurden. Administratoren können verfügbare Projekte durchsuchen und neue Projektzugriffe vergeben.</p>
+  <h2>Assign Project Dialog</h2>
+  <div class="screenshot-wrap">
+    <img alt="Assign Project dialog" src="./autemos_usermanagement_screenshots/image_7.png"/>
+    <div class="screenshot-caption">Assign Project Dialog — Projekt zuweisen und gleichzeitig die Benutzerrolle definieren.</div>
+  </div>
+  <p>Administratoren können ein Projekt zuweisen und gleichzeitig die Benutzerrolle definieren.</p>
+  <h2>Projektrollen</h2>
+  <p>Projektbezogene Rollen können sein:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Owner</h3><p>Vollständige Projektverantwortung und administrative Kontrolle.</p></div>
+    <div class="concept-card"><h3>Admin</h3><p>Kann Projektressourcen und Konfigurationen verwalten.</p></div>
+    <div class="concept-card"><h3>Member</h3><p>Standardzugriff zur Zusammenarbeit innerhalb des Projekts.</p></div>
+    <div class="concept-card"><h3>Viewer</h3><p>Nur lesender Zugriff auf Projektinformationen.</p></div>
+  </div>
+  <h2>Projektberechtigungen</h2>
+  <p>Projektrollen definieren den Zugriff auf:</p>
+  <ul class="feature-list">
+    <li>Workflows</li>
+    <li>Test Runs</li>
+    <li>Pages</li>
+    <li>Schedules</li>
+    <li>Test Data</li>
+    <li>Automation Assets</li>
+  </ul>
+  <p>Dies gewährleistet <strong>Projektisolation</strong>, <strong>kontrollierte Zusammenarbeit</strong> und <strong>sicheren Multi-Team-Betrieb</strong>.</p>
+</section>
+
+<!-- USE CASES & BENEFITS -->
+<section id="users-use-cases" class="doc-section">
+  <span class="section-label">Anwendung</span>
+  <h1>Use Cases &amp; Enterprise Vorteile</h1>
+  <h2>Typische Anwendungsfälle</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Team-Onboarding</h3><p>Neue QA Engineers oder Automation Developers einladen.</p></div>
+    <div class="concept-card"><h3>Kundentrennung</h3><p>Benutzer ausschliesslich kundenbezogenen Projekten zuweisen.</p></div>
+    <div class="concept-card"><h3>Rollenbasierte Zugriffskontrolle</h3><p>Administrative Funktionen gezielt auf bestimmte Benutzer beschränken.</p></div>
+    <div class="concept-card"><h3>Temporärer Zugriff</h3><p>Kurzfristigen Projektzugriff für externe Mitarbeiter oder Partner vergeben.</p></div>
+    <div class="concept-card"><h3>Offboarding</h3><p>Benutzer deaktivieren oder entfernen, wenn sie das Unternehmen verlassen.</p></div>
+  </div>
+  <h2>Enterprise Vorteile</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Vorteil</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Zentralisierte Zugriffskontrolle</strong></td><td>Die gesamte Benutzer- und Berechtigungsverwaltung erfolgt zentral in einer Administrationsoberfläche.</td></tr>
+        <tr><td><strong>Sichere Multi-Team-Zusammenarbeit</strong></td><td>Projekte und Berechtigungen können sauber zwischen Teams und Abteilungen getrennt werden.</td></tr>
+        <tr><td><strong>Skalierbare Benutzerverwaltung</strong></td><td>Unterstützt Enterprise-Umgebungen mit grossen Benutzerzahlen.</td></tr>
+        <tr><td><strong>Vereinfachtes Onboarding</strong></td><td>Neue Benutzer können schnell den benötigten Projekten zugewiesen werden.</td></tr>
+        <tr><td><strong>Verbesserte Sicherheit</strong></td><td>Administratoren behalten die vollständige Kontrolle über Berechtigungen, Projektzugriffe, Benutzeraktivitäten und den gesamten Benutzer-Lifecycle.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div><!-- /content-wrap -->

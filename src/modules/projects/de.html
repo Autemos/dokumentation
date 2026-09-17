@@ -1,0 +1,256 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="projects-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Projects</h1>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Nur für Administratoren —</strong> Projekte können ausschliesslich von Administratoren erstellt, bearbeitet und gelöscht werden.
+  </div>
+  <p>Das <strong>Projects Menü</strong> ist der zentrale Verwaltungsbereich für alle Projekte innerhalb von Autemos. Es ermöglicht Benutzern, verschiedene Automatisierungsprojekte zu erstellen, zu organisieren, zu durchsuchen und zwischen ihnen zu navigieren.</p>
+  <div class="screenshot-wrap">
+    <img alt="Projects overview" src="./autemos_projects_screenshots/image_1.png"/>
+    <div class="screenshot-caption">Projects Overview — zentraler Verwaltungsbereich aller Projekte mit Suche, Filter und Project Cards.</div>
+  </div>
+  <h2>Projekte als oberster Container</h2>
+  <p>Projekte dienen als oberster Container für:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Test Workflows</h3><p>Alle Workflows eines Projekts.</p></div>
+    <div class="concept-card"><h3>Test Runs</h3><p>Projekt-bezogene Ausführungen.</p></div>
+    <div class="concept-card"><h3>Pages</h3><p>Wiederverwendbare PageObjects.</p></div>
+    <div class="concept-card"><h3>Auto-Heal Konfigurationen</h3><p>Healing-Regeln pro Projekt.</p></div>
+    <div class="concept-card"><h3>Test Data</h3><p>Testdaten und Datensätze.</p></div>
+    <div class="concept-card"><h3>Schedules</h3><p>Geplante Ausführungen.</p></div>
+    <div class="concept-card"><h3>Code Generation</h3><p>Generierter Automatisierungscode.</p></div>
+    <div class="concept-card"><h3>Recorder Sessions</h3><p>Aufgezeichnete Sessions.</p></div>
+  </div>
+  <h2>Was ein Projekt repräsentieren kann</h2>
+  <p>Jedes Projekt ist logisch getrennt und kann folgendes repräsentieren:</p>
+  <ul class="feature-list">
+    <li>Eine Anwendung</li>
+    <li>Ein Produkt</li>
+    <li>Einen Kunden</li>
+    <li>Eine Business-Domain</li>
+    <li>Eine Testinitiative</li>
+  </ul>
+  <h2>Zweck</h2>
+  <p>Das Projects Menü unterstützt Teams dabei:</p>
+  <ul class="feature-list">
+    <li>Automatisierungs-Assets zu organisieren</li>
+    <li>Testdomänen voneinander zu trennen</li>
+    <li>Projektspezifische Workflows zu verwalten</li>
+    <li>Schnell auf Projektfunktionen zuzugreifen</li>
+    <li>Skalierbare Automatisierungsstrukturen aufzubauen</li>
+  </ul>
+</section>
+
+<!-- PROJECT CARDS -->
+<section id="projects-cards" class="doc-section">
+  <span class="section-label">Übersichtsseite</span>
+  <h1>Project Cards</h1>
+  <p>Jedes Projekt wird als <strong>Project Card</strong> mit wichtigen Informationen dargestellt — für schnelle Übersicht und Navigation.</p>
+  <div class="screenshot-wrap">
+    <img alt="Project Card" src="./autemos_projects_screenshots/image_4.png"/>
+    <div class="screenshot-caption">Project Card — kompakte Übersicht mit Status, Test-Anzahl, Failed Tests, Pages und Fields.</div>
+  </div>
+  <h2>Angezeigte Informationen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Information</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Project Name</strong></td><td>Eindeutiger Name des Projekts</td></tr>
+        <tr><td><strong>Project Status</strong></td><td>Aktivitätsindikator (active / inactive)</td></tr>
+        <tr><td><strong>Anzahl der Tests</strong></td><td>Gesamtanzahl der Tests im Projekt</td></tr>
+        <tr><td><strong>Failed Tests (7d)</strong></td><td>Fehlgeschlagene Tests der letzten 7 Tage</td></tr>
+        <tr><td><strong>Anzahl der Pages</strong></td><td>Anzahl konfigurierter PageObjects</td></tr>
+        <tr><td><strong>Anzahl der Fields</strong></td><td>Anzahl wiederverwendbarer Felder</td></tr>
+        <tr><td><strong>Last Updated Timestamp</strong></td><td>Zeitpunkt der letzten Änderung</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Project Status</h2>
+  <p>Projekte können verschiedene Statusindikatoren anzeigen:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>active</h3><p>Projekt ist aktiv und in Verwendung.</p></div>
+    <div class="concept-card"><h3>inactive</h3><p>Projekt ist deaktiviert oder ungenutzt.</p></div>
+  </div>
+  <p>Dadurch erhalten Benutzer schnelle Transparenz über die Projektaktivität.</p>
+</section>
+
+<!-- SEARCH SORT VIEW -->
+<section id="projects-search" class="doc-section">
+  <span class="section-label">Übersichtsseite</span>
+  <h1>Suche, Sortierung &amp; Ansichten</h1>
+  <p>Die Projects Übersichtsseite bietet umfangreiche Funktionen, um auch in grossen Portfolios schnell das richtige Projekt zu finden.</p>
+  <h2>Project Search</h2>
+  <p>Die Suchleiste ermöglicht es Benutzern, Projekte schnell zu finden. Unterstützt die Suche nach:</p>
+  <ul class="feature-list">
+    <li>Projektname</li>
+    <li>Projektbezogenen Inhalten</li>
+  </ul>
+  <h2>Sorting Options</h2>
+  <p>Projekte können nach verschiedenen Kriterien sortiert werden:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Sortierung</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Recently Updated</strong></td><td>Zuletzt geänderte Projekte zuerst</td></tr>
+        <tr><td><strong>Name</strong></td><td>Alphabetisch nach Projektname</td></tr>
+        <tr><td><strong>Tests</strong></td><td>Nach Anzahl der Tests</td></tr>
+        <tr><td><strong>Failed (7d)</strong></td><td>Nach fehlgeschlagenen Tests der letzten 7 Tage</td></tr>
+        <tr><td><strong>Pages</strong></td><td>Nach Anzahl der PageObjects</td></tr>
+        <tr><td><strong>Fields</strong></td><td>Nach Anzahl der Fields</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Vorteile der Sortierung</h3>
+  <ul class="feature-list">
+    <li>Aktive Projekte priorisieren</li>
+    <li>Instabile Projekte identifizieren</li>
+    <li>Grosse Projekte schnell finden</li>
+    <li>Wachstum der Automatisierung überwachen</li>
+  </ul>
+  <h2>View Modes</h2>
+  <p>Die Projects Seite unterstützt mehrere Darstellungsmodi:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Grid View</h3><p>Kompakte Card-Ansicht mit allen Projekten im Überblick.</p></div>
+    <div class="concept-card"><h3>List View</h3><p>Tabellarische Listenansicht mit Detail-Informationen.</p></div>
+  </div>
+</section>
+
+<!-- CREATE PROJECT -->
+<section id="projects-create" class="doc-section">
+  <span class="section-label">Verwaltung</span>
+  <h1>Create New Project</h1>
+  <p>Administratoren können neue Projekte direkt über das Projects Menü erstellen.</p>
+  <div class="screenshot-wrap">
+    <img alt="Create New Project dialog" src="./autemos_projects_screenshots/image_3.png"/>
+    <div class="screenshot-caption">Create New Project Dialog — Projektname und optionale Beschreibung definieren.</div>
+  </div>
+  <h2>Create Project Dialog</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Project Name</strong></td><td>Definiert den eindeutigen Namen des Projekts.</td></tr>
+        <tr><td><strong>Description</strong></td><td>Optionale Projektbeschreibung für organisatorische Zwecke.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Create Project Action</h2>
+  <p>Der <strong>Create Project</strong> Button erstellt den neuen Projektcontainer und initialisiert die Projektstruktur (Workflows, Pages, Schedules, etc.).</p>
+</section>
+
+<!-- EDIT & DELETE -->
+<section id="projects-edit" class="doc-section">
+  <span class="section-label">Verwaltung</span>
+  <h1>Edit &amp; Delete Project</h1>
+  <p>Bestehende Projekte können von Administratoren bearbeitet oder entfernt werden.</p>
+  <h2>Edit Project</h2>
+  <div class="screenshot-wrap">
+    <img alt="Edit Project dialog" src="./autemos_projects_screenshots/image_2.png"/>
+    <div class="screenshot-caption">Edit Project — Projektname kann jederzeit umbenannt werden.</div>
+  </div>
+  <p>Bestehende Projekte können nach der Erstellung bearbeitet werden.</p>
+  <h3>Bearbeitbare Felder</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Project Name</strong></td><td>Der Projektname kann jederzeit umbenannt werden.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Delete Project</h2>
+  <p>Administratoren können Projekte entfernen, die nicht mehr benötigt werden.</p>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Wichtige Hinweise —</strong> Das Löschen eines Projekts kann folgende Inhalte entfernen: Workflows, Runs, Pages, Test Data, Schedules sowie generierte Assets. Die genauen Auswirkungen sind abhängig von der Systemkonfiguration und den Retention Policies.
+  </div>
+</section>
+
+<!-- NAVIGATION & ISOLATION -->
+<section id="projects-navigation" class="doc-section">
+  <span class="section-label">Funktionen</span>
+  <h1>Navigation Shortcuts &amp; Isolation</h1>
+  <p>Jede Project Card bietet direkte Navigations-Shortcuts zu wichtigen Projektbereichen, und jedes Projekt ist vollständig isoliert.</p>
+  <h2>Test Workflow Navigation</h2>
+  <p>Benutzer können direkt das <strong>Test Workflow Menü</strong> öffnen. Dies ermöglicht schnellen Zugriff auf:</p>
+  <ul class="feature-list">
+    <li>Workflow-Bearbeitung</li>
+    <li>Workflow-Ausführung</li>
+    <li>Wartung der Automatisierung</li>
+  </ul>
+  <h2>Code Generation Navigation</h2>
+  <p>Benutzer können direkt das <strong>Code Generation Menü</strong> öffnen. Dies ermöglicht schnellen Zugriff auf:</p>
+  <ul class="feature-list">
+    <li>Generierten Automatisierungscode</li>
+    <li>Framework-Exporte</li>
+    <li>AI-generierte Automatisierungs-Assets</li>
+  </ul>
+  <h2>Project Isolation</h2>
+  <p>Jedes Projekt verwaltet isolierte:</p>
+  <ul class="feature-list">
+    <li>Workflows</li>
+    <li>Page Objects</li>
+    <li>Fields</li>
+    <li>Schedules</li>
+    <li>Automatisierungs-Assets</li>
+  </ul>
+  <h3>Vorteile der Isolation</h3>
+  <ul class="feature-list">
+    <li>Saubere Organisation</li>
+    <li>Skalierbarkeit</li>
+    <li>Unterstützung mehrerer Teams</li>
+    <li>Klare Verantwortlichkeitstrennung</li>
+  </ul>
+</section>
+
+<!-- ACCESS MANAGEMENT -->
+<section id="projects-access" class="doc-section">
+  <span class="section-label">Funktionen</span>
+  <h1>Access Management</h1>
+  <p>Projektzugriffsrechte werden <strong>nicht</strong> innerhalb des Projects Menüs verwaltet — die gesamte Projekt-Zugriffskontrolle erfolgt zentral über das <strong>Users Menü</strong>.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Im <strong>Users Menü</strong> werden alle Zugriffsrechte projektübergreifend gepflegt — das hält das Projects Menü übersichtlich und fokussiert auf Projektorganisation.</div>
+  <h2>Was im Users Menü konfiguriert wird</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Projektsichtbarkeit</h3><p>Welche Benutzer welche Projekte sehen können.</p></div>
+    <div class="concept-card"><h3>Benutzerzuweisungen</h3><p>Zuweisung von Usern zu Projekten.</p></div>
+    <div class="concept-card"><h3>Rollenverwaltung</h3><p>Definition und Vergabe von Projektrollen.</p></div>
+    <div class="concept-card"><h3>Berechtigungskonfiguration</h3><p>Granulare Permission-Einstellungen.</p></div>
+  </div>
+</section>
+
+<!-- USE CASES & BENEFITS -->
+<section id="projects-use-cases" class="doc-section">
+  <span class="section-label">Anwendung</span>
+  <h1>Use Cases &amp; Enterprise Vorteile</h1>
+  <h2>Typische Use Cases</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Customer Separation</h3><p>Separate Projekte für unterschiedliche Kunden oder Tenants.</p></div>
+    <div class="concept-card"><h3>Application Separation</h3><p>Organisation der Automatisierung nach Anwendungen oder Plattformen.</p></div>
+    <div class="concept-card"><h3>Team Organization</h3><p>Trennung von Projekten nach Abteilungen oder QA-Teams.</p></div>
+    <div class="concept-card"><h3>Environment Isolation</h3><p>Unabhängige Automatisierungsstrukturen für Staging, Produktion und Testumgebungen.</p></div>
+  </div>
+  <h2>Skalierbarkeit</h2>
+  <p>Das Projects Menü wurde entwickelt zur Unterstützung von:</p>
+  <ul class="feature-list">
+    <li>Kleinen Teams</li>
+    <li>Enterprise-Organisationen</li>
+    <li>Multi-Projekt-Umgebungen</li>
+    <li>Grossen Automatisierungs-Portfolios</li>
+  </ul>
+  <h2>Enterprise Vorteile</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Vorteil</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Better Organization</strong></td><td>Strukturierte Trennung von Automatisierungs-Assets.</td></tr>
+        <tr><td><strong>Faster Navigation</strong></td><td>Schneller Zugriff auf Workflows und Code Generation.</td></tr>
+        <tr><td><strong>Simplified Management</strong></td><td>Zentrale Projektverwaltung und Übersicht.</td></tr>
+        <tr><td><strong>Scalability</strong></td><td>Unterstützt grosse Enterprise-Automatisierungsportfolios.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div><!-- /content-wrap -->

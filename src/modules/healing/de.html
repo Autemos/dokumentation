@@ -1,0 +1,374 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="healing-overview" class="doc-section">
+  <div class="section-intro">
+    <span class="section-label">Self-Healing</span>
+    <h1>Self-Healing &amp; LLM</h1>
+    <p>Das Self-Healing &amp; LLM-Modul bietet zentralisiertes Management, Monitoring und Konfiguration der KI-gestützten Selector-Healing-Fähigkeiten der Plattform. Es ermöglicht automatische Selector-Wiederherstellung, intelligente Locator-Fallback-Strategien und KI-unterstützte Healing-Vorschläge.</p>
+  </div>
+  <h2>Was das Modul bietet</h2>
+  <ul class="feature-list">
+    <li>Automatische Selector-Wiederherstellung bei UI-Änderungen</li>
+    <li>Intelligente Locator-Fallback-Strategien</li>
+    <li>KI-unterstützte Healing-Vorschläge mit Konfidenzwerten</li>
+    <li>Monitoring und Analyse der Selector-Zuverlässigkeit</li>
+    <li>Globale und projektspezifische Healing-Konfiguration</li>
+    <li>Verfolgung von Healing-Kosten und Transparenz der KI-Token-Nutzung</li>
+  </ul>
+  <h2>Modulstruktur</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Abschnitt</th><th>Zweck</th></tr></thead>
+      <tbody>
+        <tr><td><strong>LLM Dashboard</strong></td><td>Analyse und KI-Healing-Metriken</td></tr>
+        <tr><td><strong>Self-Healing Monitor</strong></td><td>Laufzeit-Healing-Gesundheit und Zuverlässigkeit</td></tr>
+        <tr><td><strong>Healing Config</strong></td><td>Globale und projektspezifische Konfiguration</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Tiefe Integration</h2>
+  <p>Self-Healing ist tief in Test Workflows, Test Runs, Laufzeitausführung und Reporting integriert. In früheren Modulen ist Healing während der Workflow-Ausführung und in Berichten sichtbar — dieses Modul konzentriert sich auf das operative Management und die Konfiguration des Healing-Systems selbst.</p>
+</section>
+
+<!-- LLM DASHBOARD -->
+<section id="llm-dashboard" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>LLM Dashboard</h1>
+      <span class="badge badge-healing">Self-Healing</span>
+    </div>
+  </div>
+  <p>Das LLM Dashboard bietet Transparenz über KI-gestützte Healing-Aktivitäten, Vorschlagsgenerierung, Laufzeitkosten und Akzeptanzmetriken. Es ermöglicht Teams zu verstehen, wie oft Healing stattfindet, wie erfolgreich es ist und welche operativen KI-Kosten entstehen.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_1.png" alt="LLM Dashboard">
+    <div class="screenshot-caption">LLM Dashboard — KI-Healing-Analyse, Vorschlags-Tracking, Token-Nutzung und Kostenübersicht.</div>
+  </div>
+  <h2>Dashboard-Metriken</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Metrik</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Success Rate</strong></td><td>Gesamte Healing-Erfolgsrate über alle Ausführungen</td></tr>
+        <tr><td><strong>Proposals</strong></td><td>Gesamtanzahl der KI-generierten Healing-Vorschläge</td></tr>
+        <tr><td><strong>Accepted</strong></td><td>Akzeptierte und erfolgreich angewendete Vorschläge</td></tr>
+        <tr><td><strong>LLM Costs</strong></td><td>Geschätzte KI-Betriebskosten einschliesslich Verarbeitung von Eingabe- und Ausgabe-Tokens</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Token-Nutzung</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Metrik</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Input Tokens</td><td>An das LLM gesendete Tokens</td></tr>
+        <tr><td>Output Tokens</td><td>Vom LLM zurückgegebene Tokens</td></tr>
+        <tr><td>Total Tokens</td><td>Kombinierte Token-Nutzung</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Kostenübersicht</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Typ</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Input Cost</td><td>Kosten der Prompt-Verarbeitung</td></tr>
+        <tr><td>Output Cost</td><td>Kosten der generierten Antworten</td></tr>
+        <tr><td>Total Cost</td><td>Kombinierte LLM-Betriebskosten</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Das Cost-Trend-Diagramm zeigt die historische Entwicklung der KI-Kosten über die Zeit an und hilft Organisationen, Skalierungseffekte, ungewöhnliche Nutzungsspitzen und das KI-Betriebsbudget zu überwachen. Die Feedback-Distribution-Visualisierung zeigt die Gesamtverhältnisse von akzeptierten und abgelehnten Vorschlägen zur Bewertung der KI-Vorschlagsqualität.</p>
+</section>
+
+<!-- RECENT PROPOSALS -->
+<section id="recent-proposals" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Recent Proposals</h1>
+      <span class="badge badge-healing">LLM Dashboard</span>
+    </div>
+  </div>
+  <p>Die Recent Proposals-Tabelle zeigt kürzlich generierte Healing-Vorschläge mit ihrem aktuellen Status, Konfidenzwerten und verfügbaren Aktionen an.</p>
+  <h2>Vorschlagsinformationen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Spalte</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Date</td><td>Zeitstempel der Vorschlags-Erstellung</td></tr>
+        <tr><td>Page</td><td>Zugeordnetes PageObject</td></tr>
+        <tr><td>Element</td><td>Betroffener Selector</td></tr>
+        <tr><td>Confidence</td><td>KI-Konfidenzwert für den Vorschlag</td></tr>
+        <tr><td>Status</td><td>Aktueller Vorschlags-Status</td></tr>
+        <tr><td>Actions</td><td>Vorschlagsdetails anzeigen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Vorschlags-Status</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Status</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pending</strong></td><td>Wartet auf Überprüfung oder automatische Annahme</td></tr>
+        <tr><td><strong>Accepted</strong></td><td>Erfolgreich angewendet — Selector ist jetzt geheilt</td></tr>
+        <tr><td><strong>Rejected</strong></td><td>Vom Benutzer oder System abgelehnt</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- SELF-HEALING MONITORING -->
+<section id="healing-monitoring" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Self-Healing Monitor</h1>
+      <span class="badge badge-healing">Monitoring</span>
+    </div>
+  </div>
+  <p>Der Self-Healing-Bereich konzentriert sich auf die Laufzeit-Healing-Gesundheit und Selector-Zuverlässigkeit. Er bietet operative Transparenz über Healing-Versuche, Wiederherstellungserfolg, Selector-Stabilität und Laufzeitzuverlässigkeit.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_3.png" alt="Self-Healing Monitoring">
+    <div class="screenshot-caption">Self-Healing Monitor — Laufzeit-Healing-Gesundheit, Strategie-Rotationen und Selector-Zuverlässigkeitsmetriken.</div>
+  </div>
+  <h2>Laufzeit-Metriken</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Metrik</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Healing Events</strong></td><td>Gesamtanzahl aufgezeichneter Healing-Events über alle Ausführungen</td></tr>
+        <tr><td><strong>Success Rate</strong></td><td>Prozentsatz erfolgreicher Healing-Operationen</td></tr>
+        <tr><td><strong>Failed Heals</strong></td><td>Fehlgeschlagene Healing-Versuche — kann auf instabile Anwendungen oder grössere UI-Änderungen hinweisen</td></tr>
+        <tr><td><strong>Strategy Rotations</strong></td><td>Wie oft Fallback-Strategien während Healing-Versuchen rotiert wurden</td></tr>
+        <tr><td><strong>Heals per Minute</strong></td><td>Häufigkeit der Healing-Aktivität während der Laufzeitausführung</td></tr>
+        <tr><td><strong>Avg Heal Time</strong></td><td>Durchschnittliche Dauer für Healing-Versuche</td></tr>
+        <tr><td><strong>LLM Calls</strong></td><td>Anzahl der KI-Anfragen während Healing-Operationen</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- CIRCUIT BREAKER -->
+<section id="circuit-breaker" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Circuit Breaker</h1>
+      <span class="badge badge-healing">Monitoring</span>
+    </div>
+  </div>
+  <p>Die Healing-Engine umfasst einen Schutzmechanismus namens Circuit Breaker. Er verhindert übermässige wiederholte Healing-Versuche während instabiler Ausführungen und schützt so die Systemstabilität und Ausführungsqualität.</p>
+  <h2>Circuit Breaker-Zustände</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Zustand</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Closed (OK)</strong></td><td>Healing-System arbeitet normal</td></tr>
+        <tr><td><strong>Open</strong></td><td>Healing nach wiederholten Fehlern vorübergehend deaktiviert</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Proaktive Gesundheitsprüfung</h2>
+  <p>Die Plattform kann die Selector-Zuverlässigkeit proaktiv analysieren, bevor die Testausführung beginnt, sodass Teams instabile Selektoren frühzeitig erkennen können.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Gesundheitszustand</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Healthy</strong></td><td>Stabile Selektoren ohne Healing-Historie</td></tr>
+        <tr><td><strong>Degraded</strong></td><td>Potenziell instabile Selektoren mit gelegentlichem Healing</td></tr>
+        <tr><td><strong>Critical</strong></td><td>Hochriskante Selektoren mit häufiger Healing-Abhängigkeit</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- FIELD RELIABILITY -->
+<section id="field-reliability" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Field Reliability</h1>
+      <span class="badge badge-healing">Monitoring</span>
+    </div>
+  </div>
+  <p>Die Field Reliability-Tabelle bietet Gesundheitsanalysen pro Selector und ermöglicht Teams, instabile oder häufig geheilte Selektoren zu identifizieren und Wartungsarbeiten zu priorisieren.</p>
+  <h2>Zuverlässigkeitsmetriken</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Spalte</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td>Field</td><td>Selector-Name</td></tr>
+        <tr><td>Page Object</td><td>Zugeordnete Page</td></tr>
+        <tr><td>Reliability</td><td>Stabilitätsprozentsatz über jüngste Ausführungen</td></tr>
+        <tr><td>Usage</td><td>Gesamtausführungsanzahl</td></tr>
+        <tr><td>Heals</td><td>Anzahl ausgelöster Healing-Events</td></tr>
+        <tr><td>Heal Ratio</td><td>Healing-Häufigkeit als Prozentsatz der Nutzung</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Zuverlässigkeits-Interpretation</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Zuverlässigkeit</th><th>Bedeutung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>100%</strong></td><td>Vollständig stabiler Selector — kein Healing erforderlich</td></tr>
+        <tr><td><strong>90–99%</strong></td><td>Sehr stabil — seltene Healing-Events</td></tr>
+        <tr><td><strong>70–89%</strong></td><td>Mittelmässige Instabilität — Überprüfung empfohlen</td></tr>
+        <tr><td><strong>Unter 70%</strong></td><td>Hohe Healing-Abhängigkeit — manuelle Wartung erforderlich</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- HEALING CONFIG -->
+<section id="healing-config" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Healing Configuration</h1>
+      <span class="badge badge-healing">Configuration</span>
+    </div>
+  </div>
+  <p>Der Healing Config-Bereich steuert das globale und projektspezifische Healing-Verhalten. Die Konfiguration kann zentral verwaltet oder projektweise überschrieben werden.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_4.png" alt="Healing Configuration overview">
+    <div class="screenshot-caption">Healing-Konfiguration — globale Standardeinstellungen und projektspezifische Überschreibungseinstellungen.</div>
+  </div>
+  <h2>Konfigurationsbereiche</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Bereich</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Global</strong></td><td>Standardeinstellungen, die plattformweit angewendet werden — alle Projekte erben diese, sofern sie nicht überschrieben werden</td></tr>
+        <tr><td><strong>Project</strong></td><td>Projektspezifische Überschreibungen — geerbte Werte werden in der Benutzeroberfläche visuell angezeigt</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Self-Healing-Aktivierung</h2>
+  <p>Der Hauptschalter steuert, ob Healing aktiv ist. Wenn deaktiviert, schlagen Selektoren sofort fehl und es werden keine Fallback-Strategien versucht.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_5.png" alt="Self-Healing Enabled toggle">
+    <div class="screenshot-caption">Self-Healing Enabled — Hauptschalter für die Healing-Engine.</div>
+  </div>
+</section>
+
+<!-- HEALING MODES -->
+<section id="healing-modes" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Healing Modes</h1>
+      <span class="badge badge-healing">Configuration</span>
+    </div>
+  </div>
+  <div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:20px">
+    <div class="screenshot-wrap" style="flex:0 0 260px;margin:0">
+      <img src="./autemos_images_autoheal/image_6.png" alt="Healing Modes">
+      <div class="screenshot-caption">Healing Modes dropdown</div>
+    </div>
+    <div class="param-table-wrap" style="flex:1;min-width:0;margin:0">
+      <table class="param-table">
+        <thead><tr><th>Mode</th><th>Description</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Automatic</strong></td><td>System wendet erfolgreiche Healing-Ergebnisse automatisch zur Laufzeit an — minimiert Ausführungsunterbrechungen</td></tr>
+          <tr><td><strong>Propose Only</strong></td><td>System generiert Vorschläge, erfordert jedoch manuelle Überprüfung vor der Anwendung — empfohlen für regulierte oder produktionskritische Environments</td></tr>
+          <tr><td><strong>Disabled</strong></td><td>Healing-Funktionalität vollständig deaktiviert</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="tip">
+    <span class="tip-icon">💡</span>
+    Verwenden Sie den <strong>Propose Only</strong>-Modus für kritische Produktions-Workflows, bei denen automatische Selector-Änderungen eine Governance-Prüfung erfordern, bevor sie angewendet werden.
+  </div>
+</section>
+
+<!-- THRESHOLDS -->
+<section id="thresholds" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Schwellenwerte &amp; Limits</h1>
+      <span class="badge badge-healing">Configuration</span>
+    </div>
+  </div>
+  <p>Schwellenwerte definieren die Mindestkonfidenzwerte und Ausführungslimits, die steuern, wie aggressiv die Healing-Engine vorgeht.</p>
+
+  <h2>Auto-Heal Threshold</h2>
+  <p>Definiert den minimalen Konfidenzwert, der für automatisches Healing erforderlich ist. Bereich: 0.0–1.0. Höhere Werte sind sicherer und konservativer; niedrigere Werte ermöglichen aggressiveres automatisches Healing.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_7.png" alt="Auto-Heal Threshold">
+    <div class="screenshot-caption">Auto-Heal Threshold — minimaler Konfidenzwert für automatische Selector-Reparatur.</div>
+  </div>
+
+  <h2>Proposal Threshold</h2>
+  <p>Definiert den minimalen Konfidenzwert für die Generierung von Healing-Vorschlägen. Dieser Schwellenwert ist typischerweise niedriger als der Auto-Heal-Threshold, damit auch Vorschläge mit niedrigerer Konfidenz für die manuelle Überprüfung angezeigt werden.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_8.png" alt="Proposal Threshold">
+    <div class="screenshot-caption">Proposal Threshold — minimale Konfidenz für die Generierung eines Healing-Vorschlags.</div>
+  </div>
+
+  <h2>Max Auto-Heals Per Run</h2>
+  <p>Begrenzt die maximale Anzahl von Healing-Operationen, die während einer einzelnen Ausführung erlaubt sind. Verhindert instabile endlose Healing-Schleifen und schützt die Gesamtausführungsqualität.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_9.png" alt="Max Auto-Heals Per Run">
+    <div class="screenshot-caption">Max Auto-Heals Per Run — Obergrenze für Healing-Operationen pro Workflow-Ausführung.</div>
+  </div>
+
+  <h2>Max Healing Attempts</h2>
+  <p>Definiert, wie viele Retry-Versuche pro Selector erlaubt sind, bevor die Healing-Engine aufgibt.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_10.png" alt="Max Healing Attempts">
+    <div class="screenshot-caption">Max Healing Attempts — Retry-Limit pro Selector bevor aufgegeben wird.</div>
+  </div>
+
+  <h2>Heal Count for Blacklist</h2>
+  <p>Definiert, wie viele wiederholte Fehler erlaubt sind, bevor eine Locator-Strategie vorübergehend auf die Blacklist gesetzt wird.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_11.png" alt="Heal Count for Blacklist">
+    <div class="screenshot-caption">Heal Count for Blacklist — Fehlerschwelle, bevor eine Strategie vorübergehend ausgeschlossen wird.</div>
+  </div>
+
+  <h2>Blacklist Window</h2>
+  <p>Definiert das gleitende Zeitfenster für Blacklist-Berechnungen. Beispiel: 7 Tage — nur Fehler innerhalb der letzten 7 Tage zählen zum Blacklist-Schwellenwert.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_12.png" alt="Blacklist Window">
+    <div class="screenshot-caption">Blacklist Window — gleitendes Zeitfenster für die Blacklist-Fehlerzählung.</div>
+  </div>
+
+  <h2>Critical Fields</h2>
+  <p>Critical Fields sind Selektoren, die niemals automatisch geheilt werden sollen. Diese Felder erfordern immer eine manuelle Überprüfung, bevor Änderungen angewendet werden. Typische Beispiele sind Login-Schaltflächen, Zahlungsaktionen, destruktive Operationen und produktionskritische Workflows.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_13.png" alt="Critical Fields">
+    <div class="screenshot-caption">Critical Fields — Selektoren vom automatischen Healing ausgeschlossen, immer manuelle Überprüfung erforderlich.</div>
+  </div>
+</section>
+
+<!-- LOCATOR PRIORITY -->
+<section id="locator-priority" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Locator Priority</h1>
+      <span class="badge badge-healing">Configuration</span>
+    </div>
+  </div>
+  <p>Die Healing-Engine kann Locator-Strategien bei Wiederherstellungsversuchen priorisieren. Locators mit höherer Priorität werden zuerst versucht, sodass Teams eine Präferenz für stabile semantische Selektoren gegenüber fragilen technischen Selektoren durchsetzen können.</p>
+  <div class="screenshot-wrap">
+    <img src="./autemos_images_autoheal/image_14.png" alt="Locator Priority">
+    <div class="screenshot-caption">Locator Priority — Drag-and-Drop-Reihenfolge der Fallback-Locator-Strategien.</div>
+  </div>
+  <h2>Standard-Prioritätsreihenfolge</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Priorität</th><th>Strategie</th><th>Begründung</th></tr></thead>
+      <tbody>
+        <tr><td>#1</td><td><code>data-testid</code></td><td>Am stabilsten — speziell für Tests entwickelt</td></tr>
+        <tr><td>#2</td><td><code>aria</code></td><td>Semantisch und barrierefreiheitsbasiert</td></tr>
+        <tr><td>#3</td><td><code>css</code></td><td>Flexibel und weitverbreitet unterstützt</td></tr>
+        <tr><td>#4</td><td><code>name</code></td><td>Stabiler Bezeichner für Formularfelder</td></tr>
+        <tr><td>#5</td><td><code>id</code></td><td>Eindeutig, kann aber dynamisch sein</td></tr>
+        <tr><td>#6</td><td><code>xpath</code></td><td>Letzter Ausweg — anfällig für DOM-Änderungen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip">
+    <span class="tip-icon">💡</span>
+    Priorisieren Sie immer <strong>data-testid</strong>- und <strong>aria</strong>-Attribute. Dies sind stabile semantische Bezeichner, die UI-Refactoring überstehen, im Gegensatz zu XPath, das bei strukturellen DOM-Änderungen bricht.
+  </div>
+</section>
+
+</div><!-- /content-wrap -->

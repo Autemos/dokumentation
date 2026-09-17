@@ -1,0 +1,273 @@
+<section class="doc-section" id="pdfcompare-overview">
+<span class="section-label">Erste Schritte</span>
+<div class="section-intro"><h1>PDF Compare</h1></div>
+<p>PDF Compare ermöglicht die automatisierte Validierung generierter oder heruntergeladener PDF-Dokumente innerhalb eines Autemos Test Workflows.</p>
+<p>Ein PDF kann zentral als <strong>Baseline-Dokument</strong> hinterlegt und später in einem Workflow ausgewählt werden. Während der Ausführung erfasst Autemos das tatsächliche PDF und vergleicht es mit der gewählten Baseline.</p>
+<h2>Was verglichen wird</h2>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Text</h3><p>Erkennt geänderte, fehlende oder zusätzliche textliche Inhalte.</p></div>
+  <div class="concept-card"><h3>Werte</h3><p>Erkennt Abweichungen bei numerischen Werten im PDF.</p></div>
+  <div class="concept-card"><h3>Layout</h3><p>Erkennt visuelle und positionelle Unterschiede über einen pixelbasierten Vergleich.</p></div>
+</div>
+<p>Dynamische Inhalte lassen sich über <a href="#pdfcompare-zones">Exclusion Zones</a> für visuelle Bereiche und <a href="#pdfcompare-patterns">Ignore Patterns</a> für variablen Text behandeln. Damit bleiben auch Dokumente stabil validierbar, die wechselnde Daten, Kennzeichen, QR-Codes oder generierte Referenznummern enthalten.</p>
+<p>PDF Compare eignet sich für Rechnungen, Kontoauszüge, Versicherungsdokumente, Verträge, Bestätigungen, Reports und weitere generierte Geschäftsdokumente.</p>
+</section>
+
+<section class="doc-section" id="pdfcompare-baselines">
+<span class="section-label">Baselines</span>
+<h1>PDF Baselines</h1>
+<p>PDF Baselines sind zentral verwaltete Referenzdokumente, die vom PDF-Compare-Node im Workflow verwendet werden.</p>
+<p>Navigieren Sie im Projekt zu <strong>PDF Baselines</strong>, um die verfügbaren Referenzdokumente einzusehen. Die Übersicht zeigt unter anderem:</p>
+<ul class="feature-list">
+<li>Name der Baseline</li>
+<li>Aktuelle Version</li>
+<li>Anzahl Seiten</li>
+<li>Dateigrösse</li>
+<li>Datum der Aufzeichnung beziehungsweise des Uploads</li>
+</ul>
+<p>Eine Baseline kann von mehreren Test Workflows genutzt werden. Das vermeidet separate Referenzdateien in jedem Workflow und schafft eine kontrollierte Quelle für den Dokumentvergleich.</p>
+<div class="screenshot-wrap">
+<img alt="Übersicht der PDF Baselines im Projekt" src="./autemos_pdfcompare_screenshots/image_1.png"/>
+<div class="screenshot-caption">PDF-Baseline-Dokumente zentral verwalten.</div>
+</div>
+</section>
+
+<section class="doc-section" id="pdfcompare-upload">
+<span class="section-label">Baselines</span>
+<h1>Baseline hochladen</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+  <div style="flex:1;min-width:0">
+    <p>Wählen Sie <strong>Upload Baseline</strong>, um ein neues Referenzdokument anzulegen.</p>
+    <p>Vergeben Sie einen im Projekt eindeutigen Namen und laden Sie die gewünschte PDF-Datei hoch. Der erste Upload erzeugt Version 1 der Baseline-Familie.</p>
+    <div class="param-table-wrap">
+    <table class="param-table">
+    <thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+    <tbody>
+    <tr><td><strong>Name</strong></td><td>Eindeutiger Name zur Identifikation und Auswahl der Baseline</td></tr>
+    <tr><td><strong>PDF File</strong></td><td>Referenz-PDF für künftige Vergleiche</td></tr>
+    </tbody>
+    </table>
+    </div>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 300px;margin:0">
+    <img alt="Dialog zum Hochladen einer neuen Baseline" src="./autemos_pdfcompare_screenshots/image_2.png"/>
+    <div class="screenshot-caption">Eine neue PDF-Baseline hochladen.</div>
+  </div>
+</div>
+</section>
+
+<section class="doc-section" id="pdfcompare-versions">
+<span class="section-label">Baselines</span>
+<h1>Baseline-Versionen</h1>
+<p>Baselines sind versioniert. Ein Test Workflow kann je nach benötigtem Testaufbau die aktuelle Version oder eine ausgewählte Baseline-Version verwenden.</p>
+<p>Ist <strong>Current</strong> gewählt, folgt der Workflow automatisch späteren Neuaufzeichnungen derselben Baseline. Das ist nützlich, wenn sich das freigegebene Referenzdokument ändert, die Workflow-Konfiguration aber unverändert bleiben soll.</p>
+<div class="tip"><span class="tip-icon">💡</span>Spätere Neuaufzeichnungen laufen über <strong>Record New Version</strong> auf derselben Baseline, nicht über einen erneuten Upload.</div>
+</section>
+
+<section class="doc-section" id="pdfcompare-capture">
+<span class="section-label">Test Workflows</span>
+<h1>PDF während der Ausführung erfassen</h1>
+<p>Verwenden Sie den <strong>Capture Download</strong> Node, um ein während des Test Runs vom Browser heruntergeladenes PDF einzusammeln.</p>
+<p>Der Node identifiziert die heruntergeladene Datei über ein Dateinamensmuster und legt sie unter einer Workflow-Variable ab. Diese Variable wird anschliessend als tatsächliches Dokument an den PDF-Compare-Node übergeben.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td><strong>File Name</strong></td><td>Dateiname oder passendes Muster für das heruntergeladene PDF</td></tr>
+<tr><td><strong>Store As</strong></td><td>Workflow-Variable, die von nachfolgenden Nodes verwendet wird</td></tr>
+<tr><td><strong>Timeout</strong></td><td>Maximale Wartezeit auf den Download</td></tr>
+</tbody>
+</table>
+</div>
+<div class="screenshot-wrap">
+<img alt="Capture Download Node im Workflow-Editor" src="./autemos_pdfcompare_screenshots/image_3.png"/>
+<div class="screenshot-caption">Ein heruntergeladenes PDF erfassen und als Workflow-Variable ablegen.</div>
+</div>
+</section>
+
+<section class="doc-section" id="pdfcompare-node">
+<span class="section-label">Test Workflows</span>
+<h1>PDF Compare in einen Workflow einbinden</h1>
+<p>Fügen Sie den PDF-Compare-Node nach dem Schritt ein, der das tatsächliche PDF-Dokument erfasst oder anderweitig bereitstellt.</p>
+<h2>Typischer Ablauf</h2>
+<div class="steps">
+<div class="step"><div class="step-num">1</div><div class="step-content"><p>Die Dokumentgenerierung in der Anwendung auslösen</p></div></div>
+<div class="step"><div class="step-num">2</div><div class="step-content"><p>Das heruntergeladene PDF erfassen</p></div></div>
+<div class="step"><div class="step-num">3</div><div class="step-content"><p>Die Datei in einer Workflow-Variable ablegen</p></div></div>
+<div class="step"><div class="step-num">4</div><div class="step-content"><p>Das erfasste PDF gegen die gewählte Baseline vergleichen</p></div></div>
+<div class="step"><div class="step-num">5</div><div class="step-content"><p>Den Workflow entsprechend dem konfigurierten Fehlerverhalten fortsetzen oder abbrechen</p></div></div>
+</div>
+<div class="screenshot-wrap">
+<img alt="PDF Compare Node innerhalb eines End-to-End-Workflows" src="./autemos_pdfcompare_screenshots/image_4.png"/>
+<div class="screenshot-caption">PDF Compare innerhalb eines End-to-End-Test-Workflows.</div>
+</div>
+</section>
+
+<section class="doc-section" id="pdfcompare-config">
+<span class="section-label">Test Workflows</span>
+<h1>Konfiguration</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+  <div style="flex:1;min-width:0">
+    <p>Wählen Sie die Baseline und ordnen Sie die Variable des tatsächlichen PDFs zu, die ein vorheriger Workflow-Schritt erzeugt hat. Die verfügbaren Prüfungen lassen sich unabhängig voneinander aktivieren, passend zu den Validierungsanforderungen des Dokuments.</p>
+    <div class="param-table-wrap">
+    <table class="param-table">
+    <thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+    <tbody>
+    <tr><td><strong>Baseline</strong></td><td>Referenzdokument für den Vergleich</td></tr>
+    <tr><td><strong>Baseline version</strong></td><td>Current oder eine ausgewählte Version der Baseline</td></tr>
+    <tr><td><strong>Actual document variable</strong></td><td>Workflow-Variable mit dem erfassten PDF</td></tr>
+    <tr><td><strong>Page count</strong></td><td>Prüft, ob beide Dokumente dieselbe Seitenanzahl haben</td></tr>
+    <tr><td><strong>Text per page</strong></td><td>Vergleicht den extrahierten Text jeder korrespondierenden Seite</td></tr>
+    <tr><td><strong>Full document text</strong></td><td>Vergleicht den vollständigen extrahierten Text beider Dokumente</td></tr>
+    <tr><td><strong>Visual (pixel) compare</strong></td><td>Vergleicht die gerenderten Seiten auf visuelle und Layout-Unterschiede</td></tr>
+    <tr><td><strong>Two-stage gating</strong></td><td>Führt den Pixelvergleich nur aus, wenn der Textvergleich bereits übereinstimmte</td></tr>
+    <tr><td><strong>Render DPI</strong></td><td>Auflösung beim Rendern der Seiten für den visuellen Vergleich</td></tr>
+    <tr><td><strong>Visual tolerance</strong></td><td>Anteil abweichender Pixel, der noch als gleich gewertet wird</td></tr>
+    <tr><td><strong>On failure</strong></td><td>Legt fest, wie sich der Workflow bei einem fehlgeschlagenen Vergleich verhält</td></tr>
+    </tbody>
+    </table>
+    </div>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 260px;margin:0">
+    <img alt="Konfigurationspanel des PDF Compare Node" src="./autemos_pdfcompare_screenshots/image_5.png"/>
+    <div class="screenshot-caption">Prüfungen, visuelle Toleranz und Fehlerverhalten konfigurieren.</div>
+  </div>
+</div>
+</section>
+
+<section class="doc-section" id="pdfcompare-types">
+<span class="section-label">Vergleichsarten</span>
+<h1>Vergleichsarten</h1>
+<p>Die einzelnen Prüfungen adressieren unterschiedliche Aspekte eines Dokuments und lassen sich getrennt aktivieren.</p>
+<h2 id="pdfcompare-pagecount">Seitenanzahl</h2>
+<p>Prüft, ob Baseline und tatsächliches Dokument dieselbe Seitenanzahl enthalten. Das ist eine schnelle strukturelle Prüfung, bevor einzelne Inhalte bewertet werden.</p>
+<h2 id="pdfcompare-text">Text- und Wertevergleich</h2>
+<p>Autemos extrahiert den PDF-Text und erkennt geänderte, fehlende oder zusätzliche Inhalte. Numerische Werte wie Preise, Summen, Daten, Mengen oder Kontowerte sind in diesem Vergleich enthalten.</p>
+<p>Text kann pro Seite und über das gesamte Dokument geprüft werden. Beide Prüfungen sind unabhängig konfigurierbar.</p>
+<h2 id="pdfcompare-visual">Visueller und Layout-Vergleich</h2>
+<p>Für die visuelle Validierung rendert Autemos die PDF-Seiten und vergleicht sie auf Pixelebene. Damit werden Layout-Änderungen erkannt, etwa verschobene Elemente, veränderte Abstände, fehlende Komponenten oder Formatierungsunterschiede.</p>
+<p><strong>Render DPI</strong> steuert die Renderauflösung. <strong>Visual tolerance</strong> definiert, wie viele abweichende Pixel noch als gleich akzeptiert werden.</p>
+</section>
+
+<section class="doc-section" id="pdfcompare-gating">
+<span class="section-label">Vergleichsarten</span>
+<h1>Two-Stage Gating</h1>
+<p>Ist Two-Stage Gating aktiviert, führt Autemos den visuellen Vergleich erst aus, nachdem der konfigurierte Textvergleich übereingestimmt hat.</p>
+<p>Das kann unnötige Pixelvergleiche vermeiden, wenn ein Dokument bereits auf inhaltlicher Ebene fehlschlägt.</p>
+</section>
+
+<section class="doc-section" id="pdfcompare-zones">
+<span class="section-label">Dynamische Inhalte</span>
+<h1>Exclusion Zones für den visuellen Vergleich</h1>
+<p>Generierte PDFs enthalten häufig Werte, die sich zwischen Ausführungen berechtigterweise ändern. PDF Compare bietet dafür getrennte Mechanismen für dynamische visuelle Bereiche und für variablen Text.</p>
+<p>Exclusion Zones maskieren ausgewählte rechteckige Bereiche während des Pixelvergleichs. Sie eignen sich für wechselnde bild- oder positionsbasierte Inhalte wie:</p>
+<ul class="feature-list">
+<li>Daten und Zeitstempel</li>
+<li>QR-Codes oder Barcodes</li>
+<li>Generierte Dokument- oder Rechnungsnummern</li>
+<li>Dynamische Kopfzeilen, Stempel oder Signaturen</li>
+</ul>
+<div class="warn-box"><strong>Zonen wirken ausschliesslich auf den visuellen Vergleich.</strong> Textunterschiede im maskierten Bereich schlagen weiterhin fehl und müssen separat über <a href="#pdfcompare-patterns">Ignore Patterns</a> behandelt werden.</div>
+<p>Zonen werden auf der betreffenden PDF-Seite konfiguriert.</p>
+<div class="screenshot-wrap">
+<img alt="Editor für Exclusion Zones auf einer Rechnung" src="./autemos_pdfcompare_screenshots/image_6.png"/>
+<div class="screenshot-caption">Eine Exclusion Zone für einen dynamischen visuellen Bereich definieren.</div>
+</div>
+</section>
+
+<section class="doc-section" id="pdfcompare-patterns">
+<span class="section-label">Dynamische Inhalte</span>
+<h1>Ignore Patterns für den Textvergleich</h1>
+<p>Ignore Patterns kennzeichnen variablen Text, der den Vergleich nicht fehlschlagen lassen soll.</p>
+<p>Verwenden Sie den Marker <code>@ignore</code> innerhalb des stabilen umgebenden Textes, um den dynamischen Teil zu kennzeichnen, zum Beispiel:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td><strong>Pattern</strong></td><td>Umgebender Text mit <code>@ignore</code> für den variablen Teil, etwa <code>Buchungsnummer: @ignore Rückforderung</code></td></tr>
+<tr><td><strong>Pages</strong></td><td>Kommagetrennte Seitenzahlen. Leer bedeutet: gilt für alle Seiten</td></tr>
+</tbody>
+</table>
+</div>
+<p>Mehrere Patterns können derselben PDF-Compare-Konfiguration hinzugefügt werden.</p>
+<div class="tip"><span class="tip-icon">💡</span>Es werden keine regulären Ausdrücke geschrieben. Das Backend erzeugt den passenden Ausdruck aus dem angegebenen Muster.</div>
+<div class="screenshot-wrap">
+<img alt="Dialog zur Konfiguration von Ignore Patterns" src="./autemos_pdfcompare_screenshots/image_7.png"/>
+<div class="screenshot-caption">Ignore Patterns für variablen Text konfigurieren.</div>
+</div>
+</section>
+
+<section class="doc-section" id="pdfcompare-report">
+<span class="section-label">Auswertung</span>
+<h1>Ergebnis im Test Report</h1>
+<p>Das Ergebnis von PDF Compare wird direkt im Test-Run-Report angezeigt.</p>
+<p>Die Zusammenfassung zeigt den Gesamtstatus sowie den Status der konfigurierten Prüfungen, zum Beispiel:</p>
+<ul class="feature-list">
+<li>Page Count</li>
+<li>Text per Page</li>
+<li>Full Document Text</li>
+<li>Visual Difference</li>
+</ul>
+<p>Das verglichene Dokument bleibt als Test-Run-Artefakt verfügbar. Schlägt eine Prüfung fehl, lässt sich die detaillierte Differenzansicht zur weiteren Analyse öffnen.</p>
+<div class="screenshot-wrap">
+<img alt="PDF-Compare-Ergebnis im Test Report" src="./autemos_pdfcompare_screenshots/image_8.png"/>
+<div class="screenshot-caption">PDF-Compare-Ergebnis innerhalb des Test-Run-Reports.</div>
+</div>
+</section>
+
+<section class="doc-section" id="pdfcompare-diff">
+<span class="section-label">Auswertung</span>
+<h1>Detaillierte Differenzansicht</h1>
+<p>Die Detailansicht stellt Referenz- und tatsächliches PDF nebeneinander dar. Unterschiede werden in beiden Dokumenten direkt hervorgehoben, sodass geänderte Inhalte und Layout-Bereiche schnell lokalisierbar sind.</p>
+<p>Die erkannten Unterschiede lassen sich durchblättern und die Ansicht nach Vergleichsart filtern. Damit sind textliche Änderungen von visuellen Layout-Unterschieden unterscheidbar.</p>
+<div class="screenshot-wrap">
+<img alt="Nebeneinanderstellung von Referenz und tatsächlichem PDF mit markierten Unterschieden" src="./autemos_pdfcompare_screenshots/image_9.png"/>
+<div class="screenshot-caption">Erkannte PDF-Unterschiede nebeneinander analysieren.</div>
+</div>
+</section>
+
+<section class="doc-section" id="pdfcompare-use-cases">
+<span class="section-label">Anwendung</span>
+<h1>Typische Anwendungsfälle</h1>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Rechnungsvalidierung</h3><p>Kundendaten, Positionen, Summen und Dokumentlayout prüfen.</p></div>
+  <div class="concept-card"><h3>Finanz-, Versicherungs- und Vertragsdokumente</h3><p>Berechnete Werte und generierte Inhalte vergleichen und dabei dynamische Kennzeichen ausschliessen.</p></div>
+  <div class="concept-card"><h3>Regressionstests</h3><p>Unbeabsichtigte Dokumentänderungen nach Releases erkennen.</p></div>
+</div>
+</section>
+
+<section class="doc-section" id="pdfcompare-best-practices">
+<span class="section-label">Anwendung</span>
+<h1>Best Practices</h1>
+<ul class="best-practices">
+<li>Ein freigegebenes Geschäftsdokument mit klarem, stabilem Namen als Baseline verwenden</li>
+<li><strong>Current</strong> nur einsetzen, wenn Workflows späteren Baseline-Versionen automatisch folgen sollen</li>
+<li>Nur die Vergleichsarten aktivieren, die für das jeweilige Dokument erforderlich sind</li>
+<li>Exclusion Zones für dynamische visuelle Bereiche und Ignore Patterns für variablen Text verwenden</li>
+<li>Die visuelle Toleranz niedrig halten und die Differenzansicht prüfen, bevor eine geänderte Baseline akzeptiert wird</li>
+</ul>
+</section>
+
+<section class="doc-section" id="pdfcompare-related">
+<span class="section-label">Anwendung</span>
+<h1>Verwandte Module</h1>
+<p>PDF Compare ist Teil des grösseren Autemos-Ökosystems.</p>
+<div class="module-grid">
+<div class="module-card">
+<strong>PDF Baselines</strong>
+<span>Versionierte Referenzdokumente verwalten</span>
+</div>
+<div class="module-card">
+<strong>Capture Download</strong>
+<span>Generierte PDFs während der Ausführung einsammeln</span>
+</div>
+<div class="module-card">
+<strong>Test Workflows</strong>
+<span>Die PDF-Validierung als Workflow-Schritt ausführen</span>
+</div>
+<div class="module-card">
+<strong>Test Runs</strong>
+<span>Ergebnisse und Artefakte der Validierung einsehen</span>
+</div>
+</div>
+</section>

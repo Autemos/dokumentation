@@ -1,0 +1,218 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="search-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Test Search</h1>
+  <p>Das <strong>Test Search Menü</strong> bietet eine zentrale Such- und Discovery-Oberfläche für alle Tests innerhalb von Autemos. Die Funktion wurde entwickelt, um schnelle Transparenz über grosse Automatisierungsportfolios hinweg zu ermöglichen.</p>
+  <div class="screenshot-wrap">
+    <img alt="Test Search overview" src="./autemos_testsearch_screenshots/image_1.png"/>
+    <div class="screenshot-caption">Test Search Overview — zentrale Tabellenansicht aller Tests mit Suche, Filtern und Pass-Rate-Visualisierung.</div>
+  </div>
+  <h2>Was die Funktion ermöglicht</h2>
+  <ul class="feature-list">
+    <li>Tests schnell finden</li>
+    <li>Teststatus analysieren</li>
+    <li>Ausführungsqualität überwachen</li>
+    <li>Fehlgeschlagene oder flaky Tests filtern</li>
+    <li>Testdetails einsehen</li>
+    <li>Direkt zu zugehörigen Test Runs navigieren</li>
+  </ul>
+  <h2>Zweck</h2>
+  <p>Die Test Search Funktion unterstützt Teams dabei:</p>
+  <ul class="feature-list">
+    <li>Tests projektübergreifend zu finden</li>
+    <li>Testqualität zu überwachen</li>
+    <li>Fehlgeschlagene oder instabile Tests zu identifizieren</li>
+    <li>Ausführungsstatistiken zu analysieren</li>
+    <li>Schnell zu Ausführungen zu navigieren</li>
+    <li>Debugging-Workflows zu verbessern</li>
+    <li>Portfolio-weite Transparenz zu schaffen</li>
+  </ul>
+  <h2>Hauptfunktionen</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Globale Testsuche</h3><p>Suche über alle Projekte hinweg.</p></div>
+    <div class="concept-card"><h3>Filterfunktionen</h3><p>All / Passed / Failed / Flaky.</p></div>
+    <div class="concept-card"><h3>Testübersichtstabelle</h3><p>Zentrale Tabelle mit allen Metriken.</p></div>
+    <div class="concept-card"><h3>Pass Rate Visualisierung</h3><p>Visuelle Fortschrittsindikatoren.</p></div>
+    <div class="concept-card"><h3>Ausführungsstatistiken</h3><p>Total Runs, Average Duration, Last Run.</p></div>
+    <div class="concept-card"><h3>Detaillierte Testansicht</h3><p>Performance Trends und Tags.</p></div>
+    <div class="concept-card"><h3>Direkte Test Runs Navigation</h3><p>Schnellzugriff auf Ausführungshistorie.</p></div>
+  </div>
+</section>
+
+<!-- SEARCH & FILTERS -->
+<section id="search-filters" class="doc-section">
+  <span class="section-label">Suche &amp; Filter</span>
+  <h1>Suche &amp; Filter</h1>
+  <p>Die Test Search Seite kombiniert eine leistungsstarke globale Suche mit schnellen Filtermöglichkeiten — für effiziente Test Discovery.</p>
+  <h2>Global Test Search</h2>
+  <p>Die Suchleiste ermöglicht die globale Suche über alle Projekte hinweg. Unterstützt die Suche nach:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Suchkriterium</th><th>Beispiele</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Test Name</strong></td><td><code>custom-workflow</code></td></tr>
+        <tr><td><strong>Suite</strong></td><td><code>Banking</code></td></tr>
+        <tr><td><strong>Component</strong></td><td><code>chromium</code></td></tr>
+        <tr><td><strong>Tags</strong></td><td><code>Mobile</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Filter Optionen</h2>
+  <p>Die Test Search Seite bietet schnelle Filtermöglichkeiten:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>All</h3><p>Alle Tests anzeigen.</p></div>
+    <div class="concept-card"><h3>Passed</h3><p>Nur erfolgreich ausgeführte Tests.</p></div>
+    <div class="concept-card"><h3>Failed</h3><p>Nur fehlgeschlagene Tests.</p></div>
+    <div class="concept-card"><h3>Flaky</h3><p>Nur instabile Tests mit inkonsistentem Verhalten.</p></div>
+  </div>
+  <h2>Zweck der Filter</h2>
+  <ul class="feature-list">
+    <li>Instabile Tests isolieren</li>
+    <li>Fehler schneller erkennen</li>
+    <li>Flaky Verhalten analysieren</li>
+    <li>Sich auf stabile Ausführungen konzentrieren</li>
+  </ul>
+</section>
+
+<!-- TEST OVERVIEW TABLE -->
+<section id="search-table" class="doc-section">
+  <span class="section-label">Tabelle</span>
+  <h1>Test Overview Table</h1>
+  <p>Die zentrale Tabelle zeigt alle passenden Tests inklusive wichtiger Ausführungsmetriken.</p>
+  <h2>Angezeigte Informationen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Spalte</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Test Name</strong></td><td>Eindeutiger Test-Identifier</td></tr>
+        <tr><td><strong>Tags</strong></td><td>Kategorisierungs-Metadaten</td></tr>
+        <tr><td><strong>Project</strong></td><td>Zugehöriges Projekt</td></tr>
+        <tr><td><strong>Average Duration</strong></td><td>Durchschnittliche Laufzeit</td></tr>
+        <tr><td><strong>Status</strong></td><td>PASSED / FAILED / FLAKY</td></tr>
+        <tr><td><strong>Pass Rate</strong></td><td>Prozentwert + visueller Indikator</td></tr>
+        <tr><td><strong>Total Runs</strong></td><td>Gesamtanzahl der Ausführungen</td></tr>
+        <tr><td><strong>Last Run Timestamp</strong></td><td>Zeitpunkt der letzten Ausführung</td></tr>
+        <tr><td><strong>Action Buttons</strong></td><td>Direktzugriff auf Details und Test Runs</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Test Status</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>PASSED</h3><p>Test wurde erfolgreich ausgeführt.</p></div>
+    <div class="concept-card"><h3>FAILED</h3><p>Test ist fehlgeschlagen.</p></div>
+    <div class="concept-card"><h3>FLAKY</h3><p>Test zeigt inkonsistentes Verhalten.</p></div>
+  </div>
+  <p>Die Statusindikatoren ermöglichen schnelle Transparenz über die Stabilität der Tests.</p>
+  <h2>Pass Rate Visualisierung</h2>
+  <p>Die Pass Rate Spalte enthält Prozentwerte und visuelle Fortschrittsindikatoren — dadurch kann schnell die <strong>Testzuverlässigkeit</strong>, <strong>Konsistenz der Ausführungen</strong> und <strong>Qualität der Automatisierung</strong> bewertet werden.</p>
+  <h2>Tags</h2>
+  <p>Tests können mit Tags kategorisiert werden — z. B. <code>chromium</code>, <code>chrome</code>, <code>custom-workflow</code>. Tags verbessern:</p>
+  <ul class="feature-list">
+    <li>Suchbarkeit</li>
+    <li>Organisation</li>
+    <li>Filtermöglichkeiten</li>
+  </ul>
+  <h2>Weitere Metriken</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Metrik</th><th>Verwendung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Average Duration</strong></td><td>Performance-Monitoring, Identifikation langsamer Tests, Optimierungsanalysen</td></tr>
+        <tr><td><strong>Total Runs</strong></td><td>Nutzungsanalyse, Ausführungs-Tracking, Stabilitätsbewertung</td></tr>
+        <tr><td><strong>Last Run Information</strong></td><td>Veraltete Tests identifizieren, aktuelle Aktivitäten überwachen, Aktualität prüfen</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- TEST DETAILS -->
+<section id="search-details" class="doc-section">
+  <span class="section-label">Test Details</span>
+  <h1>Test Details View</h1>
+  <p>Benutzer können eine detaillierte Testansicht für jeden Test öffnen — mit erweiterten Informationen zu Ausführung und Performance.</p>
+  <div class="screenshot-wrap" style="max-width:520px;margin:16px 0">
+    <img alt="Test Details View" src="./autemos_testsearch_screenshots/image_2.png"/>
+    <div class="screenshot-caption">Test Details View — erweiterte Informationen mit Performance Trend, Tags und direkter Navigation zu Test Runs.</div>
+  </div>
+  <h2>Angezeigte Informationen</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Information</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Test Name</strong></td><td>Eindeutiger Test-Identifier</td></tr>
+        <tr><td><strong>Current Status</strong></td><td>Aktueller Status (PASSED / FAILED / FLAKY)</td></tr>
+        <tr><td><strong>Suite</strong></td><td>Zugehörige Test Suite</td></tr>
+        <tr><td><strong>Component</strong></td><td>Komponenten-Zuordnung</td></tr>
+        <tr><td><strong>Duration</strong></td><td>Laufzeit des Tests</td></tr>
+        <tr><td><strong>Pass Rate (30d)</strong></td><td>Erfolgsquote der letzten 30 Tage</td></tr>
+        <tr><td><strong>Total Runs</strong></td><td>Gesamtanzahl der Ausführungen</td></tr>
+        <tr><td><strong>Last Run</strong></td><td>Zeitpunkt der letzten Ausführung</td></tr>
+        <tr><td><strong>Performance Trend</strong></td><td>Visualisierter Trend über die Zeit</td></tr>
+        <tr><td><strong>Tags</strong></td><td>Zugewiesene Metadaten</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Recent Performance</h2>
+  <p>Der <strong>Recent Performance Graph</strong> visualisiert das aktuelle Ausführungsverhalten über die Zeit. Unterstützt:</p>
+  <ul class="feature-list">
+    <li>Stabilitätsanalysen</li>
+    <li>Trendüberwachung</li>
+    <li>Qualitätsmonitoring</li>
+  </ul>
+  <h2>Tags Bereich</h2>
+  <p>Der Tags Bereich zeigt zugewiesene Metadaten zur besseren Kategorisierung und Suchbarkeit.</p>
+  <h2>View Runs Navigation</h2>
+  <p>Der <strong>View Runs</strong> Button ermöglicht die direkte Navigation zu den zugehörigen <strong>Test Runs</strong>. Dadurch erhalten Benutzer schnellen Zugriff auf:</p>
+  <ul class="feature-list">
+    <li>Ausführungshistorie</li>
+    <li>Logs</li>
+    <li>Screenshots</li>
+    <li>Debugging-Informationen</li>
+    <li>Fehleranalysen</li>
+  </ul>
+</section>
+
+<!-- CROSS-PROJECT -->
+<section id="search-cross-project" class="doc-section">
+  <span class="section-label">Sichtbarkeit</span>
+  <h1>Projektübergreifende Sichtbarkeit</h1>
+  <p>Die Test Search Funktion arbeitet über alle zugänglichen Projekte hinweg — eine echte portfolio-weite Discovery-Oberfläche.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Dadurch können Benutzer projektübergreifend nach Tests suchen, ohne vorher das richtige Projekt auswählen zu müssen — ideal für QA-Teams, die mehrere Projekte parallel betreuen.</div>
+  <h2>Möglichkeiten</h2>
+  <ul class="feature-list">
+    <li>Global suchen</li>
+    <li>Tests vergleichen</li>
+    <li>Doppelte Tests identifizieren</li>
+    <li>Portfolio-weite Qualität überwachen</li>
+  </ul>
+</section>
+
+<!-- USE CASES & BENEFITS -->
+<section id="search-use-cases" class="doc-section">
+  <span class="section-label">Anwendung</span>
+  <h1>Use Cases &amp; Enterprise Vorteile</h1>
+  <h2>Typische Use Cases</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Failure Investigation</h3><p>Fehlgeschlagene Tests finden und Ausführungsdetails analysieren.</p></div>
+    <div class="concept-card"><h3>Flaky Test Analyse</h3><p>Flaky Tests filtern und Stabilisierung priorisieren.</p></div>
+    <div class="concept-card"><h3>Automation Health Monitoring</h3><p>Pass Rates und Ausführungsmetriken überwachen.</p></div>
+    <div class="concept-card"><h3>Cross-Project Search</h3><p>Tests unabhängig vom Projektstandort finden.</p></div>
+    <div class="concept-card"><h3>Execution Analysis</h3><p>Historische Ausführungsmetriken und Trends analysieren.</p></div>
+  </div>
+  <h2>Enterprise Vorteile</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Vorteil</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Zentrale Transparenz</strong></td><td>Eine zentrale Suchoberfläche für alle Tests innerhalb der Organisation.</td></tr>
+        <tr><td><strong>Höhere operative Effizienz</strong></td><td>Reduziert den Zeitaufwand beim Finden von Tests und Ausführungen.</td></tr>
+        <tr><td><strong>Verbesserte Qualitätsüberwachung</strong></td><td>Ermöglicht portfolio-weite Stabilitätsanalysen.</td></tr>
+        <tr><td><strong>Schnellere Incident Response</strong></td><td>Unterstützt schnellere Analyse von Fehlern und Regressionen.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div><!-- /content-wrap -->

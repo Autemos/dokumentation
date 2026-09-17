@@ -1,0 +1,340 @@
+<div class="content-wrap">
+
+<section class="doc-section" id="apicollections-overview">
+<span class="section-label">Erste Schritte</span>
+<div class="section-intro"><h1>API Collections</h1></div>
+<p>API Collections bieten einen zentralen Ort, um API-Definitionen in Autemos zu importieren, zu verwalten, auszuführen und wiederzuverwenden.</p>
+<p>Statt jeden API-Request manuell zu konfigurieren, lässt sich eine bestehende <strong>OpenAPI-/Swagger-Spezifikation</strong> importieren. Autemos wandelt die Spezifikation in eine API Collection um, welche die verfügbaren Endpoints und deren relevante Konfiguration enthält.</p>
+<div class="screenshot-wrap">
+<img alt="API Collections Übersicht" src="./autemos_apicollection_screenshots/image_1.png"/>
+<div class="screenshot-caption">API Collections zentral verwalten — importierte Spezifikation mit Runtime Environment und Endpoint-Liste.</div>
+</div>
+<h2>Drei Verwendungsarten</h2>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Direkt ausführen</h3><p>Endpoints direkt aus der API Collection heraus ausführen und validieren — ohne Test Workflow.</p></div>
+  <div class="concept-card"><h3>Als Workflow-Schritt</h3><p>Eine komplette API Collection als einzelnen Schritt innerhalb eines Test Workflows ausführen.</p></div>
+  <div class="concept-card"><h3>Einzelne Endpoints</h3><p>Beim Konfigurieren eines API Request Nodes einzelne Endpoints aus einer Collection auswählen.</p></div>
+</div>
+<p>Dadurch lässt sich API-Testing direkt mit Browser- und Mobile-Automatisierung im selben Test Workflow verbinden. Autemos unterstützt Web-, Mobile- und API-Testing bereits innerhalb eines einzigen Workflows.</p>
+</section>
+
+<section class="doc-section" id="apicollections-import">
+<span class="section-label">Import</span>
+<h1>Eine API Collection importieren</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+  <div style="flex:1;min-width:0">
+    <p>Navigieren Sie innerhalb Ihres Projekts zu <strong>API Collections</strong> und wählen Sie <strong>Import</strong>.</p>
+    <h2 style="margin-top:20px">Unterstützte Quellen</h2>
+    <ul class="feature-list">
+      <li><strong>File</strong> — Upload einer OpenAPI-Datei im Format <code>.json</code> oder <code>.yaml</code></li>
+      <li><strong>URL</strong> — Angabe der URL einer verfügbaren OpenAPI-Spezifikation</li>
+    </ul>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 380px;margin:0">
+    <img alt="Import Swagger/OpenAPI Dialog" src="./autemos_apicollection_screenshots/image_2.png"/>
+    <div class="screenshot-caption">OpenAPI / Swagger direkt importieren — per Datei oder URL.</div>
+  </div>
+</div>
+</section>
+
+<section class="doc-section" id="apicollections-import-config">
+<span class="section-label">Import</span>
+<h1>Import-Konfiguration</h1>
+<p>Während des Imports stehen die folgenden Optionen zur Verfügung:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td><strong>OpenAPI File / URL</strong></td><td>Quelle der OpenAPI-Spezifikation</td></tr>
+<tr><td><strong>Collection name</strong></td><td>Optionaler eigener Name für die API Collection</td></tr>
+<tr><td><strong>Operations marked as deprecated</strong></td><td>Legt fest, wie als deprecated markierte Operationen behandelt werden</td></tr>
+<tr><td><strong>Enable schema validation for all endpoints</strong></td><td>Aktiviert die Response-Schema-Validierung für alle importierten Endpoints</td></tr>
+</tbody>
+</table>
+</div>
+<div class="tip"><span class="tip-icon">💡</span>Wird kein Collection name angegeben, kann Autemos den in der OpenAPI-Spezifikation definierten Titel verwenden.</div>
+</section>
+
+<section class="doc-section" id="apicollections-schema-validation">
+<span class="section-label">Import</span>
+<h1>Schema Validation</h1>
+<p>Die Schema-Validierung kann während des Imports für die gesamte Collection aktiviert werden.</p>
+<p>Da OpenAPI-Spezifikationen die tatsächlichen API-Responses nicht immer präzise genug beschreiben, ist die Schema-Validierung standardmässig deaktiviert. Sie kann später auch individuell für einzelne Endpoints aktiviert werden.</p>
+<div class="tip"><span class="tip-icon">💡</span>Ein Import mit global aktivierter Schema-Validierung erzeugt häufig Fehlschläge, die keine echten Defects sind. Aktivieren Sie die Validierung gezielt dort, wo die Spezifikation verlässlich ist.</div>
+</section>
+
+<section class="doc-section" id="apicollections-list">
+<span class="section-label">Verwaltung</span>
+<h1>Collection-Übersicht</h1>
+<p>Nach dem Import einer OpenAPI-Spezifikation erstellt Autemos die API Collection und listet die verfügbaren Endpoints auf.</p>
+<p>Jeder Endpoint enthält Informationen aus der OpenAPI-Spezifikation:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Information</th><th>Beschreibung</th></tr></thead>
+<tbody>
+<tr><td><strong>Method</strong></td><td>HTTP-Methode wie GET, POST, PUT, PATCH oder DELETE</td></tr>
+<tr><td><strong>Path</strong></td><td>Pfad des API-Endpoints</td></tr>
+<tr><td><strong>Operation</strong></td><td>In der OpenAPI-Spezifikation definierte Operation</td></tr>
+<tr><td><strong>Expected</strong></td><td>Erwarteter HTTP-Response-Status</td></tr>
+<tr><td><strong>Status</strong></td><td>Aktueller Zustand des importierten Endpoints</td></tr>
+</tbody>
+</table>
+</div>
+<p>Die Übersicht bietet Such- und Filteroptionen, um einzelne Endpoints schnell zu finden.</p>
+</section>
+
+<section class="doc-section" id="apicollections-runtime">
+<span class="section-label">Verwaltung</span>
+<h1>Runtime Environment</h1>
+<p>Jede API Collection kann mit der Runtime-Konfiguration verbunden werden, die zur Ausführung ihrer Endpoints benötigt wird.</p>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Application</h3><p>Auswahl einer im Projekt konfigurierten Anwendung. Ohne Auswahl wird die in der OpenAPI-Spezifikation definierte Base-URL verwendet.</p></div>
+  <div class="concept-card"><h3>Default Environment</h3><p>Definiert die Standardumgebung für die Ausführung der Collection, z. B. DEV / TEST / INT / PROD.</p></div>
+  <div class="concept-card"><h3>Auth Config</h3><p>Auswahl einer wiederverwendbaren Authentifizierungs-Konfiguration, statt Credentials pro Request zu pflegen.</p></div>
+  <div class="concept-card"><h3>Test Data Binding</h3><p>Verbindet die Collection mit einem Test Data Binding, um dynamische Testdaten während der Ausführung zu nutzen.</p></div>
+</div>
+<p>Damit lässt sich dieselbe Collection gegen unterschiedliche Datensätze und Umgebungen ausführen.</p>
+</section>
+
+<section class="doc-section" id="apicollections-run">
+<span class="section-label">Verwaltung</span>
+<h1>Eine API Collection ausführen</h1>
+<p>Mit <strong>Run Collection</strong> wird die API Collection direkt ausgeführt. Autemos führt die aktivierten Endpoints der Collection mit dem konfigurierten Runtime Environment aus.</p>
+<h2>Wann verwenden</h2>
+<ul class="feature-list">
+<li>Eine importierte OpenAPI-Spezifikation schnell validieren</li>
+<li>API-Smoke- oder Regressionstests ausführen</li>
+<li>Endpoints nach API-Änderungen prüfen</li>
+<li>Eine API unabhängig von einem UI-Test-Workflow validieren</li>
+</ul>
+<div class="tip"><span class="tip-icon">💡</span>Sie müssen keinen Test Workflow erstellen, nur um die in einer Collection enthaltenen APIs auszuführen.</div>
+</section>
+
+<section class="doc-section" id="apicollections-workflows">
+<span class="section-label">Test Workflows</span>
+<h1>API Collections in Test Workflows</h1>
+<p>API Collections sind direkt in Autemos Test Workflows integriert. Damit werden APIs Teil eines End-to-End-Geschäftsprozesses, statt als isolierte API-Tests ausgeführt zu werden.</p>
+<div class="screenshot-wrap">
+<img alt="Kombinierter Browser- und API-Test im Workflow Editor" src="./autemos_apicollection_screenshots/image_3.png"/>
+<div class="screenshot-caption">API und UI zu echten End-to-End-Tests verbinden — Browser-Schritte und API Request im selben Workflow.</div>
+</div>
+<h2>Typische Abläufe</h2>
+<ul class="feature-list">
+<li><strong>Browser Action → API Request → Verify Response → Browser Action</strong></li>
+<li><strong>API Setup → Mobile Action → API Validation → Web Verification</strong></li>
+</ul>
+<p>Dies baut auf dem bestehenden Autemos-Konzept auf, Web-, Mobile- und API-Testing innerhalb eines einzigen Workflows zu kombinieren.</p>
+</section>
+
+<section class="doc-section" id="apicollections-endpoint">
+<span class="section-label">Test Workflows</span>
+<h1>Einzelnen API-Endpoint verwenden</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+  <div style="flex:1;min-width:0">
+    <p>Fügen Sie dem Test Workflow einen <a href="#api-request">API Request</a> Node hinzu. Der Node kann manuell konfiguriert oder aus einer bestehenden API Collection befüllt werden.</p>
+    <p>Wählen Sie dazu <strong>Choose from collection</strong>. Autemos öffnet den Dialog zur Endpoint-Auswahl.</p>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 300px;margin:0">
+    <img alt="API Request Node Konfiguration" src="./autemos_apicollection_screenshots/image_4.png"/>
+    <div class="screenshot-caption">API Request Node — „Choose from collection" öffnet die Endpoint-Auswahl.</div>
+  </div>
+</div>
+<p>Wählen Sie zunächst die gewünschte API Collection und anschliessend einen oder mehrere verfügbare Endpoints. Endpoints lassen sich innerhalb des Dialogs direkt durchsuchen.</p>
+<div class="screenshot-wrap">
+<img alt="Endpoint-Auswahl aus einer API Collection" src="./autemos_apicollection_screenshots/image_5.png"/>
+<div class="screenshot-caption">API Calls direkt in Workflows übernehmen — Collection wählen, Endpoints suchen und einfügen.</div>
+</div>
+<h2>Beispiel</h2>
+<ul class="feature-list">
+<li><code>GET /posts</code></li>
+<li><code>POST /posts</code></li>
+<li><code>GET /posts/{postId}</code></li>
+<li><code>PUT /posts/{postId}</code></li>
+<li><code>DELETE /posts/{postId}</code></li>
+</ul>
+</section>
+
+<section class="doc-section" id="apicollections-auto-config">
+<span class="section-label">Test Workflows</span>
+<h1>Automatische Request-Konfiguration</h1>
+<p>Wird ein Endpoint aus einer API Collection ausgewählt, verwendet Autemos die Informationen der importierten OpenAPI-Spezifikation, um den API Request Node zu befüllen.</p>
+<p>Je nach Endpoint-Definition kann dies umfassen:</p>
+<ul class="feature-list">
+<li>HTTP-Methode</li>
+<li>URL / Endpoint</li>
+<li>Authentifizierung</li>
+<li>Headers</li>
+<li>Request Body</li>
+<li>Response-Informationen</li>
+</ul>
+<p>Die Konfiguration bleibt in den Standard-Tabs des API Request Nodes verfügbar:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Tab</th><th>Inhalt</th></tr></thead>
+<tbody>
+<tr><td><strong>Request</strong></td><td>Methode und Ziel-URL</td></tr>
+<tr><td><strong>Auth</strong></td><td>Authentifizierungs-Modus und Credentials</td></tr>
+<tr><td><strong>Headers</strong></td><td>HTTP-Header als Key/Value-Paare</td></tr>
+<tr><td><strong>Body</strong></td><td>Request-Body für POST/PUT/PATCH</td></tr>
+<tr><td><strong>Response</strong></td><td>Response-Handling und Response Alias</td></tr>
+</tbody>
+</table>
+</div>
+<div class="tip"><span class="tip-icon">💡</span>Die importierte Konfiguration ist ein Startpunkt — der Request kann bei Bedarf weiterhin angepasst werden.</div>
+</section>
+
+<section class="doc-section" id="apicollections-verify-nodes">
+<span class="section-label">Test Workflows</span>
+<h1>Verify Nodes automatisch erstellen</h1>
+<p>Bei der Auswahl eines Endpoints aus einer API Collection kann die Option <strong>Also create verify nodes</strong> aktiviert werden. Autemos erstellt dann zusammen mit dem API Request die passenden Verifikationsschritte.</p>
+<p>Das reduziert den Aufwand, bereits in der API-Spezifikation definierte Validierungen manuell nachzubauen, und macht aus einer OpenAPI-Definition schneller einen ausführbaren API-Test.</p>
+<p>Die generierte Verifikation lässt sich anschliessend im Test Workflow über die reguläre <a href="#verify-response">Verify Response</a> Funktionalität anpassen.</p>
+</section>
+
+<section class="doc-section" id="apicollections-run-node">
+<span class="section-label">Test Workflows</span>
+<h1>Run API Collection Node</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+  <div style="flex:1;min-width:0">
+    <p>Statt einzelne Endpoints auszuwählen, kann eine komplette Collection aus einem Test Workflow heraus ausgeführt werden. Fügen Sie dazu den <strong>Run API Collection</strong> Node hinzu.</p>
+    <p>Der Node führt die ausgewählte API Collection als einen einzigen Workflow-Schritt aus. Die Collection sieht dabei die Variablen des Workflows.</p>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 300px;margin:0">
+    <img alt="Run API Collection Node Konfiguration" src="./autemos_apicollection_screenshots/image_6.png"/>
+    <div class="screenshot-caption">Run API Collection — Collection, Environment, Fehlerverhalten und Ergebnisvariable.</div>
+  </div>
+</div>
+<h2>Configuration</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Parameter</th><th>Beschreibung</th><th>Erforderlich</th><th>Beispiel</th></tr></thead>
+<tbody>
+<tr><td><strong>API Collection</strong></td><td>Auszuführende Collection</td><td>Yes</td><td><code>Autemos API Collection Demo</code></td></tr>
+<tr><td><strong>Environment</strong></td><td>Für die Ausführung verwendete Runtime-Umgebung</td><td>No</td><td><code>TEST</code></td></tr>
+<tr><td><strong>On item failure</strong></td><td>Verhalten des Workflows, wenn ein Endpoint fehlschlägt</td><td>Yes</td><td><code>Abort the workflow</code></td></tr>
+<tr><td><strong>Store result as</strong></td><td>Workflow-Variable mit dem Ergebnis der Collection</td><td>No</td><td><code>collectionResult</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2>Store result as</h2>
+<p>Das Ergebnis der API Collection kann in einer Workflow-Variable gespeichert werden, zum Beispiel <code>collectionResult</code>. Damit steht das Ausführungsergebnis nachfolgenden Workflow-Schritten zur Verfügung.</p>
+<div class="meta-grid">
+<div class="meta-card"><div class="meta-label">Input Variables</div><div class="meta-value"><span class="meta-pill pill-yes">Yes</span></div></div>
+<div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-yes">Yes</span></div></div>
+</div>
+<div class="tip"><span class="tip-icon">💡</span>Ist im Projekt noch keine API Collection vorhanden, weist der Node darauf hin, dass zuerst eine OpenAPI-Spezifikation importiert werden muss.</div>
+</section>
+
+<section class="doc-section" id="apicollections-combine">
+<span class="section-label">Anwendung</span>
+<h1>API und UI kombinieren</h1>
+<p>Einer der zentralen Vorteile von API Collections ist die Möglichkeit, API-Operationen mit UI-Automatisierung zu verbinden.</p>
+<h2>Beispielablauf</h2>
+<div class="steps">
+<div class="step">
+<div class="step-num">1</div>
+<div class="step-content">
+<p>Einen Kunden über eine API erstellen</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">2</div>
+<div class="step-content">
+<p>Die zurückgegebene Customer ID speichern</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">3</div>
+<div class="step-content">
+<p>Die Anwendung im Browser öffnen</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">4</div>
+<div class="step-content">
+<p>Nach dem neu erstellten Kunden suchen</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">5</div>
+<div class="step-content">
+<p>Den Kunden über die UI ändern</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">6</div>
+<div class="step-content">
+<p>Einen weiteren API-Endpoint aufrufen</p>
+</div>
+</div>
+<div class="step">
+<div class="step-num">7</div>
+<div class="step-content">
+<p>Prüfen, dass das Backend die aktualisierten Informationen enthält</p>
+</div>
+</div>
+</div>
+<p>So lässt sich der komplette Geschäftsprozess testen, ohne API- und UI-Automatisierung auf verschiedene Tools oder Test Suites aufzuteilen.</p>
+</section>
+
+<section class="doc-section" id="apicollections-use-cases">
+<span class="section-label">Anwendung</span>
+<h1>Typische Anwendungsfälle</h1>
+<div class="concept-grid">
+  <div class="concept-card"><h3>API Regression Testing</h3><p>Eine OpenAPI-Spezifikation importieren und die komplette API Collection ausführen, um die verfügbaren Endpoints zu validieren.</p></div>
+  <div class="concept-card"><h3>API Setup für UI-Tests</h3><p>Über API-Requests den benötigten Testzustand herstellen, bevor Browser- oder Mobile-Interaktionen starten.</p></div>
+  <div class="concept-card"><h3>Backend Verification</h3><p>Einen Geschäftsprozess über die UI durchführen und anschliessend per API-Request den resultierenden Backend-Zustand prüfen.</p></div>
+  <div class="concept-card"><h3>Hybrid End-to-End Testing</h3><p>Browser-, Mobile- und API-Interaktionen innerhalb eines einzigen Test Workflows kombinieren.</p></div>
+  <div class="concept-card"><h3>Wiederverwendbare API-Definitionen</h3><p>API-Definitionen zentral über API Collections pflegen, statt dieselben Requests in mehreren Workflows manuell zu konfigurieren.</p></div>
+</div>
+</section>
+
+<section class="doc-section" id="apicollections-best-practices">
+<span class="section-label">Anwendung</span>
+<h1>Best Practices</h1>
+<ul class="best-practices">
+<li>APIs wenn möglich aus der massgeblichen OpenAPI-Spezifikation importieren</li>
+<li>API Collections als zentrale Quelle für wiederverwendbare API-Definitionen nutzen</li>
+<li>Authentifizierung zentral konfigurieren, statt Credentials über Requests hinweg zu duplizieren</li>
+<li>Environments verwenden, um hartcodierte URLs zu vermeiden</li>
+<li>Test Data Bindings für dynamische und wiederverwendbare API-Tests einsetzen</li>
+<li><strong>Run Collection</strong> für API-Regression und Smoke-Testing verwenden</li>
+<li>Einzelne API Request Nodes verwenden, wenn APIs Teil eines grösseren End-to-End-Prozesses sind</li>
+<li>Automatische Verify-Node-Erstellung aktivieren, wenn die OpenAPI-Spezifikation verlässliche Response-Definitionen enthält</li>
+<li>API-Setup und -Validierung mit UI-Automatisierung kombinieren, um End-to-End-Tests schneller und robuster zu machen</li>
+</ul>
+</section>
+
+<section class="doc-section" id="apicollections-related">
+<span class="section-label">Anwendung</span>
+<h1>Verwandte Module</h1>
+<p>API Collections sind Teil des grösseren Autemos-Ökosystems.</p>
+<div class="module-grid">
+  <div class="module-card">
+<strong>Test Workflows</strong>
+<span>API-, Browser- und Mobile-Testing in einem Ablauf kombinieren</span>
+</div>
+  <div class="module-card">
+<strong>API Request</strong>
+<span>Einzelne HTTP-Requests ausführen</span>
+</div>
+  <div class="module-card">
+<strong>Verify Response</strong>
+<span>API-Responses validieren</span>
+</div>
+  <div class="module-card">
+<strong>Extract JSON Value</strong>
+<span>Response-Werte für nachfolgende Workflow-Schritte extrahieren</span>
+</div>
+  <div class="module-card">
+<strong>Test Data</strong>
+<span>Dynamische Daten für die API-Ausführung bereitstellen</span>
+</div>
+  <div class="module-card">
+<strong>Project Settings / Auth &amp; Secrets</strong>
+<span>Authentifizierung und sensible Informationen zentral verwalten</span>
+</div>
+</div>
+</section>
+
+</div>

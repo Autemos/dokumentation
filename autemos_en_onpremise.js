@@ -1,4 +1,3 @@
-// Autemos Documentation — On-Premise Stack English Translations
 window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   "onpremise-overview": `
   <span class="section-label">Getting Started</span>

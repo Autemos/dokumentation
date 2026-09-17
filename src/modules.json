@@ -1,0 +1,149 @@
+{
+  "modules": [
+    {
+      "id": "executive",
+      "label": "Executive Dashboard",
+      "section": "management",
+      "searchLabel": "Executive Dashboard",
+      "enCount": 16
+    },
+    {
+      "id": "projects",
+      "label": "Projects",
+      "section": "management",
+      "searchLabel": "Projects",
+      "enCount": 8
+    },
+    {
+      "id": "search",
+      "label": "Test Search",
+      "section": "management",
+      "searchLabel": "Test Search",
+      "enCount": 6
+    },
+    {
+      "id": "users",
+      "label": "Users",
+      "section": "management",
+      "searchLabel": "User Management",
+      "enCount": 7
+    },
+    {
+      "id": "templates",
+      "label": "Code Template",
+      "section": "management",
+      "searchLabel": "Code Template",
+      "enCount": 7
+    },
+    {
+      "id": "workflows",
+      "label": "Test Workflow",
+      "section": "project",
+      "searchLabel": "Test Workflows",
+      "enCount": 56
+    },
+    {
+      "id": "testruns",
+      "label": "Test Runs",
+      "section": "project",
+      "searchLabel": "Test Runs",
+      "enCount": 6
+    },
+    {
+      "id": "pages",
+      "label": "Pages",
+      "section": "project",
+      "searchLabel": "Pages",
+      "enCount": 12
+    },
+    {
+      "id": "healing",
+      "label": "Auto-Heal &amp; LLM",
+      "section": "project",
+      "searchLabel": "Self-Healing",
+      "enCount": 10
+    },
+    {
+      "id": "testdata",
+      "label": "Test Data",
+      "section": "project",
+      "searchLabel": "Test Data",
+      "enCount": 10
+    },
+    {
+      "id": "scheduler",
+      "label": "Schedules",
+      "section": "project",
+      "searchLabel": "Scheduler",
+      "enCount": 11
+    },
+    {
+      "id": "codegen",
+      "label": "Code Generation",
+      "section": "project",
+      "searchLabel": "Code Generation",
+      "enCount": 8
+    },
+    {
+      "id": "recorder",
+      "label": "Recorder",
+      "section": "project",
+      "searchLabel": "Recorder",
+      "enCount": 9
+    },
+    {
+      "id": "apicollections",
+      "label": "API Collections",
+      "section": "project",
+      "searchLabel": "API Collections",
+      "enCount": 16
+    },
+    {
+      "id": "jiraxray",
+      "label": "Jira Xray",
+      "section": "project",
+      "searchLabel": "Jira Xray"
+    },
+    {
+      "id": "pdfcompare",
+      "label": "PDF Compare",
+      "section": "project",
+      "searchLabel": "PDF Compare"
+    },
+    {
+      "id": "projectsettings",
+      "label": "Project Settings",
+      "section": "project",
+      "searchLabel": "Project Settings",
+      "enCount": 6
+    },
+    {
+      "id": "grid",
+      "label": "Grid Dashboard",
+      "section": "settings",
+      "searchLabel": "Grid Dashboard",
+      "enCount": 10
+    },
+    {
+      "id": "personalsettings",
+      "label": "Personal Settings",
+      "section": "settings",
+      "searchLabel": "Personal Settings",
+      "enCount": 6
+    },
+    {
+      "id": "settings",
+      "label": "Global Settings",
+      "section": "settings",
+      "searchLabel": "Global Settings",
+      "enCount": 10
+    },
+    {
+      "id": "onpremise",
+      "label": "On-Premise Stack",
+      "section": "deployment",
+      "searchLabel": "On-Premise Stack",
+      "enCount": 11
+    }
+  ]
+}

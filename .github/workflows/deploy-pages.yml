@@ -1,6 +1,6 @@
 name: Deploy GitHub Pages
 
-# Deployt die statische Autemos-Doku (autemos.html + relative Assets) nach GitHub Pages.
+# Baut die Autemos-Doku aus src/ und deployt sie (autemos.html + relative Assets) nach GitHub Pages.
 on:
   push:
     branches: [main]
@@ -27,11 +27,20 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # autemos.html + autemos_en_*.js aus src/ erzeugen; committete Artefakte werden überschrieben.
+      # build.py bricht bei Inkonsistenzen in src/ ab (Details in README.md); dann wird nichts deployt.
+      - name: Build docs from src
+        run: python3 build.py
+
       - name: Build site
         run: |
           mkdir -p _site
-          # Gesamten Doku-Inhalt nach _site kopieren (ohne Repo-/CI-Interna).
-          rsync -a --exclude='.git' --exclude='.github' --exclude='_site' --exclude='.idea' ./ _site/
+          # Gesamten Doku-Inhalt nach _site kopieren (ohne Repo-/CI-Interna
+          # und ohne Quellen/Build-Werkzeuge, die die Seite nicht benötigt).
+          rsync -a --exclude='.git' --exclude='.github' --exclude='_site' --exclude='.idea' \
+                   --exclude='/src/' --exclude='/build.py' --exclude='/extract.py' \
+                   --exclude='/README.md' --exclude='/DEPLOY.md' --exclude='/.gitignore' \
+                   ./ _site/
           # GitHub Pages liefert standardmäßig index.html aus -> Einstiegspunkt bereitstellen.
           cp _site/autemos.html _site/index.html
           # Jekyll-Verarbeitung abschalten (statische Seite 1:1 ausliefern).

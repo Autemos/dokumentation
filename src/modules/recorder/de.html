@@ -1,0 +1,250 @@
+<div class="content-wrap">
+
+<section class="doc-section" id="recorder-overview">
+<span class="section-label">Erste Schritte</span>
+<div class="section-intro"><h1>Recorder</h1></div>
+<p>Der Recorder ist der schnellste Weg, automatisierte Tests in Autemos zu erstellen. Statt Workflows manuell Schritt für Schritt aufzubauen, können Benutzer einfach mit der Anwendung interagieren, während Autemos sämtliche Aktionen automatisch aufzeichnet und in wiederverwendbare Test Workflows umwandelt.</p>
+<p>Der Recorder unterstützt zwei Recording-Modi:</p>
+<ul class="feature-list">
+  <li><strong>Manual Recording</strong> — klassischer Click-Recorder</li>
+  <li><strong>AI Recording</strong> — KI-gestützte Testerstellung über natürliche Sprache</li>
+</ul>
+<p>Während der Aufnahme erstellt Autemos automatisch Pages und Fields, Workflow Nodes, Assertions, Reusable Selectors, Page Objects sowie Tabellen- und UI-Strukturen. Der erzeugte Workflow kann anschliessend gespeichert und im Test Workflow Editor weiterbearbeitet werden.</p>
+<h2>Hauptfunktionen</h2>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Dual Recording Modes</h3><p>Wählen zwischen klassischer Interaktionsaufzeichnung (Manual) und KI-gesteuerter Testerstellung über natürliche Sprache (AI).</p></div>
+  <div class="concept-card"><h3>Web &amp; Mobile Support</h3><p>Unterstützung für Browser-basierte Anwendungen sowie Mobile Automation auf Android, iOS, physischen Geräten und Device Farms.</p></div>
+  <div class="concept-card"><h3>Automatische Page Object Erkennung</h3><p>Pages, Fields und Selectors werden während der Aufzeichnung automatisch erkannt und als wiederverwendbare Komponenten erstellt.</p></div>
+  <div class="concept-card"><h3>Workflow Ready</h3><p>Der generierte Workflow steht sofort im Test Workflow Editor zur Weiterbearbeitung und Ausführung bereit.</p></div>
+</div>
+</section>
+
+<section class="doc-section" id="recorder-dashboard">
+<span class="section-label">Erste Schritte</span>
+<h1>Recorder Workspace</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:24px">
+  <div style="flex:1;min-width:0">
+    <p>Der Recorder bietet eine zentrale Oberfläche zum Aufzeichnen, Analysieren und Speichern von Testabläufen. Der Workspace ist in klar getrennte Bereiche unterteilt, die während einer Session zusammenarbeiten.</p>
+    <h2 style="margin-top:20px">Hauptbereiche</h2>
+    <ul class="feature-list">
+      <li><strong>Session Area</strong> — Anzeige der aktiven Browser- oder Mobile-Session</li>
+      <li><strong>AI Chat Panel</strong> — Interaktion mit der KI über natürliche Sprache (AI-Modus)</li>
+      <li><strong>Events Panel</strong> — zeigt alle aufgezeichneten technischen Events in Echtzeit</li>
+      <li><strong>Workflow View</strong> — Visualisierung des generierten Test Workflows</li>
+      <li><strong>Pages View</strong> — Anzeige der automatisch erkannten Pages und Fields</li>
+    </ul>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 300px;margin:0">
+    <img alt="Recorder dashboard — Manual mode with no active session" src="./autemos_recorder_screenshots/image_1.png"/>
+    <div class="screenshot-caption">Recorder Workspace — Manual- und AI-Modus, Events / Workflow / Pages Tabs.</div>
+  </div>
+</div>
+</section>
+
+<section class="doc-section" id="recorder-session">
+<span class="section-label">Session Management</span>
+<h1>Session starten</h1>
+<p>Benutzer können direkt aus dem Recorder neue Sessions starten. Unterstützte Session-Typen: <strong>Web Browser</strong> und <strong>Mobile Device</strong>.</p>
+<h2>Web Browser Session</h2>
+<div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:24px">
+  <div style="flex:1;min-width:0">
+    <p>Konfigurieren Sie die Browser-Session über eine vordefinierte Anwendung und Umgebung oder geben Sie eine URL direkt ein.</p>
+    <div class="param-table-wrap" style="margin-top:16px">
+      <table class="param-table">
+        <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Application</strong></td><td>Auswahl einer definierten Anwendung</td></tr>
+          <tr><td><strong>Environment</strong></td><td>Auswahl der Zielumgebung (DEV, QA, UAT, PROD)</td></tr>
+          <tr><td><strong>Browser</strong></td><td>Auswahl des Zielbrowsers</td></tr>
+          <tr><td><strong>Certificate</strong></td><td>Einbindung von persönlichen oder projektweiten Zertifikaten</td></tr>
+          <tr><td><strong>Resolved URL</strong></td><td>Anzeige der final geöffneten URL</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 260px;margin:0">
+    <img alt="Add Session dialog — Web Browser" src="./autemos_recorder_screenshots/image_2.png"/>
+    <div class="screenshot-caption">Web Browser Session — Application, Environment, Browser und Certificate auswählen.</div>
+  </div>
+</div>
+<h2>Direkte URL-Aufzeichnung</h2>
+<div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:24px">
+  <div style="flex:1;min-width:0">
+    <p>Alternativ kann direkt eine URL eingegeben werden, ohne Application oder Environment auszuwählen. Ideal für Ad-hoc-Tests, externe Webseiten, temporäre Umgebungen und Schnelltests.</p>
+    <div class="tip"><span class="tip-icon">💡</span>Verwenden Sie <strong>Enter URL manually</strong>, wenn das Ziel nicht als Autemos-Anwendung registriert ist — die Session wird nicht an eine Projektumgebung gebunden.</div>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 260px;margin:0">
+    <img alt="Add Session dialog — Direct URL" src="./autemos_recorder_screenshots/image_3.png"/>
+    <div class="screenshot-caption">Direkte URL-Eingabe — ohne Application oder Environment starten.</div>
+  </div>
+</div>
+<h2>Mobile Device Session</h2>
+<div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:24px">
+  <div style="flex:1;min-width:0">
+    <div class="param-table-wrap">
+      <table class="param-table">
+        <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+        <tbody>
+          <tr><td><strong>Platform</strong></td><td>Auswahl: Android oder iOS</td></tr>
+          <tr><td><strong>Device</strong></td><td>Auswahl eines verbundenen Geräts oder manuelle UDID-Eingabe</td></tr>
+          <tr><td><strong>Application</strong></td><td>Auswahl der installierten Mobile App</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 260px;margin:0">
+    <img alt="Add Session dialog — Mobile Device" src="./autemos_recorder_screenshots/image_4.png"/>
+    <div class="screenshot-caption">Mobile Device Session — Platform, Device und Application auswählen.</div>
+  </div>
+</div>
+</section>
+
+<section class="doc-section" id="recorder-manual">
+<span class="section-label">Session Management</span>
+<h1>Manual Recording</h1>
+<p>Der Manual Recorder eignet sich für Benutzer, die direkt mit der Anwendung arbeiten möchten, während Autemos sämtliche Aktionen automatisch aufzeichnet.</p>
+<h2>Funktionsweise</h2>
+<p>Starten Sie eine Session, interagieren Sie mit der Anwendung und beenden Sie den Ablauf. Autemos zeichnet automatisch auf:</p>
+<ul class="feature-list">
+  <li>Clicks und Inputs</li>
+  <li>Navigation und Page Transitions</li>
+  <li>Assertions und Element-Interaktionen</li>
+</ul>
+<h2>Automatisch erzeugte Artefakte</h2>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Workflow Nodes</h3><p>Jede aufgezeichnete Aktion wird zu einem Node im visuellen Workflow.</p></div>
+  <div class="concept-card"><h3>Page Objects</h3><p>Pages und Fields werden automatisch erkannt und als wiederverwendbare Komponenten erstellt.</p></div>
+  <div class="concept-card"><h3>Assertions</h3><p>Validierungsschritte werden automatisch zusammen mit den Interaktions-Events erfasst.</p></div>
+  <div class="concept-card"><h3>Reusable Selectors</h3><p>Pro Element werden mehrere Selektorstrategien generiert für langfristige Stabilität.</p></div>
+</div>
+</section>
+
+<section class="doc-section" id="recorder-ai">
+<span class="section-label">Session Management</span>
+<h1>AI Recording</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:24px">
+  <div style="flex:1;min-width:0">
+    <p>Mit dem AI Recorder können Benutzer Tests vollständig über natürliche Sprache erstellen. Wechseln Sie in den AI-Modus und beschreiben Sie das gewünschte Szenario im AI Chat Panel.</p>
+    <div class="tip" style="margin-top:16px"><span class="tip-icon">💡</span>Beispiel: <em>„Öffne eBanking, navigiere zu Budget, öffne Hilfe und Kontakt und prüfe die Telefonnummer."</em></div>
+    <p style="margin-top:16px">Die KI interpretiert die Eingabe, führt die Aktionen aus, navigiert durch die Anwendung und erstellt automatisch den vollständigen Workflow.</p>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 300px;margin:0">
+    <img alt="Recorder in AI mode" src="./autemos_recorder_screenshots/image_5.png"/>
+    <div class="screenshot-caption">AI-Modus — AI Chat Panel und Modell-Selektor (z. B. GPT-4o).</div>
+  </div>
+</div>
+<h2>Transparente KI-Ausführung</h2>
+<div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:24px">
+  <div style="flex:1;min-width:0">
+    <p>Während der AI-Ausführung zeigt Autemos live an:</p>
+    <ul class="feature-list">
+      <li>Ausgeführte Commands und Browser-Aktionen</li>
+      <li>Generierte Workflow Nodes und Page Objects</li>
+      <li>Durchgeführte Assertions</li>
+      <li>Zusammenfassung der Ausführung</li>
+    </ul>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 220px;margin:0">
+    <img alt="AI Chat execution summary" src="./autemos_recorder_screenshots/image_6.png"/>
+    <div class="screenshot-caption">KI-Ausführungsübersicht — Schritte und Ergebnisse werden im Chat angezeigt.</div>
+  </div>
+</div>
+<h2>Unterstützte AI Models</h2>
+<p>Der Recorder unterstützt konfigurierbare AI Models (z. B. GPT-4o), die je nach Projektanforderung ausgewählt werden können.</p>
+</section>
+
+<section class="doc-section" id="recorder-events">
+<span class="section-label">Aufgezeichnete Daten</span>
+<h1>Events Recording</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:24px">
+  <div style="flex:1;min-width:0">
+    <p>Der <strong>Events</strong>-Tab zeigt sämtliche aufgezeichneten technischen Aktionen mit vollständigen Details.</p>
+    <h2 style="margin-top:20px">Typische Events</h2>
+    <ul class="feature-list">
+      <li><code>open_browser()</code></li>
+      <li><code>click_element()</code></li>
+      <li><code>assert_element()</code></li>
+      <li><code>close_session()</code></li>
+    </ul>
+    <h2 style="margin-top:20px">Event-Details</h2>
+    <p>Jedes Event enthält: Event Type, Selector, Page Object Referenzen, Parameter, Assertion Values sowie Browser- oder Device-Kontext. Events können nach Web, Mobile und Event Type gefiltert werden.</p>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 300px;margin:0">
+    <img alt="Events tab showing captured events" src="./autemos_recorder_screenshots/image_7.png"/>
+    <div class="screenshot-caption">Events-Tab — alle aufgezeichneten Aktionen mit Typ, Selector und Page Object Referenzen.</div>
+  </div>
+</div>
+</section>
+
+<section class="doc-section" id="recorder-workflow">
+<span class="section-label">Aufgezeichnete Daten</span>
+<h1>Workflow-Generierung</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:24px">
+  <div style="flex:1;min-width:0">
+    <p>Autemos wandelt die aufgezeichneten Events automatisch in einen visuellen Workflow um. Der <strong>Workflow</strong>-Tab zeigt den generierten Graphen in Echtzeit.</p>
+    <h2 style="margin-top:20px">Inhalt des Workflows</h2>
+    <ul class="feature-list">
+      <li>Navigation Nodes (Open Browser, Close)</li>
+      <li>Action Nodes (Click, Type, Swipe)</li>
+      <li>Assertions und Session Handling</li>
+      <li>Ablaufreihenfolge und bedingte Logik</li>
+    </ul>
+    <h2 style="margin-top:20px">Wiederverwendbarkeit</h2>
+    <p>Die erzeugten Workflows können bearbeitet, kombiniert, geplant, ausgeführt und für Code Generation verwendet werden.</p>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 220px;margin:0">
+    <img alt="Workflow tab showing generated workflow" src="./autemos_recorder_screenshots/image_8.png"/>
+    <div class="screenshot-caption">Workflow-Tab — der generierte Workflow-Graph aktualisiert sich in Echtzeit.</div>
+  </div>
+</div>
+</section>
+
+<section class="doc-section" id="recorder-pages">
+<span class="section-label">Aufgezeichnete Daten</span>
+<h1>Automatische Page Object Erkennung</h1>
+<div style="display:flex;gap:24px;align-items:flex-start;margin-bottom:24px">
+  <div style="flex:1;min-width:0">
+    <p>Eine der wichtigsten Funktionen des Recorders ist die automatische Erstellung von Page Objects. Autemos erkennt während der Aufnahme kontinuierlich UI-Strukturen und erstellt daraus wiederverwendbare Komponenten.</p>
+    <h2 style="margin-top:20px">Automatisch erkannte Elemente</h2>
+    <ul class="feature-list">
+      <li>Pages, Fields, Buttons, Inputs, Links</li>
+      <li>Tabellen und UI-Strukturen</li>
+      <li>Assertions und Selectors</li>
+    </ul>
+    <h2 style="margin-top:20px">Reuse Detection</h2>
+    <p>Autemos erkennt automatisch bereits existierende Elemente und markiert sie als <strong>Reused</strong> oder <strong>New</strong> — Duplikate werden vermieden, die Wartbarkeit verbessert.</p>
+  </div>
+  <div class="screenshot-wrap" style="flex:0 0 300px;margin:0">
+    <img alt="Pages tab showing detected Page Objects" src="./autemos_recorder_screenshots/image_9.png"/>
+    <div class="screenshot-caption">Pages-Tab — erkannte Page Objects und Fields, markiert als Reused oder New.</div>
+  </div>
+</div>
+</section>
+
+<section class="doc-section" id="recorder-output">
+<span class="section-label">Ausgabe &amp; Integration</span>
+<h1>Recorder Output</h1>
+<p>Nach dem Speichern erstellt der Recorder automatisch einen vollständigen Satz wiederverwendbarer Assets:</p>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Test Workflow</h3><p>Wiederverwendbarer Workflow zur Ausführung und Bearbeitung im Test Workflow Editor.</p></div>
+  <div class="concept-card"><h3>Page Objects</h3><p>Strukturierte Seitenmodelle mit Fields und Selectors.</p></div>
+  <div class="concept-card"><h3>Assertions</h3><p>Automatisch erfasste Validierungslogik, direkt im Workflow eingebettet.</p></div>
+  <div class="concept-card"><h3>Event Metadata</h3><p>Technische Informationen zur Ausführung für Debugging und Audit.</p></div>
+</div>
+<h2>Integration mit dem Test Workflow Editor</h2>
+<p>Nach dem Speichern kann der erzeugte Workflow im Test Workflow Editor erweitert werden: Bedingungen, Schleifen, Variablen, Retry-Logik, Integrationen und erweiterte Assertions. Der Recorder dient als Grundlage für komplexe Enterprise-Testautomatisierung.</p>
+<h2>Integration mit Code Generation</h2>
+<p>Die erzeugten Workflows können direkt im Code Generation Hub verwendet werden, um automatisierten Testcode für Selenium, Playwright oder Appium zu generieren.</p>
+<h2>Typische Use Cases</h2>
+<div class="concept-grid">
+  <div class="concept-card"><h3>Schnelle Test-Erstellung</h3><p>Automatisierte Tests innerhalb weniger Minuten erstellen.</p></div>
+  <div class="concept-card"><h3>Citizen Automation</h3><p>Auch Fachanwender ohne Programmierkenntnisse können Tests erstellen.</p></div>
+  <div class="concept-card"><h3>Page Object Discovery</h3><p>Wiederverwendbare Seitenstrukturen automatisch generieren.</p></div>
+  <div class="concept-card"><h3>Regression Testing</h3><p>Benutzerabläufe schnell in Regressionstests umwandeln.</p></div>
+</div>
+<h2>Als Test Workflow oder Sub-Workflow speichern</h2>
+<p>Beim Speichern einer Recording Session kann gewählt werden, ob die aufgezeichneten Schritte als <strong>Test Workflow</strong> oder als <strong>Sub-Workflow</strong> abgelegt werden.</p>
+<p>Ein Sub-Workflow eignet sich, wenn der aufgezeichnete Prozess in mehreren Tests verwendet werden soll, nur einen Teil eines vollständigen Tests darstellt, wiederverwendbare Eingabeparameter benötigt oder zentral gepflegt werden soll. Weitere Wege zur Erstellung beschreibt <a href="#subworkflows-create">Sub-Workflow erstellen und extrahieren</a>.</p>
+</section>
+
+</div><!-- /content-wrap -->

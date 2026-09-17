@@ -1,4 +1,3 @@
-// Autemos Documentation — Grid Dashboard English Translations
 window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   "grid-overview": `
   <span class="section-label">Getting Started</span>

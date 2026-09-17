@@ -1,0 +1,246 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="templates-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Code Template Management</h1>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Eingeschränkter Zugriff — Nur für Testarchitekten / Administratoren —</strong> Das Modul ist für fortgeschrittene Benutzer (Testarchitekten, Framework Engineers, Administratoren) vorgesehen. <strong>Fehlerhafte Änderungen an Templates können direkten Einfluss auf den generierten Automation Code in allen Projekten haben.</strong>
+  </div>
+  <p>Das Modul <strong>Code Template Management</strong> ermöglicht es Testarchitekten und Administratoren, die Templates zu definieren und zu verwalten, welche von Autemos für die automatische Codegenerierung verwendet werden.</p>
+  <div class="screenshot-wrap">
+    <img alt="Code Template Management overview" src="./autemos_codetemplatemgmt_screenshots/image_1.png"/>
+    <div class="screenshot-caption">Code Template Management — zentrale Verwaltung aller Codegenerierungs-Templates pro Sprache und Framework.</div>
+  </div>
+  <h2>Grundlage für</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Code Generation Engine</h3><p>Dynamische Generierung von Automation Code.</p></div>
+    <div class="concept-card"><h3>KI-gestützte Generierung</h3><p>Basis für AI-erzeugten Automation Code.</p></div>
+    <div class="concept-card"><h3>Framework-Exportsystem</h3><p>Framework-spezifischer Code-Export.</p></div>
+  </div>
+  <p>Anstatt statischen, vordefinierten Code zu generieren, erstellt Autemos den Automatisierungscode <strong>dynamisch auf Basis konfigurierbarer Templates</strong>. Dadurch kann der generierte Code vollständig an interne Coding Standards, Framework-Strukturen, Architekturvorgaben, Naming Conventions und Enterprise Best Practices angepasst werden.</p>
+  <h2>Zweck</h2>
+  <ul class="feature-list">
+    <li>Generierten Automation Code standardisieren</li>
+    <li>Mehrere Programmiersprachen unterstützen</li>
+    <li>Verschiedene Automatisierungsframeworks unterstützen</li>
+    <li>Generierte Teststrukturen anpassen</li>
+    <li>Unternehmensweite Coding Standards einhalten</li>
+    <li>Templates an interne Frameworks anpassen</li>
+  </ul>
+  <h2>Unterstützte Programmiersprachen &amp; Frameworks</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Sprachen</th><th>Frameworks</th></tr></thead>
+      <tbody>
+        <tr>
+          <td><strong>Java</strong> · <strong>TypeScript</strong> · <strong>Python</strong> · <strong>C#</strong></td>
+          <td><strong>Selenium</strong> · <strong>Playwright</strong> · <strong>Appium</strong></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Architekturübersicht</h2>
+  <p>Das Code Template Management System ist in vier Hauptbereiche unterteilt:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Template Editor</h3><p>Klassenstrukturen, Imports, Konstruktoren.</p></div>
+    <div class="concept-card"><h3>Node Templates</h3><p>Workflow-Aktionen zu Code-Übersetzungen.</p></div>
+    <div class="concept-card"><h3>Methods &amp; Field Types</h3><p>Feldannotationen und Interaktionsmethoden.</p></div>
+    <div class="concept-card"><h3>Configuration Import/Export</h3><p>Migration und Versionierung.</p></div>
+  </div>
+</section>
+
+<!-- LANGUAGE & FRAMEWORK SELECTION -->
+<section id="templates-selection" class="doc-section">
+  <span class="section-label">Konfiguration</span>
+  <h1>Sprache &amp; Framework Auswahl</h1>
+  <p>Bevor Templates bearbeitet werden können, müssen Benutzer eine <strong>Programmiersprache</strong> und ein <strong>Automatisierungsframework</strong> auswählen. Dadurch entstehen framework-spezifische Template-Konfigurationen.</p>
+  <h2>Haupttemplate-Typen</h2>
+  <p>Das System unterstützt verschiedene Template-Kategorien:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>pageobject</h3><p>Templates für wiederverwendbare PageObject-Klassen.</p></div>
+    <div class="concept-card"><h3>test</h3><p>Templates für ausführbare Testklassen.</p></div>
+  </div>
+  <p>Diese Templates definieren die <strong>grundlegende Struktur</strong> des generierten Automation Codes.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Jede Kombination aus Sprache + Framework hat ihre eigene Template-Konfiguration — z. B. unterscheidet sich ein Java/Selenium-PageObject grundlegend von einem TypeScript/Playwright-PageObject.</div>
+</section>
+
+<!-- TEMPLATE EDITOR -->
+<section id="templates-editor" class="doc-section">
+  <span class="section-label">Template Editor</span>
+  <h1>Template Editor</h1>
+  <p>Der <strong>Template Editor</strong> definiert die allgemeine Codestruktur, die während der Codegenerierung verwendet wird — Imports, Klassenstrukturen, Konstruktoren, Methoden, Feldinjektionen und Variablen-Placeholder.</p>
+  <div class="screenshot-wrap">
+    <img alt="Template Editor" src="./autemos_codetemplatemgmt_screenshots/image_2.png"/>
+    <div class="screenshot-caption">Template Editor — Klassenstruktur, Konstruktoren und Variablen-Placeholder für die Codegenerierung.</div>
+  </div>
+  <h2>Main Template</h2>
+  <p>Das <strong>Main Template</strong> steuert die generierte Klassenstruktur:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>PageObject Templates</h3><p>Struktur wiederverwendbarer PageObjects.</p></div>
+    <div class="concept-card"><h3>Testklassen-Templates</h3><p>Struktur ausführbarer Testklassen.</p></div>
+  </div>
+  <h2>Template-Variablen</h2>
+  <p>Templates unterstützen dynamische Platzhaltervariablen — diese werden während der Codegenerierung automatisch ersetzt:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Variable</th><th>Verwendung</th></tr></thead>
+      <tbody>
+        <tr><td><code>&dollar;{className}</code></td><td>Name der generierten Klasse</td></tr>
+        <tr><td><code>&dollar;{fields}</code></td><td>Felder-Block (Field Annotations)</td></tr>
+        <tr><td><code>&dollar;{methods}</code></td><td>Methoden-Block (Interaction Methods)</td></tr>
+        <tr><td><code>&dollar;{packageName}</code></td><td>Package- bzw. Namespace-Name</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Constructor Template</h2>
+  <p>Definiert, wie <strong>Konstruktoren</strong> generiert werden. Beispielhafte Anwendungsfälle:</p>
+  <ul class="feature-list">
+    <li>WebDriver Injection</li>
+    <li>Dependency Injection</li>
+    <li>Framework-Initialisierung</li>
+    <li>PageFactory-Initialisierung</li>
+  </ul>
+  <h2>Beschreibungsfeld &amp; Speichern</h2>
+  <p>Das <strong>Description-Feld</strong> dokumentiert den Zweck des Templates zur besseren Wartbarkeit. Die Aktion <strong>Save Template</strong> speichert die aktualisierte Template-Konfiguration — Änderungen wirken sich unmittelbar auf zukünftigen generierten Code aus.</p>
+</section>
+
+<!-- NODE TEMPLATES -->
+<section id="templates-nodes" class="doc-section">
+  <span class="section-label">Node Templates</span>
+  <h1>Node Templates</h1>
+  <p><strong>Node Templates</strong> definieren, wie Workflow-Nodes in Automation Code übersetzt werden. Jede Workflow-Aktion kann abhängig von Sprache, Framework und Architektur unterschiedlichen Code generieren.</p>
+  <div class="screenshot-wrap">
+    <img alt="Node Templates" src="./autemos_codetemplatemgmt_screenshots/image_3.png"/>
+    <div class="screenshot-caption">Node Templates — Definition der Code-Generierung pro Workflow-Aktion (Click, Assertion, Navigation, …).</div>
+  </div>
+  <h2>Unterstützte Node-Typen</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Assertion</h3><p>Verifikationen und Validierungen.</p></div>
+    <div class="concept-card"><h3>Click</h3><p>Klick-Interaktionen.</p></div>
+    <div class="concept-card"><h3>Navigation</h3><p>URL-Navigation und Routing.</p></div>
+    <div class="concept-card"><h3>Validation</h3><p>Datenvalidierungen.</p></div>
+    <div class="concept-card"><h3>API Calls</h3><p>HTTP-Aufrufe.</p></div>
+    <div class="concept-card"><h3>Wait Conditions</h3><p>Synchronisation und Waits.</p></div>
+  </div>
+  <h2>Template-Variablen</h2>
+  <p>Node Templates unterstützen dynamische Platzhalter, die automatisch aus den Workflow-Daten befüllt werden:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Variable</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><code>&dollar;{varName}</code></td><td>Variablen-Name</td></tr>
+        <tr><td><code>&dollar;{methodCall}</code></td><td>Methodenaufruf</td></tr>
+        <tr><td><code>&dollar;{value}</code></td><td>Eingabewert</td></tr>
+        <tr><td><code>&dollar;{url}</code></td><td>Ziel-URL</td></tr>
+        <tr><td><code>&dollar;{duration}</code></td><td>Wartezeit / Timeout</td></tr>
+        <tr><td><code>&dollar;{expected}</code></td><td>Erwarteter Wert</td></tr>
+        <tr><td><code>&dollar;{actual}</code></td><td>Tatsächlicher Wert</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Beispiel</h2>
+  <p>Ein <strong>Assertion-Node</strong> kann beispielsweise als Template definiert sein:</p>
+  <pre style="background:#0F121A;border:1px solid #2A2E3A;border-radius:8px;padding:12px;color:#C4C9D6;font-size:13px;overflow-x:auto"><code>assertEquals(&dollar;{expected}, &dollar;{actual});</code></pre>
+  <p>Während der Generierung wird daraus konkreter Code:</p>
+  <pre style="background:#0F121A;border:1px solid #2A2E3A;border-radius:8px;padding:12px;color:#C4C9D6;font-size:13px;overflow-x:auto"><code>assertEquals("Success", resultText);</code></pre>
+</section>
+
+<!-- METHODS & FIELD TYPES -->
+<section id="templates-methods" class="doc-section">
+  <span class="section-label">Methods &amp; Fields</span>
+  <h1>Methods &amp; Field Types</h1>
+  <p>Der Bereich <strong>Methods &amp; Field Types</strong> definiert Feldannotationen, generierte Feldstrukturen und wiederverwendbare Interaktionsmethoden. Dadurch können generierte PageObjects framework-spezifischen Konventionen folgen.</p>
+  <div class="screenshot-wrap">
+    <img alt="Methods and Field Types" src="./autemos_codetemplatemgmt_screenshots/image_4.png"/>
+    <div class="screenshot-caption">Methods &amp; Field Types — Templates für Feldannotationen und wiederverwendbare Methoden.</div>
+  </div>
+  <h2>Field Type Selection</h2>
+  <p>Benutzer können Templates für die folgenden Feldtypen definieren:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>INPUT</h3><p>Eingabefelder.</p></div>
+    <div class="concept-card"><h3>BUTTON</h3><p>Schaltflächen.</p></div>
+    <div class="concept-card"><h3>CHECKBOX</h3><p>Checkboxen.</p></div>
+    <div class="concept-card"><h3>DROPDOWN</h3><p>Auswahllisten.</p></div>
+    <div class="concept-card"><h3>TABLE</h3><p>Tabellen-Strukturen.</p></div>
+    <div class="concept-card"><h3>LINK</h3><p>Hyperlinks.</p></div>
+  </div>
+  <h2>Field Annotation Templates</h2>
+  <p>Dieser Bereich definiert, wie UI-Elemente im generierten Code dargestellt werden:</p>
+  <ul class="feature-list">
+    <li>Selenium-Annotationen</li>
+    <li>Playwright-Locators</li>
+    <li>Appium-Mobile-Selektoren</li>
+  </ul>
+  <h2>Wiederverwendbare Methoden</h2>
+  <p>Das System unterstützt wiederverwendbare Interaktionsmethoden:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Methode</th><th>Verwendung</th></tr></thead>
+      <tbody>
+        <tr><td><code>click</code></td><td>Klick auf ein Element</td></tr>
+        <tr><td><code>type</code></td><td>Texteingabe</td></tr>
+        <tr><td><code>clear</code></td><td>Feld leeren</td></tr>
+        <tr><td><code>getValue</code></td><td>Wert auslesen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Jede Methode kann <strong>benutzerdefinierte Implementierungslogik</strong>, <strong>framework-spezifisches Verhalten</strong> und <strong>Enterprise Utilities</strong> enthalten.</p>
+  <h2>Hinweise auf fehlende Templates</h2>
+  <p>Das System markiert unvollständige Template-Definitionen mit dem Hinweis <strong>„Missing Template"</strong>. Dadurch können Architekten unvollständige Framework-Konfigurationen schnell identifizieren.</p>
+  <h2>Edit- &amp; Delete-Aktionen</h2>
+  <p>Jedes Methodentemplate unterstützt <strong>Edit</strong> und <strong>Delete</strong> — dadurch ist eine vollständige Verwaltung wiederverwendbarer Automation-Methoden möglich.</p>
+</section>
+
+<!-- CONFIGURATION IMPORT/EXPORT -->
+<section id="templates-config" class="doc-section">
+  <span class="section-label">Configuration</span>
+  <h1>Configuration Import / Export</h1>
+  <p>Der <strong>Configuration-Bereich</strong> ermöglicht Unternehmen, Template-Konfigurationen zu exportieren, zu importieren und zwischen Umgebungen zu migrieren.</p>
+  <div class="screenshot-wrap">
+    <img alt="Configuration Import Export" src="./autemos_codetemplatemgmt_screenshots/image_5.png"/>
+    <div class="screenshot-caption">Configuration Import / Export — Template-Konfigurationen für Backup, Migration und Team-Synchronisation.</div>
+  </div>
+  <h2>Export Configuration</h2>
+  <p>Exportiert die aktuelle Template-Konfiguration für:</p>
+  <ul class="feature-list">
+    <li>Backups</li>
+    <li>Migrationen</li>
+    <li>Versionierung</li>
+    <li>Austausch zwischen Teams</li>
+  </ul>
+  <h2>Import Configuration</h2>
+  <p>Importiert zuvor exportierte Template-Konfigurationen — nützlich für:</p>
+  <ul class="feature-list">
+    <li>Onboarding</li>
+    <li>Framework-Rollouts</li>
+    <li>Synchronisation mehrerer Umgebungen</li>
+  </ul>
+</section>
+
+<!-- USE CASES & BEST PRACTICES -->
+<section id="templates-use-cases" class="doc-section">
+  <span class="section-label">Anwendung</span>
+  <h1>Use Cases &amp; Best Practices</h1>
+  <h2>Typische Anwendungsfälle</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Selenium Enterprise Frameworks</h3><p>Generierung unternehmensweiter Selenium PageObjects und Teststrukturen.</p></div>
+    <div class="concept-card"><h3>Playwright-Standardisierung</h3><p>Sicherstellung konsistenter Playwright-Architekturen über Teams hinweg.</p></div>
+    <div class="concept-card"><h3>Appium Mobile Automation</h3><p>Generierung wiederverwendbarer Mobile-Automation-Strukturen.</p></div>
+    <div class="concept-card"><h3>KI-gestützte Codegenerierung</h3><p>Bereitstellung sauberer Templates für KI-generierten Automation Code.</p></div>
+  </div>
+  <h2>Best Practices</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Empfehlung</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Versionierte Templates verwenden</strong></td><td>Templates sollten versioniert und historisiert werden.</td></tr>
+        <tr><td><strong>Zugriff beschränken</strong></td><td>Nur erfahrene Framework-Architekten sollten Templates bearbeiten dürfen.</td></tr>
+        <tr><td><strong>Templates sorgfältig testen</strong></td><td>Fehlerhafte Templates können sämtliche generierten Automation-Artefakte beeinflussen.</td></tr>
+        <tr><td><strong>Einheitliche Standards einhalten</strong></td><td>Konsistente Naming- und Strukturkonventionen verwenden.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div><!-- /content-wrap -->

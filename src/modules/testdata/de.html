@@ -1,0 +1,559 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="testdata-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Test Data Management</h1>
+  <p>Das <strong>Test Data Management Modul</strong> ermöglicht die zentrale Verwaltung, Bereitstellung und Wiederverwendung von Testdaten innerhalb der Plattform. Es stellt sicher, dass Test Workflows jederzeit auf konsistente, dynamische und reproduzierbare Testdaten zugreifen können — unabhängig davon, ob die Daten aus APIs, Datenbanken, Dateien oder internen Datensätzen stammen.</p>
+  <div class="screenshot-wrap">
+    <img alt="Test Data Management overview" src="./autemos_testdata_screenshot/image_1.png"/>
+    <div class="screenshot-caption">Test Data Management — zentrale Verwaltung aller Testdaten-Quellen, Bindings und Datensätze.</div>
+  </div>
+  <h2>Das Modul unterstützt</h2>
+  <ul class="feature-list">
+    <li>Zentrale Datenquellen</li>
+    <li>Wiederverwendbare Datensätze</li>
+    <li>Runtime-Bindings</li>
+    <li>Asynchrone Datenpersistierung</li>
+    <li>Scope-basierte Datenhaltung</li>
+    <li>Dynamische Testdatenbereitstellung</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">💡</span>Testdaten sind ein zentraler Bestandteil stabiler und skalierbarer Testautomatisierung.</div>
+  <h2>Ziele des Moduls</h2>
+  <ul class="feature-list">
+    <li>Testdaten zentral verwalten</li>
+    <li>Redundante Datendefinitionen vermeiden</li>
+    <li>Daten zwischen Workflows wiederverwenden</li>
+    <li>Dynamische Datenquellen anbinden</li>
+    <li>Asynchrone Testausführungen unterstützen</li>
+    <li>Reproduzierbare Tests sicherstellen</li>
+    <li>Komplexe Enterprise-Testdatenflüsse abbilden</li>
+  </ul>
+  <h2>Hauptbereiche</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Bereich</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Overview</strong></td><td>Status und Runtime-Übersicht</td></tr>
+        <tr><td><strong>Data Sources</strong></td><td>Verwaltung externer Datenquellen</td></tr>
+        <tr><td><strong>Variables</strong></td><td>Testdaten-Bindings und Variablen</td></tr>
+        <tr><td><strong>Settings</strong></td><td>Adapter- und Datenbank-Konfiguration</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- OVERVIEW DASHBOARD -->
+<section id="testdata-dashboard" class="doc-section">
+  <span class="section-label">Status</span>
+  <h1>Overview Dashboard</h1>
+  <p>Das <strong>Overview Dashboard</strong> zeigt den aktuellen Zustand der Testdaten-Infrastruktur — Adapter-Status, aktive Datenquellen, Cache und Runtime-Zustände auf einen Blick.</p>
+  <div class="screenshot-wrap">
+    <img alt="Overview Dashboard" src="./autemos_testdata_screenshot/image_16.png"/>
+    <div class="screenshot-caption">Overview Dashboard — Live-Status aller Testdaten-Komponenten und Verbindungen.</div>
+  </div>
+  <h2>Enthaltene Informationen</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Adapter-Status</h3><p>Verfügbarkeit aller Datenadapter.</p></div>
+    <div class="concept-card"><h3>Aktive Datenquellen</h3><p>Welche Quellen aktuell verbunden sind.</p></div>
+    <div class="concept-card"><h3>Cache-Informationen</h3><p>Nutzung und Auslastung des Caches.</p></div>
+    <div class="concept-card"><h3>Scope-Verwendung</h3><p>Aktive Scopes pro Run / Project / Tenant.</p></div>
+    <div class="concept-card"><h3>Auto-Refresh Status</h3><p>Konfiguration automatischer Aktualisierungen.</p></div>
+    <div class="concept-card"><h3>Runtime-Zustände</h3><p>Aktive Bindings und Runtime-Variablen.</p></div>
+  </div>
+  <h2>Hilft dabei</h2>
+  <ul class="feature-list">
+    <li>Verbindungsprobleme schnell zu erkennen</li>
+    <li>Aktive Datenbindungen zu überwachen</li>
+    <li>Cache-Nutzung zu analysieren</li>
+    <li>Runtime-Datenzustände zu prüfen</li>
+  </ul>
+</section>
+
+<!-- DATA SOURCES -->
+<section id="testdata-sources" class="doc-section">
+  <span class="section-label">Datenquellen</span>
+  <h1>Data Sources</h1>
+  <p>Im Bereich <strong>Data Sources</strong> werden externe und interne Datenquellen verwaltet. Jede Datenquelle kann mehrfach innerhalb verschiedener Test Workflows verwendet werden.</p>
+  <div class="screenshot-wrap">
+    <img alt="Data Sources" src="./autemos_testdata_screenshot/image_2.png"/>
+    <div class="screenshot-caption">Data Sources — Verwaltung aller konfigurierten Datenquellen und Adapter.</div>
+  </div>
+  <h2>Unterstützte Source Types</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>REST API</h3><p>HTTP-basierte Datenabfragen.</p></div>
+    <div class="concept-card"><h3>JSON File</h3><p>Strukturierte JSON-Datenquellen.</p></div>
+    <div class="concept-card"><h3>Excel</h3><p>XLSX-basierte Datensätze.</p></div>
+    <div class="concept-card"><h3>Database</h3><p>JDBC / PostgREST Anbindungen.</p></div>
+    <div class="concept-card"><h3>iSynth</h3><p>iSynth-Datenquellen für synthetische Testdaten.</p></div>
+  </div>
+  <h2>Named Data Sources</h2>
+  <p>Named Data Sources definieren wiederverwendbare Datenquellen-Konfigurationen — z.&nbsp;B. <code>testdata_users</code>, <code>api_orders</code>, <code>customer_data</code>, <code>product_catalog</code>.</p>
+  <div class="screenshot-wrap">
+    <img alt="Named Data Sources" src="./autemos_testdata_screenshot/image_3.png"/>
+    <div class="screenshot-caption">Named Data Sources — wiederverwendbare Datenquellen.</div>
+  </div>
+  <p>Eine Datenquelle enthält:</p>
+  <ul class="feature-list">
+    <li>Source Type</li>
+    <li>Verbindungsinformationen</li>
+    <li>Authentifizierung</li>
+    <li>Retry-Konfiguration</li>
+    <li>Timeout-Konfiguration</li>
+    <li>Path Templates</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">💡</span>Named Data Sources ermöglichen zentrale Wiederverwendung und vereinfachte Wartung.</div>
+  <h2>REST API Datenquellen</h2>
+  <p>REST APIs können direkt als Testdatenquelle verwendet werden — z.&nbsp;B. für Kundendaten, Produktdaten oder Session-Tokens.</p>
+  <div class="screenshot-wrap">
+    <img alt="REST API Data Sources" src="./autemos_testdata_screenshot/image_6.png"/>
+    <div class="screenshot-caption">REST API Datenquellen — direkter Zugriff auf APIs für dynamische Testdaten.</div>
+  </div>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Base URL</strong></td><td>API-Endpoint</td></tr>
+        <tr><td><strong>Authentication</strong></td><td>Token, Basic Auth, OAuth</td></tr>
+        <tr><td><strong>Timeout</strong></td><td>Maximale Wartezeit</td></tr>
+        <tr><td><strong>Retry Handling</strong></td><td>Wiederholungslogik bei Fehlern</td></tr>
+        <tr><td><strong>Health Path</strong></td><td>Health-Check Endpoint</td></tr>
+        <tr><td><strong>Path Templates</strong></td><td>Dynamische URL-Pfade</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>iSynth Integration</h2>
+  <p>Das Modul unterstützt <strong>iSynth-basierte Testdatenquellen</strong> für synthetische Testdaten-Generierung.</p>
+  <div class="screenshot-wrap">
+    <img alt="iSynth Integration" src="./autemos_testdata_screenshot/image_7.png"/>
+    <div class="screenshot-caption">iSynth Integration — synthetische Testdaten und dynamische Datenbereitstellung.</div>
+  </div>
+  <h3>Unterstützte Funktionen</h3>
+  <ul class="feature-list">
+    <li>Synthetische Testdaten-Generierung</li>
+    <li>Dynamische Runtime-Datenbereitstellung</li>
+    <li>Temporäre Datensatz-Erstellung</li>
+    <li>Tenant-bewusste Datenisolierung</li>
+  </ul>
+  <h3>Konfigurierbare Parameter</h3>
+  <ul class="feature-list">
+    <li>Base URL</li>
+    <li>Authentication</li>
+    <li>API Keys</li>
+    <li>Timeout</li>
+    <li>Retry-Konfiguration</li>
+    <li>Path Templates</li>
+    <li>TTL (Time-to-Live)</li>
+  </ul>
+  <p>Damit lassen sich direkt in die Plattform integrieren:</p>
+  <ul class="feature-list">
+    <li>Synthetische Kundengenerierung</li>
+    <li>Skalierbare Enterprise-Testdaten</li>
+    <li>Privacy-sichere Testautomatisierung</li>
+    <li>Dynamische CI/CD-Testdatenbereitstellung</li>
+    <li>Parallele Ausführung mit isolierten Datensätzen</li>
+  </ul>
+  <h2>Datenbank-Anbindungen</h2>
+  <p>Das Modul unterstützt Datenbank-basierte Testdatenquellen über <strong>JDBC</strong> oder <strong>PostgREST</strong>. Damit können bestehende Testdatenbanken, Data Pools und zentrale Testdaten-Repositories direkt verwendet werden.</p>
+  <div class="screenshot-wrap">
+    <img alt="Database connections" src="./autemos_testdata_screenshot/image_8.png"/>
+    <div class="screenshot-caption">Datenbank-Anbindungen — JDBC / PostgREST Konfiguration.</div>
+  </div>
+  <div class="screenshot-wrap">
+    <img alt="Database details" src="./autemos_testdata_screenshot/image_9.png"/>
+    <div class="screenshot-caption">Datenbank-Details — Tabellen-Mapping und Datenabruf.</div>
+  </div>
+  <h3>Konfigurierbare Parameter</h3>
+  <ul class="feature-list">
+    <li>Tabellenname</li>
+    <li>Schema</li>
+    <li>Data Type Column</li>
+    <li>API Keys</li>
+    <li>Maximale Datensätze</li>
+  </ul>
+</section>
+
+<!-- BINDINGS -->
+<section id="testdata-bindings" class="doc-section">
+  <span class="section-label">Bindings</span>
+  <h1>Test Data Bindings</h1>
+  <p>Bindings verbinden Workflows mit Datenquellen. Ein Binding definiert, <strong>welche Daten geladen werden</strong>, <strong>aus welcher Quelle</strong>, <strong>unter welchem Namen</strong> und <strong>für welche Umgebung</strong>.</p>
+  <div class="screenshot-wrap">
+    <img alt="Test Data Bindings" src="./autemos_testdata_screenshot/image_10.png"/>
+    <div class="screenshot-caption">Test Data Bindings — Verknüpfung von Workflows mit Datenquellen.</div>
+  </div>
+  <h2>Beispiel-Binding</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Wert</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Binding Name</strong></td><td><code>premiumCustomer</code></td></tr>
+        <tr><td><strong>Source</strong></td><td><code>customer_api</code></td></tr>
+        <tr><td><strong>Data Type</strong></td><td><code>CUSTOMER</code></td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h3>Verwendung im Workflow</h3>
+  <pre style="background:#0F121A;border:1px solid #2A2E3A;border-radius:8px;padding:12px;color:#C4C9D6;font-size:13px;overflow-x:auto"><code>&dollar;{premiumCustomer.email}
+&dollar;{premiumCustomer.id}</code></pre>
+  <h2>Environment-spezifische Bindings</h2>
+  <div style="display:flex;gap:24px;align-items:flex-start;margin:16px 0">
+    <div style="flex:1;min-width:0">
+      <p>Bindings können pro Environment definiert werden — dadurch können dieselben Workflows unterschiedliche Datenquellen je Umgebung verwenden.</p>
+      <div class="concept-grid">
+        <div class="concept-card"><h3>DEV</h3><p>Entwicklungs-Daten.</p></div>
+        <div class="concept-card"><h3>TEST</h3><p>Test-Daten.</p></div>
+        <div class="concept-card"><h3>STAGING</h3><p>Staging-Daten.</p></div>
+        <div class="concept-card"><h3>PROD</h3><p>Produktions-Daten.</p></div>
+      </div>
+    </div>
+    <div class="screenshot-wrap" style="flex:0 0 360px;margin:0">
+      <img alt="Environment Bindings" src="./autemos_testdata_screenshot/image_11.png"/>
+      <div class="screenshot-caption">Environment-spezifische Bindings — pro DEV / TEST / STAGING / PROD.</div>
+    </div>
+  </div>
+</section>
+
+<!-- TEST DATA EASY -->
+<section id="testdata-easy" class="doc-section">
+  <span class="section-label">Datensätze</span>
+  <h1>Test Data Easy</h1>
+  <p><strong>Test Data Easy</strong> ermöglicht die einfache Verwaltung statischer oder halb-dynamischer Datensätze direkt innerhalb der Plattform. Datensätze können <strong>erstellt</strong>, <strong>bearbeitet</strong>, <strong>importiert</strong> und <strong>wiederverwendet</strong> werden.</p>
+  <div class="screenshot-wrap">
+    <img alt="Test Data Easy" src="./autemos_testdata_screenshot/image_12.png"/>
+    <div class="screenshot-caption">Test Data Easy — direkte Verwaltung von Datensätzen innerhalb der Plattform.</div>
+  </div>
+  <h2>Datensätze hinzufügen und bearbeiten</h2>
+  <p>Test Data Easy Datensätze können entweder <strong>direkt in einem Test Workflow</strong> oder <strong>zentral im Test Data Modul</strong> verwaltet werden. Dadurch können Teams schnell wiederverwendbare Datensätze für Workflows, Bindings, Loops und Data-driven Testing-Szenarien erstellen.</p>
+  <div class="screenshot-wrap">
+    <img alt="New Test Data Easy Dataset" src="./autemos_testdata_screenshot/image_13.png"/>
+    <div class="screenshot-caption">New Test Data Easy Dataset — Dialog zum Erstellen und Bearbeiten von Datensätzen mit allen Optionen (Linked Workflow, One-Time Use, Add Column/Row, Import).</div>
+  </div>
+  <h3>Funktionen</h3>
+  <p>Unterstützte Möglichkeiten:</p>
+  <ul class="feature-list">
+    <li>Wiederverwendbare Datensätze erstellen</li>
+    <li>Bestehende Datensätze bearbeiten</li>
+    <li>Zeilen hinzufügen und entfernen</li>
+    <li>Spalten hinzufügen und entfernen</li>
+    <li>CSV / XLSX / JSON Dateien importieren</li>
+    <li>Tabellendaten direkt einfügen</li>
+    <li>Datensätze mit Workflows verknüpfen</li>
+    <li>One-Time-Use Datensätze konfigurieren</li>
+  </ul>
+  <h2>Unterstützte Importformate</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>CSV</h3><p>Komma-getrennte Werte.</p></div>
+    <div class="concept-card"><h3>XLSX</h3><p>Excel-Tabellen.</p></div>
+    <div class="concept-card"><h3>JSON</h3><p>Strukturierte JSON-Daten.</p></div>
+    <div class="concept-card"><h3>Manuelle Eingabe</h3><p>Tabellendaten direkt im Grid einfügen.</p></div>
+  </div>
+  <p>Damit lassen sich bestehende Testdaten-Repositories schnell in die Plattform integrieren.</p>
+  <h2>Datensatz-Struktur</h2>
+  <p>Ein Datensatz besteht aus <strong>Spalten</strong>, <strong>Zeilen</strong> und optionalen <strong>Workflow-Verknüpfungen</strong>. Typische Beispiele:</p>
+  <ul class="feature-list">
+    <li>Login-User</li>
+    <li>Produktlisten</li>
+    <li>Testbestellungen</li>
+    <li>Referenzdaten</li>
+  </ul>
+  <h2>Verknüpfte Workflows</h2>
+  <p>Datensätze können optional mit einem bestimmten Test Workflow verknüpft werden. Das verbessert:</p>
+  <ul class="feature-list">
+    <li>Nachverfolgbarkeit</li>
+    <li>Wartbarkeit</li>
+    <li>Workflow-spezifisches Testdaten-Management</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">💡</span>Wenn kein Workflow verknüpft ist, kann der Datensatz <strong>projektweit wiederverwendet</strong> werden.</div>
+  <h2>Typischer Ablauf</h2>
+  <p>In den meisten Fällen:</p>
+  <ul class="feature-list">
+    <li>Test Data Easy Datensätze werden direkt während der Workflow-Erstellung angelegt</li>
+    <li>Der Datensatz wird automatisch mit dem Workflow verknüpft</li>
+    <li>Variablen können sofort in Workflow-Nodes verwendet werden</li>
+  </ul>
+  <p>Alternativ können Datensätze auch zentral im Test Data Modul erstellt und gepflegt werden. Das ist nützlich für:</p>
+  <ul class="feature-list">
+    <li>Gemeinsam genutzte Datensätze</li>
+    <li>Wiederverwendbare Regression-Daten</li>
+    <li>Zentral verwaltete Test-Pools</li>
+    <li>Teamweite, wiederverwendbare Testassets</li>
+  </ul>
+  <div class="screenshot-wrap">
+    <img alt="One-Time Use" src="./autemos_testdata_screenshot/image_14.png"/>
+    <div class="screenshot-caption">One-Time Use — Markierung bereits konsumierter Datensätze.</div>
+  </div>
+  <h2>One-Time Use</h2>
+  <p>Der <strong>One-Time Use Modus</strong> verhindert die Wiederverwendung bereits konsumierter Datensätze.</p>
+  <h3>Verhalten</h3>
+  <ul class="feature-list">
+    <li>Verwendete Zeilen werden markiert</li>
+    <li>Bereits verwendete Daten werden nicht erneut geliefert</li>
+    <li>Ideal für eindeutige Testdaten</li>
+  </ul>
+  <p><strong>Beispiele:</strong> Gutscheincodes · Einmal-User · eindeutige Registrierungen</p>
+  <div class="tip"><span class="tip-icon">💡</span>Verhindert Datenkonflikte in parallelen Tests.</div>
+</section>
+
+<!-- PLAYGROUND -->
+<section id="testdata-playground" class="doc-section">
+  <span class="section-label">Tools</span>
+  <h1>Playground &amp; Acquire</h1>
+  <p>Der <strong>Playground</strong> dient zum manuellen Testen und Validieren von Datenquellen.</p>
+  <div class="screenshot-wrap">
+    <img alt="Playground" src="./autemos_testdata_screenshot/image_15.png"/>
+    <div class="screenshot-caption">Playground — Datenquellen manuell abfragen und validieren.</div>
+  </div>
+  <h2>Funktionen</h2>
+  <ul class="feature-list">
+    <li>Testdaten abrufen</li>
+    <li>Filter testen</li>
+    <li>TTL prüfen</li>
+    <li>Cache-Verhalten validieren</li>
+    <li>Async Store prüfen</li>
+  </ul>
+  <h2>Acquire Test Data</h2>
+  <p>Mit <strong>Acquire Test Data</strong> können Daten manuell geladen werden.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Parameter</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Source Type</strong></td><td>Quelle der Daten</td></tr>
+        <tr><td><strong>Data Type</strong></td><td>z.&nbsp;B. CUSTOMER, ORDERS, USERS</td></tr>
+        <tr><td><strong>Quantity</strong></td><td>Anzahl der abzurufenden Datensätze</td></tr>
+        <tr><td><strong>Scope</strong></td><td>RUN / PROJECT / TENANT</td></tr>
+        <tr><td><strong>TTL Override</strong></td><td>Eigene Cache-Lebenszeit</td></tr>
+        <tr><td><strong>JSON Filter</strong></td><td>Filter-Logik</td></tr>
+        <tr><td><strong>Cache Bypass</strong></td><td>Cache umgehen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Async Store</h2>
+  <p>Der <strong>Async Store</strong> ermöglicht persistente Datenhaltung über asynchrone Workflow-Ausführungen hinweg.</p>
+  <h3>Besonders wichtig für</h3>
+  <ul class="feature-list">
+    <li><a href="#time-gap">Time Gap</a> Nodes</li>
+    <li>Mehrteilige Workflows</li>
+    <li>Langlaufende Prozesse</li>
+  </ul>
+  <h3>Persistierte Daten überleben</h3>
+  <ul class="feature-list">
+    <li>JVM Restarts</li>
+    <li>Workflow-Unterbrechungen</li>
+    <li>Asynchrone Fortsetzungen</li>
+  </ul>
+</section>
+
+<!-- SCOPE & CACHE -->
+<section id="testdata-scope" class="doc-section">
+  <span class="section-label">Architektur</span>
+  <h1>Scope-Konzept &amp; Cache-System</h1>
+  <h2>Scope-Konzept</h2>
+  <p>Das Modul unterstützt unterschiedliche <strong>Daten-Lebenszyklen</strong>, um Daten gezielt zu isolieren oder zu teilen.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Scope</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>RUN</strong></td><td>Nur für eine Testausführung</td></tr>
+        <tr><td><strong>PROJECT</strong></td><td>Für ein Projekt verfügbar</td></tr>
+        <tr><td><strong>TENANT</strong></td><td>Global tenantweit verfügbar</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Cache-System</h2>
+  <p>Das integrierte Cache-System reduziert unnötige Datenabrufe.</p>
+  <h3>Funktionen</h3>
+  <ul class="feature-list">
+    <li>Token-Caching</li>
+    <li>API-Response-Caching</li>
+    <li>Scope-basierte Cache-Verwaltung</li>
+    <li>TTL-Steuerung</li>
+  </ul>
+  <h3>Vorteile</h3>
+  <ul class="feature-list">
+    <li>Schnellere Ausführung</li>
+    <li>Geringere API-Last</li>
+    <li>Stabilere Testläufe</li>
+  </ul>
+</section>
+
+<!-- RUNTIME & ERROR HANDLING -->
+<section id="testdata-runtime" class="doc-section">
+  <span class="section-label">Runtime</span>
+  <h1>Runtime-Verhalten &amp; Fehlerbehandlung</h1>
+  <p>Das Test Data Management läuft tief integriert in die Workflow-Ausführung und stellt sicher, dass Daten zur richtigen Zeit verfügbar sind.</p>
+  <h2>Runtime-Verhalten</h2>
+  <h3>Vor Start eines Workflows</h3>
+  <ul class="feature-list">
+    <li>Bindings werden aufgelöst</li>
+    <li>Datenquellen werden abgefragt</li>
+    <li>Daten werden validiert</li>
+    <li>Runtime-Variablen erzeugt</li>
+  </ul>
+  <h3>Während der Ausführung</h3>
+  <ul class="feature-list">
+    <li>Daten bleiben verfügbar</li>
+    <li>Runtime-State kann persistiert werden</li>
+    <li>Async Workflows können Daten wieder aufnehmen</li>
+  </ul>
+  <h2>Fehlerbehandlung</h2>
+  <p>Das Modul unterstützt robuste Fehlerbehandlung:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Retry-Mechanismen</h3><p>Automatische Wiederholungen bei Fehlern.</p></div>
+    <div class="concept-card"><h3>Timeout-Konfiguration</h3><p>Maximale Wartezeit pro Quelle.</p></div>
+    <div class="concept-card"><h3>Adapter-Health-Checks</h3><p>Verfügbarkeitsprüfung der Adapter.</p></div>
+    <div class="concept-card"><h3>Cache-Fallbacks</h3><p>Fallback auf gecachte Daten.</p></div>
+    <div class="concept-card"><h3>Persistente Wiederaufnahme</h3><p>Async-Workflows können fortgesetzt werden.</p></div>
+  </div>
+  <h3>Typische Fehler</h3>
+  <ul class="feature-list">
+    <li>Nicht erreichbare APIs</li>
+    <li>Ungültige Datenstrukturen</li>
+    <li>Leere Datensätze</li>
+    <li>Abgelaufene Tokens</li>
+  </ul>
+</section>
+
+<!-- SETTINGS -->
+<section id="testdata-settings" class="doc-section">
+  <span class="section-label">Konfiguration</span>
+  <h1>Einstellungen</h1>
+  <p>Der Bereich <strong>Einstellungen</strong> definiert das Standardverhalten für Laufzeit, Caching, Persistenz und Infrastruktur innerhalb des Test Data Managements. Hier können Administratoren und Test Architekten zentral steuern, wie Testdaten geladen, zwischengespeichert, gespeichert und geschützt werden.</p>
+
+  <h2>Projekt-Standardeinstellungen</h2>
+  <p>Die Projekt-Standardeinstellungen definieren das Laufzeitverhalten für alle Testdatenoperationen innerhalb eines Projekts.</p>
+  <div class="screenshot-wrap">
+    <img alt="Project Defaults" src="./autemos_testdata_screenshot/image_17.png"/>
+    <div class="screenshot-caption">Projekt-Standardeinstellungen — Standardquelle, TTL, Persistenzbereich und Retry-Verhalten.</div>
+  </div>
+  <h3>Konfigurierbare Parameter</h3>
+  <ul class="feature-list">
+    <li>Standardquelle</li>
+    <li>Standard-TTL</li>
+    <li>Standard-Persistenzbereich</li>
+    <li>Retry-Verhalten</li>
+    <li>Maximale Anzahl an Retries</li>
+  </ul>
+  <h3>Unterstützte Scopes</h3>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>RUN</h3><p>Nur für eine Testausführung.</p></div>
+    <div class="concept-card"><h3>PROJECT</h3><p>Für ein Projekt verfügbar.</p></div>
+    <div class="concept-card"><h3>TENANT</h3><p>Global tenantweit verfügbar.</p></div>
+  </div>
+  <h3>Vorteile</h3>
+  <ul class="feature-list">
+    <li>Zentrale Laufzeitkonfiguration</li>
+    <li>Konsistentes Testdatenhandling</li>
+    <li>Projektspezifische Overrides</li>
+    <li>Stabiles Retry- und Recovery-Verhalten</li>
+  </ul>
+
+  <h2>Projekt Cache Policy</h2>
+  <p>Die <strong>Cache Policy</strong> steuert, wie lange geladene oder generierte Datensätze innerhalb der Plattform verfügbar bleiben.</p>
+  <div class="screenshot-wrap">
+    <img alt="Project Cache Policy" src="./autemos_testdata_screenshot/image_18.png"/>
+    <div class="screenshot-caption">Projekt Cache Policy — TTL, Persistenz-Scope und Per-Type Overrides.</div>
+  </div>
+  <h3>Konfigurierbare Parameter</h3>
+  <ul class="feature-list">
+    <li>Standard-TTL</li>
+    <li>Persistenz-Scope</li>
+    <li>TTL-Overrides pro Datentyp</li>
+  </ul>
+  <h3>Vorteile</h3>
+  <ul class="feature-list">
+    <li>Temporäre Runtime-Datensätze</li>
+    <li>Wiederverwendbare Projekt-Caches</li>
+    <li>Optimierte Performance</li>
+    <li>Reduzierte externe API-Aufrufe</li>
+    <li>Konfigurierbare Datenlebenszeiten</li>
+  </ul>
+
+  <h2>Globale Infrastruktur &amp; Sensitive Felder</h2>
+  <p>Das Modul unterstützt zentrale Infrastruktur-Einstellungen für <strong>asynchrone Persistenz</strong> und den sicheren Umgang mit sensitiven Daten.</p>
+  <div class="screenshot-wrap">
+    <img alt="Global Infrastructure and Sensitive Fields" src="./autemos_testdata_screenshot/image_19.png"/>
+    <div class="screenshot-caption">Globale Infrastruktur &amp; Sensitive Felder — Async Store Backend und Maskierung.</div>
+  </div>
+  <h3>Infrastrukturkonfiguration</h3>
+  <ul class="feature-list">
+    <li>Async Store Backend</li>
+    <li>Effective Source</li>
+    <li>Effective Scope</li>
+    <li>Retry-Konfiguration</li>
+  </ul>
+  <h3>Maskierung sensitiver Felder</h3>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Passwörter</h3><p>Vollständige Maskierung in Logs.</p></div>
+    <div class="concept-card"><h3>Tokens</h3><p>API- und Session-Tokens.</p></div>
+    <div class="concept-card"><h3>IBANs</h3><p>Bankverbindungen.</p></div>
+    <div class="concept-card"><h3>Kreditkartennummern</h3><p>Zahlungsdaten.</p></div>
+  </div>
+  <h3>Vorteile</h3>
+  <ul class="feature-list">
+    <li>Sicheres Runtime-Logging</li>
+    <li>Schutz sensitiver Informationen</li>
+    <li>Zentrale Infrastrukturverwaltung</li>
+    <li>Compliance-konforme Testausführung</li>
+  </ul>
+
+  <h2>Globale Cache Infrastruktur</h2>
+  <p>Die Plattform beinhaltet eine zentrale Cache-Infrastruktur für Runtime-Datensätze und temporäre Persistenz.</p>
+  <div class="screenshot-wrap">
+    <img alt="Global Cache Infrastructure" src="./autemos_testdata_screenshot/image_20.png"/>
+    <div class="screenshot-caption">Globale Cache Infrastruktur — Maximale Cache-Grösse, Eviction und Persistenz-Scope.</div>
+  </div>
+  <h3>Konfigurierbare Parameter</h3>
+  <ul class="feature-list">
+    <li>Maximale Cache-Grösse</li>
+    <li>Eager Eviction</li>
+    <li>Eviction-Intervall</li>
+    <li>Effektiver Persistenz-Scope</li>
+  </ul>
+  <h3>Vorteile</h3>
+  <ul class="feature-list">
+    <li>Skalierbares Runtime-Caching</li>
+    <li>Automatische Bereinigung</li>
+    <li>Optimierte Speichernutzung</li>
+    <li>Stabile Ausführung langlaufender Workflows</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">💡</span>Projekteinstellungen können Werte aus der globalen Konfiguration übernehmen oder individuell überschreiben.</div>
+</section>
+
+<!-- BEST PRACTICES & BENEFITS -->
+<section id="testdata-best-practices" class="doc-section">
+  <span class="section-label">Anwendung</span>
+  <h1>Best Practices, Häufige Fehler &amp; Vorteile</h1>
+  <h2>Best Practices</h2>
+  <ul class="best-practices">
+    <li>Datenquellen zentral verwalten</li>
+    <li>Bindings konsistent benennen</li>
+    <li>Environment-spezifische Bindings verwenden</li>
+    <li>One-Time Use für eindeutige Daten aktivieren</li>
+    <li>Datenquellen im Playground testen</li>
+    <li>Runtime-Daten sauber persistieren</li>
+    <li>TTLs bewusst konfigurieren</li>
+  </ul>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Häufige Fehler —</strong> Hardcoded Testdaten verwenden · Testdaten zwischen parallelen Runs teilen · keine Scope-Trennung verwenden · One-Time Use vergessen · zu grosse Datensätze laden · Environment-Mapping ignorieren.
+  </div>
+  <h2>Vorteile</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Vorteil</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Zentrale Testdatenverwaltung</strong></td><td>Alle Datenquellen an einem Ort.</td></tr>
+        <tr><td><strong>Skalierbare Datenbereitstellung</strong></td><td>Geeignet für Enterprise-Mengen.</td></tr>
+        <tr><td><strong>Dynamische Datenquellen</strong></td><td>APIs, DBs, Files, Synthetic.</td></tr>
+        <tr><td><strong>Asynchrone Datenpersistierung</strong></td><td>Über Time Gap Nodes hinweg.</td></tr>
+        <tr><td><strong>Wiederverwendbare Datensätze</strong></td><td>Einmal definieren, mehrfach nutzen.</td></tr>
+        <tr><td><strong>Bessere Wartbarkeit</strong></td><td>Zentrale Änderungen.</td></tr>
+        <tr><td><strong>Stabilere Automatisierung</strong></td><td>Cache + Retry + Health-Checks.</td></tr>
+        <tr><td><strong>Höhere Wiederverwendbarkeit</strong></td><td>Bindings über Workflows hinweg.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Das Test Data Management bildet die <strong>Grundlage für professionelle Enterprise-Testautomatisierung</strong> mit konsistenten und reproduzierbaren Testdaten.</p>
+</section>
+
+</div><!-- /content-wrap -->

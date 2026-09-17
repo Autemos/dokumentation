@@ -1,0 +1,383 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="settings-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Global Settings</h1>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Nur für Administratoren —</strong> Der Bereich Global Settings ist ausschliesslich für Systemadministratoren zugänglich. Änderungen wirken sich auf alle Projekte, Benutzer und das globale Systemverhalten aus. Falsche Konfigurationen können Stabilität, Sicherheit, Ausführungsumgebungen oder verbundene Dienste beeinträchtigen.
+  </div>
+  <p>Das Modul <strong>Global Settings</strong> bietet eine zentrale Verwaltung aller systemweiten Konfigurationen innerhalb der gesamten Autemos-Plattform. Alle Einstellungen gelten global für sämtliche Projekte und Umgebungen.</p>
+  <div class="screenshot-wrap">
+    <img alt="Global Settings overview" src="./autemos_settings_screenshots/image_1.png"/>
+    <div class="screenshot-caption">Global Settings — zentrale Verwaltung aller plattformweiten Konfigurationen.</div>
+  </div>
+  <h2>Konfigurierbare Bereiche</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>LLM Integration</h3><p>Konfiguration von Large Language Models für AI-Funktionalitäten.</p></div>
+    <div class="concept-card"><h3>Security</h3><p>Authentifizierung, Passwort-Richtlinien und Zugriffskontrolle.</p></div>
+    <div class="concept-card"><h3>Notifications</h3><p>Email- und Slack-basierte Benachrichtigungen.</p></div>
+    <div class="concept-card"><h3>Storage</h3><p>Datenrichtlinien, Aufbewahrung und Backups.</p></div>
+    <div class="concept-card"><h3>Selenium Grid</h3><p>Verteilte Browser-Ausführungs-Infrastruktur.</p></div>
+    <div class="concept-card"><h3>Cloud Providers</h3><p>Externe Testplattform-Integrationen.</p></div>
+    <div class="concept-card"><h3>Certificates</h3><p>Sichere Runtime-Zertifikate für geschützte Anwendungen.</p></div>
+  </div>
+  <h2>Zweck</h2>
+  <ul class="feature-list">
+    <li>Infrastruktur zentral verwalten</li>
+    <li>Enterprise-Administration vereinfachen</li>
+    <li>Plattformweite Integrationen steuern</li>
+    <li>Test-Infrastruktur konfigurieren</li>
+    <li>Sicherheits- und Compliance-Richtlinien umsetzen</li>
+    <li>Benachrichtigungen und Speicherstrategien verwalten</li>
+    <li>Skalierbare Testumgebungen bereitstellen</li>
+  </ul>
+</section>
+
+<!-- LLM INTEGRATION -->
+<section id="settings-llm" class="doc-section">
+  <span class="section-label">AI &amp; Security</span>
+  <h1>LLM Integration</h1>
+  <p>Die <strong>LLM Integration Settings</strong> ermöglichen die Konfiguration von Large Language Models innerhalb der gesamten Plattform. Diese Einstellungen werden verwendet für KI-gestützte Feldgenerierung, AI-basierte Automatisierung, intelligente Workflow-Erstellung, automatische Testgenerierung und Auto-Healing.</p>
+  <div class="screenshot-wrap">
+    <img alt="LLM Integration settings" src="./autemos_settings_screenshots/image_2.png"/>
+    <div class="screenshot-caption">LLM Integration — Konfiguration des LLM-Providers, API-Key, Modell-Auswahl und Rate Limits.</div>
+  </div>
+  <h2>Konfigurationsmöglichkeiten</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Enable LLM</strong></td><td>Aktiviert oder deaktiviert AI-Funktionalitäten global für die gesamte Plattform.</td></tr>
+        <tr><td><strong>LLM Server URL</strong></td><td>Endpoint des LLM-Providers (z. B. <code>https://api.openai.com/v1</code>).</td></tr>
+        <tr><td><strong>API Key</strong></td><td>Sichere API-Authentifizierung — verschlüsselt im Backend gespeichert, versteckte UI-Anzeige.</td></tr>
+        <tr><td><strong>Model Selection</strong></td><td>Auswahl des AI-Modells (GPT-4, GPT-4o, Claude, eigene Modelle).</td></tr>
+        <tr><td><strong>Temperature</strong></td><td>Steuert Kreativität und Determinismus — niedrige Werte = stabilere Ergebnisse, hohe Werte = kreativere Antworten.</td></tr>
+        <tr><td><strong>Max Tokens</strong></td><td>Maximale Anzahl an Tokens pro Anfrage.</td></tr>
+        <tr><td><strong>Timeout</strong></td><td>Maximale Ausführungszeit für AI-Anfragen.</td></tr>
+        <tr><td><strong>Rate Limits</strong></td><td>Maximale Requests pro Minute, API-Schutz und Kostenkontrolle.</td></tr>
+        <tr><td><strong>Monthly Cost Threshold</strong></td><td>Monatliches Kostenlimit für AI-Nutzung — Budgetkontrolle und Enterprise Governance.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Logging Optionen</h2>
+  <ul class="feature-list">
+    <li>Detailliertes AI-Logging</li>
+    <li>Fallback-Caching</li>
+    <li>Debugging und Monitoring</li>
+  </ul>
+</section>
+
+<!-- SECURITY -->
+<section id="settings-security" class="doc-section">
+  <span class="section-label">AI &amp; Security</span>
+  <h1>Security Settings</h1>
+  <p>Der Bereich <strong>Security Settings</strong> verwaltet globale Authentifizierungs- und Sicherheitsrichtlinien der Plattform.</p>
+  <div class="screenshot-wrap">
+    <img alt="Security Settings" src="./autemos_settings_screenshots/image_4.png"/>
+    <div class="screenshot-caption">Security Settings — Session Management, Passwort-Richtlinien, Two-Factor Authentication und CORS-Konfiguration.</div>
+  </div>
+  <h2>Session Management</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Session Timeout</strong></td><td>Meldet Benutzer nach einer definierten Inaktivitätsdauer automatisch ab.</td></tr>
+        <tr><td><strong>Max Login Attempts</strong></td><td>Maximale Anzahl fehlgeschlagener Login-Versuche vor einer Kontosperrung.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Passwort-Richtlinien</h2>
+  <ul class="feature-list">
+    <li>Mindestpasswortlänge</li>
+    <li>Enterprise Passwort-Standards</li>
+    <li>Erweiterte Sicherheitsrichtlinien</li>
+  </ul>
+  <h2>Two-Factor Authentication</h2>
+  <ul class="feature-list">
+    <li>Verpflichtende 2FA</li>
+    <li>Globale MFA-Richtlinien</li>
+    <li>Erweiterte Kontosicherheit</li>
+  </ul>
+  <h2>Guest Access &amp; CORS</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Guest Access</strong></td><td>Steuert, ob Gastbenutzer auf öffentliche Projekte zugreifen dürfen.</td></tr>
+        <tr><td><strong>CORS Configuration</strong></td><td>Definiert erlaubte Origins für Frontend-/Backend-Kommunikation (z. B. <code>http://localhost:3000</code>). Unterstützt Enterprise Deployments, eigene Domains und Multi-Environment Setups.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<!-- NOTIFICATIONS -->
+<section id="settings-notifications" class="doc-section">
+  <span class="section-label">Kommunikation</span>
+  <h1>Notification Settings</h1>
+  <p>Der Bereich <strong>Notifications</strong> verwaltet systemweite Kommunikationskanäle für Benachrichtigungen und Alerts.</p>
+  <div class="screenshot-wrap">
+    <img alt="Notification Settings" src="./autemos_settings_screenshots/image_5.png"/>
+    <div class="screenshot-caption">Notifications — SMTP-Konfiguration und Slack-Integration für Email- und Webhook-basierte Benachrichtigungen.</div>
+  </div>
+  <h2>Email Notifications — SMTP Configuration</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>SMTP Server</strong></td><td>Hostname des SMTP-Servers</td></tr>
+        <tr><td><strong>SMTP Port</strong></td><td>Port des SMTP-Servers (z. B. 587)</td></tr>
+        <tr><td><strong>Authentication</strong></td><td>Authentifizierungsdaten (verschlüsselt gespeichert)</td></tr>
+        <tr><td><strong>Sender Address</strong></td><td>Absenderadresse für ausgehende Emails</td></tr>
+        <tr><td><strong>Admin Recipients</strong></td><td>Admin-Benachrichtigungsadressen</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Email Features</h2>
+  <ul class="feature-list">
+    <li>Systembenachrichtigungen</li>
+    <li>Execution Alerts</li>
+    <li>Fehlerberichte</li>
+    <li>Administrative Nachrichten</li>
+  </ul>
+  <h2>Slack Integration</h2>
+  <p>Autemos unterstützt die Integration von Slack über Webhooks. Webhook-URLs werden verschlüsselt gespeichert.</p>
+  <ul class="feature-list">
+    <li>Echtzeit-Benachrichtigungen</li>
+    <li>Execution Alerts</li>
+    <li>Fehlerberichte</li>
+    <li>Team-Kommunikation</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">🔒</span>Sensible Daten wie Passwörter und Webhook-URLs werden grundsätzlich verschlüsselt im Backend gespeichert.</div>
+</section>
+
+<!-- STORAGE -->
+<section id="settings-storage" class="doc-section">
+  <span class="section-label">Infrastruktur</span>
+  <h1>Storage Management</h1>
+  <p>Der Bereich <strong>Storage Settings</strong> verwaltet systemweite Speicher- und Datenrichtlinien.</p>
+  <div class="screenshot-wrap">
+    <img alt="Storage Settings" src="./autemos_settings_screenshots/image_6.png"/>
+    <div class="screenshot-caption">Storage Management — Upload-Limits, Data Retention, automatische Bereinigung und Backups.</div>
+  </div>
+  <h2>File Upload Limits</h2>
+  <ul class="feature-list">
+    <li>Maximale Upload-Grösse</li>
+    <li>Speicherlimits</li>
+    <li>Ressourcenschutz</li>
+  </ul>
+  <h2>Data Retention</h2>
+  <p>Steuert die Aufbewahrungsdauer von Systemdaten:</p>
+  <ul class="feature-list">
+    <li>Screenshots</li>
+    <li>Logs</li>
+    <li>Execution-Artefakte</li>
+    <li>Reports</li>
+  </ul>
+  <h2>Automatic Cleanup &amp; Compression</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Funktion</th><th>Vorteil</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Automatic Cleanup</strong></td><td>Automatische Löschung veralteter Daten — reduzierter Speicherverbrauch und Compliance-Unterstützung</td></tr>
+        <tr><td><strong>Data Compression</strong></td><td>Speicheroptimierung durch Datenkomprimierung</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Automatic Backups</h2>
+  <p>Unterstützt geplante automatische Backups in folgenden Intervallen:</p>
+  <ul class="feature-list">
+    <li>Täglich</li>
+    <li>Wöchentlich</li>
+    <li>Monatlich</li>
+  </ul>
+</section>
+
+<!-- SELENIUM GRID -->
+<section id="settings-grid" class="doc-section">
+  <span class="section-label">Infrastruktur</span>
+  <h1>Selenium Grid Configuration</h1>
+  <p>Die <strong>Selenium Grid Settings</strong> verwalten die Infrastruktur für verteilte Browser-Ausführung — parallele Tests, Browser Nodes, Docker-basiertes Grid und skalierbare Execution-Infrastruktur.</p>
+  <div class="screenshot-wrap">
+    <img alt="Selenium Grid Configuration" src="./autemos_settings_screenshots/image_7.png"/>
+    <div class="screenshot-caption">Selenium Grid — Node-Konfiguration für Chrome, Firefox und Edge mit Session Limits und Recording-Optionen.</div>
+  </div>
+  <h2>Grid Configuration</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Chrome Nodes</strong></td><td>Anzahl der Chrome-Nodes im Grid</td></tr>
+        <tr><td><strong>Firefox Nodes</strong></td><td>Anzahl der Firefox-Nodes im Grid</td></tr>
+        <tr><td><strong>Edge Nodes</strong></td><td>Anzahl der Edge-Nodes im Grid</td></tr>
+        <tr><td><strong>Session Limits</strong></td><td>Maximale parallele Sessions</td></tr>
+        <tr><td><strong>Connection Timeouts</strong></td><td>Verbindungs-Timeouts für Grid-Nodes</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Automatic Grid Management</h2>
+  <ul class="feature-list">
+    <li>Auto-start Grid</li>
+    <li>Auto-stop Grid</li>
+    <li>Dynamisches Node-Scaling</li>
+  </ul>
+  <h2>Recording Options</h2>
+  <ul class="feature-list">
+    <li>Videoaufzeichnung</li>
+    <li>Automatische Screenshots</li>
+    <li>Fehlerdiagnose</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">💡</span>Das lokale Selenium Grid verbindet sich automatisch über das Docker-Netzwerk — keine manuelle URL-Konfiguration erforderlich.</div>
+
+  <h2 id="settings-grid-emulator">Mobile Emulator Configuration</h2>
+  <div class="screenshot-wrap">
+    <img alt="Mobile Emulator Configuration" src="./autemos_settings_screenshots/image_8.png"/>
+    <div class="screenshot-caption">Mobile Emulator — Konfiguration von Android-Emulatoren (Samsung, Pixel, virtuelle Geräte-Skalierung).</div>
+  </div>
+  <p>Unterstützt die Konfiguration von Android-Emulatoren wie Samsung- und Pixel-Geräte sowie virtuelle Geräte-Skalierung.</p>
+  <h3>Emulator Settings</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Einstellung</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Number of Emulators</strong></td><td>Anzahl der parallel laufenden Emulatoren</td></tr>
+        <tr><td><strong>Memory Allocation</strong></td><td>Speicherzuweisung pro Emulator</td></tr>
+        <tr><td><strong>Screen Resolution</strong></td><td>Bildschirmauflösung des virtuellen Geräts</td></tr>
+        <tr><td><strong>Screen Dimensions</strong></td><td>Bildschirm-Dimensionen</td></tr>
+        <tr><td><strong>Session Timeouts</strong></td><td>Timeouts für Emulator-Sessions</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning"><span class="tip-icon">⚠️</span><strong>Plattformanforderungen:</strong> Android-Emulatoren benötigen <strong>Linux</strong>, <strong>KVM-Unterstützung</strong> und <strong>Hardware-Virtualisierung</strong>.</div>
+</section>
+
+<!-- CLOUD PROVIDERS -->
+<section id="settings-cloud" class="doc-section">
+  <span class="section-label">Infrastruktur</span>
+  <h1>Cloud Providers</h1>
+  <p>Der Bereich <strong>Cloud Providers</strong> verwaltet Integrationen externer Testplattformen wie Experitest, BrowserStack, Sauce Labs und LambdaTest.</p>
+  <div class="screenshot-wrap">
+    <img alt="Cloud Providers" src="./autemos_settings_screenshots/image_9.png"/>
+    <div class="screenshot-caption">Cloud Providers — Verwaltung externer Testplattform-Integrationen mit Routing und Status-Monitoring.</div>
+  </div>
+  <h2>Unterstützte Provider</h2>
+  <ul class="feature-list">
+    <li>Experitest</li>
+    <li>BrowserStack</li>
+    <li>Sauce Labs</li>
+    <li>LambdaTest</li>
+    <li>Eigene Provider</li>
+  </ul>
+  <h2>Provider Routing</h2>
+  <p>Autemos unterstützt Routing für Desktop Browser, virtuelle Mobile Devices und reale Geräte.</p>
+  <h2>Connection Management</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Funktion</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>API Credentials</strong></td><td>Sichere Provider-Authentifizierung</td></tr>
+        <tr><td><strong>Connection Test</strong></td><td>Verbindungsprüfung vor dem Speichern</td></tr>
+        <tr><td><strong>Device Availability</strong></td><td>Anzeige verfügbarer Geräte</td></tr>
+        <tr><td><strong>Execution Routing</strong></td><td>Steuerung der Test-Ausführung pro Provider</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Provider Status Monitoring</h2>
+  <ul class="feature-list">
+    <li>Online-/Offline-Status</li>
+    <li>Verfügbare Geräte</li>
+    <li>Slot-Kapazitäten</li>
+    <li>Browser-Verfügbarkeit</li>
+  </ul>
+</section>
+
+<!-- CERTIFICATES -->
+<section id="settings-certificates" class="doc-section">
+  <span class="section-label">Infrastruktur</span>
+  <h1>Certificates Management</h1>
+  <p>Der Bereich <strong>Certificates</strong> verwaltet sichere Runtime-Zertifikate für geschützte Anwendungen.</p>
+  <div class="screenshot-wrap">
+    <img alt="Certificates Management" src="./autemos_settings_screenshots/image_10.png"/>
+    <div class="screenshot-caption">Certificates — zentrale Verwaltung gemeinsamer Zertifikate mit Vault- und File-System-Integration.</div>
+  </div>
+  <h2>Shared Certificate Sources</h2>
+  <p>Administratoren können konfigurieren:</p>
+  <ul class="feature-list">
+    <li>Gemeinsame Zertifikatsspeicherorte</li>
+    <li>Vault-Integrationen</li>
+    <li>Gemeinsame File-System-Quellen</li>
+  </ul>
+  <p>Diese Zertifikate können projektübergreifend genutzt werden.</p>
+  <h2>Shared Certificates</h2>
+  <p>Gemeinsame Zertifikate werden zentral verwaltet und sind global verfügbar. Typische Anwendungsfälle:</p>
+  <ul class="feature-list">
+    <li>Enterprise-Authentifizierung</li>
+    <li>Gemeinsame mTLS-Zugriffe</li>
+    <li>Organisationsweite Zertifikate</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">💡</span><strong>Persönliche Zertifikate</strong> werden im persönlichen Settings-Menü hinzugefügt und verwaltet — nicht in den Global Settings.</div>
+  <h2>Sicherheit &amp; Verschlüsselung</h2>
+  <p>Sensible Konfigurationswerte werden plattformweit geschützt durch:</p>
+  <ul class="feature-list">
+    <li>Backend-Verschlüsselung</li>
+    <li>Sichere Credential-Speicherung</li>
+    <li>Versteckte UI-Werte</li>
+    <li>Sichere API-Kommunikation</li>
+  </ul>
+</section>
+
+<!-- SYSTEM STATUS -->
+<section id="settings-status" class="doc-section">
+  <span class="section-label">Plattform</span>
+  <h1>System Status &amp; Skalierbarkeit</h1>
+  <p>Die Plattform bietet eine Live-Übersicht über den Zustand sämtlicher Infrastruktur-Komponenten — Administratoren können den Systemzustand jederzeit schnell überprüfen.</p>
+  <div class="screenshot-wrap">
+    <img alt="System Status Overview" src="./autemos_settings_screenshots/image_11.png"/>
+    <div class="screenshot-caption">System Status Overview — Live-Status aller Plattform-Komponenten auf einen Blick.</div>
+  </div>
+  <h2>Live-Status-Übersicht</h2>
+  <ul class="feature-list">
+    <li>LLM-Status</li>
+    <li>Sicherheitsniveau</li>
+    <li>Benachrichtigungsstatus</li>
+    <li>Storage Cleanup Verhalten</li>
+  </ul>
+  <h2>Enterprise Skalierbarkeit</h2>
+  <p>Die Architektur der Global Settings unterstützt:</p>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Enterprise Deployments</h3><p>Grosse, verteilte Installationen mit zentraler Konfiguration.</p></div>
+    <div class="concept-card"><h3>Multi-Projekt Umgebungen</h3><p>Konfiguration über viele parallele Projekte hinweg.</p></div>
+    <div class="concept-card"><h3>Verteilte Execution</h3><p>Verteilte Execution-Infrastrukturen.</p></div>
+    <div class="concept-card"><h3>Cloud-native Setups</h3><p>Cloud-native Testumgebungen.</p></div>
+    <div class="concept-card"><h3>Hybrid Testing</h3><p>Hybride Testing-Setups (lokal + Cloud).</p></div>
+  </div>
+</section>
+
+<!-- USE CASES & BENEFITS -->
+<section id="settings-use-cases" class="doc-section">
+  <span class="section-label">Anwendung</span>
+  <h1>Use Cases &amp; Vorteile</h1>
+  <h2>Typische Anwendungsfälle</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Enterprise Plattform-Administration</h3><p>Zentrale Verwaltung aller Infrastruktur- und Integrationskomponenten.</p></div>
+    <div class="concept-card"><h3>AI Infrastruktur-Konfiguration</h3><p>Globale Verwaltung von AI-Providern und AI-Nutzung.</p></div>
+    <div class="concept-card"><h3>Security Governance</h3><p>Organisationsweite Sicherheits- und Compliance-Richtlinien.</p></div>
+    <div class="concept-card"><h3>Distributed Test Infrastructure</h3><p>Verwaltung von Selenium Grid und Cloud-Testplattformen.</p></div>
+    <div class="concept-card"><h3>Certificate &amp; Authentication</h3><p>Sichere Verwaltung von Runtime-Zertifikaten und Authentifizierung.</p></div>
+  </div>
+  <h2>Vorteile</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Vorteil</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Zentrale Administration</strong></td><td>Ein zentraler Ort für sämtliche systemweiten Einstellungen.</td></tr>
+        <tr><td><strong>Enterprise Security</strong></td><td>Starke Verschlüsselung und moderne Zugriffskontrolle.</td></tr>
+        <tr><td><strong>Skalierbare Infrastruktur</strong></td><td>Unterstützt verteilte Ausführung und Cloud-Integrationen.</td></tr>
+        <tr><td><strong>Operative Transparenz</strong></td><td>Bietet Übersicht über Infrastrukturstatus und Konfiguration.</td></tr>
+        <tr><td><strong>Flexible Integrationen</strong></td><td>Unterstützt unterschiedliche Provider, Umgebungen und Enterprise-Architekturen.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+</div><!-- /content-wrap -->

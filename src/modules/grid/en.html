@@ -1,0 +1,248 @@
+<section class="doc-section" id="grid-overview">
+  <span class="section-label">Getting Started</span>
+  <h1>Grid Dashboard</h1>
+  <p>The Grid Dashboard provides a centralized real-time overview of all configured browser and mobile execution environments within Autemos. It helps teams monitor and manage their automation infrastructure efficiently.</p>
+  <div class="screenshot-wrap">
+    <img alt="Grid Dashboard overview" src="./autemos_grid_screenshots/image_1.png"/>
+    <div class="screenshot-caption">Grid Dashboard — centralized overview of all connected browsers, mobile devices, cloud providers, and active sessions.</div>
+  </div>
+  <h2>What the Dashboard Visualizes</h2>
+  <ul class="feature-list">
+    <li>Available browsers</li>
+    <li>Connected mobile devices</li>
+    <li>Cloud providers</li>
+    <li>Active sessions</li>
+    <li>Capacity usage</li>
+    <li>Device status</li>
+  </ul>
+  <h2>Purpose</h2>
+  <p>The Grid Dashboard is designed to:</p>
+  <ul class="feature-list">
+    <li>Monitor execution infrastructure health</li>
+    <li>Visualize available execution capacity</li>
+    <li>Display connected browsers and devices</li>
+    <li>Show active and available sessions</li>
+    <li>Provide operational transparency for test execution environments</li>
+  </ul>
+</section>
+<section class="doc-section" id="grid-environments">
+  <span class="section-label">Getting Started</span>
+  <h1>Supported Execution Environments</h1>
+  <p>The Grid Dashboard supports various browser and mobile environments as well as cloud-provider integrations.</p>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h3>Desktop Browsers</h3>
+      <p>Chrome, Edge, Firefox, Safari, and remote Selenium nodes.</p>
+    </div>
+    <div class="concept-card">
+      <h3>Mobile Devices</h3>
+      <p>Android, iOS, phones, tablets, local devices, and cloud devices.</p>
+    </div>
+    <div class="concept-card">
+      <h3>Cloud Providers</h3>
+      <p>Experitest, BrowserStack, Sauce Labs, LambdaTest, and custom providers.</p>
+    </div>
+  </div>
+  <h2>Desktop Browsers</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Browser</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Chrome</strong></td><td>Default browser for most web automations</td></tr>
+        <tr><td><strong>Edge</strong></td><td>Microsoft Edge based on Chromium</td></tr>
+        <tr><td><strong>Firefox</strong></td><td>Mozilla Firefox</td></tr>
+        <tr><td><strong>Safari</strong></td><td>Apple Safari (macOS / iOS)</td></tr>
+        <tr><td><strong>Remote Selenium Nodes</strong></td><td>Self-hosted Selenium grid nodes</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Mobile Devices</h2>
+  <ul class="feature-list">
+    <li>Android &amp; iOS</li>
+    <li>Phones and tablets</li>
+    <li>Local devices</li>
+    <li>Cloud devices</li>
+  </ul>
+</section>
+<section class="doc-section" id="grid-sections">
+  <span class="section-label">Dashboard</span>
+  <h1>Dashboard Sections</h1>
+  <p>The dashboard is divided into multiple logical sections to provide quick access to the most important infrastructure information.</p>
+  <h2>Provider Overview</h2>
+  <p>The top section displays all configured providers and their availability. Examples:</p>
+  <ul class="feature-list">
+    <li>Local</li>
+    <li>Experitest</li>
+    <li>Cloud providers</li>
+  </ul>
+  <h2>Type Filters</h2>
+  <p>Users can filter execution environments by:</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Filter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Desktop</strong></td><td>Show only desktop browsers</td></tr>
+        <tr><td><strong>Mobile</strong></td><td>Show only mobile environments</td></tr>
+        <tr><td><strong>Real Devices</strong></td><td>Show only physical devices</td></tr>
+        <tr><td><strong>All</strong></td><td>Show all execution environments</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>This simplifies navigation in larger infrastructures.</p>
+</section>
+<section class="doc-section" id="grid-metrics">
+  <span class="section-label">Dashboard</span>
+  <h1>Infrastructure Metrics</h1>
+  <p>Four central metrics provide an at-a-glance overview of the capacity and utilization of the entire infrastructure.</p>
+  <div class="concept-grid">
+    <div class="concept-card">
+      <h3>Total Devices</h3>
+      <p>Total number of configured devices and number of available devices. <em>Example: 12 Total Devices, 2 available.</em></p>
+    </div>
+    <div class="concept-card">
+      <h3>Active Sessions</h3>
+      <p>Currently running sessions and maximum session capacity. <em>Example: 1 of 6 max.</em></p>
+    </div>
+    <div class="concept-card">
+      <h3>Available Slots</h3>
+      <p>Remaining execution capacity and total free slots across all providers.</p>
+    </div>
+    <div class="concept-card">
+      <h3>Cloud Providers</h3>
+      <p>Number of configured cloud providers and active provider connections.</p>
+    </div>
+  </div>
+</section>
+<section class="doc-section" id="grid-browsers">
+  <span class="section-label">Dashboard</span>
+  <h1>Browser Grid Monitoring</h1>
+  <p>In the <strong>Local Grid Browsers</strong> section, the dashboard visualizes all connected browsers with detailed information on version, utilization, and free slots.</p>
+  <h2>Visualized Information</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Information</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Browser Type</strong></td><td>Chrome, Edge, Firefox, Safari</td></tr>
+        <tr><td><strong>Browser Version</strong></td><td>Installed version</td></tr>
+        <tr><td><strong>Available Slots</strong></td><td>Number of free parallel slots</td></tr>
+        <tr><td><strong>Used Capacity</strong></td><td>Currently occupied slots</td></tr>
+        <tr><td><strong>Session Utilization</strong></td><td>Utilization in percent</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip"><span class="tip-icon">💡</span>Example: <strong>Chrome v131.0</strong> · 1 / 6 slots · 17% utilization.</div>
+</section>
+<section class="doc-section" id="grid-devices">
+  <span class="section-label">Dashboard</span>
+  <h1>Device Visualization</h1>
+  <p>Each connected mobile device is displayed as a dedicated card — with all relevant information at a glance.</p>
+  <h2>Device Cards</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Field</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Device Name</strong></td><td>Unique device name</td></tr>
+        <tr><td><strong>OS Version</strong></td><td>Operating system version (Android / iOS)</td></tr>
+        <tr><td><strong>Platform</strong></td><td>Android or iOS</td></tr>
+        <tr><td><strong>Provider</strong></td><td>Local, BrowserStack, Sauce Labs, etc.</td></tr>
+        <tr><td><strong>Availability Status</strong></td><td>Current status (Online / Busy / Offline)</td></tr>
+        <tr><td><strong>Device Model</strong></td><td>Specific model (e.g., iPhone 15 Pro)</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Device Status</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Online</h3><p>Device is connected and available.</p></div>
+    <div class="concept-card"><h3>Offline</h3><p>Device is currently unreachable.</p></div>
+    <div class="concept-card"><h3>Busy</h3><p>Device is occupied with a session.</p></div>
+    <div class="concept-card"><h3>In Use</h3><p>Device is currently being used actively.</p></div>
+    <div class="concept-card"><h3>Available</h3><p>Device is free and ready for a new session.</p></div>
+  </div>
+  <h2>Real-Time Monitoring</h2>
+  <p>The dashboard updates dynamically and shows session utilization, device connectivity, infrastructure availability, and provider status in real time.</p>
+</section>
+<section class="doc-section" id="grid-providers">
+  <span class="section-label">Integration</span>
+  <h1>Provider Integration</h1>
+  <p>The Grid Dashboard supports both local infrastructures and external cloud providers — all in a unified view.</p>
+  <h2>Local Infrastructure</h2>
+  <p>Supports internally hosted:</p>
+  <ul class="feature-list">
+    <li>Selenium Grid</li>
+    <li>Appium Grid</li>
+    <li>Browser nodes</li>
+    <li>Local mobile devices</li>
+  </ul>
+  <h2>Cloud Device Farms</h2>
+  <p>Supports external cloud providers for:</p>
+  <ul class="feature-list">
+    <li>Mobile testing</li>
+    <li>Cross-browser testing</li>
+    <li>Parallel execution</li>
+  </ul>
+</section>
+<section class="doc-section" id="grid-capacity">
+  <span class="section-label">Integration</span>
+  <h1>Execution Capacity Management</h1>
+  <p>With capacity information, teams can optimize their execution strategy and identify bottlenecks early.</p>
+  <h2>Session Availability</h2>
+  <p>Teams can quickly identify:</p>
+  <ul class="feature-list">
+    <li>Available execution capacity</li>
+    <li>Grid bottlenecks</li>
+    <li>Overloaded nodes</li>
+    <li>Free execution slots</li>
+  </ul>
+  <h2>Parallel Execution Visibility</h2>
+  <p>The dashboard helps optimize:</p>
+  <ul class="feature-list">
+    <li>Parallel test execution</li>
+    <li>Resource allocation</li>
+    <li>Infrastructure scaling</li>
+  </ul>
+</section>
+<section class="doc-section" id="grid-health">
+  <span class="section-label">Integration</span>
+  <h1>Health Monitoring</h1>
+  <p>The dashboard displays the overall health status of the entire infrastructure.</p>
+  <h2>Infrastructure Health</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Healthy</h3><p>All providers and devices are functioning properly.</p></div>
+    <div class="concept-card"><h3>Warning</h3><p>Individual components are showing issues.</p></div>
+    <div class="concept-card"><h3>Offline</h3><p>Providers or devices are unreachable.</p></div>
+    <div class="concept-card"><h3>Partial Availability</h3><p>Only part of the infrastructure is available.</p></div>
+  </div>
+  <h2>Real Device Management</h2>
+  <p>The Grid Dashboard provides visibility into connected phones, tablets, OS versions, provider ownership, and real-device availability.</p>
+  <h2>Scalability</h2>
+  <ul class="feature-list">
+    <li>Enterprise-scale infrastructures</li>
+    <li>Hybrid environments</li>
+    <li>Multi-provider setups</li>
+    <li>Distributed execution nodes</li>
+  </ul>
+</section>
+<section class="doc-section" id="grid-use-cases">
+  <span class="section-label">Usage</span>
+  <h1>Use Cases &amp; Benefits</h1>
+  <h2>Typical Use Cases</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>Infrastructure Monitoring</h3><p>Track the status of all execution environments centrally.</p></div>
+    <div class="concept-card"><h3>Test Execution Planning</h3><p>Identify available devices and browser slots before large regression runs.</p></div>
+    <div class="concept-card"><h3>Capacity Optimization</h3><p>Monitor utilization and optimize infrastructure allocation.</p></div>
+    <div class="concept-card"><h3>Real Device Operations</h3><p>Manage and monitor mobile device farms.</p></div>
+  </div>
+  <h2>Benefits</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Benefit</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Centralized Visibility</strong></td><td>Single dashboard for the entire execution infrastructure.</td></tr>
+        <tr><td><strong>Real-Time Monitoring</strong></td><td>Live visibility into sessions and device usage.</td></tr>
+        <tr><td><strong>Better Resource Utilization</strong></td><td>Quickly identify free capacity and bottlenecks.</td></tr>
+        <tr><td><strong>Improved Stability</strong></td><td>Early visibility into offline devices or provider issues.</td></tr>
+        <tr><td><strong>Enterprise Scalability</strong></td><td>Supports large distributed automation infrastructures.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
