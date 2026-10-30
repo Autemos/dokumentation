@@ -139,6 +139,13 @@
   </div>
   <h2>Create Project Action</h2>
   <p>Der <strong>Create Project</strong> Button erstellt den neuen Projektcontainer und initialisiert die Projektstruktur (Workflows, Pages, Schedules, etc.).</p>
+  <h2>Regeln für den Projektnamen</h2>
+  <ul class="feature-list">
+    <li>3 bis 100 Zeichen.</li>
+    <li>Erlaubt sind Buchstaben aller Sprachen — auch <strong>Umlaute, ß und Akzente</strong> —, Ziffern, Leerzeichen sowie <code>- _ . ( ) &amp;</code>. Namen wie „Qualitätssicherung (Süd) &amp; Co.“ lassen sich also anlegen.</li>
+    <li>Nicht erlaubt sind Zeichen wie <code>&lt; &gt; / \ " ' ; %</code>.</li>
+  </ul>
+  <p>Lehnt der Server den Namen oder eine andere Eingabe ab, nennt der Dialog den <strong>Grund</strong> — es erscheint keine Erfolgsmeldung.</p>
 </section>
 
 <!-- EDIT & DELETE -->
@@ -166,6 +173,8 @@
   <div class="warning">
     <span class="tip-icon">⚠️</span><strong>Wichtige Hinweise —</strong> Das Löschen eines Projekts kann folgende Inhalte entfernen: Workflows, Runs, Pages, Test Data, Schedules sowie generierte Assets. Die genauen Auswirkungen sind abhängig von der Systemkonfiguration und den Retention Policies.
   </div>
+  <h3>Fehler beim Speichern</h3>
+  <p>Für den neuen Namen gelten dieselben Regeln wie beim Anlegen (siehe <a href="#projects-create">Create New Project</a>). Wird eine Änderung abgelehnt — im Dialog <strong>Edit Project</strong> ebenso wie in den Projekteinstellungen —, nennt Autemos den Grund; die Eingabe bleibt zum Korrigieren stehen, und der bisherige Projektname wird nicht überschrieben.</p>
 </section>
 
 <!-- NAVIGATION & ISOLATION -->

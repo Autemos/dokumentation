@@ -293,6 +293,110 @@
   </ul>
   <p><strong>Beispiele:</strong> Gutscheincodes · Einmal-User · eindeutige Registrierungen</p>
   <div class="tip"><span class="tip-icon">💡</span>Verhindert Datenkonflikte in parallelen Tests.</div>
+  <h2 id="testdata-easy-tags">Tags</h2>
+  <p>Jeder Datensatz kann <strong>beliebig viele Tags</strong> tragen. Tags sind frei vergebbare Begriffe (z. B. <code>Smoke</code>, <code>High</code> oder ein Release-Name) und dienen dazu, grosse Datenbestände fachlich oder organisatorisch zu ordnen. Eine eigene Logik (z. B. eine Prioritätssteuerung) hängt an einem Tag nicht — der Begriff bleibt frei.</p>
+  <h3>Tags vergeben</h3>
+  <ul class="feature-list">
+    <li>Im Dialog <strong>New/Edit Easy Test Data Dataset</strong> steht unter <em>Description</em> das Feld <strong>Tags</strong> (Platzhalter „Create or reuse a tag“).</li>
+    <li>Mit <strong>Enter</strong> oder dem Knopf <strong>Add tag</strong> wird der Tag übernommen. Jeder Tag erscheint als Marke mit den Knöpfen <strong>Edit tag</strong> und <strong>Remove tag</strong>.</li>
+    <li>Das Feld schlägt alle bereits im Projekt verwendeten Tags vor, damit Begriffe wiederverwendet werden.</li>
+    <li>Gross-/Kleinschreibung wird beim Duplikat-Vergleich ignoriert; es gilt die zuerst verwendete Schreibweise.</li>
+  </ul>
+  <h3>Suchen, filtern, gruppieren</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Element</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Spalte „Tags“</strong></td><td>In der Tabellenansicht direkt nach dem Namen; in der Kartenansicht als Marken. Datensätze ohne Tags zeigen „—“.</td></tr>
+        <tr><td><strong>Search datasets</strong></td><td>Suchfeld „Search by name or tag“: findet Datensätze, deren Name <em>oder</em> ein Tag den Suchtext enthält.</td></tr>
+        <tr><td><strong>Filter by tags (match all)</strong></td><td>Eine Checkbox je vorhandenem Tag. Bei mehreren gewählten Tags werden nur Datensätze gezeigt, die <em>alle</em> diese Tags tragen.</td></tr>
+        <tr><td><strong>Group by tag</strong></td><td>Gruppiert die Übersicht nach Tag; zuletzt folgt die Gruppe „Without tags“. Ein Datensatz mit mehreren Tags erscheint in jeder seiner Gruppen. Standardmässig aus.</td></tr>
+        <tr><td><strong>Clear filters</strong></td><td>Setzt Suche und Filter zurück. Der Zähler „n of m datasets“ zeigt, wie viele Datensätze sichtbar sind.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Passt kein Datensatz, erscheint „No datasets match the current filters“. Im Workflow-Knoten <em>Easy Test Data</em> werden die Tags des gewählten Datensatzes nur angezeigt. Bestehende Datensätze ohne Tags bleiben unverändert nutzbar.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Tags lassen sich auch für die <a href="#testdata-datadriven">datengetriebene Ausführung</a> verwenden: Dort wählt die Option <em>By tags</em> alle Datensätze mit den gewünschten Tags aus.</div>
+  <h2 id="testdata-easy-shortname">Platzhalter-Kurzname (ohne Binding)</h2>
+  <p>Jede Easy-Test-Data-Tabelle hat einen <strong>Placeholder name</strong>. Damit lässt sich die Tabelle in einem Workflow <strong>ohne zusätzliches Binding</strong> verwenden: <code>{{kurzname.spalte}}</code> liefert den Wert der Spalte aus Zeile 1 — oder aus der Zeile, die im Dialog <a href="#testdata-run-selection">Test Data Selection</a> gewählt wurde.</p>
+  <ul class="feature-list">
+    <li>Die Übersicht zeigt den Kurznamen in der Spalte <strong>Placeholder name</strong> (zwischen Name und Tags) mit einem Kopieren-Knopf.</li>
+    <li>Der Kurzname wird beim Anlegen automatisch erzeugt: Kleinschreibung, <code>ä/ö/ü/ß</code> werden zu <code>ae/oe/ue/ss</code>, alle anderen Sonderzeichen und Leerzeichen zu <code>_</code>. Beginnt er mit einer Ziffer, wird <code>t_</code> vorangestellt. Beispiel: „Länder Test“ wird zu <code>laender_test</code>.</li>
+    <li>Reservierte Namen (<code>secret</code>, <code>env</code>, <code>vars</code>, <code>part1</code> …) erhalten das Suffix <code>_table</code>; bei einer Kollision im Projekt folgt <code>_2</code>, <code>_3</code> …</li>
+    <li>Der Kurzname bleibt beim Umbenennen der Tabelle gleich und ist nicht editierbar, damit bestehende Workflows nicht brechen.</li>
+    <li>Tabellennamen dürfen Umlaute und andere Buchstaben enthalten. Gross-/Kleinschreibung im Platzhalter ist egal.</li>
+    <li>Der Variablen-Picker im Workflow-Editor bietet im Abschnitt <strong>Test Data Tables</strong> alle Projekt-Tabellen an und fügt <code>{{kurzname.spalte}}</code> ein.</li>
+    <li>Wie bei einem Easy-Binding verbraucht eine One-Time-Use-Tabelle die verwendete Zeile.</li>
+  </ul>
+  <h3>Auflösungsreihenfolge</h3>
+  <p>Ein Platzhalter wird in dieser Reihenfolge aufgelöst: Secret → Laufvariable, Parameter oder Store-As-Ziel → Test Data Binding → Easy-Tabelle. Bestehende Workflows ändern ihr Verhalten dadurch nicht. Trägt ein Binding denselben Namen wie eine Tabelle, <strong>gewinnt das Binding</strong>; das zeigt der Picker mit dem Hinweis „Overridden by binding“, die Vorab-Prüfung im Editor als Warnung (sie blockiert nicht) und die Tabellenliste mit einem Warn-Symbol am Kurznamen.</p>
+</section>
+
+<section id="testdata-run-selection" class="doc-section">
+  <span class="section-label">Ausführung</span>
+  <h1>Test Data Selection beim Run</h1>
+  <p>Hat ein Workflow Testdaten, startet der Run-Knopf nicht mehr blind: Es öffnet sich der Dialog <strong>Test Data Selection</strong>. Dort legen Sie fest, mit welchen Zeilen des Datensatzes der Workflow läuft. Das gilt für den Run im Workflow-Editor ebenso wie für den Run aus der Workflow-Liste.</p>
+  <h2>Wann erscheint der Dialog?</h2>
+  <ul class="feature-list">
+    <li>Der Workflow enthält einen <strong>Easy Test Data</strong>-Knoten (verknüpfter Datensatz oder eingebettete Tabelle), oder</li>
+    <li>der Workflow verwendet ein <strong>benanntes Test Data Binding</strong>.</li>
+  </ul>
+  <p>Workflows ohne Testdaten starten wie bisher direkt.</p>
+  <h2>Run mode</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Modus</th><th>Wirkung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Single Row</strong></td><td>Eine bestimmte Zeile wählen; es läuft genau eine Execution.</td></tr>
+        <tr><td><strong>Selected Rows</strong></td><td>Mehrere Zeilen ankreuzen; sie laufen nacheinander.</td></tr>
+        <tr><td><strong>All Rows</strong></td><td>Der Workflow läuft für alle verfügbaren Zeilen nacheinander.</td></tr>
+        <tr><td><strong>Default Run</strong></td><td>Vorgabe. Der Workflow startet wie bisher mit der ersten (bei One-Time-Use: der ersten unverbrauchten) Zeile.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Die Tabelle <strong>Data rows</strong> zeigt die Zeilen des Datensatzes; gewählte Zeilen sind markiert, ein Zähler (z. B. „2 rows selected“) fasst zusammen, und der Bereich <strong>Preview</strong> zeigt die Werte. Bei One-Time-Use-Datensätzen tragen bereits verbrauchte Zeilen das Badge <strong>Consumed</strong>. Mit <strong>Cancel</strong> startet nichts.</p>
+  <h2>Was beim Lauf passiert</h2>
+  <ul class="feature-list">
+    <li>Jede gewählte Zeile läuft als <strong>eigene Execution</strong> mit genau ihren Werten und mit eigenem Testergebnis. Der Test- bzw. Report-Name trägt den Zusatz <code>[Set · Row n]</code>.</li>
+    <li>Eine Log-Zeile nennt Set und Zeile der Execution.</li>
+    <li>Eine <strong>gezielte Auswahl verbraucht nichts</strong>: One-Time-Use-Zeilen bleiben unverbraucht. Auch Knoten, Datensatz, Binding und Workflow werden nicht verändert. Nur der <em>Default Run</em> verbraucht wie bisher.</li>
+    <li>Der Editor verfolgt die Serie, bis alle Zeilen gelaufen sind; die nächste Zeile startet, sobald die vorige beendet ist.</li>
+  </ul>
+  <h2>Grenzen</h2>
+  <ul class="feature-list">
+    <li>Es werden höchstens <strong>100 Zeilen</strong> angeboten; der Dialog weist darauf hin.</li>
+    <li>Bei One-Time-Use-Datensätzen umfasst <em>All Rows</em> nur die unverbrauchten Zeilen.</li>
+    <li>Die Zeilenwahl gilt für <strong>ein</strong> Set. Nutzt der Workflow weitere Test-Data-Sets, laufen diese mit ihrer Standardzeile; ein Hinweis im Dialog sagt das.</li>
+    <li>Passt eine gewählte Zeile nicht mehr zum Stand des Datensatzes (z. B. weil sie inzwischen geändert wurde), meldet der Server den Grund, und es startet nichts.</li>
+  </ul>
+</section>
+
+<section id="testdata-datadriven" class="doc-section">
+  <span class="section-label">Ausführung</span>
+  <h1>Data-driven Execution &amp; Dataset Pool</h1>
+  <p>Mit <strong>Data-driven execution…</strong> (Menü des Run-Knopfs im Workflow-Editor) läuft ein Workflow <strong>einmal je passendem Datensatz</strong>. Jeder Datensatz startet einen eigenständigen Lauf; ein Batch fasst sie zusammen, zeigt den Fortschritt und lässt sich abbrechen. In den Run-Details steht der Name des verwendeten Datensatzes.</p>
+  <h2>Data-driven Binding (Dataset Pool)</h2>
+  <p>Statt für jeden Datensatz ein eigenes Binding anzulegen, bündelt ein <strong>Data-driven Binding</strong> mehrere kompatible Easy-Datensätze unter <strong>einem Namen</strong>. Im Binding-Manager wählen Sie dazu bei <strong>Binding type</strong> den Pool-Typ und ordnen ihm die Datensätze zu. Der Workflow referenziert nur <code>{{country.feld}}</code>; pro Lauf liefert der Pool einen Datensatz unter diesem Namen. Bestehende Einzel-Bindings laufen unverändert weiter.</p>
+  <h2>Der Dialog „Data-driven execution“</h2>
+  <p>Der Dialog erkennt das Binding aus den Platzhaltern des Workflows selbst — ein technischer Variablenname muss nicht mehr eingetippt werden.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Bereich</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Data source / Binding</strong></td><td>Referenziert der Workflow genau ein Pool-Binding, zeigt der Dialog „Data-driven binding: country“ und die Quelle („Source: Easy Test Data“). Bei mehreren wählen Sie unter <em>Data-driven binding</em>. Gibt es keins, erklärt ein Hinweis, wie man eins anlegt, mit dem Link <em>Set up a data-driven binding</em>.</td></tr>
+        <tr><td><strong>Dataset selection</strong></td><td>Welche Datensätze laufen: All datasets, Single dataset, Selected datasets, First N datasets oder By tags (alle Datensätze mit den gewählten Tags).</td></tr>
+        <tr><td><strong>Execution preview</strong></td><td>Nennt vorab die Run-Zahl, z. B. „4 datasets selected – 4 test runs will be created“, und listet die gewählten Datensätze.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Start wird verweigert —</strong> Fehlt einem Datensatz ein Feld, das der Workflow benötigt, startet nichts. Die Meldung nennt Datensatz und Feld (z. B. „Dataset 'AUT66-03-France' lacks field(s) expectedTitle required by {{country.expectedTitle}}“). Es wird weder ein Batch angelegt noch ein Run gestartet.
+  </div>
+  <h2>Rechte und Zeitpläne</h2>
+  <ul class="feature-list">
+    <li>Die Datensatzauswahl lesen alle Projektmitglieder; <strong>Starten und Abbrechen</strong> einer datengetriebenen Ausführung verlangt mindestens die Projektrolle Editor (siehe <a href="#users-roles">Rollen &amp; Rechte</a>).</li>
+    <li>Dieselbe Auswahl lässt sich in Zeitplänen festlegen — siehe <a href="#scheduler-testdata">Testdaten im Zeitplan</a>.</li>
+  </ul>
 </section>
 
 <!-- PLAYGROUND -->

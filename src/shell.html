@@ -347,6 +347,13 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
 .module-tab.active-personalsettings .module-tab-dot{background:#D946EF}
 .result-module.mod-personalsettings{background:rgba(217,70,239,.2);color:#F5D0FE}
 
+.badge-notifications{background:#FEFCE8;color:#854D0E;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.3px}
+.dot-notifications{background:#CA8A04}
+#sidebar[data-module="notifications"] .nav-link.active{background:rgba(202,138,4,.15);border-left-color:#CA8A04;color:#E2E8F0}
+.module-tab.active-notifications{background:rgba(202,138,4,.15);color:#FDE68A}
+.module-tab.active-notifications .module-tab-dot{background:#CA8A04}
+.result-module.mod-notifications{background:rgba(202,138,4,.2);color:#FDE68A}
+
 .badge-onpremise{background:#FFF7ED;color:#9A3412;font-size:11px;font-weight:600;padding:3px 9px;border-radius:20px;letter-spacing:.3px}
 .dot-onpremise{background:#F97316}
 #sidebar[data-module="onpremise"] .nav-link.active{background:rgba(249,115,22,.15);border-left-color:#F97316;color:#E2E8F0}
@@ -1016,6 +1023,7 @@ function buildChatbotIndex() {
     else if (mod.id === 'module-settings') modLabel = 'Global Settings';
     else if (mod.id === 'module-projectsettings') modLabel = 'Project Settings';
     else if (mod.id === 'module-personalsettings') modLabel = 'Personal Settings';
+    else if (mod.id === 'module-notifications') modLabel = 'Notifications';
     else if (mod.id === 'module-executive') modLabel = 'Executive Dashboard';
     else if (mod.id === 'module-projects') modLabel = 'Projects';
     else if (mod.id === 'module-search') modLabel = 'Test Search';

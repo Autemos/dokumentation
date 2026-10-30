@@ -283,6 +283,108 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   </ul>
   <p><strong>Examples:</strong> Coupon codes · one-time users · unique registrations</p>
   <div class="tip"><span class="tip-icon">💡</span>Prevents data conflicts in parallel tests.</div>
+  <h2 id="testdata-easy-tags">Tags</h2>
+  <p>Each dataset can carry <strong>any number of tags</strong>. Tags are free-form terms (for example <code>Smoke</code>, <code>High</code> or a release name) used to organise large data collections by topic or ownership. A tag does not trigger any logic of its own (such as priority handling) — the term stays free.</p>
+  <h3>Assigning tags</h3>
+  <ul class="feature-list">
+    <li>In the <strong>New/Edit Easy Test Data Dataset</strong> dialog, the <strong>Tags</strong> field sits below <em>Description</em> (placeholder "Create or reuse a tag").</li>
+    <li>Press <strong>Enter</strong> or the <strong>Add tag</strong> button to apply a tag. Each tag appears as a chip with the buttons <strong>Edit tag</strong> and <strong>Remove tag</strong>.</li>
+    <li>The field suggests all tags already used in the project so that terms are reused.</li>
+    <li>Duplicates are detected regardless of upper/lower case; the spelling used first is kept.</li>
+  </ul>
+  <h3>Search, filter, group</h3>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Element</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>"Tags" column</strong></td><td>In table view directly after the name; in card view as chips. Datasets without tags show "—".</td></tr>
+        <tr><td><strong>Search datasets</strong></td><td>Search field "Search by name or tag": finds datasets whose name <em>or</em> a tag contains the search text.</td></tr>
+        <tr><td><strong>Filter by tags (match all)</strong></td><td>One checkbox per existing tag. With several tags selected, only datasets carrying <em>all</em> of them are shown.</td></tr>
+        <tr><td><strong>Group by tag</strong></td><td>Groups the overview by tag; the "Without tags" group comes last. A dataset with several tags appears in each of its groups. Off by default.</td></tr>
+        <tr><td><strong>Clear filters</strong></td><td>Resets search and filters. The counter "n of m datasets" shows how many datasets are visible.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>If nothing matches, "No datasets match the current filters" is shown. In the <em>Easy Test Data</em> workflow node, the tags of the selected dataset are display-only. Existing datasets without tags remain fully usable.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Tags can also be used for <a href="#testdata-datadriven">data-driven execution</a>: there, the <em>By tags</em> option selects all datasets carrying the desired tags.</div>
+  <h2 id="testdata-easy-shortname">Placeholder name (without a binding)</h2>
+  <p>Every Easy Test Data table has a <strong>Placeholder name</strong>. It lets you use the table in a workflow <strong>without an additional binding</strong>: <code>{{shortname.column}}</code> returns the column value from row 1 — or from the row chosen in the <a href="#testdata-run-selection">Test Data Selection</a> dialog.</p>
+  <ul class="feature-list">
+    <li>The overview shows the short name in the <strong>Placeholder name</strong> column (between Name and Tags) with a copy button.</li>
+    <li>The short name is generated automatically on creation: lower case, <code>ä/ö/ü/ß</code> become <code>ae/oe/ue/ss</code>, all other special characters and spaces become <code>_</code>. If it starts with a digit, <code>t_</code> is prepended. Example: "Länder Test" becomes <code>laender_test</code>.</li>
+    <li>Reserved names (<code>secret</code>, <code>env</code>, <code>vars</code>, <code>part1</code> …) get the suffix <code>_table</code>; on a collision within the project, <code>_2</code>, <code>_3</code> … follows.</li>
+    <li>The short name stays the same when the table is renamed and cannot be edited, so existing workflows do not break.</li>
+    <li>Table names may contain umlauts and other letters. Upper/lower case in the placeholder does not matter.</li>
+    <li>The variable picker in the workflow editor lists all project tables in the <strong>Test Data Tables</strong> section and inserts <code>{{shortname.column}}</code>.</li>
+    <li>As with an Easy binding, a One-Time-Use table consumes the row that is used.</li>
+  </ul>
+  <h3>Resolution order</h3>
+  <p>A placeholder is resolved in this order: secret → run variable, parameter or store-as target → test data binding → Easy table. Existing workflows therefore behave as before. If a binding has the same name as a table, <strong>the binding wins</strong>; the picker flags this with "Overridden by binding", the pre-run check in the editor shows a (non-blocking) warning, and the table list shows a warning icon next to the short name.</p>
+`,
+  "testdata-run-selection": `
+  <span class="section-label">Execution</span>
+  <h1>Test Data Selection at Run</h1>
+  <p>If a workflow has test data, the Run button no longer starts blindly: the <strong>Test Data Selection</strong> dialog opens. There you decide which dataset rows the workflow runs with. This applies to the Run in the workflow editor as well as to the Run from the workflow list.</p>
+  <h2>When does the dialog appear?</h2>
+  <ul class="feature-list">
+    <li>The workflow contains an <strong>Easy Test Data</strong> node (linked dataset or embedded table), or</li>
+    <li>the workflow uses a <strong>named test data binding</strong>.</li>
+  </ul>
+  <p>Workflows without test data start directly, as before.</p>
+  <h2>Run mode</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Mode</th><th>Effect</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Single Row</strong></td><td>Pick one specific row; exactly one execution runs.</td></tr>
+        <tr><td><strong>Selected Rows</strong></td><td>Tick several rows; they run one after another.</td></tr>
+        <tr><td><strong>All Rows</strong></td><td>The workflow runs once for every available row, one after another.</td></tr>
+        <tr><td><strong>Default Run</strong></td><td>Default. The workflow starts as before with the first row (with One-Time-Use: the first unconsumed row).</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The <strong>Data rows</strong> table shows the rows of the dataset; selected rows are highlighted, a counter (for example "2 rows selected") summarises the choice, and the <strong>Preview</strong> area shows the values. For One-Time-Use datasets, rows that are already used carry the <strong>Consumed</strong> badge. <strong>Cancel</strong> starts nothing.</p>
+  <h2>What happens during the run</h2>
+  <ul class="feature-list">
+    <li>Each selected row runs as its <strong>own execution</strong> with exactly its values and its own test result. The test and report name carries the suffix <code>[Set · Row n]</code>.</li>
+    <li>A log line names the set and row of the execution.</li>
+    <li>A <strong>targeted selection consumes nothing</strong>: One-Time-Use rows stay unconsumed. The node, dataset, binding and workflow are not changed either. Only the <em>Default Run</em> consumes, as before.</li>
+    <li>The editor follows the series until all rows have run; the next row starts as soon as the previous one has finished.</li>
+  </ul>
+  <h2>Limits</h2>
+  <ul class="feature-list">
+    <li>At most <strong>100 rows</strong> are offered; the dialog points this out.</li>
+    <li>For One-Time-Use datasets, <em>All Rows</em> covers only the unconsumed rows.</li>
+    <li>The row selection applies to <strong>one</strong> set. If the workflow uses further test data sets, they run with their default row; a note in the dialog says so.</li>
+    <li>If a selected row no longer matches the state of the dataset (for example because it has been changed in the meantime), the server reports the reason and nothing starts.</li>
+  </ul>
+`,
+  "testdata-datadriven": `
+  <span class="section-label">Execution</span>
+  <h1>Data-driven Execution &amp; Dataset Pool</h1>
+  <p>With <strong>Data-driven execution…</strong> (menu of the Run button in the workflow editor), a workflow runs <strong>once per matching dataset</strong>. Each dataset starts an independent run; a batch groups them, shows progress and can be cancelled. The run details show the name of the dataset that was used.</p>
+  <h2>Data-driven binding (dataset pool)</h2>
+  <p>Instead of creating a separate binding for each dataset, a <strong>data-driven binding</strong> bundles several compatible Easy datasets under <strong>one name</strong>. In the binding manager, choose the pool type under <strong>Binding type</strong> and assign the datasets to it. The workflow only references <code>{{country.field}}</code>; per run, the pool supplies one dataset under that name. Existing single bindings continue to work unchanged.</p>
+  <h2>The "Data-driven execution" dialog</h2>
+  <p>The dialog detects the binding from the workflow's placeholders itself — you no longer have to type a technical variable name.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Area</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Data source / Binding</strong></td><td>If the workflow references exactly one pool binding, the dialog shows "Data-driven binding: country" and the source ("Source: Easy Test Data"). With several, choose under <em>Data-driven binding</em>. If there is none, a note explains how to create one, with the link <em>Set up a data-driven binding</em>.</td></tr>
+        <tr><td><strong>Dataset selection</strong></td><td>Which datasets run: All datasets, Single dataset, Selected datasets, First N datasets or By tags (all datasets with the chosen tags).</td></tr>
+        <tr><td><strong>Execution preview</strong></td><td>States the number of runs up front, for example "4 datasets selected – 4 test runs will be created", and lists the selected datasets.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Start is refused —</strong> If a dataset lacks a field the workflow needs, nothing starts. The message names dataset and field (for example "Dataset 'AUT66-03-France' lacks field(s) expectedTitle required by {{country.expectedTitle}}"). No batch is created and no run is started.
+  </div>
+  <h2>Permissions and schedules</h2>
+  <ul class="feature-list">
+    <li>All project members can read the dataset selection; <strong>starting and cancelling</strong> a data-driven execution requires at least the Editor project role (see <a href="#users-roles">Roles &amp; Permissions</a>).</li>
+    <li>The same selection can be set in schedules — see <a href="#scheduler-testdata">Test data in a schedule</a>.</li>
+  </ul>
 `,
   "testdata-playground": `
   <span class="section-label">Tools</span>

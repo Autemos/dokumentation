@@ -32,6 +32,7 @@
       <li><strong>Events Panel</strong> — zeigt alle aufgezeichneten technischen Events in Echtzeit</li>
       <li><strong>Workflow View</strong> — Visualisierung des generierten Test Workflows</li>
       <li><strong>Pages View</strong> — Anzeige der automatisch erkannten Pages und Fields</li>
+      <li><strong>Plan</strong> und <strong>Variables</strong> — Implementationsplan und belegte Variablen einer KI-Aufnahme (siehe <a href="#recorder-ai-plan">Implementationsplan</a>)</li>
     </ul>
   </div>
   <div class="screenshot-wrap" style="flex:0 0 300px;margin:0">
@@ -99,6 +100,45 @@
 </div>
 </section>
 
+<section class="doc-section" id="recorder-recording-state">
+<span class="section-label">Session Management</span>
+<h1>Aufnahmezustand und Sitzungsfenster</h1>
+<p>Eine neue Recorder-Session startet im Zustand <strong>Not recording</strong>. Sie bestimmen selbst, wann aufgezeichnet wird; der aktuelle Zustand ist jederzeit sichtbar.</p>
+<h2>Start, Pause, Resume</h2>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Zustand / Knopf</th><th>Wirkung</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Not recording</strong> / <strong>Start recording</strong></td><td>Interaktionen werden weder als Event noch als Node noch als Page-Object-Feld aufgezeichnet. <strong>Start recording</strong> schaltet auf Recording.</td></tr>
+      <tr><td><strong>Recording</strong> / <strong>Pause recording</strong></td><td>Jede Interaktion erscheint in der Event-Liste. <strong>Pause recording</strong> schaltet auf Paused.</td></tr>
+      <tr><td><strong>Paused</strong> / <strong>Resume recording</strong></td><td>Interaktionen werden nicht aufgezeichnet, bisherige Einträge bleiben erhalten. <strong>Resume recording</strong> schaltet wieder auf Recording.</td></tr>
+    </tbody>
+  </table>
+</div>
+<ul class="feature-list">
+  <li>Ein gespeicherter Workflow (oder Sub-Workflow) enthält nur Schritte aus aktiven Aufnahmephasen, in zeitlicher Reihenfolge. Haben Sie vor dem Start navigiert, beginnt die Phase mit <code>Navigate → &lt;aktuelle URL&gt;</code>.</li>
+  <li>Auf Mobile Devices gilt dasselbe: Taps und Gesten bei Not recording oder Paused werden nicht aufgezeichnet.</li>
+  <li>Ein KI-Befehl bei Not recording schaltet den Zustand sichtbar auf Recording.</li>
+  <li>Wird gespeichert, ohne dass je gestartet wurde, lehnt der Recorder mit der Meldung „no interaction step" ab; es entsteht kein Workflow.</li>
+</ul>
+<h2>Live-Ansicht in einem eigenen Fenster</h2>
+<p>Bei laufender Browser- oder Mobile-Session steht über der Live-Ansicht der beschriftete Knopf <strong>Open in new window</strong>. Er liegt in einer Leiste oberhalb der Ansicht und verdeckt die getestete Anwendung nicht. Im eigenen Fenster ist das Bild grösser als eingebettet.</p>
+<ul class="feature-list">
+  <li>Aufnahme und Synchronität bleiben unverändert: Ein Klick im abgekoppelten Fenster erscheint im Events-Tab des Autemos-Fensters; Stop, Save und die Tabs bleiben im Autemos-Fenster bedienbar.</li>
+  <li>Schliessen Sie das Fenster, läuft die Session weiter. Ein Hinweis erklärt das, und der Knopf <strong>Open in new window</strong> steht wieder zur Verfügung.</li>
+  <li>Blockiert der Browser das Pop-up, weist ein Hinweis auf den Knopf über der Ansicht hin.</li>
+  <li>Ohne laufende Session gibt es den Knopf nicht.</li>
+</ul>
+<h2>Verlust der Browser-Session</h2>
+<p>Bricht die Browser-Session einer Web-Aufnahme weg (zum Beispiel weil der Browser extern beendet wurde), erkennt der Recorder das innerhalb von etwa 15 Sekunden von selbst:</p>
+<ul class="feature-list">
+  <li>In der Browserfläche erscheint die Meldung <strong>Browser session disconnected</strong> mit der Ursache und dem Knopf <strong>Start a new session</strong>, der den Add-Session-Dialog öffnet.</li>
+  <li>Der Tab zeigt einen roten Punkt („Disconnected"); die Aufnahme dieser Session wird kontrolliert beendet. Bei der letzten lebenden Session steht der Zustand auf Not recording, und <strong>Start recording</strong> ist gesperrt, bis wieder eine lebende Session existiert.</li>
+  <li>Leben weitere Tabs, läuft die Aufnahme dort unverändert weiter.</li>
+  <li>Der KI-Chat erhält genau einen Hinweis. Bereits aufgezeichnete Schritte, Events, Nodes und Page Objects bleiben unverändert erhalten.</li>
+</ul>
+</section>
+
 <section class="doc-section" id="recorder-manual">
 <span class="section-label">Session Management</span>
 <h1>Manual Recording</h1>
@@ -117,6 +157,44 @@
   <div class="concept-card"><h3>Assertions</h3><p>Validierungsschritte werden automatisch zusammen mit den Interaktions-Events erfasst.</p></div>
   <div class="concept-card"><h3>Reusable Selectors</h3><p>Pro Element werden mehrere Selektorstrategien generiert für langfristige Stabilität.</p></div>
 </div>
+</section>
+
+<section class="doc-section" id="recorder-web-interactions">
+<span class="section-label">Session Management</span>
+<h1>Web-Aufnahme: Tasten, Checkboxen, Dialoge und Tabs</h1>
+<p>Der manuelle Web-Recorder zeichnet neben Klicks und Eingaben auch folgende Interaktionen auf; sie werden bei der Wiedergabe (Playwright und Selenium) ausgeführt.</p>
+<h2>Tasten und Tastenkombinationen</h2>
+<ul class="feature-list">
+  <li>Steuertasten wie Enter, Escape, Tab, Pfeiltasten oder F5 und Kombinationen wie Strg+A werden als <strong>Press Key</strong>-Node aufgezeichnet (zum Beispiel <code>Control+a</code>).</li>
+  <li>Enter in einem Suchfeld ohne Formular ergibt zuerst den Type-Node mit dem Text, danach <strong>Press Key</strong> Enter auf demselben Element. Enter in einem Formularfeld ergibt genau einen Press-Key-Node; Enter oder Leertaste auf einem Button ergibt nur den Click-Node.</li>
+  <li>Normales Tippen (auch mit Shift), Backspace und Delete im Feld erzeugen keine Press-Key-Nodes.</li>
+</ul>
+<h2>Checkbox und Radio</h2>
+<p>Das Anhaken einer Checkbox oder die Wahl eines Radio-Buttons wird als <strong>Check</strong>-Node mit dem Sollzustand aufgezeichnet (an oder aus, Label <code>Check "&lt;Text&gt;"</code>), nicht als Klick. Bei der Wiedergabe wird nur geklickt, wenn der Zustand vom Sollzustand abweicht. Ist er bereits wie gewünscht, ist der Schritt bestanden (Log „bereits gesetzt"). Damit bleibt die Checkbox auch bei mehrfacher Wiedergabe angehakt. Weicht der Zustand nach dem Klick ab, schlägt der Schritt mit Messwerten fehl.</p>
+<p>Bestehende Workflows mit Klick-Nodes auf Checkboxen laufen unverändert.</p>
+<h2>Rich-Text-Felder</h2>
+<p>Eingaben in editierbare Bereiche (<code>contenteditable</code>) werden als Type-Node mit dem eingegebenen Text aufgezeichnet; die Wiedergabe füllt das Element.</p>
+<h2>Browser-Dialoge</h2>
+<p>Dialoge vom Typ alert, confirm, prompt und beforeunload werden aufgezeichnet und bei der Wiedergabe als <strong>Handle Dialog</strong>-Node ausgeführt (Aktion zum Beispiel <em>accept</em>, optional mit erwartetem Dialogtext).</p>
+<ul class="feature-list">
+  <li>Beim Aufnehmen bleibt der Dialog im Browserbild stehen, bis Sie ihn beantworten. Die Aufnahme enthält genau einen Klick und ein Dialog-Event mit Typ, Text und Entscheidung.</li>
+  <li>Im KI-Recorder funktioniert ein Satz wie „And I accept the confirm dialog" ebenso: Hinter dem Klick entsteht ein Handle-Dialog-Node.</li>
+  <li>Ein Dialog ohne Handle-Dialog-Node wird weiterhin abgelehnt. Der Node trägt jetzt aber eine Warnung mit Dialogtyp und -text; die KI erhält einen Hinweis, den Dialog mit dem passenden Werkzeug zu behandeln.</li>
+</ul>
+<h2>Neue Tabs und Popups</h2>
+<p>Öffnet ein Klick einen neuen Tab oder ein Popup (<code>target=_blank</code>, <code>window.open</code>), werden Klicks im neuen Tab ebenfalls aufgezeichnet. Der Workflow enthält einen <strong>Switch Tab</strong>-Node für den Wechsel und bei Bedarf einen <strong>Close Tab</strong>-Node. Ein typischer Ablauf: Klick, Switch Tab (latest), Titel prüfen, Close Tab, weiter im ursprünglichen Tab.</p>
+<div class="tip"><span class="tip-icon">💡</span>Nicht unterstützt sind Datei-Auswahl-Dialoge (dafür gibt es den Upload-Node), Basic-Auth-Prompts und Druckdialoge. Der Mobile Recorder hat eigene Alert-Semantik und ist nicht betroffen.</div>
+</section>
+
+<section class="doc-section" id="recorder-origin">
+<span class="section-label">Session Management</span>
+<h1>Eigene Aktionen während eines KI-Zugs</h1>
+<p>Arbeitet die KI gerade und Sie klicken oder tippen selbst im Live-Bild (Browser oder Mobile Device), wird Ihre Aktion als eigener Node aufgezeichnet. Die Aktionen der KI selbst werden dabei nie doppelt aufgenommen.</p>
+<ul class="feature-list">
+  <li>Entscheidend ist, von wem eine Aktion stammt (KI oder Mensch), nicht wann sie geschieht. Ein Tap oder eine Eingabe von Hand im Mobile-Live-Bild ergibt genau einen Click- bzw. Type-Node, auch während eines laufenden KI-Zugs und kurz danach.</li>
+  <li>Ein Klick im Browserbild während eines KI-Zugs ergibt nach dem Zug genau einen Eintrag bzw. Node. Das Echo einer Aktion der KI wird nie zum Node.</li>
+  <li>Handgesten werden im Chat als manuelle Beobachtung vermerkt; Aktionen der KI nicht.</li>
+</ul>
 </section>
 
 <section class="doc-section" id="recorder-ai">
@@ -151,6 +229,190 @@
 </div>
 <h2>Unterstützte AI Models</h2>
 <p>Der Recorder unterstützt konfigurierbare AI Models (z. B. GPT-4o), die je nach Projektanforderung ausgewählt werden können.</p>
+</section>
+
+<section class="doc-section" id="recorder-ai-plan">
+<span class="section-label">KI-Aufnahme im Detail</span>
+<h1>Implementationsplan und Schrittprüfung</h1>
+<p>Der AI Recorder zerlegt Ihren Auftrag in einen Implementationsplan. Der Plan erscheint im Chat und im Tab <strong>Plan</strong> der Seitenleiste. Jeder Schritt hat einen Status und, wo möglich, ein prüfbares Ziel.</p>
+<h2>Prüfung der Schritte</h2>
+<ul class="feature-list">
+  <li>Bei verbundenem Mobile Device bekommt jeder prüfbare Schritt ein Ziel: Eine Eingabe wird über den Feldwert geprüft, ein Tap, der den Bildschirm wechselt, über ein Merkmal des nächsten Bildschirms. Der letzte Tap und der Schritt „connect mobile device" bleiben ohne Ziel.</li>
+  <li>Ein Schritt, dessen Ziel schon vor der Handlung galt, zählt als „done, but NOT verified", wenn er eine echte Handlung ist. Reine Prüf- und Warteschritte mit bereits geltendem Ziel zählen als verifiziert.</li>
+  <li>Nicht prüfbare Schritte (zum Beispiel das Verbinden des Geräts) erscheinen im Plan-Bericht getrennt und neutral statt in der Zahl „NOT verified". Ein Bericht lautet dann zum Beispiel „6 of 7 steps verified" plus eine Angabe für den nicht prüfbaren Schritt.</li>
+  <li>Auf dem Gerät prüft der Server das Ziel nach jeder Handlung selbst, ohne dass die KI es melden muss. Ist das Ziel erreicht, wird der Schritt abgeschlossen, bevor die nächste Handlung ans Gerät geht.</li>
+  <li>Ein Tap auf ein Element ausserhalb des sichtbaren Bereichs scrollt selbst herein (in beide Richtungen, begrenzt auf höchstens 10 Wischbewegungen). Ist das Element nicht erreichbar, endet der Schritt mit „element not visible" statt mit einem Tap.</li>
+</ul>
+<h2>Nicht ausführbare Schritte</h2>
+<p>Ist ein Schritt in der laufenden Session nicht ausführbar, wird er als Lücke <strong>not recorded</strong> festgehalten, mit dem Grund und der nächstbesten Alternative (Chat und Plan). Der Plan läuft mit den übrigen Schritten weiter. Die Schlussmeldung <strong>Plan finished</strong> listet alle Lücken („Not recorded: step N …") und alle Fehlschläge („Failed: step N …"). Stellt die KI statt einer Handlung eine Rückfrage, wird der Schritt zur Lücke mit der Rückfrage als Grund.</p>
+<h2>Mehrere Geräte im Plan</h2>
+<ul class="feature-list">
+  <li>In einer Aufnahme über mehrere Geräte (Browser und Telefon oder zwei Telefone) wird jeder Schritt auf dem Gerät ausgeführt und geprüft, zu dem er gehört. Browser-Schritte führen nie ein Mobile-Werkzeug aus.</li>
+  <li>Der Chat-Plan hängt an jede Zeile „· on &lt;Gerät&gt;", im Tab Plan zeigt jeder Schritt „Device: &lt;Gerät&gt;". Bei Aufnahmen mit nur einem Gerät erscheint kein Kennzeichen.</li>
+</ul>
+<h2>Weiter ab hier</h2>
+<p>Nach dem Ende eines Zugs zeigt jede Plan-Karte mit Status failed, Lücke oder offen (nach einem abgebrochenen Plan) den Knopf <strong>Continue from here</strong>. Er setzt die Aufnahme an diesem Schritt fort: Schritte davor bleiben, der gewählte und alle folgenden Schritte laufen erneut. Es entsteht kein neuer Plan, die bisherigen Nodes bleiben erhalten. Der Knopf fehlt während eines laufenden Zugs, bei offener Rückfrage und bei veraltetem Plan.</p>
+<p>Zusätzlich gilt auf dem Mobile Device: Solange ein Schritt noch geprüft wird, lässt der Recorder keine Handlung für ein fremdes Ziel durch („Report step N first"). Wartet eine Rückfrage auf Ihre Entscheidung, zeigt der Schritt „halted — waiting for your decision".</p>
+<h2>Plan-Haltepunkt</h2>
+<p>Ein Szenario-Schritt wie <em>And I pause for review</em> wird zum Plan-Schritt: Die Aufnahme hält an, die Karte zeigt den Stand (erledigt, pausiert, verbleibend) und die Knöpfe <strong>Continue</strong> und <strong>Stop recording</strong>.</p>
+</section>
+
+<section class="doc-section" id="recorder-ai-questions">
+<span class="section-label">KI-Aufnahme im Detail</span>
+<h1>Rückfragen und Sitzungsmodus</h1>
+<p>Weicht die Aufnahme vom Plan ab, hält der AI Recorder an und fragt nach, statt still weiterzulaufen. Während der Pause findet kein KI-Aufruf statt.</p>
+<h2>Session mode</h2>
+<p>Auf der Recorder-Seite wählen Sie über die Optionsgruppe <strong>Session mode</strong> zwischen <strong>Interactive</strong> (Vorgabe) und <strong>Unattended</strong>.</p>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Modus</th><th>Verhalten bei Fristablauf ohne Antwort</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Interactive</strong></td><td>Die Aufnahme stoppt; der Entwurf wird als unvollständig markiert („The draft is incomplete from step N"). Die Karte kündigt an, in wie vielen Sekunden die Aufnahme stoppt.</td></tr>
+      <tr><td><strong>Unattended</strong></td><td>Die Aufnahme läuft weiter; jede automatische Entscheidung wird im Chat protokolliert („Auto-decision at step N …").</td></tr>
+    </tbody>
+  </table>
+</div>
+<ul class="feature-list">
+  <li>Eine Antwort gilt für dieselbe Ursache bis zum Ende der Aufnahme; der Chat vermerkt „applied your earlier decision". Plan-Haltepunkte fragen immer; Stop wird nie zur Regel.</li>
+  <li>Vor „Save as workflow" zeigt der Dialog <strong>Review adjustments before saving</strong> alle Angleichungen (Schritt, Grund, erwartet, aufgezeichnet, wer). Ein unvollständiger Entwurf zeigt „incomplete from step N" und trägt „Incomplete from step N." in der Beschreibung.</li>
+  <li>Gehört eine Handlung zu einem späteren Planschritt, wird sie diesem gutgeschrieben; im Modus Interactive hält die Aufnahme vorher mit dem Grund „action belongs to step K" an.</li>
+</ul>
+<h2>Gescheiterte Handlung</h2>
+<p>Scheitert ein Tap, Klick oder eine Eingabe, hält die Aufnahme an und fragt mit den Knöpfen <strong>Retry</strong>, <strong>Skip step</strong>, <strong>Pick another element</strong> und <strong>Stop recording</strong>. Der Fragetext nennt Schritt, Ziel und die sichtbaren Aufschriften sowie den Grund (nicht gefunden, nicht sichtbar, schreibgeschützt, ohne Wirkung).</p>
+<ul class="feature-list">
+  <li>Gibt es ein passendes Element auf dem Bildschirm, fragt der Recorder schon nach dem ersten Fehlschlag (mit bis zu vier Kandidaten als Knöpfe). Sonst unternimmt die KI genau einen eigenen Neuversuch und fragt nach dem zweiten.</li>
+  <li><strong>Skip step</strong> markiert den Schritt als übersprungen („Skipped by user"); die Aufnahme geht mit dem nächsten weiter. <strong>Stop recording</strong> beendet die Aufnahme, Browser bzw. Gerät werden frei, Aufgezeichnetes lässt sich speichern.</li>
+  <li><strong>Pick another element</strong> führt die Handlung auf dem gewählten Kandidaten oder einer getippten Aufschrift aus.</li>
+  <li>Während der Pause zeigt der Kopf „Paused - waiting for you", der Tab einen Warn-Punkt, und die gescheiterte Handlung steht als roter (nicht gespeicherter) Node auf der Leinwand.</li>
+  <li>Antworten Sie nicht innerhalb der Frist, stoppt die Aufnahme (Speichern bleibt möglich). Sie läuft nie ungefragt weiter.</li>
+  <li>Meldet die KI für einen Handlungsschritt „failed" oder „not possible", kommt dieselbe Rückfrage statt eines stillen Weitermachens.</li>
+</ul>
+<h2>Näherungstreffer: „Did you mean …?"</h2>
+<p>Weicht das Zielelement auf dem Mobile Device nur näherungsweise vom Szenariotext ab (zum Beispiel „Software version" statt „Software information"), fragt der Recorder vor der Handlung im Chat „Did you mean “Software information”?" mit Knöpfen. Nach <strong>Ja</strong> wird genau eine Handlung auf dem tatsächlichen Element ausgeführt; Plan-Schritt und Node tragen den echten Text. Der Chat meldet <code>Step n updated: “…” → “…”</code>, und der Speicherdialog zeigt die Zeile unter <strong>Adjusted during recording</strong>. Mit <strong>Skip step</strong> wird nichts angetippt, mit <strong>No, let me describe it</strong> tippen Sie die Aufschrift selbst ein.</p>
+<ul class="feature-list">
+  <li>Unterschiede in Gross-/Kleinschreibung, Satzzeichen oder Leerraum lösen keine Frage aus. Bei Gegenbeispielen wie „Sign in" gegen „Sign out" oder „Delete" gegen „Delete all" wird immer gefragt, nie automatisch getippt.</li>
+  <li>Im Web-Recorder gilt dieses Verhalten nicht.</li>
+</ul>
+<h2>Eindeutige Fälle entscheidet der Recorder selbst</h2>
+<p>Scheitert eine Handlung nur, weil die KI das falsche Selektor-Attribut gewählt hat, und es gibt genau ein passendes Element mit derselben Aufschrift, führt der Recorder die Handlung darauf ohne Rückfrage aus. Der Chat vermerkt das, zum Beispiel <code>Step 9: used 'Name' (same label; the AI's selector was wrong …)</code>. Bei mehreren gleichnamigen Elementen, bei nicht anklickbaren Elementen oder bei Näherungstreffern fragt der Recorder weiterhin nach.</p>
+<h2>Rotes Ziel und unbekannte Variable (Mobile)</h2>
+<p>In mobilen Aufnahmen läuft der Plan nie über einen roten Schritt hinweg. Ist ein Ziel aus Ihrem Auftrag nach der Handlung nicht erreicht, oder ist eine Variable unbekannt oder mehrdeutig, hält der Recorder mit einer Rückfrage an (Retry, Pick, Skip, Stop; bei Variablen mit den bekannten Namen als Knöpfen). Selbst erfundene oder abgeleitete Ziele („About phone screen" statt „About phone") lösen keine Frage aus, sondern werden tolerant verglichen. Im Modus Interactive erscheint auch dann eine Rückfrage-Karte, wenn die KI ohne Handlung stehen bleibt; sie zitiert die betroffene Szenariozeile.</p>
+</section>
+
+<section class="doc-section" id="recorder-ai-values">
+<span class="section-label">KI-Aufnahme im Detail</span>
+<h1>Variablen, Platzhalter und Prüfungen</h1>
+<h2>Variablen-Tab</h2>
+<p>Sobald die KI die erste Variable belegt (zum Beispiel mit „extract into a variable"), erscheint in der rechten Seitenleiste der Tab <strong>Variables</strong> mit einem Badge für die Anzahl. Vorher gibt es den Tab nicht.</p>
+<ul class="feature-list">
+  <li>Die Tabelle (nur lesen) hat die Spalten <strong>Name</strong>, <strong>Value</strong>, <strong>Source</strong> und <strong>When</strong>. Nicht leere Werte haben einen Kopier-Knopf.</li>
+  <li>Ein Klick auf die Quelle springt in den Tab Workflow und wählt den Extract-Node aus.</li>
+  <li>Der neueste Wert steht oben mit dem Badge <em>latest</em>. Setzt die KI dieselbe Variable erneut, ersetzt die neue Zeile die alte.</li>
+  <li>Im Chat steht neben dem Satz <code>Stored "…" from "…" in &lt;name&gt;.</code> der Knopf <strong>View variables</strong>, der den Tab öffnet.</li>
+  <li>Eine neue Aufnahme oder Clear leert die Variablen; der Tab verschwindet.</li>
+</ul>
+<h2>Extract: leere Werte und Belege</h2>
+<ul class="feature-list">
+  <li>Ein leerer Wert gilt nicht mehr als Erfolg (Ausnahme: das Attribut <em>value</em>). Eine Warnung im Chat nennt die Variable: <code>&lt;variable&gt; is empty - "&lt;source&gt;" had no readable text.</code></li>
+  <li>Jeder gespeicherte oder verwendete Wert wird im Chat belegt: <code>Stored "&lt;value&gt;" from "&lt;source&gt;" in &lt;variable&gt;.</code> bzw. <code>Creating contact "&lt;value&gt;" (from &lt;variable&gt;).</code></li>
+  <li>Ein Selektor, der einen Text ausserhalb des Bildschirms festschreibt, wird vor dem Aufruf abgelehnt statt in ein Zeitlimit zu laufen.</li>
+  <li>Trägt ein Extract-Selektor beim Speichern den soeben ausgelesenen Wert als Bedingung (<code>following-sibling::*[@text='12']</code>), ersetzt der Recorder sie durch eine strukturelle Form (<code>following-sibling::*[1]</code>) und zeigt am Node eine Warnung. So liest der Workflow auf anderen Geräten oder in anderen Zuständen den Wert neu aus.</li>
+</ul>
+<h2>Platzhalter</h2>
+<ul class="feature-list">
+  <li>Ein Werkzeugaufruf mit einem unaufgelösten Platzhalter (<code>{{…}}</code> oder <code>${…}</code>) wird nie ausgeführt, in keinem Werkzeug und in keinem Parameter. Das gilt auch für unbekannte <code>{{secret.X}}</code> (Hinweis auf die Liste der Secrets) und nicht berechenbare Ausdrücke. Der Schritt wird rot, die Meldung nennt den Variablennamen, es entsteht kein Node.</li>
+  <li>Eine ähnliche Schreibweise einer bekannten Variable (<code>{{androidVersion}}</code> für <code>android_version</code>) wird eindeutig aufgelöst; der Node trägt <code>{{android_version}}</code>.</li>
+  <li><code>window.print()</code> und File-Picker über „execute script" werden abgewiesen, ohne die Session zu gefährden.</li>
+</ul>
+<h2>Prüfarten für Assertions</h2>
+<p>Die KI kann zusätzlich zu positiven Prüfungen folgende Assertions aufzeichnen; im Node-Editor sind die Bedingungen sichtbar und wählbar.</p>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Prüfart</th><th>Web</th><th>Mobile</th></tr></thead>
+    <tbody>
+      <tr><td>Element nicht sichtbar / nicht vorhanden</td><td>ja</td><td>ja</td></tr>
+      <tr><td>Text nicht im Element enthalten / nicht auf der Seite</td><td>ja</td><td>ja</td></tr>
+      <tr><td>Selektor nicht vorhanden</td><td>ja</td><td>ja</td></tr>
+      <tr><td>URL enthält / URL gleich, Seite geladen</td><td>ja</td><td>nein</td></tr>
+    </tbody>
+  </table>
+</div>
+<p>URL- und Seitenprüfungen sowie „Text nicht auf der Seite" brauchen einen erwarteten Wert und werden sonst bei der Aufnahme abgelehnt. Negativ-Prüfungen werden bei der Wiedergabe nicht selbstgeheilt. In einer reinen Mobile-Session kann die KI ausserdem den Wert eines Elements in eine Workflow-Variable lesen („Extracted &lt;variable&gt; = &lt;Wert&gt;"), die ein Folgeschritt verwendet.</p>
+</section>
+
+<section class="doc-section" id="recorder-ai-testcase">
+<span class="section-label">KI-Aufnahme im Detail</span>
+<h1>Jira/Xray-Testfälle aufnehmen</h1>
+<p>Wählen Sie einen Jira/Xray-Testfall (Cucumber-Szenario oder manuelle Schritte), arbeitet der AI Recorder ihn ab.</p>
+<ul class="feature-list">
+  <li><strong>Implementationsplan:</strong> Der Testfall wird wie getippter Text in einen Plan zerlegt. Der Tab <strong>Plan</strong> öffnet sich von selbst; der Tab <strong>Test case</strong> bleibt erreichbar. Jeder Planschritt nennt seine Testfall-Zeile („Test case step k"). Testfall-Zeilen ohne Planschritt nennt eine Chatzeile unter dem Plan; passt die Zeilenzahl nicht, steht dort, dass die Liste nicht automatisch abgehakt wird. Ergibt die Zerlegung keinen Plan, läuft der Testfall wie bisher.</li>
+  <li><strong>Abhaken:</strong> Die Liste <strong>Test case</strong> wird abgehakt, sobald alle Planschritte einer Zeile fertig sind. Zusätzlich hakt der Recorder einen Schritt selbst ab, wenn eine erfolgreiche Eingabe genau dem zitierten Wert dieses Schritts entspricht, auch wenn die KI den Schritt nicht meldet. Ein Schritt ohne tatsächliche Handlung gilt nie als erledigt, und der Zähler fällt nie.</li>
+  <li><strong>Wertetreue:</strong> Getippte Werte werden gegen das Drehbuch des Testfalls geprüft. Ein Wert, der dort nicht vorkommt, wird sofort mit <code>VALUE MISMATCH</code> und den Werten des Testfalls abgewiesen. Richtige Werte (auch unzitierte Testdaten der manuellen Schritte) laufen; <code>{{secret.…}}</code> nur, wenn das Drehbuch Secrets erwähnt. Von Ihnen selbst getippte Chat-Nachrichten werden nicht geprüft.</li>
+  <li><strong>Voraussetzung oder Handlung:</strong> Bei jedem Schritt erklärt die KI, ob er eine Handlung ist oder ein Zustand (im Chat „Step N: action" bzw. „checking state"). Ein Zustand wird nur geprüft und nie hergestellt; eine Handlung wird ausgeführt und aufgezeichnet. Meldet die KI einen Zustandsschritt als failed oder not possible, muss sie einen Grund nennen; er erscheint im Schritt-Panel als „failed — reported by the AI".</li>
+  <li>Ein selbst getippter Abbruchwunsch wird nicht durch den Testfall-Anstoss überstimmt.</li>
+</ul>
+</section>
+
+<section class="doc-section" id="recorder-mobile-apps">
+<span class="section-label">Mobile Aufnahme</span>
+<h1>Mobile: Apps und mehrere Geräte</h1>
+<h2>Kein App-Name: das Gerät allein</h2>
+<p>Nennt Ihr Auftrag keine App („open android"), startet die KI nur das Gerät (Home-Screen) und nicht mehr eine Standard-Demo-App. Sie weist in einem Satz darauf hin und bietet an, eine App zu nennen.</p>
+<h2>Vorinstallierte Apps und mehrere Apps</h2>
+<ul class="feature-list">
+  <li>Ein Szenario kann mit einer vorinstallierten App beginnen (Einstellungen, Kontakte, Galaxy Store, Play Store) und im Verlauf in eine zweite App wechseln. Die App wird über ihr Paket gestartet; Apps aus dem Anbieter-Katalog funktionieren wie bisher.</li>
+  <li>Dafür stehen die Nodes <strong>Open App</strong> und <strong>Terminate App</strong> zur Verfügung; ein Schritt wie „open the contacts app" ist ein ausführbarer Plan-Schritt. Der Workflow läuft auf demselben Gerät durch.</li>
+  <li>Scheitert die Session (zum Beispiel weil eine Katalog-App fehlt oder das Gerät belegt ist), nennt die Schlusszeile im Chat den Grund des Anbieters in einem Satz. Zugangsdaten erscheinen dort nie.</li>
+</ul>
+<h2>Zweites Handy in derselben Aufnahme</h2>
+<p>Ist das erste Handy über den Geräte-Tab gebunden, kann die KI ein weiteres Gerät zusätzlich öffnen oder umschalten (<code>open_mobile_device</code> bzw. <code>switch_session</code> mit UDID). Alle folgenden Schritte laufen auf diesem Gerät, das erste bleibt offen.</p>
+<ul class="feature-list">
+  <li>Für ein bereits gebundenes Gerät meldet die KI „already connected" (kein doppelter Aufbau). Für ein nicht geöffnetes Gerät verweist <code>switch_session</code> auf <code>open_mobile_device</code>.</li>
+  <li>Stop bzw. Schliessen trennt nur die von der KI geöffneten Handys; das Gerät aus dem Geräte-Tab bleibt der Oberfläche.</li>
+  <li>Ein von der KI geöffnetes Handy hat keinen eigenen Live-View-Tab. Bedienung und Prüfung laufen über die KI-Aufnahme.</li>
+</ul>
+</section>
+
+<section class="doc-section" id="recorder-mobile-actions">
+<span class="section-label">Mobile Aufnahme</span>
+<h1>Mobile: Gesten und Geräte-Aktionen</h1>
+<h2>Scrollen, Wischen, Long-Press</h2>
+<p>Mobile Aufnahmen (KI und manuell) zeichnen diese Gesten als je einen Node ohne feste Bildschirmkoordinaten auf; die Wiedergabe führt sie auf jedem Gerät unabhängig von der Auflösung aus.</p>
+<ul class="feature-list">
+  <li><strong>Scroll to</strong>: „scroll until I see About phone" ergibt einen Node mit Text oder XPath. Gibt es das Ziel nicht, endet der Schritt nach der festgelegten Höchstzahl an Wischbewegungen oder bei unverändertem Bildschirm mit einer Meldung, die Ziel und Wischanzahl nennt; der Node ist failed, es gibt keinen Endlos-Lauf.</li>
+  <li><strong>Swipe</strong>: Richtung, Element (Wischen innerhalb eines Elements, zum Beispiel eines Karussells) und Prozent statt Pixel.</li>
+  <li><strong>Long Press</strong>: „I long press on About phone" ergibt einen Long-Press-Node mit Selektor und Dauer (mindestens 500 ms). Im manuellen Recorder wird ein Halten der Maus ab 600 ms zu einem Long-Press-Schritt; ein kurzer Klick bleibt ein Tap, Ziehen bleibt ein Swipe.</li>
+  <li>Ältere Workflows mit Swipe-Nodes laufen unverändert.</li>
+</ul>
+<h2>Geräte-Aktionen</h2>
+<p>Der KI-Recorder und der manuelle Mobile Recorder zeichnen folgende Aktionen auf und spielen sie ab:</p>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Aktion</th><th>Verhalten</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Rotate device</strong></td><td>Dreht das Gerät (siehe unten).</td></tr>
+      <tr><td>App in den Hintergrund</td><td>„put the app in the background for 3 seconds and bring it back": ein Node mit Sekundenangabe; danach ist die App wieder im Vordergrund.</td></tr>
+      <tr><td>Deep Link</td><td>Öffnet einen Link in der App; auf Android ohne App-Paket erscheint eine verständliche Fehlermeldung.</td></tr>
+      <tr><td>Tastatur schliessen</td><td>Blendet die Tastatur aus; ohne offene Tastatur ist der Schritt trotzdem grün.</td></tr>
+      <tr><td>Systemdialog</td><td>Nimmt einen Dialog wie „Allow location access" an oder lehnt ihn ab. Optional: Ohne Dialog wird der Schritt bei der Wiedergabe übersprungen, der Lauf bleibt grün.</td></tr>
+      <tr><td>Enter, Suchen, Löschen auf iOS</td><td>Die Return-Taste und Delete funktionieren auf iOS; Android-Verhalten bleibt unverändert.</td></tr>
+      <tr><td>Start mit frischer App</td><td>Die Session startet ohne gespeicherten Zustand (Android zusätzlich ohne App-Daten); der Erststart-Bildschirm erscheint. Vorgabe bleibt: Zustand behalten.</td></tr>
+    </tbody>
+  </table>
+</div>
+<h2>Rotate device</h2>
+<ul class="feature-list">
+  <li>Der Knopf <strong>Rotate device</strong> schaltet das Gerät des aktiven Mobile-Tabs zwischen Hoch- und Querformat um; die Live Device View zieht nach.</li>
+  <li>Die Drehung erscheint als Schritt „Rotate LANDSCAPE" bzw. „Rotate PORTRAIT" und wird beim Speichern zu einem Rotate-Node. Bei zwei Mobile-Tabs dreht sich nur das Gerät des aktiven.</li>
+  <li>Dreht sich das Gerät nicht (zum Beispiel Home-Screen oder App mit fester Ausrichtung), erscheint eine Meldung mit Grund („The device did not rotate: …"); es wird kein Schritt aufgezeichnet. Während einer Drehung ist der Knopf gesperrt.</li>
+</ul>
+<h2>Keyboard</h2>
+<ul class="feature-list">
+  <li>Der Keyboard-Knopf der Live Device View blendet die Bildschirmtastatur der aktiven Session ein und aus und zeigt ihren Zustand am Knopf (gedrückt = Tastatur offen). Nach einem Tap in ein Eingabefeld springt der Knopf innerhalb von etwa 20 Sekunden von selbst auf „offen".</li>
+  <li>Ohne aktives Eingabefeld erscheint der Hinweis „No active input field …", bei fehlender Unterstützung „… not supported on this device.".</li>
+  <li>Die Live Device View zeigt nach dem Umschalten sofort den neuen Bildschirm. Aufgezeichnet wird nur das Ausblenden, nicht das Einblenden.</li>
+  <li>Background, Deep link und System dialog treffen ebenfalls die aktive Session und melden Erfolg oder Fehler sichtbar („No system dialog found on the device." wenn kein Dialog da ist).</li>
+</ul>
 </section>
 
 <section class="doc-section" id="recorder-events">
@@ -219,6 +481,80 @@
     <div class="screenshot-caption">Pages-Tab — erkannte Page Objects und Fields, markiert als Reused oder New.</div>
   </div>
 </div>
+<h2>Vorhandene Page Objects zur Seite</h2>
+<p>Im Pages-Tab zeigt der Bereich <strong>Existing page objects for this page</strong>, welche Page Objects und Felder es zur geöffneten Seite bereits gibt, mit allen Feldnamen und ohne Aufklappen. Der Bereich folgt der aktuellen URL; gibt es zur Seite nichts, steht dort „No existing page objects for this page." Bei einer Mobile-Session mit App-Paket zeigt er die Page Objects dieser App; ohne Paket bzw. Bundle-ID erscheint „No app context …". Auch die KI kann die vorhandenen Page Objects zu einer Seite abfragen.</p>
+<h2>Wiederverwendung über den Selektor</h2>
+<p>Alle Recorder (KI, passiv, Auto-Mapping) verwenden ein vorhandenes Feld mit gleichem Selektor wieder, statt es unter einem neuen Namen anzulegen; der Workflow-Node verweist auf das vorhandene Feld. Der passive Recorder benennt eine Aufnahme auf einer URL mit genau einem vorhandenen Page Object nach diesem.</p>
+<h2>Vorhandene Felder beim Öffnen prüfen</h2>
+<p>Öffnet die KI eine Seite oder App, zu der Page Objects existieren, werden alle gespeicherten Selektoren in einem einzigen lesenden Durchgang live geprüft (höchstens etwa 2 Sekunden, ohne die Seite zu verändern). Jedes Feld erhält einen Befund: <code>confirmed</code> (genau ein sichtbarer Treffer), <code>not found</code> oder <code>ambiguous (n)</code>. Bestätigte Felder übernimmt die KI unverändert, neue Selektoren baut sie nur für nicht bestätigte Elemente. Das spart Fehlversuche an veralteten Feldern. Bei veralteten Feldern erscheint pro Seitenöffnung genau eine Chat-Notiz „not found". Wird das Zeitlimit überschritten, steht „not checked live (timeout)" und die Aufnahme läuft ohne Fehler weiter.</p>
+<h2>Selektor-Reparatur</h2>
+<p>Bevor ein vorhandenes Feld einen neuen Selektor bekommt, wird der gespeicherte Selektor live geprüft. Trifft er, bleibt er stehen. Trifft er nicht, wird er überschrieben und die Reparatur gemeldet: Der Bereich <strong>Selector repairs</strong> nennt Feld, alten und neuen Selektor und die betroffenen Workflows. Konnte nicht live geprüft werden (keine Session), steht dort „(not checked live)"; eine Überschreibung geschieht nie still.</p>
+<h2>Automatische Page-Screenshots</h2>
+<p>Legt der Web-Recorder (passiv oder KI) eine Page an, die noch keinen Screenshot hat, wird im Hintergrund automatisch ein Screenshot der aufgenommenen Seite hinterlegt, in derselben Ablage wie ein manueller Upload (Bild und Vorschau werden wie beim Upload verkleinert und komprimiert).</p>
+<ul class="feature-list">
+  <li>Ein vorhandener Screenshot, manuell oder automatisch, wird nie überschrieben. Auch vorhandene Pages ohne Bild, die eine Aufnahme wieder verwendet, bekommen eines. Ein späterer manueller Upload ersetzt das automatische Bild.</li>
+  <li>Bei mehrseitigen Aufnahmen zeigt jede Page ihre eigene Seite. Navigiert die Aktion weg, entsteht kein falsches Bild; es wird bei der nächsten Zuordnung nachgeholt.</li>
+  <li>Die Aufnahme wird dadurch nicht langsamer. Schlägt der Screenshot fehl, bricht weder Aufnahme noch Speichern ab, und es erscheint kein Fehler.</li>
+  <li>Mobile-Aufnahmen und die Workflow-Ausführung lösen keinen Screenshot aus.</li>
+</ul>
+<h2>Änderungen im Pages-Tab speichern</h2>
+<p>Was Sie im Pages-Tab ändern (Feld oder Seite umbenennen, Selektor, Feldtyp), landet beim Speichern in den Page Objects des Projekts, bei jeder Aufnahmeart: manuell Web, reine KI-Web, Mobile und gemischt. Der gespeicherte Workflow verweist anschliessend auf die neuen Namen, die Änderung ist in der Page-Object-Verwaltung sichtbar.</p>
+<ul class="feature-list">
+  <li><strong>Save All</strong> im Pages-Tab funktioniert auch ohne manuelle Web-Session und zeigt „Saved".</li>
+  <li>Scheitert das Speichern der Page Objects beim Speichern des Workflows, ist der Workflow trotzdem gespeichert; der Chat meldet „Pages were not stored: …".</li>
+  <li>Ohne Ihre Änderung entsteht beim Speichern weder ein zusätzliches Feld noch ein zusätzliches Page Object.</li>
+  <li>Die Selektor-Eingabe gibt es nur für bearbeitbare Felder. Bereits im Projekt vorhandene Page Objects lassen sich hier nicht umbenennen; <strong>Remove</strong> wirkt nur auf die Aufnahme, nicht auf das Page Object.</li>
+</ul>
+</section>
+
+<section class="doc-section" id="recorder-resume">
+<span class="section-label">Ausgabe &amp; Integration</span>
+<h1>Bestehenden Workflow fortsetzen (Edit live from here)</h1>
+<p>Mit <strong>Edit live from here</strong> steigen Sie an einem Node eines bestehenden Workflows in den Recorder ein: Der Workflow läuft bis zum Einfügepunkt, danach nehmen Sie weitere Schritte auf, die in den Workflow eingefügt werden.</p>
+<h2>Sofort aufnehmen</h2>
+<ul class="feature-list">
+  <li>Sobald der Einfügepunkt erreicht ist, zeigt der Recorder „Recording" und „Pause recording", ohne dass Sie <strong>Start recording</strong> drücken. Ein eigener Klick im Browserbild erscheint sofort im Events-Tab im Abschnitt „Recording from here". Bei Mobile gilt dasselbe für Fingertipps im Gerätebild.</li>
+  <li>Solange der Lauf noch zum Einfügepunkt fährt, steht der Zustand auf „Not recording". Eine neue leere Session (Add session, auch nach Clear) startet wie gewohnt mit „Not recording".</li>
+  <li><strong>Pause recording</strong> und <strong>Resume recording</strong> funktionieren auch hier.</li>
+</ul>
+<h2>Speichern</h2>
+<p>Der Speicherdialog zeigt immer die Gruppe <strong>Target workflow</strong> mit Name, Einfügeposition (Label und ID) und Version. Daneben stehen zwei getrennte Aktionen:</p>
+<div class="param-table-wrap">
+  <table class="param-table">
+    <thead><tr><th>Aktion</th><th>Wirkung</th></tr></thead>
+    <tbody>
+      <tr><td><strong>Update workflow</strong></td><td>Fügt die Schritte hinter dem Anker in den bestehenden Workflow ein. Bestehende Nodes und Verbindungen bleiben, die Version steigt um 1 (mit Snapshot). Funktioniert auch, wenn der geparkte Lauf keine Worker-Session mehr hat, nach „Could not attach" und nach <strong>Clear</strong>.</td></tr>
+      <tr><td><strong>Save as new workflow</strong></td><td>Legt aus Original und Aufnahme einen neuen Workflow an; das Original bleibt unverändert.</td></tr>
+    </tbody>
+  </table>
+</div>
+<ul class="feature-list">
+  <li>Der Toolbar-Knopf heisst <strong>Save as workflow</strong>. <strong>Finish run</strong> fügt den Hand-Schritt genau einmal nach dem Anker ein.</li>
+  <li>Steigen Sie am letzten Node „Close Browser" ein, parkt der Lauf davor, und der Dialog zeigt „Insert before: Close Browser".</li>
+  <li>Hat jemand den Workflow inzwischen geändert (Versionskonflikt), bleibt der Dialog mit einem Konflikthinweis und den zwei Auswegen offen.</li>
+</ul>
+<h2>Abgelaufene Bearbeitungssitzung</h2>
+<ul class="feature-list">
+  <li>Ist die Bearbeitungssitzung abgelaufen oder beendet, meldet der Recorder das in Klartext. Der Speicherdialog bleibt offen und die Aufnahme erhalten.</li>
+  <li>Bei offenem Tab hält der Recorder die Sitzung automatisch am Leben (etwa jede Minute). Endet sie trotzdem, erscheint im Chat einmalig ein Hinweis.</li>
+  <li><strong>Clear</strong> verwirft den geparkten Lauf; Browser bzw. Grid-Platz werden frei.</li>
+  <li>Neuladen oder Schliessen des Tabs mit ungesicherten Schritten löst die Browser-Rückfrage aus. Navigieren Sie innerhalb der Anwendung weg, erscheint der Dialog <strong>Leave recording?</strong> mit <strong>Stay</strong> und <strong>Discard and leave</strong>. Aufgenommene Schritte werden nach einem Neuladen nicht wiederhergestellt.</li>
+</ul>
+</section>
+
+<section class="doc-section" id="recorder-save-rules">
+<span class="section-label">Ausgabe &amp; Integration</span>
+<h1>Was beim Speichern geschieht</h1>
+<h2>Bestehende Sub-Workflows erkennen</h2>
+<p>Deckt die aufgenommene Schrittfolge einen bestehenden Sub-Workflow des Projekts vollständig ab, ersetzt der Recorder sie beim Speichern durch einen <strong>Call Sub-Workflow</strong>-Node. Das gilt auch für im Editor gebaute Sub-Workflows und auch dann, wenn der AI Recorder eigene Prüfschritte dazwischen eingeschoben hat.</p>
+<ul class="feature-list">
+  <li>Die aufgezeichneten Werte werden den Input-Parametern zugeordnet (zum Beispiel <code>username</code> = aufgezeichneter Wert). Lässt sich ein Parameter nicht eindeutig zuordnen, bleibt das Mapping leer und der Inspector des Nodes zeigt einen Hinweis mit <strong>Confirm</strong>; nach Bestätigen oder Ändern verschwindet er.</li>
+  <li>Secrets (<code>{{secret.*}}</code>) im Sub-Workflow verhindern die Erkennung nicht; der Klartext der Aufnahme landet nicht im Call-Node.</li>
+  <li>Beim Aufnehmen in einen bestehenden Workflow werden nur Sub-Workflows ohne Session-Start eingesetzt.</li>
+  <li>Kein Fehltreffer: bei anderer URL, anderem Kanal oder einem nicht-Echo-Assert dazwischen bleibt es bei den einzelnen Schritten. Teilfolgen eines Sub-Workflows werden nicht ersetzt, bereits gespeicherte Workflows werden nicht nachträglich umgebaut.</li>
+</ul>
+<h2>Neue KI-Konversation beginnt leer</h2>
+<p>Beginnen Sie nach dem Ende einer KI-Konversation (Stop) mit dem nächsten Befehl eine neue, startet der AI Recorder mit einer leeren Knotenliste. Der Tab Workflow und jeder Speicherweg enthalten nur die Nodes der neuen Konversation, und der Variablen-Tab enthält keine Variablen der vorigen. Waren noch ungespeicherte Schritte da, steht im Chat eine Zeile, dass sie verworfen wurden. Innerhalb derselben Konversation (weitere Befehle, Pause/Weiter) wird nichts geleert. „Stop, dann Speichern" ohne neuen Befehl speichert weiterhin die Nodes der gestoppten Konversation.</p>
 </section>
 
 <section class="doc-section" id="recorder-output">
@@ -245,6 +581,16 @@
 <h2>Als Test Workflow oder Sub-Workflow speichern</h2>
 <p>Beim Speichern einer Recording Session kann gewählt werden, ob die aufgezeichneten Schritte als <strong>Test Workflow</strong> oder als <strong>Sub-Workflow</strong> abgelegt werden.</p>
 <p>Ein Sub-Workflow eignet sich, wenn der aufgezeichnete Prozess in mehreren Tests verwendet werden soll, nur einen Teil eines vollständigen Tests darstellt, wiederverwendbare Eingabeparameter benötigt oder zentral gepflegt werden soll. Weitere Wege zur Erstellung beschreibt <a href="#subworkflows-create">Sub-Workflow erstellen und extrahieren</a>.</p>
+<h3>Sub-Workflow speichern: Input-Parameter</h3>
+<p>Der Speicherdialog einer neuen Aufnahme zeigt die Optionen <strong>Workflow</strong> (vorgewählt) und <strong>Sub-workflow</strong>. Bei Workflow gibt es keinen Parameter-Schritt; gespeichert wird wie bisher mit Start-Node vorn und Close Browser hinten.</p>
+<p>Bei <strong>Sub-workflow</strong> erscheint die Gruppe <strong>Input parameters</strong> mit <strong>Add parameter</strong>. Je Zeile geben Sie <strong>Parameter name</strong>, <strong>Default value</strong> und <strong>Required</strong> an; <strong>Remove parameter</strong> löscht die Zeile.</p>
+<ul class="feature-list">
+  <li>Leere, ungültige oder doppelte Parameternamen werden an der Zeile gemeldet; <strong>Save</strong> bleibt dann gesperrt.</li>
+  <li>Der Sub-Workflow hat keinen Start-Node, dafür einen Kopf-Node, der die Parameter deklariert, und alle aufgezeichneten Schritte. Ein Close Browser wird nicht automatisch angehängt; ein aufgezeichneter bleibt.</li>
+  <li>Das gilt für alle Speicherwege (KI, Handaufnahme Web und Mobile). Aufgezeichnete Werte werden dabei nicht automatisch durch <code>{{Parametername}}</code> ersetzt.</li>
+  <li>Der Sub-Workflow erscheint in der Workflow-Liste als Subworkflow und lässt sich in anderen Workflows über <strong>Call Sub-Workflow</strong> wählen; seine Parameter erscheinen dort als Inputs. Erfolgsmeldungen nennen „sub-workflow".</li>
+  <li>Beim Fortsetzen eines bestehenden Workflows (Edit live from here) gibt es diese Wahl nicht.</li>
+</ul>
 </section>
 
 </div><!-- /content-wrap -->

@@ -192,6 +192,10 @@
 </div>
 <h2>Execution Log</h2>
 <p>The execution log provides step-by-step status updates, execution times, and detailed error information. Use it to pinpoint exactly which step failed and why.</p>
+<h3>Copying Logs</h3>
+<p>In the header of the <strong>Execution Log</strong> panel, the <strong>Copy logs</strong> button (before <strong>Clear logs</strong>) copies all entries of the current run to the clipboard with one click, one line per entry in the format <code>[HH:MM:SS.mmm] +elapsed LEVEL [node] message</code>. The panel stays open. In the run report the same button sits at the expanded log block of a step (<strong>Copy logs of &lt;step&gt;</strong>); it copies exactly that step’s lines in the format <code>[time] LEVEL message</code>.</p>
+<h3>Secrets in the Log</h3>
+<p>Secret values appear in the Execution Log, the status response, the run report and the API request log entirely as <code>***</code>, without a single character of clear text. Secrets shorter than 4 characters are not masked (the run warns about this).</p>
 <h2>Live Execution View</h2>
 <div class="screenshot-wrap">
 <img alt="Live Device View" src="./autemos_images/image10.png"/>
@@ -289,6 +293,177 @@
 <span>Reusable workflow components shared across Test Workflows</span>
 </div>
 </div>
+</section>
+<section class="doc-section" id="wf-collections"><span class="section-label">Editor &amp; Execution</span>
+<h1>Collections (Test Sets)</h1>
+
+<p>A <strong>Collection</strong> is an ordered group of Test Workflows that you run together: via Fast Run or as the target of a schedule, sequentially or in parallel, with automatic retry of failed tests. Each run is its own <strong>Collection Execution</strong> with a report per test and an overall status. Collections work without any Jira/Xray configuration.</p>
+
+<h2>Creating a Collection</h2>
+<ul class="feature-list">
+<li>The workflow overview has a <strong>Collections (n)</strong> tab next to <strong>All</strong>, <strong>Test-Workflows</strong> and <strong>Sub-Workflows</strong>.</li>
+<li>The header is the same in every tab: view toggle, <strong>Record Workflow</strong> and the <strong>+ Create</strong> menu with the entries <strong>Workflow</strong>, <strong>Sub-Workflow</strong> and <strong>Collection</strong>.</li>
+<li><strong>+ Create</strong> → <strong>Collection</strong> opens the <strong>Create Collection</strong> dialog with the fields <strong>Name</strong> and <strong>Description</strong>, a search (<strong>Search workflows</strong>) and the list of all Test Workflows of the project (sub-workflows are not listed). Each workflow shows its version, Jira key and last-changed date.</li>
+<li>The order in which you tick the workflows is the order of the collection. <strong>Create</strong> saves the collection and opens its detail page.</li>
+</ul>
+
+<h2>Collection List and Detail Page</h2>
+<p>The list in the <strong>Collections</strong> tab shows <strong>Name</strong>, <strong>Workflows</strong>, <strong>Last execution</strong>, <strong>Status</strong> and <strong>Updated</strong>. Every row has a <strong>Run</strong> button; clicking the name opens the detail page.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Element</th><th>Function</th></tr></thead>
+<tbody>
+<tr><td><strong>Back</strong></td><td>Back to the collections list</td></tr>
+<tr><td><strong>Run</strong></td><td>Opens the <strong>Run collection</strong> dialog</td></tr>
+<tr><td><strong>Schedule</strong></td><td>Opens the Scheduler create dialog with the collection preselected</td></tr>
+<tr><td><strong>Edit</strong></td><td>Change name, description and members (<strong>Edit Collection</strong> dialog, saved with <strong>Save</strong>)</td></tr>
+<tr><td><strong>Delete</strong></td><td>Deletes the collection after confirmation. Workflows and past executions are kept.</td></tr>
+<tr><td><strong>Move … up / Move … down / Remove …</strong></td><td>Change the order or remove a workflow from the collection. The change is saved immediately.</td></tr>
+</tbody>
+</table>
+</div>
+<p>The detail table shows <strong>#</strong>, <strong>Workflow</strong>, <strong>Version</strong>, <strong>Jira</strong> and <strong>Availability</strong>. If a member is no longer available (for example deleted), the notice “1 workflow unavailable” appears.</p>
+
+<h2>Running a Collection</h2>
+<p><strong>Run</strong> opens the <strong>Run collection</strong> dialog:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Setting</th><th>Description</th><th>Default</th></tr></thead>
+<tbody>
+<tr><td><strong>Execution mode</strong></td><td><strong>Sequential</strong>: one test after the other in collection order. <strong>Parallel</strong>: several tests at the same time, the rest wait.</td><td>Sequential</td></tr>
+<tr><td><strong>Retry count</strong></td><td>How often a failed test is started again (0 to 3)</td><td>0</td></tr>
+<tr><td><strong>Headless</strong></td><td>Run without a visible browser</td><td>on</td></tr>
+</tbody>
+</table>
+</div>
+<p><strong>Start run</strong> creates a new Collection Execution and opens its page.</p>
+<h3>Rules</h3>
+<ul class="feature-list">
+<li>All workflows that are part of the collection and available at the time of the start are executed. Workflows added later are not part of that execution.</li>
+<li>Unavailable members are reported before the start and shown as <strong>Not run</strong> (reason “Workflow unavailable”) in the report.</li>
+<li>In <strong>Parallel</strong> mode, by default at most three tests run at the same time; further tests start as soon as a slot becomes free.</li>
+<li>Only failed tests are repeated, at most <strong>Retry count</strong> times. With <strong>Sequential</strong>, the retry runs before the next test. Self-healing works unchanged inside each run.</li>
+<li>Creating, changing and running requires project membership; reading requires project access.</li>
+</ul>
+
+<h2>Execution Page and Status</h2>
+<p>The page “&lt;Collection&gt; – execution #&lt;id&gt;” shows the overall status (<strong>Overall status</strong>), mode, retry, trigger, start and end, and a summary such as “n passed · m failed · k not run”. While the execution is running it refreshes every 5 seconds; <strong>Cancel</strong> stops a queued or running execution. The <strong>Test results</strong> table has the columns <strong>Test</strong>, <strong>Status</strong>, <strong>Attempts</strong>, <strong>Duration</strong> (sum of all attempts) and <strong>Report</strong> with an “Attempt n” link per attempt to the run report.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Level</th><th>Status values</th></tr></thead>
+<tbody>
+<tr><td>Test</td><td>Queued, Running, Passed, Passed after Retry, Failed, Not run, Cancelled</td></tr>
+<tr><td>Collection Execution</td><td>Queued, Running, Passed, Failed, Cancelled</td></tr>
+</tbody>
+</table>
+</div>
+<p>The overall status is derived from the tests that were started only: at least one <strong>Failed</strong> results in <strong>Failed</strong>, otherwise at least one passed test results in <strong>Passed</strong>. If no test was started, the execution is <strong>Failed</strong> with the reason “No runnable workflow.” A successful retry is shown separately (“passed after retry”); there is no separate overall status for it.</p>
+
+<h2>Collection in a Schedule</h2>
+<p>In the Scheduler create dialog, choose <strong>Collection</strong> under <strong>Execution target</strong> (instead of <strong>Workflow</strong>). You then get <strong>Collection</strong>, <strong>Execution mode</strong> (Sequential/Parallel) and <strong>Retry count</strong> (0–3); the fields for individual workflows, parallelism and retry delay are hidden. Time, frequency, time zone, trigger and the Active switch remain.</p>
+<ul class="feature-list">
+<li>The schedule list shows “Collection · &lt;Name&gt; · n Workflows · Parallel · Retry 1x” instead of the test count.</li>
+<li>The schedule detail page shows <strong>Collection: &lt;Name&gt;</strong> with mode and retry, a link to the collection and the latest executions (<strong>Recent executions</strong>).</li>
+<li>Every run (trigger or <strong>Run Now</strong>) creates a Collection Execution with the trigger Schedule.</li>
+<li>If the collection has been deleted in the meantime, the execution ends as <strong>Failed</strong> with the reason “The collection of this schedule no longer exists.”</li>
+<li>Existing schedules with the target Workflow behave unchanged.</li>
+</ul>
+
+</section>
+<section class="doc-section" id="wf-editor-toolbar"><span class="section-label">Editor &amp; Execution</span>
+<h1>Workflow Editor Toolbar</h1>
+
+<p>The toolbar (<em>Workflow editor toolbar</em>) stays on one line: switches such as Undo, Redo, Auto Connect, Schedule and Jira / Xray show an icon only, the name appears as a tooltip. Main actions such as <strong>Save</strong> keep their text. Open the AI sidebar with <strong>Open AI chat</strong> at the edge of the toolbar (collapse it with <strong>Collapse AI chat</strong>); there is no second “Edit with AI” button in the toolbar any more.</p>
+
+<h2>Undo and Redo</h2>
+<p>One click on <strong>Undo</strong> reverts exactly one action, and even the first action after opening or saving can be undone. <strong>Redo</strong> restores the state after the action.</p>
+
+<h2>Data-driven execution</h2>
+<p>In the Run menu, <strong>Run</strong> starts a normal single run. <strong>Data-driven execution…</strong> opens the <strong>Data-driven execution</strong> dialog directly: <strong>Test data source</strong>, <strong>Data variable</strong> and <strong>Dataset selection</strong> (default <strong>All datasets</strong>) are visible immediately, without ticking a checkbox first. The run starts with <strong>Run</strong> in the dialog. In the Scheduler dialogs, the <strong>Data-driven execution</strong> checkbox controls whether a scheduled test runs once per dataset.</p>
+
+<h2>Schedule: Assign a Workflow Directly to a Schedule</h2>
+<p>The <strong>Schedule</strong> button (calendar icon) appears for saved main workflows, not for sub-workflows. For a workflow that has never been saved it is disabled (tooltip “Save the workflow first to assign it to a schedule”).</p>
+<ul class="feature-list">
+<li>When opened, the list loads the project’s schedules with the target Workflows (collection schedules are not shown). Schedules that already contain the workflow carry a check mark; a counter on the button shows the number of assignments.</li>
+<li>Clicking a schedule assigns the workflow and shows the message “Added to schedule “&lt;Name&gt;””. Clicking an already assigned schedule removes nothing; it tells you that removal is done in the schedule.</li>
+<li>Assigning requires the project role <strong>Editor</strong>; otherwise “You need the Editor role in this project to assign schedules” appears.</li>
+<li><strong>+ New Schedule</strong> (last entry) switches to the Scheduler and opens the create dialog with the workflow preselected. With unsaved changes the editor first asks in the <strong>Unsaved changes</strong> dialog (including <strong>Save &amp; continue</strong>). <strong>Back to workflow</strong> returns you to the editor, where the new schedule appears as assigned.</li>
+</ul>
+
+<h2>Status Indicators for Code Sync and Jira/Xray Sync</h2>
+<p>For saved workflows the toolbar shows up to two compact status buttons: <strong>Code sync: &lt;status&gt;</strong> (if the project has a Git connection) and <strong>Jira sync: &lt;status&gt;</strong> (if the workflow is linked to Jira/Xray and the connection is set up). If the respective integration is missing, so is the button; the two are independent of each other.</p>
+<ul class="feature-list">
+<li>Every status has a colour <em>and</em> a shape: check = In sync, triangle = Out of sync, bookmark check = Baseline accepted (blue, never “In sync”), question mark = Unknown, Not checked, Not synced or PR open, cross = error, spinner = Checking.</li>
+<li>The tooltip names the integration, the status, “Last checked …” and, if available, the Jira test key or the commit summary.</li>
+<li>The indicators follow every sync decision without reloading (check, apply, link, unlink).</li>
+<li>Clicking <strong>Code sync</strong> opens the “Code changes – &lt;Name&gt;” dialog with <strong>Ignore</strong>, <strong>Accept baseline only</strong>, <strong>Apply</strong> and <strong>Check now</strong>. Clicking <strong>Jira sync</strong> shows the “Jira sync status” group in the side column.</li>
+</ul>
+
+</section>
+<section class="doc-section" id="wf-auto-connect"><span class="section-label">Editor &amp; Execution</span>
+<h1>Auto Connect</h1>
+
+<p>The <strong>Auto Connect</strong> button in the toolbar suggests connections for unconnected nodes when their arrangement is unambiguous. Existing edges and node data stay untouched.</p>
+<ul class="feature-list">
+<li>The suggested edges appear dashed. The <strong>Auto Connect proposal</strong> bar reports, for example, “2 connections suggested”.</li>
+<li>Only <strong>Apply</strong> accepts the proposal; <strong>Cancel</strong> discards it without any change.</li>
+<li>After <strong>Apply</strong>, a single <strong>Undo</strong> reverts all new edges.</li>
+<li>Ambiguous places are not connected but reported: open outputs of <a href="#if">If</a> and <a href="#loop">Loop</a>, positions of equal rank and areas with several ends.</li>
+<li>If nothing is unambiguous, “No unambiguous connections …” appears with a <strong>Close</strong> button.</li>
+<li>The button is disabled while the editor is locked, a run is active or fewer than two nodes exist.</li>
+</ul>
+<div class="tip"><span class="tip-icon">💡</span>Auto Connect prefers to connect nothing rather than connect wrongly. Review the dashed proposal before <strong>Apply</strong>.</div>
+
+</section>
+<section class="doc-section" id="wf-validation-hints"><span class="section-label">Editor &amp; Execution</span>
+<h1>Red Nodes: Finding the Reason</h1>
+
+<p>A node with a red outline is incomplete or unreachable. The reason is visible directly in the editor, for all node types:</p>
+<ul class="feature-list">
+<li><strong>On the node:</strong> hovering shows a tooltip with the concrete message.</li>
+<li><strong>In the node details:</strong> every missing required field is marked red at its own form field, and the message below it states which value is missing. For the <a href="#extract-text">Extract Text</a> node, for example, this is the <strong>Save As</strong> field when it is empty, not just the source element.</li>
+<li>For orphan nodes (unreachable) and nodes of unknown type there is only the tooltip, because no single field is affected.</li>
+</ul>
+<p>The rules about which fields are required do not change; the display only makes the already computed reason visible. A validly configured node stays unmarked.</p>
+
+</section>
+<section class="doc-section" id="wf-version-restore"><span class="section-label">Editor &amp; Execution</span>
+<h1>Restoring a Workflow Version</h1>
+
+<p>In the <strong>Version history</strong> panel of the editor you can restore an older version.</p>
+<ul class="feature-list">
+<li>Every older version has a <strong>Restore version N</strong> button; the newest version has none.</li>
+<li>A confirmation <strong>Restore version N?</strong> (<strong>Restore</strong> / Cancel) protects against accidental overwriting. Nothing happens without confirmation.</li>
+<li>With unsaved changes or AI suggestions that have not been accepted yet, the button is disabled (tooltip “Save your changes before restoring a version”).</li>
+<li>After restoring, a new version is created with the note “Restored from version n”. The panel closes, the editor reloads the state and the message “Workflow restored to version N” appears.</li>
+<li>If restoring fails, the panel shows “Restore failed: …” with the cause.</li>
+<li>The project role <strong>Editor</strong> is required.</li>
+<li>If the workflow is connected to Git, the code sync status switches to <strong>Out of sync</strong> afterwards.</li>
+</ul>
+
+</section>
+<section class="doc-section" id="wf-expressions"><span class="section-label">Editor &amp; Execution</span>
+<h1>Date and Calculation Expressions in Placeholders</h1>
+
+<p>In addition to variables and test data, the <code>{{…}}</code> placeholders accept two kinds of expressions that are evaluated at <strong>run time</strong>. A workflow replayed on another day therefore yields the correct date instead of a frozen literal.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Expression</th><th>Meaning</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td><code>{{today}}</code>, <code>{{now}}</code></td><td>Today’s date or the current point in time</td><td><code>{{today}}</code></td></tr>
+<tr><td><code>{{today+3d}}</code></td><td>Offset <code>±N</code> with unit <code>d</code> (days), <code>w</code> (weeks), <code>m</code> (months) or <code>y</code> (years)</td><td><code>{{today-1w}}</code></td></tr>
+<tr><td><code>{{today+3d|dd.MM.yyyy}}</code></td><td>Optional output format after <code>|</code> (date pattern)</td><td>Delivery date in 3 days as <code>dd.MM.yyyy</code></td></tr>
+<tr><td><code>{{a+b}}</code>, <code>{{price*2}}</code></td><td>Simple arithmetic with numbers and numeric variables</td><td><code>{{2+3}}</code></td></tr>
+</tbody>
+</table>
+</div>
+<ul class="feature-list">
+<li>An ordinary variable always takes precedence: if a variable is called <code>today</code>, its value is used rather than the date.</li>
+<li>The AI recorder writes a relative date request (“delivery date in 3 days”) as an expression, not as a resolved date.</li>
+<li>There is no full formula language: no parentheses and no functions beyond the forms listed.</li>
+<li>Workflows already recorded with frozen date values are not rewritten.</li>
+</ul>
+
 </section>
 <section class="doc-section" id="subworkflows-overview">
 <span class="section-label">Reusable Workflows</span>
@@ -408,6 +583,14 @@
 <li>Internal child variables are not exposed unless configured as outputs.</li>
 </ul>
 
+<h2>Parameter Types: Text, Secret, Data Bundle</h2>
+<p>In the Parameters node every row has a type (<strong>Parameter type</strong>): <strong>Text</strong> (default), <strong>Secret</strong> or <strong>Data Bundle</strong>. Secret and Data Bundle have no default value; the field shows “Assigned by the calling workflow”. Existing parameters stay Text.</p>
+<ul class="feature-list">
+<li>In the calling <a href="#call-sub-workflow">Call Sub-Workflow</a> node (section <strong>Input Parameters</strong>) you pick an existing secret for a Secret parameter and a test data binding of the project for a Data Bundle parameter (<strong>Data bundle for &lt;parameter&gt;</strong>). Assignments that no longer exist are highlighted (“Secret “X” is not available in this project.”).</li>
+<li>Inside the sub-workflow the steps use <code>{{param}}</code> (secret value), <code>{{param.field}}</code> (field of the first record) or <code>{{paramRecords}}</code> (list of all records).</li>
+<li>Type and availability are checked before the sub-workflow starts; an error aborts the call node with a clear message, for example “Sub-workflow parameter "zugang" expects a secret, but a binding was assigned.”, “… (data bundle) is required, but nothing was assigned.” or “… secret "KK_PWD" does not exist or is not accessible for this run.”</li>
+<li>Secret values appear masked in the log, the report and the output of the call node.</li>
+</ul>
 <h2>Example</h2>
 <div class="param-table-wrap">
 <table class="param-table">
@@ -462,6 +645,7 @@
 <tr><td><strong>Headless</strong></td><td>Runs the browser without a visible user interface</td><td>No</td><td><code>true</code></td></tr>
 <tr><td><strong>Platform</strong></td><td>Defines the target execution platform</td><td>Yes</td><td><code>Chrome</code></td></tr>
 <tr><td><strong>Test Type</strong></td><td>Defines the type of test execution</td><td>Yes</td><td><code>Web</code></td></tr>
+<tr><td><strong>Ignore HTTPS errors</strong></td><td>Accepts self-signed, expired or mismatched certificates (web only, not mobile; default off)</td><td>No</td><td><code>true</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -472,6 +656,15 @@
 <li>Launches the browser in visible mode (for debugging) or headless mode (for automated execution)</li>
 <li>Prepares the environment for all subsequent browser interactions</li>
 </ul>
+<h2>Ignoring Certificate Errors</h2>
+<p>The <strong>Ignore HTTPS errors</strong> switch (hint in the editor: “Accepts self-signed, expired or mismatched certificates. Test environments only — not applied to API nodes.”) sets up the browser session to ignore HTTPS certificate errors. It is off by default and visible for web only.</p>
+<ul class="feature-list">
+<li>In a test run the setting applies to the whole browser session; the Execution Log notes that certificate errors are ignored.</li>
+<li>The <strong>java/playwright</strong> code export generates the option in the browser context. For other export targets no code is generated, but a warning: the exported test would reject untrusted certificates.</li>
+<li>With several Open Browser nodes, the first web node counts; if a later one differs, a warning appears.</li>
+<li>The switch does not apply to API nodes.</li>
+</ul>
+<div class="warn-box"><strong>Test environments only:</strong> this option deliberately switches off certificate validation. Do not use it against production systems.</div>
 <h2>Output</h2>
 <p>No direct output. The node establishes a browser session that is used by all subsequent steps.</p>
 <div class="meta-grid">
@@ -529,6 +722,7 @@
 </tbody>
 </table>
 </div>
+<p class="param-note">* The URL field has a <strong>Bindings</strong> button. With it you insert a test data binding, a data bundle or the runtime/cache value of an earlier step (for example from <a href="#extract-text">Extract Text</a>) as the URL; at run time the node navigates to the resolved value. The button only appears in direct URL mode: if an <strong>Application</strong> is selected, the field is read-only as “Resolved URL”. Inserting replaces the field content; text before or after it (for example <code>https://host/reset?token={{token}}</code>) you type by hand. For a data bundle the button inserts <code>{{Name.}}</code>, and you add the field name after it.</p>
 <p class="param-note">* The URL can be specified directly or resolved via the selected application configuration.</p>
 <p><strong>Wait Until Options</strong></p>
 <div class="param-table-wrap">
@@ -576,6 +770,40 @@
 <li>Add an Assert or Soft Verify node after navigation to confirm the expected page is shown</li>
 </ul>
 </section>
+<section class="doc-section" id="wf-reload"><div class="node-left"><div class="node-header">
+<div>
+<h1>Reload</h1>
+<span class="badge badge-browser">Browser</span>
+</div>
+</div><p>The Reload node reloads the current page of the active browser session. It is meant for web tests, for example to check the saved state after a change.</p><div class="tip"><span class="tip-icon">💡</span>The recorder can record “reload” as its own node instead of falling back to an Execute JavaScript workaround.</div></div>
+<h2>Configuration</h2>
+<p>The node has no parameters.</p>
+<h2>Behavior</h2>
+<ul class="feature-list">
+<li>Reloads the current page (Playwright and Selenium)</li>
+<li>The browser session stays open</li>
+</ul>
+<div class="meta-grid">
+<div class="meta-card"><div class="meta-label">Input Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
+<div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
+</div></section>
+<section class="doc-section" id="wf-go-forward"><div class="node-left"><div class="node-header">
+<div>
+<h1>Go Forward</h1>
+<span class="badge badge-browser">Browser</span>
+</div>
+</div><p>The Go Forward node moves one step forward in the history of the browser session, the counterpart of <strong>Go Back</strong>. It is meant for web tests.</p></div>
+<h2>Configuration</h2>
+<p>The node has no parameters.</p>
+<h2>Behavior</h2>
+<ul class="feature-list">
+<li>Navigates forward in the history of the active session (Playwright and Selenium)</li>
+<li>The recorder can record “go forward” as its own node</li>
+</ul>
+<div class="meta-grid">
+<div class="meta-card"><div class="meta-label">Input Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
+<div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
+</div></section>
 <section class="doc-section" id="close-browser"><div class="node-left"><div class="node-header">
 <div>
 <h1>Close Browser</h1>
@@ -1482,6 +1710,31 @@
 <li>Add validation after exiting to confirm the correct context</li>
 <li>Avoid unnecessary context switches</li>
 </ul></section>
+<section class="doc-section" id="wf-closed-shadow"><div class="node-left"><div class="node-header">
+<div>
+<h1>Closed Shadow DOM</h1>
+<span class="badge badge-session">Session Control</span>
+</div>
+</div><p>Elements in <strong>closed</strong> shadow roots (<code>attachShadow({ mode: 'closed' })</code>) are found and operated with the same selectors as elements in open ones: CSS (<code>#target-4</code>), text (<code>text=Click target 4</code>) and role (<code>role=button[...]</code>). There is no separate selector syntax and no workaround in page objects; recorder, self-healing and code export work unchanged.</p></div>
+<h2>How It Works</h2>
+<ul class="feature-list">
+<li>The <a href="#open-browser">Open Browser</a> node installs a small hook in Playwright web sessions that creates closed shadow roots as open ones internally. It applies to all pages and frames loaded afterwards.</li>
+<li>The host element then carries the attribute <code>data-stk-shadow-was-closed</code>, so the original encapsulation remains recognisable.</li>
+<li>The worker notes in the run log that the feature is active.</li>
+</ul>
+<h2>Limits</h2>
+<ul class="feature-list">
+<li>Applies to Chromium and Edge (via the grid); Selenium mode and mobile sessions are not affected.</li>
+<li>The target page sees the root as open. Pages that check whether <code>shadowRoot</code> is <code>null</code> may behave differently.</li>
+<li>A document that is already loaded is only covered from the next navigation.</li>
+<li>A Playwright test outside Autemos that does not install this hook does not find these elements.</li>
+</ul>
+<h2>Switching It Off</h2>
+<p>The feature is on by default. The worker setting <code>WORKER_CLOSED_SHADOW_FORCE_OPEN=false</code> switches it off; the earlier behaviour then applies (elements in closed roots are not found), and the log notes that the feature is off.</p>
+<div class="meta-grid">
+<div class="meta-card"><div class="meta-label">Input Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
+<div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
+</div></section>
 <section class="doc-section" id="mobile-press-key"><div class="node-left"><div class="node-header">
 <div>
 <h1>Mobile Press Key</h1>
@@ -1649,6 +1902,24 @@
 <li>Checks the selected condition against the element</li>
 <li>Uses the expected value when the condition requires a comparison</li>
 <li>Fails the workflow if the assertion is not met</li>
+</ul>
+<h2>Further Conditions</h2>
+<p>Besides visible/not visible and the text comparisons, these conditions exist. The recorder records them as an Assert node and playback evaluates them identically.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Condition</th><th>Check</th><th>Expected Value</th></tr></thead>
+<tbody>
+<tr><td><code>enabled</code> / <code>disabled</code></td><td>The element is enabled or disabled (for example “Save is disabled”)</td><td>not needed</td></tr>
+<tr><td><code>matches</code></td><td>The element text matches a regular expression (a partial match is enough)</td><td>the regex pattern</td></tr>
+<tr><td><code>sorted</code></td><td>All matches of the selector are sorted (for example a price list)</td><td><code>asc</code> (default) or <code>desc</code></td></tr>
+<tr><td><code>pageLoaded</code></td><td>The page title contains the value</td><td>Title text, visible and editable in the editor</td></tr>
+</tbody>
+</table>
+</div>
+<ul class="feature-list">
+<li>With <code>sorted</code>, numbers are compared numerically, everything else alphabetically.</li>
+<li>The <strong>Expected Value</strong> field appears for all conditions that need a value (<code>pageLoaded</code>, <code>urlContains</code>, <code>urlEquals</code>, <code>textNotOnPage</code>, <code>matches</code>, <code>sorted</code>).</li>
+<li>In the generated Playwright test (Java), <code>pageLoaded</code> checks the title with <code>hasTitle</code>. Without a value the assertion is not generated and is commented in the code as “NICHT GENERIERT”. If you change the title in the code, Code Sync carries the new value back to the node; Code Sync does not take over regular expressions in the title pattern.</li>
 </ul>
 <h2>Output</h2>
 <p>No output. The node contributes to the test result by marking the validation as passed or failed.</p>
@@ -2084,6 +2355,46 @@
 <li>Keep wait times as short as possible</li>
 <li>Prefer Assert (e.g. visible) or If conditions over Wait</li>
 <li>Use Wait for animations, not for loading logic</li>
+</ul></section>
+<section class="doc-section" id="wf-wait-for"><div class="node-left"><div class="node-header">
+<div>
+<h1>Wait for</h1>
+<span class="badge badge-control">Control Flow</span>
+</div>
+</div><p>The Wait for node waits until an element fulfils a condition. Unlike <a href="#wait">Wait</a> (fixed pause), execution continues as soon as the condition holds. It works for web (Playwright and Selenium) and mobile (Appium).</p><h2>When to Use</h2><ul class="feature-list">
+<li>Wait until a loading indicator or overlay disappears</li>
+<li>Wait for content that appears with a delay</li>
+<li>Wait until an element contains a text or becomes enabled</li>
+</ul><div class="tip"><span class="tip-icon">💡</span>A Gherkin line such as “And I wait until the loading spinner disappears” is recorded as exactly one Wait for node (on mobile devices as well). It already blocks during recording until the condition holds.</div></div>
+<h2>Configuration</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Parameter</th><th>Description</th><th>Required</th><th>Example</th></tr></thead>
+<tbody>
+<tr><td><strong>Target</strong></td><td>Target element: page object and element, or a selector</td><td>Yes</td><td><code>LoginPage.spinner</code></td></tr>
+<tr><td><strong>Condition</strong></td><td><code>appears</code>, <code>disappears</code> (also when the element is not in the DOM), <code>textContains</code> or <code>enabled</code></td><td>Yes</td><td><code>disappears</code></td></tr>
+<tr><td><strong>Expected Value</strong></td><td>Text to look for with <code>textContains</code></td><td>Only with <code>textContains</code></td><td><code>Done</code></td></tr>
+<tr><td><strong>Timeout</strong></td><td>Maximum wait time in milliseconds (at most 120,000)</td><td>No</td><td><code>30000</code></td></tr>
+</tbody>
+</table>
+</div>
+<h2>Behavior</h2>
+<ul class="feature-list">
+<li>Waits until the condition holds or the time limit is reached (default 30 seconds)</li>
+<li>On timeout the node fails; the message names the condition, the target, the time limit and the last measured state</li>
+<li>It is not an assertion: a wait that does not complete is a normal node error, like a failed click</li>
+</ul>
+<h2>Output</h2>
+<p>No output.</p>
+<div class="meta-grid">
+<div class="meta-card"><div class="meta-label">Input Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
+<div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
+</div>
+<h2>Best Practices</h2>
+<ul class="best-practices">
+<li>Prefer Wait for over a fixed pause for spinners, overlays and delayed content</li>
+<li>Choose the time limit slightly above the expected loading time</li>
+<li>Check the result afterwards with an <a href="#assert">Assert</a></li>
 </ul></section>
 <section class="doc-section" id="time-gap"><div class="node-left"><div class="node-header">
 <div>
@@ -2780,12 +3091,204 @@
 <li>Only modify application state when necessary</li>
 <li>Validate results with Assert or If nodes</li>
 </ul></section>
+<section class="doc-section" id="wf-custom-code"><span class="section-label">Custom Code</span>
+<h1>Custom Code</h1>
+
+<p>The <strong>Custom Code</strong> node runs JavaScript logic inside a workflow. It is marked as a technical step (palette group <strong>Technical</strong>, chip “Technical step” on the node) and is generated neither by the AI recorder nor by the passive recorder.</p>
+
+<h2>Two Kinds of Scripts</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Kind</th><th>Runs</th><th>Control</th></tr></thead>
+<tbody>
+<tr><td><strong>Worker script</strong> (new blocks)</td><td>On the server in an isolated JavaScript sandbox</td><td>Browser and device (web and mobile) exclusively through <code>ctx</code> commands, see <a href="#wf-custom-code-commands">ctx Commands</a></td></tr>
+<tr><td><strong>Legacy page script</strong></td><td>In the page of the active web session</td><td>Direct DOM access, see <a href="#wf-custom-code-page">Page Script</a></td></tr>
+</tbody>
+</table>
+</div>
+<p>New Custom Code nodes are worker scripts. Existing blocks without a setting keep running unchanged as legacy page scripts and show the <strong>Legacy page script</strong> badge in the inspector. They are not converted automatically.</p>
+
+<h2>Inspector “Custom Code settings”</h2>
+<ul class="feature-list">
+<li><strong>Code</strong>: the code is the body of an <code>async</code> function; <code>await</code> is allowed. At most 10,000 characters.</li>
+<li><strong>Outputs</strong> (<strong>Add output</strong>): names of the values the code returns with <code>return { name: value }</code>. Every returned key must be declared here (names: letters, digits and underscore, at most 64 characters, not starting with a digit). Declared values are available to following nodes as variables and appear in the variable picker as “Custom Code output”. If a declared value is not returned, it is <code>null</code> and a warning appears in the log.</li>
+<li><strong>Timeout (ms)</strong>: 1,000 to 30,000, default 5,000.</li>
+<li><strong>Templates</strong>: six templates (for example “Select by variable”, “Clear and refill a field”, “Read a value and store it”, “Loop over table rows”, “Wait for an element”, “Mobile: tap and read”). The selection inserts the code at the cursor.</li>
+<li><strong>ctx commands</strong>: an always visible command list grouped into Variables, Web, Device and Log. Clicking a signature inserts it.</li>
+<li><strong>Page object</strong> / <strong>Field</strong> / <strong>Insert field</strong>: picks a page object field and inserts the matching notation.</li>
+<li><strong>Coding guidelines</strong>: collapsible help with the rules and examples.</li>
+</ul>
+<p>The code is checked as you type; the message (for example a syntax error with line number) appears below the code field. Saving remains possible; workflow validation then shows the node as faulty.</p>
+
+<h2>Limits of a Worker Script</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Limit</th><th>Value</th></tr></thead>
+<tbody>
+<tr><td>Compute time (excluding time spent in ctx commands)</td><td>Value of <strong>Timeout (ms)</strong></td></tr>
+<tr><td>Total duration including commands</td><td>300 seconds</td></tr>
+<tr><td>Number of ctx commands per block</td><td>200</td></tr>
+<tr><td>Memory per block</td><td>64 MB</td></tr>
+<tr><td>Statements executed per block</td><td>2,000,000 (stops endless loops)</td></tr>
+</tbody>
+</table>
+</div>
+<p>When a limit is exceeded, the step ends with a message such as “Custom code timed out after N ms of script time (line n)”, “Custom code stopped: more than 200 ctx commands (line n)” or “… memory limit of 64 MB exceeded (line n)”. A worker script has no <code>document</code> and no <code>window</code> (message: “… is not available in worker scripts – use ctx.web.* commands”); libraries, <code>import</code> and <code>require</code> are not available.</p>
+<div class="warn-box"><strong>Security note:</strong> The list of forbidden constructs (for example <code>fetch</code>, <code>eval</code>, <code>document.cookie</code>) is a coding rule and an early feedback, not sandbox protection. The actual protection is the <strong>Custom Code Author</strong> role and the fact that secret values never reach <code>ctx</code>.</div>
+
+<h2>Error Messages</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Case</th><th>Step message</th></tr></thead>
+<tbody>
+<tr><td>Validation rejected</td><td><code>Custom code rejected: …</code></td></tr>
+<tr><td>Error in the code</td><td><code>Custom code error: &lt;message&gt; (line n)</code></td></tr>
+<tr><td>Timeout</td><td><code>Custom code timed out after … ms</code></td></tr>
+<tr><td>Return value is not a plain object</td><td><code>Custom code must return a plain object, got &lt;type&gt;</code></td></tr>
+<tr><td>Undeclared key</td><td><code>Custom code returned undeclared output 'x'. Declare it under Outputs.</code></td></tr>
+<tr><td>No suitable session</td><td><code>Custom Code requires a web browser session</code> (legacy) or <code>ctx.web needs an open browser – add an Open Browser node before this block</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>If a command fails, it throws an error “&lt;command&gt;: &lt;cause&gt;”. The code can react with <code>try/catch</code>; the substep still appears as failed in the report.</p>
+
+<h2>Logs and Report</h2>
+<ul class="feature-list">
+<li><code>ctx.log</code>, <code>ctx.warn</code> and <code>ctx.error</code> (at most 200 lines of 1,000 characters each) appear in the editor’s <strong>Execution Log</strong> with the prefix <code>[Custom Code]</code>, before the completion or error line of the step.</li>
+<li>If the connection to the execution stream drops, the editor fetches the final state, error message and ctx lines from the server instead of ending the run silently.</li>
+<li>In the test run report the step appears under the node’s name, its <code>ctx</code> lines behind “Show n log entries”. For a worker script, each <code>ctx</code> command appears as its own substep (with the command text, at most 120 characters).</li>
+</ul>
+
+<h2>Permission: the “Custom Code Author” Role</h2>
+<ul class="feature-list">
+<li>Only users with the role <strong>Custom Code Author</strong>, or administrators, may create or change Custom Code. The role is set in addition to the normal role: in the dialog for creating and editing users via the <strong>Custom Code Author</strong> switch.</li>
+<li>Without the role the palette entry is disabled (“Requires role Custom Code Author”), and <strong>Code</strong>, <strong>Outputs</strong> and <strong>Timeout</strong> are read-only. Moving, renaming, disabling, deleting and duplicating the node remain possible.</li>
+<li>The server enforces this when saving, restoring and through the API: “Custom Code can only be created or edited by users with the role Custom Code Author or Administrator.”</li>
+<li>This also applies to Custom Code in embedded sub-workflow images and to <strong>Run without saving</strong>: new or changed Custom Code is neither saved nor executed without the role (“This run contains new or changed Custom Code. Only users with the role Custom Code Author or Administrator can run it – save it with an authorized user first.”). Unchanged code and a sub-workflow saved by an authorised user run for everyone as before.</li>
+</ul>
+
+</section>
+<section class="doc-section" id="wf-custom-code-commands"><span class="section-label">Custom Code</span>
+<h1>Custom Code: ctx Commands</h1>
+
+<p>A worker script controls browser and device exclusively through <code>ctx</code> commands. The commands run through the same actions as the corresponding nodes, that is with page objects and self-healing. They are synchronous and return their value directly; <code>await</code> in front is allowed but has no effect.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Command</th><th>Effect</th></tr></thead>
+<tbody>
+<tr><td><code>ctx.vars.get(name)</code></td><td>Reads a workflow variable (live). For a secret it returns the placeholder, otherwise <code>undefined</code>.</td></tr>
+<tr><td><code>ctx.vars.set(name, value)</code></td><td>Writes a variable (text, number, boolean, <code>null</code> or JSON object, at most 64 KB). The name of a secret cannot be overwritten.</td></tr>
+<tr><td><code>ctx.testData</code></td><td>Read-only copy of the bound test data</td></tr>
+<tr><td><code>ctx.web.click(target)</code>, <code>hover</code>, <code>clear</code></td><td>Click, hover, clear a field</td></tr>
+<tr><td><code>ctx.web.type(target, text)</code></td><td>Type text; <code>{{…}}</code> placeholders are resolved</td></tr>
+<tr><td><code>ctx.web.select(target, choice)</code></td><td>Select by <code>{text}</code> or <code>{value}</code> (a plain string counts as text)</td></tr>
+<tr><td><code>ctx.web.check(target, on)</code></td><td>Set a checkbox (<code>true</code>/<code>false</code>)</td></tr>
+<tr><td><code>ctx.web.read(target[, attribute])</code></td><td>Read text or an attribute (default: text content)</td></tr>
+<tr><td><code>ctx.web.waitFor(target, ms)</code></td><td>Waits 100–60,000 ms for the element; error after the deadline</td></tr>
+<tr><td><code>ctx.web.isVisible(target)</code></td><td><code>true</code>/<code>false</code>, never throws because of invisibility</td></tr>
+<tr><td><code>ctx.web.navigate(url)</code></td><td>Open a URL</td></tr>
+<tr><td><code>ctx.device.tap(target)</code>, <code>type</code>, <code>clear</code>, <code>read</code>, <code>waitFor</code></td><td>Corresponding actions on the mobile device</td></tr>
+<tr><td><code>ctx.device.swipe(direction)</code></td><td><code>up</code>, <code>down</code>, <code>left</code> or <code>right</code></td></tr>
+<tr><td><code>ctx.device.back()</code>, <code>home()</code></td><td>Back or Home key</td></tr>
+<tr><td><code>ctx.log(msg)</code>, <code>warn</code>, <code>error</code></td><td>Write to the Execution Log</td></tr>
+</tbody>
+</table>
+</div>
+<p><code>ctx.web.*</code> requires an active web session, <code>ctx.device.*</code> an active mobile session. Otherwise the step reports, for example, “ctx.device needs an active mobile session (active: web 'chrome-1')”.</p>
+
+<h2>Targets (<code>target</code>)</h2>
+<ul class="feature-list">
+<li><strong>Page object short form</strong> <code>'LoginPage.username'</code>: selector and self-healing come from the page object.</li>
+<li><strong>Object form</strong> <code>{ pageObject: 'LoginPage (app:com.x)', field: 'username' }</code>: required for names with spaces or parentheses.</li>
+<li><strong>Selector</strong> <code>{ selector: '…' }</code> or any other string (CSS/XPath as on the node). If no page object <code>a</code> with field <code>b</code> exists for a short form such as <code>a.b</code>, it is used as a selector; a warning in the log explains this.</li>
+</ul>
+<p>If a page object or field is missing, the message names the cause precisely:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Case</th><th>Message</th></tr></thead>
+<tbody>
+<tr><td>Field missing, similar fields exist</td><td><code>Page object 'P' has no field 'f' – did you mean 'g'?</code> (up to three suggestions)</td></tr>
+<tr><td>Field missing, nothing similar</td><td><code>Page object 'P' has no field 'f' (fields: a, b, c)</code></td></tr>
+<tr><td>Page object without fields</td><td><code>Page object 'P' has no field 'f' (it has no fields)</code></td></tr>
+<tr><td>Page object missing</td><td><code>Page object 'P' not found in this project</code> (with a suggestion if available)</td></tr>
+<tr><td>Run without a project</td><td><code>Page object 'P' not found – this run has no project</code></td></tr>
+</tbody>
+</table>
+</div>
+<p>This hint is also part of the error message when the short form falls back to a selector. Field names are compared exactly, only suggested and never silently corrected; a field selector changed later applies on the next run.</p>
+
+<h2>Secrets in Custom Code</h2>
+<ul class="feature-list">
+<li><code>ctx.vars.get("KEY")</code> returns the placeholder <code>{{secret.KEY}}</code> for an available secret (project, personal or global), never the value. A workflow variable of the same name takes precedence. If neither a variable nor a secret exists, the result is <code>undefined</code>.</li>
+<li><code>ctx.web.type</code> and <code>ctx.device.type</code> resolve <code>{{KEY}}</code> and <code>{{secret.KEY}}</code> at run time. If <code>{{NAME}}</code> is neither a variable nor an available secret, the command aborts: “ctx.web.type: '{{NAME}}' is neither a workflow variable nor a secret available to this run (project, personal, global)”.</li>
+<li>The clear text appears nowhere: log, status, report and read values show <code>***</code>.</li>
+</ul>
+
+</section>
+<section class="doc-section" id="wf-custom-code-page"><span class="section-label">Custom Code</span>
+<h1>Custom Code: Page Script (Legacy)</h1>
+
+<p>A <strong>legacy page script</strong> runs in the page of the active web session and reads the page directly. It applies to web sessions only. The code is the body of an <code>async</code> function (ES2020, no libraries) and returns declared outputs with <code>return { name: value }</code>.</p>
+
+<h2>The ctx Object</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Object</th><th>Content</th></tr></thead>
+<tbody>
+<tr><td><code>ctx.vars</code></td><td>Read-only copy of the workflow variables at the start (without secrets)</td></tr>
+<tr><td><code>ctx.testData</code></td><td>Copy of the bound test data</td></tr>
+<tr><td><code>ctx.page.url</code>, <code>title</code></td><td>URL and title when the step starts (the current URL is <code>location.href</code>)</td></tr>
+<tr><td><code>ctx.page.query(sel)</code>, <code>queryAll</code>, <code>text</code></td><td>Element(s) or text by CSS selector in the current document</td></tr>
+<tr><td><code>ctx.page.click(selector)</code></td><td>Clicks the element; error <code>ctx.page.click: no element for "&lt;selector&gt;"</code> if nothing matches</td></tr>
+<tr><td><code>ctx.page.type(selector, text)</code></td><td>Sets the value so that React and Vue pages pick it up as well (native setter plus <code>input</code> and <code>change</code> events)</td></tr>
+<tr><td><code>ctx.page.waitFor(selector, timeoutMs)</code></td><td>Waits (checking every 100 ms) for a visible element and returns it. The deadline is capped at the node’s remaining run time minus 250 ms so that its own message appears.</td></tr>
+<tr><td><code>ctx.log</code>, <code>warn</code>, <code>error</code></td><td>Write to the Execution Log</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>Examples</h2>
+<pre><code>// Click
+ctx.page.click('#submit'); // throws if nothing matches
+return {};
+
+// Type text (React/Vue pick up the value)
+ctx.page.type('#email', 'ada@example.com');
+return {};
+
+// Wait for an element (output: welcome)
+const banner = await ctx.page.waitFor('#welcome', 3000);
+ctx.log('Banner: ' + banner.textContent.trim());
+return { welcome: banner.textContent.trim() };</code></pre>
+<p>For dropdowns set <code>select.value</code> and fire a <code>change</code> event (<code>new Event('change', { bubbles: true })</code>); set a checkbox with <code>click()</code>, not via <code>.checked</code>; <code>scrollIntoView</code> scrolls an element into view. Never wait with <code>setInterval</code> (forbidden), use <code>await</code> and <code>setTimeout</code> or <code>ctx.page.waitFor</code> instead.</p>
+
+<h2>Limits</h2>
+<ul class="feature-list">
+<li><code>query</code>, <code>queryAll</code> and <code>text</code> take <strong>CSS selectors</strong> only; Playwright selectors (<code>text=</code>, <code>&gt;&gt;</code>) and XPath raise a <code>SyntaxError</code>.</li>
+<li><strong>iframes:</strong> the search does not look inside. For the same origin, <code>iframe.contentDocument</code> helps; frames of another origin are not reachable. Alternative: a <a href="#switch-frame">Switch Frame</a> before the block and <a href="#exit-frame">Exit Frame</a> after it.</li>
+<li><strong>Shadow DOM:</strong> open roots are reachable via <code>host.shadowRoot</code>, closed ones are not.</li>
+<li><strong>Navigation:</strong> if the code keeps running after a navigation (<code>window.location</code>, clicking a link), the step fails with “Execution context was destroyed, most likely because of a navigation” and its <code>ctx.log</code> lines are lost. Navigate as the last statement and add a <a href="#wf-wait-for">Wait for</a> step afterwards.</li>
+<li>No page objects and no self-healing for these selectors.</li>
+<li>The whole block is a single step in the report under the node’s name; the <code>ctx.log</code> lines appear behind “Show n log entries”.</li>
+<li>Forbidden constructs (among others <code>fetch</code>, <code>XMLHttpRequest</code>, <code>WebSocket</code>, <code>eval</code>, <code>setInterval</code>, <code>document.cookie</code>, <code>localStorage</code>, <code>import</code>, <code>require</code>) are rejected during validation. This is a coding rule, not protection against circumvention.</li>
+</ul>
+
+</section>
 <section class="doc-section" id="table-handling-overview">
 <div class="section-intro">
 <h1>Table Handling</h1>
 <span class="badge badge-table">Table Handling</span>
 </div>
 <p>The Table Handling Nodes provide a complete set of business-oriented operations for interacting with enterprise tables in your Test Workflows. Instead of relying on row positions or technical selectors, they work with business columns, conditions, and configured table definitions.</p>
+<h2>Invalid Arguments Are Rejected</h2>
+<p>A table node (and the table tools of the AI recorder) fails immediately with a clear message if a row condition is not valid, instead of silently running with a different meaning. The message names the field, the wrong value and the allowed values; no row is clicked or counted.</p>
+<ul class="feature-list">
+<li><strong>Criteria mode</strong> may only be <code>all</code> or <code>any</code> (for example <code>OR</code> is rejected; upper/lower case does not matter).</li>
+<li>A <strong>comparison operator</strong> must be one of the supported ones (for example <code>notEqual</code> is rejected); if it is missing, <code>equals</code> applies. This also applies to the cell checks.</li>
+<li>The conditions (<code>criteria</code>) must be a list; an object leads to “criteria must be a list of conditions …”. Empty is allowed.</li>
+<li>A condition with a value but without a column is rejected (“criteria condition #n has no column”); a completely empty condition is ignored.</li>
+<li>The same applies to saved workflows: the node is “failed” in the run before the worker is called. In the AI recorder the message appears as an error of the tool call.</li>
+</ul>
 </section>
 <section class="doc-section" id="cell-value"><div class="node-left"><div class="node-header">
 <div>

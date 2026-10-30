@@ -246,6 +246,12 @@
     <img src="./autemos_images_autoheal/image_5.png" alt="Self-Healing Enabled toggle">
     <div class="screenshot-caption">Self-Healing Enabled — Hauptschalter für die Healing-Engine.</div>
   </div>
+  <h2>Abhängige Einstellungen gesperrt</h2>
+  <p>Ist im aktiven Bereich (Global, Project oder Field) <strong>Self-Healing Enabled</strong> ausgeschaltet oder der Healing Mode auf <strong>Disabled</strong> gesetzt, sind alle davon abhängigen Einstellungen gesperrt und ausgegraut: die beiden Schwellenwerte, Max Auto-Heals Per Run, Max Healing Attempts, Heal Count for Blacklist, Blacklist Window, Critical Fields und Locator Priority, einschliesslich ihrer Reset-Knöpfe. Ein Hinweis nennt den Grund: «Enable Self-Healing or select a Healing Mode to edit these settings.»</p>
+  <ul class="feature-list">
+    <li>Der Schalter, die Auswahl des Healing Mode und <strong>Save Configuration</strong> bleiben bedienbar.</li>
+    <li>Die gesperrten Werte bleiben unverändert erhalten, werden beim Speichern mitgesendet und sind nach der Reaktivierung sofort wieder bearbeitbar.</li>
+  </ul>
 </section>
 
 <!-- HEALING MODES -->
@@ -267,7 +273,7 @@
         <tbody>
           <tr><td><strong>Automatic</strong></td><td>System wendet erfolgreiche Healing-Ergebnisse automatisch zur Laufzeit an — minimiert Ausführungsunterbrechungen</td></tr>
           <tr><td><strong>Propose Only</strong></td><td>System generiert Vorschläge, erfordert jedoch manuelle Überprüfung vor der Anwendung — empfohlen für regulierte oder produktionskritische Environments</td></tr>
-          <tr><td><strong>Disabled</strong></td><td>Healing-Funktionalität vollständig deaktiviert</td></tr>
+          <tr><td><strong>Disabled</strong></td><td>Healing-Funktionalität vollständig deaktiviert — im Lauf wird nichts geheilt, auch wenn <strong>Self-Healing Enabled</strong> eingeschaltet bleibt</td></tr>
         </tbody>
       </table>
     </div>
@@ -276,6 +282,7 @@
     <span class="tip-icon">💡</span>
     Verwenden Sie den <strong>Propose Only</strong>-Modus für kritische Produktions-Workflows, bei denen automatische Selector-Änderungen eine Governance-Prüfung erfordern, bevor sie angewendet werden.
   </div>
+  <p>Steht der effektive Modus auf <strong>Disabled</strong>, startet im Lauf keine Heilung: Der Schritt mit kaputtem Selektor scheitert am Original-Selektor, und das Lauf-Log nennt den Grund («SKIPPED: healing mode is set to Disabled for this project»). Das gilt auch für die proaktive Prüfung. Wird Self-Healing selbst abgeschaltet, lautet der Grund «self-healing is switched off for this project». Ohne gespeicherte Einstellung gilt <strong>Automatic</strong>.</p>
 </section>
 
 <!-- THRESHOLDS -->
@@ -368,6 +375,37 @@
   <div class="tip">
     <span class="tip-icon">💡</span>
     Priorisieren Sie immer <strong>data-testid</strong>- und <strong>aria</strong>-Attribute. Dies sind stabile semantische Bezeichner, die UI-Refactoring überstehen, im Gegensatz zu XPath, das bei strukturellen DOM-Änderungen bricht.
+  </div>
+</section>
+
+
+<!-- HEALING SAFEGUARDS -->
+<section id="healing-safeguards" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Schutzregeln gegen falsche Heilungen</h1>
+      <span class="badge badge-healing">Konfiguration</span>
+    </div>
+  </div>
+  <p>Eine Heilung soll einen Test reparieren, nie einen echten Fehler verdecken. Zwei Schutzregeln verhindern, dass ein Schritt auf ein fremdes Element «geheilt» wird und trotzdem grün meldet.</p>
+  <h2>Identitätsprüfung des Heilkandidaten</h2>
+  <p>Bevor ein Heilkandidat verwendet wird, prüft Autemos, ob es dasselbe Element ist wie das ursprünglich gemeinte. Lehnt die Prüfung den Kandidaten als <strong>anderes Element</strong> ab, wird er nirgends ausgeführt: nicht während des Laufs, nicht bei der proaktiven Prüfung und nicht im KI-Recorder.</p>
+  <ul class="feature-list">
+    <li>Die Suche läuft nach einer Ablehnung weiter: gemerkte Alternative, Re-Finder, schliesslich die KI. Ein identitätsgeprüfter Rückfall gewinnt gegen jeden abgelehnten Vorschlag.</li>
+    <li>Bleibt kein identitätsgeprüfter Kandidat übrig, schlägt der Schritt fehl (rot). Die Fehlermeldung nennt Kandidat, Stufe und Ablehnungsgrund.</li>
+    <li>Eine abgelehnte gemerkte Alternative wird nicht gelöscht, aber weder benutzt noch als verwendete Alternative gezählt.</li>
+    <li>Die Regel gilt gleich für Aktionen und Prüfungen (Klick, Eingabe, Assert, Lesen/Text extrahieren, Heilung in Custom Code). Kandidaten, die die Prüfung bestätigt oder nicht beurteilen kann, verhalten sich wie bisher.</li>
+  </ul>
+  <h2>Bezugsprüfung bei Inline-Selektoren</h2>
+  <p>Ein Web-Schritt mit Inline-Selektor (ohne Page-Object-Feld und ohne gespeicherten Eintrag) wird nur noch geheilt, wenn der vorgeschlagene Kandidat ein Merkmal des gescheiterten Selektors trägt, zum Beispiel ID, Klasse, Test-Hook, Name, aria-label oder Beschriftung. Gibt es auf der Seite kein solches Element, scheitert der Schritt wieder mit «Selektor findet kein Element: &lt;Selektor&gt;», auch wenn die KI dem Vorschlag eine hohe Konfidenz zuschreibt.</p>
+  <ul class="feature-list">
+    <li>Die Regel gilt vor beiden Schwellenwerten: Der Kandidat wird weder automatisch geheilt noch als Vorschlag («Proposed») verwendet.</li>
+    <li>Das Lauf-Log nennt den Grund («no candidate is related to the failed selector …»). Es entsteht weder ein Heilungs-Ereignis noch ein Eintrag in der Ablage.</li>
+    <li>Unverändert bleiben Heilungen von Page-Object-Feldern und gespeicherten Einträgen, mobile Schritte sowie Läufe, bei denen kein DOM erfasst wurde.</li>
+  </ul>
+  <div class="tip">
+    <span class="tip-icon">💡</span>
+    Ein Test, der ein fehlendes Element erkennen soll, schlägt damit korrekt fehl, statt dank einer Heilung auf ein anderes Element zu bestehen.
   </div>
 </section>
 

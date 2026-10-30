@@ -142,6 +142,19 @@
   </ul>
 </section>
 
+<section id="projectsettings-testruns" class="doc-section">
+  <span class="section-label">Konfiguration</span>
+  <h1>Test Runs</h1>
+  <p>Der Reiter <strong>Test Runs</strong> der Projekt-Settings ist für Projekt-Admins sichtbar und legt Voreinstellungen für die Run-Berichte des Projekts fest.</p>
+  <h2>Screenshots im Report</h2>
+  <ul class="feature-list">
+    <li>Ein Schalter bestimmt den <strong>Screenshot-Standard</strong> (Vorgabe: aus). Er speichert sofort.</li>
+    <li>Jeder Run-Report des Projekts öffnet sich mit diesem Zustand des Schalters <strong>Screenshots</strong>.</li>
+    <li>Im Report kann weiterhin für die aktuelle Ansicht umgeschaltet werden; die Umschaltung gilt nur für diese Ansicht und verändert die Projekt-Einstellung nicht.</li>
+    <li>Der Schalter steuert nur die <em>Anzeige</em> im Report. Ob beim Lauf Screenshots aufgenommen werden, regelt die globale Einstellung.</li>
+  </ul>
+</section>
+
 <!-- API KEYS -->
 <section id="projectsettings-apikeys" class="doc-section">
   <span class="section-label">Integration &amp; Security</span>
@@ -267,6 +280,14 @@
     <li>Änderungen wirken automatisch auf alle abhängigen Requests</li>
     <li>Credentials werden niemals in Workflows offengelegt</li>
   </ul>
+  <h2>Secrets löschen</h2>
+  <p>Ein Secret lässt sich <strong>nicht löschen, solange es irgendwo verwendet wird</strong>. Das gilt für Projekt-, globale und persönliche Secrets. Berücksichtigt werden Verwendungen in Workflows, in den Input-Mappings von Sub-Workflows, in eingebetteten Sub-Workflows und in Auth-Konfigurationen.</p>
+  <ul class="feature-list">
+    <li>Der Dialog nennt die <strong>Anzahl</strong> und die <strong>Fundstellen</strong> der Verwendung („Secret 'KEY' cannot be deleted: it is still referenced in N place(s) (workflows, sub-workflows or auth configurations). Remove these references first.“).</li>
+    <li>Workflow-Fundstellen führen in den Editor, Fundstellen in Auth-Konfigurationen zum Reiter Auth &amp; Secrets des Projekts bzw. bei globalen Konfigurationen zu den Global Settings.</li>
+    <li>Ist das Secret nirgends mehr referenziert, lässt es sich löschen.</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">🔒</span>Den Klartext eines Secrets anzuzeigen ist globalen Administratoren vorbehalten; Projekt-Admins sehen diese Funktion nicht (siehe <a href="#users-roles">Rollen &amp; Rechte</a>).</div>
 </section>
 
 <!-- BEST PRACTICES -->

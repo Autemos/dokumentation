@@ -10,8 +10,11 @@
   <div class="concept-card"><h3>Testdefinition nutzen</h3><p>Manuelle Testschritte oder Cucumber-Szenarien als Eingabe für die Aufzeichnung verwenden.</p></div>
   <div class="concept-card"><h3>Automatisch verknüpfen</h3><p>Den gespeicherten Test Workflow automatisch mit dem Xray Test Case verbinden.</p></div>
   <div class="concept-card"><h3>Kontext anzeigen</h3><p>Zentrale Xray-Metadaten einsehen und den verknüpften Test Case direkt aus dem Workflow öffnen.</p></div>
+  <div class="concept-card"><h3>Änderungen erkennen</h3><p>Änderungen am Xray-Testfall in Jira erkennen, ansehen und kontrolliert übernehmen.</p></div>
+  <div class="concept-card"><h3>Xray-Läufe ausführen</h3><p>Test Executions und Test Plans mit den verknüpften Workflows ausführen und Ergebnisse nach Xray zurückschreiben.</p></div>
+  <div class="concept-card"><h3>Collections mit Test Sets</h3><p>Collections aus Xray Test Sets anlegen und verbinden; ihre Läufe erscheinen als Test Execution in Jira.</p></div>
 </div>
-<div class="warning"><span class="tip-icon">⚠️</span><strong>Die Synchronisation von Test-Run-Ergebnissen mit Jira Xray ist noch nicht verfügbar.</strong> Sie ist für November 2026 geplant und nicht Teil des aktuellen Funktionsumfangs.</div>
+<p>Autemos schreibt Ausführungsergebnisse zurück nach Jira Xray: Auf der Seite <a href="#jiraxray-runs">Test Runs</a> lassen sich Xray Test Executions und Test Plans ausführen, Collections mit Xray Test Sets verbinden und Änderungen am Testfall in Jira erkennen.</p>
 </section>
 
 <section class="doc-section" id="jiraxray-select">
@@ -90,6 +93,7 @@
 <p>Beim Speichern der Aufzeichnung erstellt Autemos den Test Workflow und verknüpft ihn automatisch mit dem ausgewählten Xray Test Case.</p>
 <p>Die Verknüpfung erhält die Nachvollziehbarkeit zwischen der fachlichen Testdefinition in Jira und ihrer technischen Automatisierung in Autemos. Ein zusätzliches manuelles Mapping nach der Aufzeichnung ist nicht erforderlich.</p>
 <p>Die Verknüpfung ist direkt im Test Workflow sichtbar und lässt sich über die Aktion <strong>Unlink</strong> wieder entfernen, wenn der Workflow nicht mehr mit dem Test Case verbunden sein soll.</p>
+<p>Eine bestehende Verknüpfung lässt sich auch direkt auf einen anderen Test Case <a href="#jiraxray-change">ändern</a>.</p>
 <div class="screenshot-wrap">
 <img alt="Verknüpfter Xray-Kontext im Workflow-Editor" src="./autemos_jiraxray_screenshots/image_4.png"/>
 <div class="screenshot-caption">Verknüpfter Xray-Kontext im Workflow-Editor.</div>
@@ -111,7 +115,9 @@
     <tr><td><strong>Test Type</strong></td><td>Xray Test Type, zum Beispiel Manual oder Cucumber</td></tr>
     <tr><td><strong>Status</strong></td><td>Aktueller Jira-Workflow-Status</td></tr>
     <tr><td><strong>Assignee</strong></td><td>In Jira zugewiesene Person</td></tr>
-    <tr><td><strong>Priority</strong></td><td>In Jira konfigurierte Priorität</td></tr>
+    <tr><td><strong>Jira priority</strong></td><td>In Jira konfigurierte Priorität</td></tr>
+    <tr><td><strong>Autemos priority</strong></td><td>Massgebliche Priorität in Autemos mit Quelle, siehe <a href="#jiraxray-priority">Priorität</a></td></tr>
+    <tr><td><strong>Jira sync status</strong></td><td>Ob der Testfall in Jira dem Referenzstand entspricht, siehe <a href="#jiraxray-sync">Änderungen erkennen</a></td></tr>
     <tr><td><strong>Description</strong></td><td>Fachliche Beschreibung oder Szenariokontext</td></tr>
     <tr><td><strong>Linked on</strong></td><td>Zeitpunkt, zu dem die Verknüpfung erstellt wurde</td></tr>
     </tbody>
@@ -128,7 +134,148 @@
 <section class="doc-section" id="jiraxray-open">
 <span class="section-label">Verknüpfung</span>
 <h1>In Jira Xray öffnen</h1>
-<p>Der verknüpfte Issue Key bietet direkten Zugriff auf den ursprünglichen Test Case in Jira Xray. Von der Automatisierung in Autemos gelangt man so unmittelbar zum fachlichen Test Case, ohne ihn in Jira erneut suchen zu müssen.</p>
+<p>Der verknüpfte Issue Key im Reiter Xray ist ein Link, der den Vorgang in Jira (<code>…/browse/&lt;KEY&gt;</code>) in einem neuen Tab öffnet. Von der Automatisierung in Autemos gelangt man so unmittelbar zum fachlichen Test Case, ohne ihn in Jira erneut suchen zu müssen. Der Link steht auch, wenn der Testfall nicht gefunden wurde oder Jira nicht erreichbar ist. Ist die Jira-Adresse nicht bekannt, bleibt der Schlüssel reiner Text ohne Symbol.</p>
+</section>
+
+<section class="doc-section" id="jiraxray-change">
+<span class="section-label">Verknüpfung</span>
+<h1>Verknüpfung ändern</h1>
+<p>Im Reiter <strong>Xray</strong> des Workflow-Editors lässt sich eine bestehende Verknüpfung auf einen anderen Testfall umhängen, ohne sie vorher zu lösen.</p>
+<div class="steps">
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h3>Change wählen</h3><p>Der Knopf <strong>Change</strong> steht neben <strong>Unlink</strong>, auch bei einer verwaisten Verknüpfung (Testfall nicht gefunden oder Jira nicht erreichbar). Er blendet unter der bestehenden Verknüpfung die Suche ein; <strong>Cancel</strong> bricht ab.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h3>Testfall suchen</h3><p>Nach einem Schlüssel suchen, z. B. <code>SB-377</code>. Der aktuell verknüpfte Testfall ist in der Trefferliste mit «Already linked» gekennzeichnet und nicht erneut verknüpfbar.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h3>Ersetzen bestätigen</h3><p><strong>Link</strong> an einem anderen Treffer öffnet <strong>Replace Xray link?</strong>: «Replace the link to … with …? The reference for change detection is taken anew from …». Erst <strong>Replace</strong> ersetzt die Verknüpfung. Bei einem Fehler oder <strong>Cancel</strong> bleibt die alte Verknüpfung unverändert bestehen.</p></div></div>
+</div>
+<p>Nach dem Ersetzen stehen der neue Schlüssel, ein frischer Referenzstand und der Abgleichstatus im Reiter; die Knoten, Kanten und Einstellungen des Workflows ändern sich nicht. Die erste Verknüpfung eines unverknüpften Workflows bleibt ohne Bestätigungsdialog.</p>
+</section>
+
+<section class="doc-section" id="jiraxray-priority">
+<span class="section-label">Verknüpfung</span>
+<h1>Priorität: Jira und Autemos</h1>
+<p>Jeder verknüpfte Workflow hat genau eine für die Testdurchführung massgebliche <strong>Autemos-Priorität</strong>. Der Xray-Reiter zeigt sie getrennt von der <strong>Jira priority</strong> (dem Rohwert aus Jira), in der Gruppe <strong>Autemos priority</strong> mit der Quelle «from Jira» oder «managed in Autemos». Weicht ein manuell geführter Wert von Jira ab, steht zusätzlich «Jira: High».</p>
+<h2>Regel pro Projekt</h2>
+<p>In der Karte «Jira/Xray-Zuordnung» der Projekteinstellungen legt das Feld <strong>Priority handling</strong> fest, woher die Priorität kommt:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Einstellung</th><th>Wirkung</th></tr></thead>
+<tbody>
+<tr><td><strong>Adopt Jira priority</strong> (Standard)</td><td>Autemos übernimmt die Jira-Priorität beim Verknüpfen, beim Ändern der Verknüpfung, bei <strong>Check now</strong> und bei der periodischen Prüfung. Die Priorität ist im Reiter nur lesbar.</td></tr>
+<tr><td><strong>Manage independently</strong></td><td>Die Priorität wird in Autemos geführt. Wer im Projekt schreiben darf, setzt sie im Reiter über das Auswahlfeld <strong>Priority</strong> und <strong>Save</strong>. Sie bleibt über Neuladen und Prüfungen erhalten.</td></tr>
+</tbody>
+</table>
+</div>
+<h2>Skala und Mapping</h2>
+<p>Die Skala lautet Highest, High, Medium, Low, Lowest und entspricht dem Jira-Standardschema; Jira-Namen werden unabhängig von der Gross-/Kleinschreibung gleichnamig übernommen. Eigene Jira-Prioritäten ordnet das Textfeld <strong>Priority mapping</strong> zu, z. B. <code>P1=Highest, P2=High</code>; diese Einträge gehen dem Standard vor. Ein ungültiges Ziel wird beim Speichern mit Feldhinweis abgelehnt. Ein nicht zugeordneter Jira-Name ändert die Autemos-Priorität nicht und erscheint als «not mapped (Jira: P7)», ohne Fehler und ohne «Out of sync».</p>
+<ul class="feature-list">
+<li>Eine reine Prioritätsänderung in Jira ändert den Abgleichstatus nicht (siehe «Änderungen in Jira erkennen»).</li>
+<li>Ist Jira nicht erreichbar, bleibt die gespeicherte Priorität stehen.</li>
+<li>Beim Lösen der Verknüpfung bleibt die Priorität erhalten; die Quelle wechselt auf «managed in Autemos». Das Speichern des Workflows im Editor verändert sie nicht.</li>
+<li>Das Öffnen des Reiters löst weder eine Prüfung noch einen Schreibzugriff aus.</li>
+</ul>
+</section>
+
+<section class="doc-section" id="jiraxray-sync">
+<span class="section-label">Verknüpfung</span>
+<h1>Änderungen in Jira erkennen</h1>
+<p>Beim Verknüpfen hält Autemos einen Referenzstand des Testfalls fest: Titel, Beschreibung, Testschritte (Action, Data, Expected result), Cucumber-Szenario und Test Type. Alle 6 Stunden prüft ein Hintergrundjob alle verknüpften Workflows nacheinander gegen Jira; zusätzlich prüft der Knopf <strong>Check now</strong> im Reiter genau diesen Workflow sofort. Das Öffnen des Reiters startet keine Prüfung. Bestehende Verknüpfungen ohne Referenz erhalten beim ersten erfolgreichen Lauf automatisch eine («created automatically»).</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Jira sync status</th><th>Bedeutung</th></tr></thead>
+<tbody>
+<tr><td><strong>In sync</strong></td><td>Der Testfall in Jira entspricht dem Referenzstand. Angezeigt werden «Reference from … by …» und «Last checked».</td></tr>
+<tr><td><strong>Out of sync</strong></td><td>Inhalt, Titel oder Test Type haben sich in Jira geändert. Der Hinweis <strong>The test case changed in Jira</strong> nennt die betroffenen Bereiche: Title, Description, Test steps, Scenario, Test type.</td></tr>
+<tr><td><strong>Unknown</strong></td><td>Die Prüfung war nicht möglich (z. B. fehlende Berechtigung, Jira nicht erreichbar, Testfall gelöscht, Einrichtung fehlt). Der Grund steht im Reiter, der Referenzstand bleibt unverändert.</td></tr>
+<tr><td><strong>Not checked yet</strong></td><td>Noch keine Prüfung, oder der Testfall war beim Verknüpfen nicht vollständig lesbar. Die Verknüpfung besteht trotzdem.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Änderungen an Status, Assignee, Priority, Komponenten, Labels, Kommentaren sowie reine Leerraum- und Zeilenende-Änderungen zählen nicht und lassen den Status auf «In sync».</p>
+<h2>Änderungen ansehen und übernehmen</h2>
+<ul class="feature-list">
+<li><strong>View changes</strong> öffnet je geändertem Bereich die zwei Spalten «Reference» und «Jira now»; Testschritte erscheinen zeilenweise mit den Kennzeichen «changed», «added» und «removed».</li>
+<li><strong>Accept changes</strong> übernimmt genau den angezeigten Jira-Stand als neue Referenz («In sync», «Reference from … by …»; Audit-Eintrag). Der Workflow selbst wird nicht verändert – Schritte sind bei Bedarf manuell anzupassen. Hat sich der Testfall in Jira inzwischen erneut geändert, erscheint eine Meldung zum Neuladen, und es wird nichts übernommen.</li>
+<li>In der Workflow-Liste trägt jeder «Out of sync»-Workflow in Tabelle und Kachel das Abzeichen <strong>Jira changed</strong>; es verschwindet nach «Accept changes».</li>
+<li><strong>Unlink</strong> entfernt auch die Referenz; ein erneutes Verknüpfen legt eine neue an.</li>
+</ul>
+</section>
+
+<section class="doc-section" id="jiraxray-runs">
+<span class="section-label">Ausführung</span>
+<h1>Run from Xray: Test Execution oder Test Plan ausführen</h1>
+<p>Auf der Seite <strong>Test Runs</strong> führt der Knopf <strong>Run from Xray</strong> eine Xray Test Execution oder einen Test Plan mit den verknüpften Autemos-Workflows aus und schreibt die Ergebnisse zurück nach Xray. Der Knopf erscheint nur, wenn die Jira-Verbindung eingerichtet und dem Projekt ein Jira-Projekt zugeordnet ist.</p>
+<div class="steps">
+  <div class="step"><div class="step-num">1</div><div class="step-content"><h3>Laden</h3><p>Im Dialog <strong>Run from Xray</strong> den Schlüssel unter <strong>Test Execution or Test Plan key</strong> eingeben und <strong>Load tests</strong> wählen. Autemos zeigt Typ und Titel sowie die Tabelle <strong>Xray tests</strong> mit den Spalten Xray test, Autemos workflow und Mapping.</p></div></div>
+  <div class="step"><div class="step-num">2</div><div class="step-content"><h3>Zuordnung prüfen</h3><p>Jeder Xray-Test hat genau einen Zustand: <strong>Linked</strong> (mit Workflow-Name), <strong>Not linked</strong> oder <strong>Ambiguous (n workflows)</strong>. Zugeordnet wird ausschliesslich über die Xray-Verknüpfung aktiver Workflows des Projekts, nie über Namen oder Ähnlichkeit. Nur «Linked» wird ausgeführt.</p></div></div>
+  <div class="step"><div class="step-num">3</div><div class="step-content"><h3>Starten</h3><p><strong>Start run</strong> führt die zugeordneten Workflows nacheinander aus («Runs 1 of 3 tests»). Der Knopf ist gesperrt ohne geladene Liste, bei einem Ladefehler oder wenn kein Test «Linked» ist.</p></div></div>
+</div>
+<h2>Ziel-Execution</h2>
+<p>Bei einer Test Execution schreibt Autemos die Ergebnisse in diese Execution. Bei einem Test Plan legt Autemos beim Start eine neue Execution unter dem Plan an («Autemos run &lt;Datum Uhrzeit&gt; – &lt;Projekt&gt;»), in der alle zugeordneten Tests zunächst auf TODO stehen. Es werden höchstens 1000 Tests eines Satzes gelesen (sonst Hinweis). Scheitert das Anlegen, wird nichts ausgeführt.</p>
+<h2>Seite des Xray-Laufs</h2>
+<p>Die Seite des Xray-Laufs zeigt im Bereich <strong>Xray sync</strong> die Tabelle <strong>Xray run tests</strong>:</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Spalte</th><th>Inhalt</th></tr></thead>
+<tbody>
+<tr><td><strong>Result</strong></td><td>Ergebnis in Autemos: PASSED oder FAILED (alles ausser einem erfolgreichen Lauf zählt als FAILED), RUNNING oder «—». Ein Link «Report» öffnet den Autemos-Bericht.</td></tr>
+<tr><td><strong>Xray status</strong></td><td>Der aus Xray zurückgelesene Status des Testlaufs.</td></tr>
+<tr><td><strong>Sync</strong></td><td>«Waiting», <strong>Sent to &lt;Execution&gt;</strong> oder <strong>Sync failed: &lt;Grund&gt;</strong> mit dem Knopf <strong>Retry sync</strong>; «Not run» für Tests ohne eindeutige Zuordnung.</td></tr>
+</tbody>
+</table>
+</div>
+<ul class="feature-list">
+<li>Nach dem Ende jedes Workflows überträgt Autemos das Ergebnis ohne weitere Aktion nach Xray, mit einem Kommentar «Autemos run &lt;id&gt; – &lt;Link zum Bericht&gt;», und liest den Status zurück. Weicht er vom Autemos-Ergebnis ab, gilt die Zustellung als gescheitert.</li>
+<li>Eine gescheiterte Zustellung ändert nie das Ergebnis des Laufs in Autemos. Es gibt keine automatische Wiederholung; <strong>Retry sync</strong> stellt erneut zu. Zugangsdaten erscheinen weder in Meldung noch Log.</li>
+<li>Ladefehler erscheinen im Dialog, z. B. «SB-999999 was not found in Jira project SB.» oder «SB-377 is a Xray test, not a test execution or test plan.».</li>
+<li>Ein dritter Reiter <strong>Xray runs</strong> in der Run-Übersicht listet alle Xray-Läufe; normale Läufe ohne Xray-Lauf sind unverändert.</li>
+</ul>
+<h2>Frühere Läufe derselben Execution</h2>
+<p>Wird dieselbe Test Execution erneut ausgeführt, bleiben alle früheren Autemos-Reports auffindbar:</p>
+<ul class="feature-list">
+<li>Im Xray-Test-Run-Kommentar steht unter der Zeile des aktuellen Reports die Liste <strong>Earlier Autemos runs</strong> mit Datum, Ergebnis und Report-Link, neueste zuerst. Aufgeführt werden höchstens 10 Einträge; weitere fasst die Zeile «and n more» mit einem Link auf die Laufseite zusammen. Der aktuelle Status wird unverändert nach Xray geschrieben.</li>
+<li>Auf der Seite des Xray-Laufs zeigt die Region <strong>Earlier Autemos runs</strong> die Tabelle «Earlier runs» mit Started, Run, Xray test, Result und Report; ohne frühere Läufe steht dort «No earlier Autemos runs of &lt;Schlüssel&gt;».</li>
+</ul>
+</section>
+
+<section class="doc-section" id="jiraxray-collections">
+<span class="section-label">Ausführung</span>
+<h1>Collections mit Xray Test Sets</h1>
+<p>Eine Collection lässt sich mit einem Xray <strong>Test Set</strong> verbinden. Dabei wird nur aus Jira gelesen; Autemos schreibt nichts in das Test Set. Ein Test Set ist keine Test Execution: <strong>Run from Xray</strong> weist es mit «… is a test set, not a test execution or test plan.» ab.</p>
+<h2>Collection aus einem Test Set anlegen</h2>
+<p>Im Menü <strong>+ Create</strong> der Workflow-Übersicht legt der Eintrag <strong>Collection from Xray Test Set</strong> eine Collection an. Der Eintrag erscheint nur, wenn dem Projekt ein Jira-Projekt zugeordnet ist.</p>
+<ul class="feature-list">
+<li>Im Dialog <strong>Create Collection from Xray Test Set</strong> den Schlüssel unter <strong>Xray Test Set key</strong> eingeben und <strong>Load</strong> wählen. Ein Schlüssel, der kein Test Set ist, ergibt eine Meldung, z. B. «SB-385 is a test execution, not a test set.», und <strong>Create</strong> bleibt gesperrt.</li>
+<li>Die Tabelle <strong>Xray tests</strong> zeigt jeden Test mit Mapping: <strong>Linked</strong>, <strong>Not automated</strong> (kein verknüpfter Workflow) oder <strong>Ambiguous (n workflows)</strong>. Der Name ist mit dem Titel des Test Sets vorbelegt und änderbar.</li>
+<li>Mitglieder der Collection werden genau die «Linked»-Workflows, in der Reihenfolge des Test Sets.</li>
+<li>Die Detailseite zeigt den Eintrag <strong>Xray Test Set</strong> als Link nach Jira (neuer Tab), einen Hinweis zur Zahl nicht automatisierter Tests («n tests of … are not automated – they are not run.») und die Tabelle <strong>Xray tests</strong>. Das Mapping wird live aus den aktuellen Verknüpfungen berechnet.</li>
+</ul>
+<h2>Bestehende Collection nachträglich verknüpfen</h2>
+<p>Der Knopf <strong>Link Xray Test Set</strong> in der Kopfzeile einer Collection ohne Test Set öffnet einen Dialog mit Laden und Vorschau wie oben.</p>
+<ul class="feature-list">
+<li>Bisherige Mitglieder bleiben in gleicher Position erhalten; kein Workflow erscheint doppelt. Neue «Linked»-Workflows kommen nur über die Checkbox <strong>Add &lt;Workflow&gt;</strong> hinzu (standardmässig gesetzt). Bereits enthaltene stehen als «Already in collection» da, Mitglieder ohne Test im Set als «Not in test set … they stay in the collection».</li>
+<li>Bei <strong>Ambiguous</strong> bleibt <strong>Link</strong> gesperrt. Ausführungen und ihre Ergebnisse bleiben unverändert.</li>
+<li>Der Dialog warnt: «After linking, every run of this collection creates a Xray Test Execution in Jira.»</li>
+</ul>
+<h2>Änderungen am Test Set erkennen</h2>
+<p>Für eine verbundene Collection zeigt der Bereich <strong>Xray sync status</strong> der Detailseite den Status In sync, Out of sync, Unknown oder Not checked yet samt «Reference from … by …» und «Last checked». Autemos prüft alle 6 Stunden im Hintergrund; <strong>Check for Changes</strong> prüft sofort. Hinzugefügte, entfernte und im Titel geänderte Tests zählen als Änderung, eine reine Umsortierung nicht.</p>
+<ul class="feature-list">
+<li>Bei «Out of sync» nennt der Hinweis <strong>The test set changed in Jira</strong> die Zahlen («n added, n removed, n changed»).</li>
+<li><strong>Review Jira Changes</strong> öffnet die Tabelle <strong>Jira changes</strong> mit Xray test, Change (Added, Removed, Changed), Referenzwert, Jira-Wert und Mapping. Jede Änderung hat eine Checkbox <strong>Apply &lt;Schlüssel&gt;</strong>; dazu kommen «Add &lt;Workflow&gt;» (neue Mitglieder) und «Also remove &lt;Workflow&gt; from collection» (standardmässig aus).</li>
+<li><strong>Apply selected</strong> übernimmt nur die gewählten Änderungen in Referenz und Mitgliederliste. Sind alle übernommen, steht der Status auf «In sync». Hat sich Jira inzwischen erneut geändert, wird nichts übernommen. <strong>Cancel</strong> verändert nichts.</li>
+</ul>
+</section>
+
+<section class="doc-section" id="jiraxray-collection-runs">
+<span class="section-label">Ausführung</span>
+<h1>Collection-Ausführung nach Xray berichten</h1>
+<p>Läuft eine mit einem Xray Test Set verbundene Collection (manuell oder per Zeitplan), legt Autemos beim Start genau eine neue Xray Test Execution im Jira-Projekt der Zuordnung an. Jeder Lauf erhält eine eigene Execution («Autemos – &lt;Collection&gt; – #&lt;Nummer&gt;»); frühere Executions und ihre Ergebnisse bleiben erhalten.</p>
+<ul class="feature-list">
+<li>Die Execution enthält alle Tests des Test Sets, zunächst auf TODO.</li>
+<li>Nach jedem Item schreibt Autemos den Endstatus nach allen Wiederholungen zurück: erfolgreich (auch nach Wiederholung) → PASSED, fehlgeschlagen → FAILED, technischer Fehler → FAILED mit Kommentar «ERROR – …». Der Kommentar enthält den Link zum Autemos-Bericht und zur Collection-Ausführung.</li>
+<li>Nicht automatisierte Tests (Not linked oder Ambiguous) lösen keine Meldung aus und bleiben in Xray auf TODO; sie werden nie als erfolgreich gemeldet.</li>
+<li>Die Seite der Collection-Ausführung zeigt in der Region «Collection execution» den Eintrag <strong>Xray test execution</strong> als Link nach Jira. Die Karte <strong>Xray tests</strong> listet je Test das Mapping und den Zustellstatus: <strong>Sent</strong> (mit Xray-Status), <strong>Failed</strong> (Grund im Tooltip), <strong>Not automated</strong> oder <strong>Not sent</strong>. Ein Abbruch der Ausführung setzt offene Zeilen auf «Not sent».</li>
+<li>Scheitert das Anlegen der Execution beim manuellen Start, erscheint die Meldung im Dialog, und die Collection wird nicht gestartet. Scheitert nur eine Zustellung, bleibt das Autemos-Ergebnis unverändert.</li>
+<li>Collections ohne Test Set und die Funktion «Run from Xray» verhalten sich unverändert.</li>
+</ul>
 </section>
 
 <section class="doc-section" id="jiraxray-scope">
@@ -146,26 +293,14 @@
 <tr><td>Gespeicherten Test Workflow automatisch verknüpfen</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
 <tr><td>Xray-Metadaten im Test Workflow anzeigen</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
 <tr><td>Test Case direkt in Jira Xray öffnen</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
-<tr><td>Test-Run-Ergebnisse mit Jira Xray synchronisieren</td><td><span class="meta-pill pill-no">Geplant für November 2026</span></td></tr>
+<tr><td>Verknüpfung auf einen anderen Test Case ändern</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Jira-Priorität und Autemos-Priorität getrennt führen</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Änderungen am Test Case in Jira erkennen und übernehmen</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Xray Test Execution oder Test Plan ausführen und Ergebnisse nach Xray zurückschreiben</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Collections aus Xray Test Sets anlegen, verknüpfen und Änderungen prüfen</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
+<tr><td>Collection-Läufe als Xray Test Execution berichten</td><td><span class="meta-pill pill-yes">Verfügbar</span></td></tr>
 </tbody>
 </table>
-</div>
-</section>
-
-<section class="doc-section" id="jiraxray-planned">
-<span class="section-label">Umfang</span>
-<h1>Geplant: Test-Run-Synchronisation</h1>
-<div class="warning"><span class="tip-icon">⚠️</span><strong>Diese Funktion ist noch nicht verfügbar.</strong> Der folgende Screenshot ist eine Produktvorschau und zeigt keine heute nutzbare Funktionalität. Die Synchronisation ist für November 2026 geplant.</div>
-<p>Die geplante Erweiterung soll einen Autemos Test Run mit dem entsprechenden Ausführungskontext in Jira Xray verbinden und Ausführungsergebnisse in beiden Systemen verfügbar machen.</p>
-<h2>Geplanter Umfang</h2>
-<ul class="feature-list">
-<li>Einen Autemos Test Run mit dem relevanten Jira-Xray-Ausführungskontext verknüpfen und direkte Navigation zwischen beiden Systemen ermöglichen</li>
-<li>Den Gesamtstatus des Test Runs sowie verfügbare Ergebnisse einzelner Testschritte synchronisieren</li>
-<li>Den Synchronisationsstatus und verständliche Fehlerinformationen in Autemos anzeigen</li>
-</ul>
-<div class="screenshot-wrap">
-<img alt="Produktvorschau der geplanten Test-Run-Synchronisation" src="./autemos_jiraxray_screenshots/image_5.png"/>
-<div class="screenshot-caption">Vorschau — Synchronisation von Test-Run-Ergebnissen, geplant für November 2026. Nicht Teil des aktuellen Funktionsumfangs.</div>
 </div>
 </section>
 
@@ -177,7 +312,7 @@
   <div class="concept-card"><h3>Cucumber-Akzeptanztests automatisieren</h3><p>Fachlich lesbare Given-When-Then-Szenarien direkt im Recorder automatisieren.</p></div>
   <div class="concept-card"><h3>Durchgängige Nachvollziehbarkeit</h3><p>Die Automatisierung dauerhaft mit ihrem ursprünglichen fachlichen Test Case verbunden halten.</p></div>
   <div class="concept-card"><h3>Zusammenarbeit von Fachbereich und Automatisierung</h3><p>Fachliche Definitionen in Xray pflegen, ausführbare Workflows in Autemos.</p></div>
-  <div class="concept-card"><h3>Integriertes Ausführungsreporting (geplant)</h3><p>Autemos-Ausführungsergebnisse im Reporting-Kontext von Jira Xray verfügbar machen. Geplant für November 2026.</p></div>
+  <div class="concept-card"><h3>Integriertes Ausführungsreporting</h3><p>Autemos-Ausführungsergebnisse als Xray Test Execution mit Report-Links in Jira verfügbar machen.</p></div>
 </div>
 </section>
 

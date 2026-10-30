@@ -140,6 +140,68 @@
     </table>
   </div>
 </section>
+
+<section id="scheduler-testdata" class="doc-section">
+  <span class="section-label">Scheduler</span>
+  <h1>Test Data in a Schedule</h1>
+  <p>In <strong>Create New Schedule</strong> and <strong>Edit Schedule</strong>, ticking a workflow lets you set directly which test data it runs with — with the same options as the manual <a href="#testdata-datadriven">Data-driven execution…</a>.</p>
+  <h2>Selection in the dialog</h2>
+  <ul class="feature-list">
+    <li>Below the workflow list, each ticked workflow gets a block <strong>Test data for «Workflow»</strong>. Unticking removes the block together with its selection.</li>
+    <li>The available modes are <strong>Single dataset</strong>, <strong>All datasets</strong>, <strong>Selected datasets</strong>, <strong>First N datasets</strong> and <strong>By tags</strong> (for tags see <a href="#testdata-easy">Test Data Easy</a>).</li>
+    <li>If the selection is incomplete, <strong>Create Schedule</strong> or <strong>Save Changes</strong> stays disabled.</li>
+    <li>The selection applies only to schedules targeting workflows, not collections. Without a selection, the workflow runs once as before.</li>
+  </ul>
+  <h2>Editing</h2>
+  <p>In the Edit dialog, the tests assigned to the schedule are ticked and show their saved selection. Newly ticked tests are added on save, changed selections are updated. <strong>Unticking removes the test from the schedule when you save</strong> ("Unchecking removes the test from this schedule when you save.").</p>
+  <h2>Detail page and run</h2>
+  <ul class="feature-list">
+    <li>The detail page summarises the selection per test in one line, for example "Run once per dataset: First 10 datasets · Tags: Smoke · Source: Test Data Easy".</li>
+    <li>On execution, the schedule starts a batch with one run per dataset; the run history shows the dataset for each run.</li>
+    <li>If a dataset lacks a field the workflow needs, the test ends as <em>FAILED</em> with a message, without a run starting.</li>
+  </ul>
+</section>
+
+<section id="scheduler-xray" class="doc-section">
+  <span class="section-label">Scheduler</span>
+  <h1>Xray Reporting per Schedule</h1>
+  <p>Each workflow schedule decides for itself whether its results are reported to Jira Xray. Technical check runs, development tests or frequently run regression tests therefore do not create unnecessary test executions.</p>
+  <h2>Settings in the dialog</h2>
+  <p>The <em>Reporting</em> section appears in Create/Edit Schedule when the project has a Jira mapping and the target is workflows (not collections).</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Element</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Report results to Jira Xray</strong></td><td>Switch, default <strong>off</strong>. Help text: "Creates a new Xray test execution for every scheduled run." Existing schedules stay off.</td></tr>
+        <tr><td><strong>Xray Test Plan</strong></td><td>Appears only when the switch is on. A Jira key such as <code>SB-381</code>. Empty takes the test plan the project has stored as its default ("Leave empty to use the project default (KEY)"). If the project has no default, the field is required.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="feature-list">
+    <li>Saving only works with a valid configuration: without a Jira mapping for the project, "Reporting to Jira Xray needs a Jira mapping for this project." appears; without a test plan, "A test plan is required to report results to Jira Xray. …"; with an invalid key, "… is not a valid Jira issue key."</li>
+    <li>Switching off is always possible. The entered plan is kept but not used.</li>
+  </ul>
+  <h2>What happens on every run</h2>
+  <p>With the switch on, Autemos creates a <strong>new Xray test execution</strong> in the test plan after every schedule run has ended. The title reads "Autemos – &lt;schedule name&gt; – &lt;date time&gt; (run &lt;id&gt;)". The Xray tests linked to the schedule's workflows are reported — in a single request carrying the real results. Earlier runs keep their own execution and are never overwritten.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Result in Autemos</th><th>Status in Xray</th><th>Comment</th></tr></thead>
+      <tbody>
+        <tr><td>passed</td><td>PASSED</td><td>—</td></tr>
+        <tr><td>failed</td><td>FAILED</td><td>Error text</td></tr>
+        <tr><td>technical error (start error, abort, timeout)</td><td>FAILED</td><td>"Technical error: …"</td></tr>
+        <tr><td>not run (dependency failed)</td><td>TODO</td><td>"Not run: dependency failed"</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="feature-list">
+    <li>If an Xray test is linked to several workflows, the worst status applies; for retries the last attempt counts.</li>
+    <li>The comment per test contains the link to the run's report.</li>
+    <li>If no Xray tests are linked, nothing is sent to Jira.</li>
+    <li>If reporting fails (for example Jira is unreachable), neither result nor status of the schedule run changes.</li>
+    <li>The detail page shows the state, for example "Reporting to Jira Xray: On – Test Plan X (from project)" or "Off".</li>
+  </ul>
+</section>
 <section class="doc-section" id="upcoming-runs">
   <div class="node-header">
     <div>

@@ -166,7 +166,32 @@
   </ul>
 </section>
 
-<!-- LOGOUT -->
+<section id="personalsettings-security" class="doc-section">
+  <span class="section-label">Account</span>
+  <h1>Security &amp; Passwort ändern</h1>
+  <p>Im Reiter <strong>Security</strong> der Personal Settings ändern Sie Ihr Passwort im Bereich <strong>Change Password</strong>.</p>
+  <h2>Felder</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Current Password</strong></td><td>Ihr aktuelles Passwort als Nachweis.</td></tr>
+        <tr><td><strong>New Password</strong></td><td>Das neue Passwort. Darunter zeigt die Liste <em>Password requirements</em> die Regeln (siehe unten).</td></tr>
+        <tr><td><strong>Confirm New Password</strong></td><td>Wiederholung des neuen Passworts.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Jedes Feld hat ein Augensymbol, mit dem die Eingabe sichtbar gemacht wird. Fehler erscheinen direkt am betroffenen Feld: falsches aktuelles Passwort, abweichende Bestätigung, ein Verstoss gegen die Passwortregeln oder ein neues Passwort, das dem aktuellen entspricht.</p>
+  <h2>Passwortregeln</h2>
+  <p>Standardmässig gilt: mindestens 8 und höchstens 128 Zeichen, mindestens ein Buchstabe und mindestens eine Ziffer („At least 8 characters, including a letter and a number“). Unter <strong>New Password</strong> steht die Liste <strong>Password requirements</strong> mit einem Eintrag je Regel. Jeder Eintrag zeigt per Text <strong>Met</strong> oder <strong>Not met</strong>, ob die Regel erfüllt ist, und aktualisiert sich mit jedem Tastendruck. Dieselbe Liste erscheint auf der Seite zum Zurücksetzen des Passworts.</p>
+  <h2>Nach dem Ändern</h2>
+  <ul class="feature-list">
+    <li>Alle anderen Sitzungen des Benutzers werden ungültig; sie müssen sich neu anmelden.</li>
+    <li>Die aktuelle Sitzung bleibt angemeldet.</li>
+    <li>Die Änderung erscheint als Sicherheitsereignis im <a href="#settings-audit">Audit Log</a> — ohne die Passwörter selbst.</li>
+  </ul>
+</section>
+
 <section id="personalsettings-logout" class="doc-section">
   <span class="section-label">Account</span>
   <h1>Logout</h1>
@@ -178,5 +203,49 @@
     <li>Erfolgt die Rückkehr zum Login-Screen</li>
   </ul>
 </section>
+
+<section id="personalsettings-tours" class="doc-section">
+  <span class="section-label">Hilfe</span>
+  <h1>Guided Tours</h1>
+  <p>Geführte Touren erklären Oberflächen Schritt für Schritt. Eine Tour hebt jeweils ein Element hervor und erklärt es in einem kleinen Dialog.</p>
+  <h2>Getting started</h2>
+  <p>Im Avatar-Menü steht zwischen <em>Settings</em> und <em>Logout</em> der Eintrag <strong>Start guided tour</strong>. Die Tour <strong>Getting started</strong> führt durch den Rahmen der Anwendung.</p>
+  <ul class="feature-list">
+    <li><strong>Next</strong>, <strong>Back</strong> und <strong>Done</strong> führen durch die Schritte; ein Zähler zeigt den Fortschritt.</li>
+    <li>Mit <strong>Skip tour</strong>, der Escape-Taste oder einem Klick ausserhalb endet die Tour.</li>
+    <li>Die Tour startet <strong>nie automatisch</strong>. Ob Sie sie gesehen oder übersprungen haben, merkt sich Autemos pro Benutzer auf dem Server; ungesehene Touren tragen am Menüeintrag das Badge „New“. Sie lässt sich beliebig oft neu starten.</li>
+  </ul>
+  <h2>Feature-Touren</h2>
+  <p>Grössere Bereiche haben eine eigene Tour, die Sie mit dem Knopf <strong>Tour</strong> im Kopf der Seite starten. Aktuell gibt es die <strong>Recorder tour</strong> (Recorder) und die <strong>Workflow tour</strong> (Workflow-Liste, in allen Reitern, für alle Rollen).</p>
+  <ul class="feature-list">
+    <li>Feature-Touren sind <strong>interaktiv</strong>: Manche Schritte warten darauf, dass Sie das hervorgehobene Element anklicken („Click … to continue“) oder einen Dialog öffnen.</li>
+    <li>Sie gehen über Seiten und Dialoge hinweg. Mit <strong>Back</strong> stellt die Tour den vorherigen Zustand wieder her; ein dafür geöffneter Dialog (z. B. <em>Add Session</em>) wird wieder geschlossen.</li>
+    <li>Ein Klick ausserhalb beendet die Tour <em>nicht</em>, damit Sie während der Tour mit der Seite arbeiten können. Verlassen Sie den Bereich des Features, endet die Tour.</li>
+    <li>Ist ein Element nicht vorhanden, erklärt die Tour den Schritt zentriert oder überspringt ihn.</li>
+  </ul>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Eine Tour startet nie etwas selbst —</strong> weder eine Session noch eine Aufnahme noch eine Ausführung. Im Schritt „Start Session“ der Recorder tour ist der Knopf zwar hervorgehoben, ein Klick startet aber nichts; ein Hinweis im Dialog („Session start is paused while a tour is running…“) erklärt das. Beenden oder überspringen Sie die Tour, dann starten Sie die Session wie gewohnt. Die Tour erklärt ausserdem, wo eine Aufnahme an der Toolbar gestoppt wird.
+  </div>
+</section>
+
+<section id="personalsettings-buildinfo" class="doc-section">
+  <span class="section-label">Hilfe</span>
+  <h1>Build-Info &amp; Support-ID</h1>
+  <p>Unter <strong>Logout</strong> zeigt das Avatar-Menü einen Fussbereich mit den Angaben, die der Support für Rückfragen braucht.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Eintrag</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Frontend-Build</strong></td><td>Bauzeit der Oberfläche im Format „Build TT.MM.JJJJ HH:MM UTC - sha7“ (sha7 = die ersten sieben Zeichen der Code-Version; fehlt sie, z. B. bei lokalen Builds, entfällt dieser Teil).</td></tr>
+        <tr><td><strong>Backend-Build</strong></td><td>Dieselbe Angabe für den Server.</td></tr>
+        <tr><td><strong>Support-ID</strong></td><td>Eine Kennung pro Browser-Tab; ein neuer Tab hat eine neue ID. Sie lässt sich kopieren.</td></tr>
+        <tr><td><strong>Copy for support</strong></td><td>Kopiert Version, Build, Browser, Support-ID und aktuelle Zeit in die Zwischenablage — zum Einfügen in eine Supportanfrage.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Die Support-ID wird mit jeder Anfrage an den Server mitgesendet. So findet der Support zu Ihrer Meldung die passenden Server-Logeinträge.</p>
+</section>
+
+<!-- LOGOUT -->
 
 </div><!-- /content-wrap -->

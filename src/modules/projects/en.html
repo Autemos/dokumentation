@@ -130,6 +130,13 @@
   </div>
   <h2>Create Project Action</h2>
   <p>The <strong>Create Project</strong> button creates the new project container and initializes the project structure (workflows, pages, schedules, etc.).</p>
+  <h2>Rules for the project name</h2>
+  <ul class="feature-list">
+    <li>3 to 100 characters.</li>
+    <li>Letters of all languages — including <strong>umlauts, ß and accents</strong> — digits, spaces and <code>- _ . ( ) &amp;</code> are allowed. Names such as "Qualitätssicherung (Süd) &amp; Co." can therefore be created.</li>
+    <li>Characters such as <code>&lt; &gt; / \ " ' ; %</code> are not allowed.</li>
+  </ul>
+  <p>If the server rejects the name or another input, the dialog states the <strong>reason</strong> — no success message appears.</p>
 </section>
 <section class="doc-section" id="projects-edit">
   <span class="section-label">Management</span>
@@ -155,6 +162,8 @@
   <div class="warning">
     <span class="tip-icon">⚠️</span><strong>Important notes —</strong> Deleting a project may remove the following content: Workflows, Runs, Pages, Test Data, Schedules, and generated assets. The exact impact depends on the system configuration and retention policies.
   </div>
+  <h3>Errors when saving</h3>
+  <p>The same rules apply to the new name as when creating a project (see <a href="#projects-create">Create New Project</a>). If a change is rejected — in the <strong>Edit Project</strong> dialog as well as in the project settings — Autemos states the reason; the input stays in place for correction, and the existing project name is not overwritten.</p>
 </section>
 <section class="doc-section" id="projects-navigation">
   <span class="section-label">Features</span>

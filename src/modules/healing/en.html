@@ -231,6 +231,12 @@
     <img src="./autemos_images_autoheal/image_5.png" alt="Self-Healing Enabled toggle">
     <div class="screenshot-caption">Self-Healing Enabled — master toggle for the healing engine.</div>
   </div>
+  <h2>Dependent settings locked</h2>
+  <p>If <strong>Self-Healing Enabled</strong> is switched off in the active scope (Global, Project or Field) or the Healing Mode is set to <strong>Disabled</strong>, all dependent settings are locked and greyed out: the two thresholds, Max Auto-Heals Per Run, Max Healing Attempts, Heal Count for Blacklist, Blacklist Window, Critical Fields and Locator Priority, including their reset buttons. A note gives the reason: "Enable Self-Healing or select a Healing Mode to edit these settings."</p>
+  <ul class="feature-list">
+    <li>The switch, the Healing Mode selection and <strong>Save Configuration</strong> stay operable.</li>
+    <li>The locked values are kept unchanged, are sent along when saving and can be edited again immediately after reactivation.</li>
+  </ul>
 </section>
 <section class="doc-section" id="healing-modes">
   <div class="node-header">
@@ -250,7 +256,7 @@
         <tbody>
           <tr><td><strong>Automatic</strong></td><td>System applies successful healing results automatically at runtime — minimizes execution disruption</td></tr>
           <tr><td><strong>Propose Only</strong></td><td>System generates proposals but requires manual review before application — recommended for regulated or production-critical environments</td></tr>
-          <tr><td><strong>Disabled</strong></td><td>Healing functionality fully disabled</td></tr>
+          <tr><td><strong>Disabled</strong></td><td>Healing functionality fully disabled — nothing is healed during a run, even if <strong>Self-Healing Enabled</strong> stays switched on</td></tr>
         </tbody>
       </table>
     </div>
@@ -259,6 +265,7 @@
     <span class="tip-icon">💡</span>
     Use <strong>Propose Only</strong> mode for critical production workflows where automatic selector changes require governance review before being applied.
   </div>
+  <p>If the effective mode is <strong>Disabled</strong>, no heal starts during a run: the step with the broken selector fails on the original selector, and the run log states the reason ("SKIPPED: healing mode is set to Disabled for this project"). This also applies to the proactive check. If Self-Healing itself is switched off, the reason is "self-healing is switched off for this project". Without a stored setting, <strong>Automatic</strong> applies.</p>
 </section>
 <section class="doc-section" id="thresholds">
   <div class="node-header">
@@ -347,5 +354,34 @@
   <div class="tip">
     <span class="tip-icon">💡</span>
     Always prioritize <strong>data-testid</strong> and <strong>aria</strong> attributes. These are stable semantic identifiers that survive UI refactoring, unlike XPath, which breaks on structural DOM changes.
+  </div>
+</section>
+
+<section class="doc-section" id="healing-safeguards">
+  <div class="node-header">
+    <div>
+      <h1>Safeguards Against Wrong Heals</h1>
+      <span class="badge badge-healing">Configuration</span>
+    </div>
+  </div>
+  <p>A heal is meant to repair a test, never to hide a real error. Two safeguards prevent a step from being "healed" onto a foreign element and still reporting green.</p>
+  <h2>Identity check of the heal candidate</h2>
+  <p>Before a heal candidate is used, Autemos checks whether it is the same element as the one originally meant. If the check rejects the candidate as a <strong>different element</strong>, it is executed nowhere: not during the run, not in the proactive check and not in the AI Recorder.</p>
+  <ul class="feature-list">
+    <li>After a rejection the search continues: stored alternative, re-finder, finally the AI. An identity-verified fallback wins against any rejected proposal.</li>
+    <li>If no identity-verified candidate remains, the step fails (red). The error message names the candidate, the stage and the reason for the rejection.</li>
+    <li>A rejected stored alternative is not deleted, but neither used nor counted as a used alternative.</li>
+    <li>The rule applies equally to actions and checks (click, input, assert, read/extract text, healing in custom code). Candidates the check confirms or cannot judge behave as before.</li>
+  </ul>
+  <h2>Relevance check for inline selectors</h2>
+  <p>A web step with an inline selector (without a page object field and without a stored entry) is only healed if the proposed candidate carries a feature of the failed selector, for example an ID, class, test hook, name, aria-label or label. If there is no such element on the page, the step fails again with "Selektor findet kein Element: &lt;selector&gt;", even if the AI attributes a high confidence to the proposal.</p>
+  <ul class="feature-list">
+    <li>The rule applies before both thresholds: the candidate is neither healed automatically nor used as a proposal ("Proposed").</li>
+    <li>The run log states the reason ("no candidate is related to the failed selector …"). No heal event and no entry in the store is created.</li>
+    <li>Unchanged are heals of page object fields and stored entries, mobile steps, and runs in which no DOM was captured.</li>
+  </ul>
+  <div class="tip">
+    <span class="tip-icon">💡</span>
+    A test that is supposed to detect a missing element therefore fails correctly instead of passing thanks to a heal onto another element.
   </div>
 </section>
