@@ -26,7 +26,7 @@
       "label": "Users",
       "section": "management",
       "searchLabel": "User Management",
-      "enCount": 7
+      "enCount": 9
     },
     {
       "id": "templates",
@@ -68,14 +68,14 @@
       "label": "Test Data",
       "section": "project",
       "searchLabel": "Test Data",
-      "enCount": 10
+      "enCount": 13
     },
     {
       "id": "scheduler",
       "label": "Schedules",
       "section": "project",
       "searchLabel": "Scheduler",
-      "enCount": 11
+      "enCount": 13
     },
     {
       "id": "codegen",
@@ -115,7 +115,7 @@
       "label": "Project Settings",
       "section": "project",
       "searchLabel": "Project Settings",
-      "enCount": 6
+      "enCount": 7
     },
     {
       "id": "grid",
@@ -129,14 +129,21 @@
       "label": "Personal Settings",
       "section": "settings",
       "searchLabel": "Personal Settings",
-      "enCount": 6
+      "enCount": 9
+    },
+    {
+      "id": "notifications",
+      "label": "Notifications",
+      "section": "settings",
+      "searchLabel": "Notifications",
+      "enCount": 5
     },
     {
       "id": "settings",
       "label": "Global Settings",
       "section": "settings",
       "searchLabel": "Global Settings",
-      "enCount": 10
+      "enCount": 11
     },
     {
       "id": "onpremise",

@@ -21,7 +21,7 @@
   </div>
   <div class="concept-card">
     <h3>Git Synchronization</h3>
-    <p>Generierten Code direkt in GitHub-, GitLab- oder Bitbucket-Repositories pushen — mit Branch-Management und History-Tracking.</p>
+    <p>Generierten Code direkt in ein GitHub-Repository pushen — mit Branch-Management und History-Tracking.</p>
   </div>
   <div class="concept-card">
     <h3>Sync Profiles</h3>
@@ -33,7 +33,7 @@
   <table class="param-table">
     <thead><tr><th>Sprachen</th><th>Frameworks</th><th>Test Runners</th><th>Git Providers</th></tr></thead>
     <tbody>
-      <tr><td>Java, TypeScript, Python, C#</td><td>Selenium, Playwright, Appium</td><td>TestNG, JUnit, Vitest, Jest</td><td>GitHub, GitLab, Bitbucket</td></tr>
+      <tr><td>Java, TypeScript, Python, C#</td><td>Selenium, Playwright, Appium</td><td>TestNG, JUnit, Vitest, Jest</td><td>GitHub</td></tr>
     </tbody>
   </table>
 </div>
@@ -95,7 +95,7 @@
   <table class="param-table">
     <thead><tr><th>Feld</th><th>Beschreibung</th></tr></thead>
     <tbody>
-      <tr><td><strong>Provider</strong></td><td>Git-Provider — GitHub, GitLab oder Bitbucket</td></tr>
+      <tr><td><strong>Provider</strong></td><td>Git-Provider — derzeit GitHub (GitLab und Bitbucket sind deaktiviert)</td></tr>
       <tr><td><strong>Repository URL</strong></td><td>Ziel-Repository für die Code-Synchronisierung</td></tr>
       <tr><td><strong>Access Token</strong></td><td>Persönlicher Zugriffstoken zur Authentifizierung</td></tr>
       <tr><td><strong>Default Branch</strong></td><td>Branch für die Synchronisierung (z. B. <code>main</code>)</td></tr>
@@ -313,7 +313,7 @@
   <div class="screenshot-caption">Git Sync — Provider, Repository-URL, Zugriffstoken und Branch konfigurieren. Sync History verfolgt alle früheren Pushes.</div>
 </div>
 <h2>Git-Verbindung</h2>
-<p>Unterstützte Provider: <strong>GitHub</strong>, <strong>GitLab</strong>, <strong>Bitbucket</strong>. Repository-URL, persönlichen Zugriffstoken und Standard-Branch konfigurieren. <strong>Test Connection</strong> verwenden, um vor dem Speichern zu validieren.</p>
+<p>Unterstützter Provider: <strong>GitHub</strong> (GitLab und Bitbucket sind deaktiviert). Repository-URL, persönlichen Zugriffstoken und Standard-Branch konfigurieren. <strong>Test Connection</strong> verwenden, um vor dem Speichern zu validieren.</p>
 <h2>Sync History</h2>
 <p>Die Sync History bietet vollständige Transparenz über jeden vorherigen Synchronisierungs-Lauf:</p>
 <ul class="feature-list">
@@ -333,4 +333,309 @@
 <div class="tip"><span class="tip-icon">💡</span>Kombinieren Sie externe API-Trigger mit Sync Profiles für eine vollautomatische Code-Generierungs-Pipeline — generieren, pushen und einen PR automatisch als Teil jedes Deployment-Zyklus öffnen.</div>
 </section>
 
+
+<!-- CODE-SYNC: ZUSTAND -->
+<section id="codegen-sync-state" class="doc-section">
+<span class="section-label">Code-Sync</span>
+<h1>Code-Sync: Zustand und Prüfung</h1>
+<p>Wurde der generierte Testcode eines Workflows per Push to Git in ein GitHub-Repository übertragen, erkennt Autemos, wenn dieser Code später im Repository von Hand geändert wird. Der Workflow wird dabei nie stillschweigend verändert: Änderungen werden angezeigt und erst nach ausdrücklicher Entscheidung übernommen. Bei unklarem Stand zeigt Autemos nie fälschlich «In sync» an.</p>
+<div class="warning"><span class="tip-icon">⚠️</span><strong>Nur GitHub.</strong> Der Code-Sync und Push to Git unterstützen derzeit ausschliesslich GitHub. GitLab und Bitbucket sind in der Git-Verbindung deaktiviert und werden vom Server abgewiesen.</div>
+<h2>Sync-Zustand in der Workflow-Liste</h2>
+<p>Hat das Projekt eine Git-Verbindung, zeigt die Workflow-Liste (Tabelle und Kacheln) je Workflow den Sync-Zustand. Der Zustand wird nach dem Laden der Liste nachgeladen und blockiert sie nicht. Ohne Git-Verbindung erscheinen weder Spalte noch Badge noch Knopf.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Zustand</th><th>Bedeutung</th></tr></thead>
+<tbody>
+<tr><td><strong>Not synced</strong></td><td>Der Workflow wurde noch nie ins Repository übertragen.</td></tr>
+<tr><td><strong>PR open</strong></td><td>Der Pull Request des letzten Push to Git ist noch offen. Der Workflow gilt erst nach dem Merge als «In sync».</td></tr>
+<tr><td><strong>In sync</strong></td><td>Die Testdatei im Repository stimmt mit dem zuletzt übertragenen Stand überein.</td></tr>
+<tr><td><strong>Out of sync</strong></td><td>Die Testdatei wurde im Repository geändert oder gelöscht. Mit dem Zusatz «ignored», wenn die Änderung bewusst ignoriert wurde.</td></tr>
+<tr><td><strong>Baseline accepted</strong></td><td>Der Repository-Stand wurde als neue Basis akzeptiert, der Workflow aber nicht daraus aktualisiert.</td></tr>
+<tr><td><strong>Unknown</strong></td><td>Der Stand konnte nicht geprüft werden (z. B. GitHub nicht erreichbar, Token ungültig, Kontingent erschöpft, Push vor Einführung der Versionsverfolgung). Der Grund steht im Tooltip.</td></tr>
+</tbody>
+</table>
+</div>
+<p>Die Prüfung vergleicht ausschliesslich die Testdateien des jeweiligen Workflows; Commits an anderen Dateien lösen kein «Out of sync» aus. Das Ergebnis wird rund 10 Minuten zwischengespeichert. Mit dem Knopf <strong>Check now</strong> in der Kopfzeile der Liste lässt sich die Prüfung sofort auslösen.</p>
+<h2>Hinweis im Workflow-Editor</h2>
+<p>Im Workflow-Editor zeigt der Indikator «Code sync» in der Werkzeugleiste den aktuellen Zustand (Symbol; Tooltip «Code sync: …» mit Zustand, Zeitpunkt der letzten Prüfung und letztem Commit). Bei einer Änderung im Repository erscheint der Hinweis <strong>There are changes in the underlying code</strong> mit Commit, Autor und Zeitpunkt sowie dem Knopf <strong>View changes</strong>. Wurde die Änderung ignoriert, bleibt der Hinweis dezenter und erscheint bei einem neuen Commit wieder in voller Form. Ist der Stand unbekannt, erscheint <strong>Code sync state unknown</strong> mit dem Grund.</p>
+<h2>Dialog «Code changes»</h2>
+<p>Der Dialog zeigt links den zuletzt synchronisierten Code und rechts den aktuellen Stand im Repository. Oben steht der Bereich <strong>Workflow changes</strong>: die erkannten Änderungen pro Workflow-Knoten (Knotenname, Parameter, alter und neuer Wert). Darunter steht der Textvergleich des Codes zwischen der zuletzt synchronisierten Version und dem aktuellen Repository-Stand, je Datei als hinzugefügt, entfernt oder geändert gekennzeichnet. Farbig markiert sind genau die Zeilen, die auch ein <code>git diff</code> als hinzugefügt (grün, rechts) oder entfernt (rot, links) meldet; ein neu ergänzter Knotenblock wird mit allen seinen Zeilen markiert, die Zeile davor bleibt unmarkiert. Unter dem Vergleich zeigt <strong>Changed lines (from line n)</strong> die geänderten Zeilen als Liste. Nicht übernehmbare Änderungen sind ausdrücklich gekennzeichnet und nennen den Grund; reine Kommentar- und Leerzeilenänderungen werden als unwesentlich markiert. Ein Link <strong>Supported changes</strong> öffnet in einem neuen Tab die in Autemos ausgelieferte Dokumentation der unterstützten Änderungen (Sprachen, Frameworks, Knotenarten, Einschränkungen); er benötigt keinen Zugriff auf GitHub.</p>
+<h2>Entscheidungen</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Knopf</th><th>Wirkung</th></tr></thead>
+<tbody>
+<tr><td><strong>Ignore changes</strong></td><td>Der Workflow bleibt unverändert. Der Zustand bleibt «Out of sync (ignored)», bis ein neuer Commit hinzukommt.</td></tr>
+<tr><td><strong>Accept baseline only</strong></td><td>Der Repository-Stand wird als neue Basis übernommen, der Workflow bleibt unverändert. Der Zustand lautet «Baseline accepted», nicht «In sync».</td></tr>
+<tr><td><strong>Apply to workflow</strong></td><td>Übernimmt die erkannten Änderungen in den Workflow. Nach einer Bestätigung («Apply code changes to workflow?») wird der Workflow aktualisiert; der Zustand wechselt auf «In sync».</td></tr>
+<tr><td><strong>Check now</strong></td><td>Prüft das Repository sofort erneut und aktualisiert Zustand und Vorschau.</td></tr>
+<tr><td><strong>Push to Git</strong></td><td>Erzeugt den Code des Workflows neu und öffnet den Pull-Request-Dialog (siehe «Push to Git im Editor»).</td></tr>
+<tr><td><strong>Close</strong></td><td>Schliesst den Dialog, ohne etwas zu ändern.</td></tr>
+</tbody>
+</table>
+</div>
+<h3>Regeln für «Apply to workflow»</h3>
+<ul class="feature-list">
+<li>Der Knopf ist gesperrt (mit Begründung), solange eine Änderung nicht unterstützt ist, der Code nicht analysiert werden konnte, ein Konflikt besteht oder die Vorschau nicht verfügbar ist. Es wird dann nichts teilweise übernommen.</li>
+<li>Die Übernahme ist atomar: Entweder wird alles übernommen oder nichts. Vor der Übernahme legt Autemos eine wiederherstellbare Version «Before code sync apply (commit …)» an, danach «Applied code changes from commit …». Beide sind im Versionsverlauf als Quelle «Code sync» erkennbar.</li>
+<li>Wurde der Workflow in Autemos seit dem letzten Sync bearbeitet oder wird er gerade von jemand anderem bearbeitet, meldet die Vorschau einen Konflikt und überschreibt nichts. Hat sich das Repository seit dem Öffnen des Dialogs erneut geändert, lehnt Autemos die Entscheidung mit einem Hinweis zum Neuladen ab.</li>
+<li>Die resultierende Workflow-Struktur wird vor dem Speichern geprüft. Knotenarten, die der Generator nicht erzeugt, bleiben im Workflow erhalten.</li>
+<li>Wird eine frühere Version des Workflows wiederhergestellt, wechselt der Sync-Zustand auf «Out of sync».</li>
+<li>Die Vorschau ist nur verfügbar, wenn die Testdatei von einer Autemos-Version stammt, die Knotenmarker enthält. Bei älteren Ständen erscheint «Preview not available»; ein erneuter Push to Git behebt das. Ignorieren und Basis akzeptieren bleiben möglich.</li>
+<li>Vorschau darf, wer Mitglied des Projekts ist. Übernehmen und Entscheiden setzen Editor-Rechte voraus. Alle Schritte (Vorschau angesehen, übernommen, Konflikt, wiederhergestellt, Entscheidung) erscheinen in der Audit-Übersicht in der Kategorie «Code Sync».</li>
+</ul>
+<div class="tip"><span class="tip-icon">💡</span>Ausgeführt wird immer der Workflow in Autemos, nie der Code aus dem Repository. Ein «Out of sync»-Workflow läuft daher unverändert weiter, bis die Änderungen übernommen wurden.</div>
+<h2>Hinweis nach «Apply to workflow»: neue Knoten-IDs</h2>
+<p>Hat «Apply to workflow» neue Schritte angelegt, steht im Code im Repository noch <code>node=new</code>, während die neuen Knoten in Autemos bereits eine eindeutige ID tragen. Bis der Code erneut übertragen wurde, zeigt der Workflow-Editor oberhalb des Workflows einen bleibenden Hinweis: <strong>Workflow updated. New nodes have been assigned unique IDs.</strong> mit dem Satz «Please synchronize the generated code with GitHub before making further external changes.» und dem Knopf <strong>Sync code now</strong>.</p>
+<ul class="feature-list">
+<li><strong>Sync code now</strong> öffnet den Dialog «Push to Git» für diesen Workflow. Der Lauf startet erst mit Ihrem Klick auf <strong>Create Pull Request</strong>; Autemos ändert das Repository nie von selbst. Der Knopf ist gesperrt (mit Begründung), wenn der Workflow ungespeicherte Änderungen hat oder die Projektrolle keine Editor-Rechte erlaubt.</li>
+<li>Der Hinweis bleibt nach dem Neuladen und für andere Benutzer stehen, auch im Zustand «In sync». Er verschwindet, sobald der Pull Request erzeugt wurde (Zustand «PR open» zeigt ihn nicht an). Eine spätere Übernahme, die nur Parameter ändert, löscht ihn nicht.</li>
+<li>Der Hinweis erscheint nur, wenn mindestens ein neuer Schritt übernommen wurde; nach reinen Änderungen oder Löschungen erscheint er nicht.</li>
+<li>Solange er steht, warnt der Dialog «Code changes» oberhalb von «Workflow changes»: Schritte aus einer früheren Übernahme tragen im Repository noch <code>node=new</code>, deshalb können sie bei weiteren externen Änderungen als hinzugefügt und zugleich entfernt erscheinen. Übernehmen bleibt möglich; synchronisieren Sie zuerst den Code.</li>
+<li>Nach der Übernahme meldet ein kurzer Hinweis: «Sync the generated code with GitHub – see the notice above the workflow.»</li>
+</ul>
+</section>
+
+<!-- CODE-SYNC: PUSH AUS DEM EDITOR -->
+<section id="codegen-sync-push" class="doc-section">
+<span class="section-label">Code-Sync</span>
+<h1>Push to Git aus dem Workflow-Editor</h1>
+<p>Aus dem Dialog «Code changes» im Workflow-Editor erzeugt der Knopf <strong>Push to Git</strong> den Code des geöffneten Workflows und einen GitHub-Pull-Request, ohne den Editor zu verlassen. Er öffnet den gleichen Push-to-Git-Dialog wie der Generate-Tab; nur der geöffnete Workflow und die von ihm verwendeten PageObjects werden übergeben.</p>
+<ul class="feature-list">
+<li>Der Knopf ist gesperrt, solange der Workflow ungespeicherte Änderungen hat («Save your changes before pushing to Git») oder wenn die Projektrolle keine Editor-Rechte erlaubt («You need editor rights in this project to push to Git»).</li>
+<li>Vor dem Push prüft Autemos das Repository frisch. Hat das Repository nicht übernommene externe Änderungen, ist der Stand unbekannt oder weicht die akzeptierte Basis ab, erscheint eine Warnung und <strong>Create Pull Request</strong> bleibt gesperrt, bis die Checkbox <strong>Overwrite the external changes in the repository</strong> gesetzt ist. <strong>View changes</strong> springt in den Dialog «Code changes». Externe Änderungen werden so nie unbemerkt überschrieben.</li>
+<li>Bei ignorierten Änderungen oder einem noch offenen Pull Request erscheint nur ein Hinweis, der Push bleibt frei.</li>
+<li>Nach Erfolg meldet ein Hinweis <strong>Pull request #n created – not merged yet</strong>; der Indikator wechselt auf «Code sync: PR open».</li>
+</ul>
+<h2>Offener Pull Request und fehlende Git-Verbindung</h2>
+<ul class="feature-list">
+<li><strong>Offener Pull Request:</strong> Solange der Pull Request nicht gemergt ist, gibt es nichts zu vergleichen. Der Dialog «Code changes» zeigt dann eine Information mit dem Link <strong>Open pull request #n</strong> statt eines roten Fehlers und ohne Wiederholen-Knopf. Echte Ladefehler erscheinen weiterhin als Fehler mit Retry.</li>
+<li><strong>Keine Git-Verbindung:</strong> Der Editor zeigt «Code sync: not set up». Der Dialog erklärt «No Git connection is configured for this project.» und bietet den Link <strong>Set up Git connection</strong>, der direkt in die Einrichtung des Code Generation Hub führt. Push to Git ist bis dahin gesperrt («Set up a Git connection first»).</li>
+</ul>
+</section>
+
+<!-- CODE-SYNC: UNTERSTÜTZTE ÄNDERUNGEN -->
+<section id="codegen-sync-supported" class="doc-section">
+<span class="section-label">Code-Sync</span>
+<h1>Unterstützte Code-Änderungen</h1>
+<p>Der Code-Sync liest Änderungen am generierten Testcode knotengenau zurück. Jeder Workflow-Knoten steht im generierten Code zwischen den Marker-Kommentaren <code>@autemos node=… type=…</code> und <code>@autemos end</code>. Diese Marker ordnen den Code dem Knoten zu und dürfen nicht entfernt oder verändert werden. Ein neuer Schritt wird mit <code>@autemos node=new type=…</code> eingeleitet.</p>
+<h2>Änderungsarten</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Art</th><th>Bedeutung</th><th>Übernehmbar</th></tr></thead>
+<tbody>
+<tr><td><strong>MODIFIED</strong></td><td>Ein Parameter eines Knotens hat sich geändert (alter → neuer Wert).</td><td>Ja</td></tr>
+<tr><td><strong>ADDED</strong></td><td>Ein neuer Schritt wurde im Code ergänzt.</td><td>Ja, wenn die Form unterstützt wird</td></tr>
+<tr><td><strong>REMOVED</strong></td><td>Ein Schritt wurde aus dem Code entfernt. Wird der Schritt oder seine Variable noch von anderen Knoten gelesen, ist die Übernahme gesperrt.</td><td>Ja</td></tr>
+<tr><td><strong>REORDERED</strong></td><td>Die Reihenfolge der Schritte hat sich geändert.</td><td>Ja</td></tr>
+<tr><td><strong>MOVED</strong></td><td>Ein Schritt liegt in einem anderen Zweig, in oder ausserhalb eines Schleifenkörpers oder auf einer anderen Ebene.</td><td>Ja (Java/Playwright)</td></tr>
+<tr><td><strong>UNSUPPORTED</strong></td><td>Nicht synchronisierbare Änderung, mit Grund. Sperrt «Apply to workflow».</td><td>Nein</td></tr>
+<tr><td><strong>IGNORABLE</strong></td><td>Nur Kommentar- oder Leerzeilen.</td><td>Ohne Wirkung</td></tr>
+</tbody>
+</table>
+</div>
+<h2>Knotenarten und Parameter</h2>
+<p>Die folgende Tabelle gilt für Java/Playwright. Die Knotenarten navigate/openBrowser, type, select, wait und assert werden zusätzlich für TypeScript, Python und C# sowie für Selenium erkannt; die übrigen Zeilen und alle Strukturänderungen nur für Java/Playwright.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Knotenart</th><th>Parameter</th><th>Erkanntes Statement (Java/Playwright)</th></tr></thead>
+<tbody>
+<tr><td><strong>navigate, openBrowser</strong></td><td><code>url</code></td><td><code>page.navigate("…")</code></td></tr>
+<tr><td><strong>type</strong></td><td><code>value</code></td><td>PageObject-Aufruf <code>type…("…")</code> oder ohne PageObject <code>page.locator("…").fill("…")</code></td></tr>
+<tr><td><strong>select</strong></td><td><code>value</code></td><td>PageObject-Aufruf <code>selectByValue…("…")</code> oder <code>page.locator("…").selectOption("…")</code></td></tr>
+<tr><td><strong>wait</strong></td><td><code>duration</code></td><td><code>page.waitForTimeout(n)</code>. Die Vorschau zeigt den Wert in der Einheit des Knotens (ms oder s).</td></tr>
+<tr><td><strong>click</strong></td><td>–</td><td><code>page.locator("…").click()</code> oder PageObject-Aufruf <code>click…()</code></td></tr>
+<tr><td><strong>doubleClick</strong></td><td>–</td><td><code>page.locator("…").dblclick()</code></td></tr>
+<tr><td><strong>hover</strong></td><td>–</td><td><code>page.locator("…").hover()</code></td></tr>
+<tr><td><strong>check</strong></td><td><code>checked</code> (true/false)</td><td><code>page.locator("…").check()</code> bzw. <code>.uncheck()</code></td></tr>
+<tr><td><strong>pressKey</strong></td><td><code>key</code></td><td><code>page.locator("…").press("Enter")</code> bzw. <code>page.keyboard.press("Enter")</code></td></tr>
+<tr><td><strong>scroll</strong></td><td><code>scrollTo</code> (element, top, bottom)</td><td><code>scrollIntoViewIfNeeded()</code>, <code>window.scrollTo(0, 0)</code> bzw. <code>window.scrollTo(0, document.body.scrollHeight)</code>. Pixelwerte (<code>page.mouse.wheel</code>) werden erkannt, aber nicht synchronisiert.</td></tr>
+<tr><td><strong>assert</strong></td><td><code>condition</code>, Erwartungswert und weitere Parameter</td><td>siehe Tabelle der Assertion-Bedingungen unten</td></tr>
+<tr><td><strong>ifCondition, loop, callSubWorkflow</strong></td><td>Bedingung, Schleifenparameter, Sub-Workflow</td><td>siehe «Strukturänderungen»</td></tr>
+</tbody>
+</table>
+</div>
+<h3>Neue Schritte</h3>
+<p>Neue Schritte (ADDED) werden für navigate und wait in allen Sprachen übernommen. Nur bei Java/Playwright kommen ifCondition, loop und callSubWorkflow sowie in der <code>page.locator</code>-Form click, doubleClick, hover, check, pressKey, scroll, type, select und assert hinzu. Der neue Knoten erhält den Selektor aus dem Statement. Ein neuer Schritt, der ein PageObject-Element anspricht, ist nicht übernehmbar («new steps via a page object need the element mapping»), weil Autemos das Element nicht aus dem Code zuordnen kann; verwenden Sie die <code>page.locator("…")</code>-Form oder legen Sie den Schritt in Autemos an.</p>
+<h3>Selektoren in PageObject-Dateien</h3>
+<p>Ändert jemand den Selektor eines Felds in einer von Autemos erzeugten PageObject-Datei, zeigt der Sync die Änderung an jedem Knoten, der dieses Feld nutzt. <strong>Apply to workflow</strong> schreibt den neuen Selektor in das PageObject-Feld in Autemos. Das gilt für Web-PageObjects mit Playwright in Java, TypeScript, Python und C#. Felder werden über Marker <code>@autemos pageObjectField=…</code> zugeordnet; Felder werden in Autemos angelegt, umbenannt und entfernt, nicht im Code (ein doppelter Marker oder ein verändertes Locator-Literal wird als Problem gemeldet). In TypeScript sind Felder mit Mehrplattform-Locatoren (z. B. nur Android- oder iOS-Locator) nicht synchronisierbar. Selektoränderungen direkt im Test (<code>page.locator("…")</code>) werden erkannt, aber nicht übernommen.</p>
+<p>Jeder Workflow beobachtet die PageObject-Datei in seinem eigenen Zielordner. Haben Sie dasselbe PageObject aus zwei Workflows in unterschiedliche Zielordner übertragen, sind das zwei getrennte Dateien: Eine Änderung in der einen Datei zeigt nur der Workflow an, dessen Ordner sie betrifft, und eine spätere erneute Änderung desselben Felds wird mit <strong>Check now</strong> ebenfalls erkannt. Nutzen mehrere Workflows dasselbe PageObject, nennt der Grund der Änderung die anderen Workflows (<code>also used by: …</code>, höchstens fünf Namen, dann <code>+n more</code>), weil <strong>Apply to workflow</strong> den Selektor für alle diese Workflows ändert.</p>
+</section>
+
+<!-- CODE-SYNC: ASSERTIONS -->
+<section id="codegen-sync-assertions" class="doc-section">
+<span class="section-label">Code-Sync</span>
+<h1>Assertion-Bedingungen im Code-Sync</h1>
+<p>Für alle Bedingungen des Assertion-Katalogs schreibt der Java/Playwright-Generator ein eindeutiges Statement (<code>assertThat(…)</code> aus der Playwright-Assertions-Bibliothek). Der Sync liest daraus den Erwartungswert, die Bedingung (Vergleichsoperator) und Zusatzparameter zurück. Ein Wechsel zwischen erkannten Formen (z. B. <code>isEnabled</code> → <code>isDisabled</code>) ergibt eine Änderung der Bedingung. <code>L</code> steht für <code>page.locator("…")</code>.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Bedingung</th><th>Parameter</th><th>Statement</th></tr></thead>
+<tbody>
+<tr><td><strong>visible</strong></td><td>–</td><td><code>assertThat(L.first()).isVisible()</code></td></tr>
+<tr><td><strong>notVisible</strong></td><td>–</td><td><code>assertThat(L.first()).isHidden()</code></td></tr>
+<tr><td><strong>exists</strong></td><td>–</td><td><code>assertThat(L.first()).isAttached()</code></td></tr>
+<tr><td><strong>notExists</strong>, <strong>selectorNotExists</strong></td><td>–</td><td><code>assertThat(L).hasCount(0)</code> (beide Bedingungen teilen sich diese Form; der Sync behält die im Knoten gespeicherte)</td></tr>
+<tr><td><strong>countEquals</strong></td><td><code>expectedCount</code></td><td><code>assertThat(L).hasCount(n)</code></td></tr>
+<tr><td><strong>countGreaterThan</strong></td><td><code>expectedCount</code></td><td><code>assertThat(L.nth(n)).isAttached()</code></td></tr>
+<tr><td><strong>textEquals</strong></td><td><code>expectedValue</code></td><td><code>hasText("…")</code></td></tr>
+<tr><td><strong>textContains</strong></td><td><code>expectedValue</code></td><td><code>containsText("…")</code></td></tr>
+<tr><td><strong>textNotContains</strong></td><td><code>expectedValue</code></td><td><code>not().containsText("…")</code></td></tr>
+<tr><td><strong>textNotOnPage</strong></td><td><code>expectedValue</code></td><td><code>assertThat(page.locator("body")).not().containsText("…")</code> (ohne Knoten-Selektor)</td></tr>
+<tr><td><strong>valueEquals</strong></td><td><code>expectedValue</code></td><td><code>hasValue("…")</code></td></tr>
+<tr><td><strong>matches</strong></td><td><code>expectedValue</code> (regulärer Ausdruck)</td><td><code>containsText(java.util.regex.Pattern.compile("…"))</code></td></tr>
+<tr><td><strong>attributeContains</strong></td><td><code>attributeName</code>, <code>expectedValue</code></td><td><code>hasAttribute("name", Pattern.compile("…"))</code></td></tr>
+<tr><td><strong>enabled</strong> / <strong>disabled</strong></td><td>–</td><td><code>isEnabled()</code> / <code>isDisabled()</code></td></tr>
+<tr><td><strong>checked</strong> / <strong>unchecked</strong></td><td>–</td><td><code>isChecked()</code> / <code>not().isChecked()</code></td></tr>
+<tr><td><strong>pageLoaded</strong></td><td><code>expectedValue</code></td><td>Prüfung des Seitentitels (enthält den Wert)</td></tr>
+<tr><td><strong>urlContains</strong>, <strong>urlEquals</strong></td><td><code>expectedValue</code></td><td>URL-Prüfung der Seite</td></tr>
+<tr><td><strong>sorted</strong></td><td>Richtung</td><td>Nicht synchronisiert: Es gibt kein Playwright-Gegenstück. Der Export enthält einen gekennzeichneten Platzhalter; nur die Richtung lässt sich ändern.</td></tr>
+</tbody>
+</table>
+</div>
+<ul class="feature-list">
+<li>Ein neuer oder entfernter Assert-Block wird kontrolliert übernommen. Neue Asserts müssen in der <code>page.locator</code>- oder <code>page</code>-Form stehen.</li>
+<li>Nicht synchronisiert und mit Grund gekennzeichnet sind: Änderungen des Selektors oder Ziels, die PageObject-Form bei neuen Asserts, reguläre-Ausdrucks-Syntax in <code>hasAttribute</code>, Titel- und URL-Prüfungen, Variablenausdrücke sowie unbekannte Statements.</li>
+<li>Stammt die Basis eines Blocks aus einem Export vor der Unterstützung einer Bedingung, verlangt Autemos zuerst einen erneuten Push to Git, um die Basis zu aktualisieren.</li>
+<li>Die Vorschau zeigt je Assert die Bedingung und die betroffenen Parameter (alt → neu), bei neuen Asserts alle Parameter. Fehlende Pflichtparameter (Erwartungswert, Anzahl, Attributname) verhindern die Übernahme mit einer Meldung.</li>
+</ul>
+</section>
+
+<!-- CODE-SYNC: STRUKTUR -->
+<section id="codegen-sync-structure" class="doc-section">
+<span class="section-label">Code-Sync</span>
+<h1>Strukturänderungen: Bedingungen, Schleifen, Sub-Workflows</h1>
+<p>Bedingungen, Schleifen und Sub-Workflow-Aufrufe erscheinen im generierten Java/Playwright-Code eindeutig zuordenbar (mit eigenen Markern für Zweige und Schleifenkörper). Änderungen daran zeigt die Vorschau einzeln, inklusive der betroffenen Verbindungen (Bereiche <strong>Connections</strong> und <strong>Sub-workflow references</strong>). Übernommen wird nur, was eine gültige Workflow-Struktur ergibt; sonst ist die Änderung gekennzeichnet und «Apply to workflow» gesperrt.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Änderung im Code</th><th>Ergebnis</th></tr></thead>
+<tbody>
+<tr><td>Schritt in anderen Zweig, in oder aus einem Schleifenkörper, andere Ebene</td><td>MOVED, Verbindungen werden neu aufgebaut</td></tr>
+<tr><td>Schritte innerhalb einer Ebene umordnen</td><td>REORDERED</td></tr>
+<tr><td>Neuer Schritt in einem Zweig oder Schleifenkörper</td><td>ADDED mit Strukturpfad (z. B. «if1 › true»)</td></tr>
+<tr><td>Schritt entfernen</td><td>REMOVED (gesperrt, solange andere Knoten seine Variablen lesen)</td></tr>
+<tr><td>Neuer If-Block in der erzeugten Form <code>autemosCondition("…","operator","…")</code>, mit optionalem else</td><td>ADDED ifCondition mit Bedingung, Operator und Vergleichswert</td></tr>
+<tr><td>Neue Schleife in der Range-Form <code>autemosRange(from, to, step, max)</code></td><td>ADDED loop mit Bereich, Maximalzahl der Durchläufe und Variablenname</td></tr>
+<tr><td>If-Block oder Schleife löschen</td><td>REMOVED des Steuerknotens; verbliebene Kind-Schritte werden verschoben, gelöschte entfernt</td></tr>
+<tr><td>else-Zweig hinzufügen oder entfernen</td><td>Änderung der Verbindungen</td></tr>
+<tr><td>Sub-Workflow-Aufruf hinzufügen</td><td>ADDED callSubWorkflow (Voraussetzung: die Methode <code>autemosSub_&lt;id&gt;</code> existiert im Code)</td></tr>
+<tr><td>Sub-Workflow-Aufruf entfernen</td><td>REMOVED (gesperrt, solange seine Ausgabevariablen gelesen werden)</td></tr>
+<tr><td>Aufruf auf einen anderen Sub-Workflow umstellen</td><td>MODIFIED <code>workflowId</code>; Vertrag und Snapshot werden aus dem Ziel neu gelesen. Ein ungültiges Ziel sperrt die Übernahme.</td></tr>
+<tr><td>Eingabe-Zuordnungen hinzufügen oder entfernen</td><td>Übernehmbar für Literale; ein Pflicht-Input darf nicht entfallen</td></tr>
+<tr><td>Ausgabe-Zuordnungen (Output Mappings)</td><td>Zielvariable ändern, hinzufügen, entfernen; mit Leserprüfung</td></tr>
+<tr><td>Schleifenvariable (<code>variableName</code>)</td><td>MODIFIED mit Leserprüfung: Wird die alte Variable noch gelesen, ist die Übernahme gesperrt</td></tr>
+</tbody>
+</table>
+</div>
+<h2>Prüfregeln</h2>
+<ul class="feature-list">
+<li>Je If-Knoten höchstens eine true- und eine false-Verbindung, je Schleife genau eine Körper-Verbindung; keine Zyklen ausser der Rückkante der Schleife; alle erzeugten Knoten vom Start erreichbar; Verschachtelungstiefe höchstens 5.</li>
+<li>Sub-Workflow-Referenzen müssen existieren, im gleichen Projekt liegen, aktiv und als Sub-Workflow gekennzeichnet sein und dürfen sich nicht (auch nicht indirekt) selbst aufrufen.</li>
+<li>Die Übernahme bleibt atomar mit Versionen und Audit-Eintrag.</li>
+</ul>
+<h2>Grenzen</h2>
+<ul class="feature-list">
+<li>Strukturänderungen werden nur für Java/Playwright synchronisiert; in anderen Sprachen und Frameworks ist nur die Reihenfolge übernehmbar, Strukturänderungen sind als nicht unterstützt gekennzeichnet.</li>
+<li>Nicht unterstützt: <code>else if</code>, <code>switch</code>, ternäre Ausdrücke, freie Ausdrücke, Operatoren ausserhalb der elf Operatoren des If-Knotens, <code>while</code>, <code>do</code>, <code>for(;;)</code>, <code>break</code>/<code>continue</code>, Datensatz-Quellen bei Schleifen, Inputs aus Secrets, Bindings oder Datenbündeln, Variablen als Input, Änderungen an den Schritten innerhalb der Sub-Workflow-Methode sowie Tiefe über 5.</li>
+<li>Ausführung in Autemos: Die Workflow-Engine wertet Bedingungen und Schleifen genauso aus wie der generierte Test. Bei einer Bedingung läuft nur der zutreffende Zweig, eine Schleife durchläuft jeden Eintrag ihres Bereichs. Eine Schleife ohne gültige Datenquelle bricht mit einer klaren Meldung ab.</li>
+<li>Bedingung auf eine nicht gesetzte Workflow-Variable: Der generierte Test bricht mit «workflow variable &lt;name&gt; is not set» ab, statt still den Text zu vergleichen (Ausnahme: <code>isEmpty</code>/<code>isNotEmpty</code>).</li>
+</ul>
+</section>
+
+<!-- EXPORT: UMFANG -->
+<section id="codegen-export-coverage" class="doc-section">
+<span class="section-label">Code-Export</span>
+<h1>Umfang des Java/Playwright-Exports</h1>
+<p>Der Java/Playwright-Export erzeugt für jede Knotenart des Katalogs entweder ausführbaren, gleichwertigen Code oder meldet eine begründete Lücke. Es gibt keine stillen Fehlübersetzungen und keine TODO-Platzhalter mehr. Die Tabelle unten gilt nur für Java/Playwright. Für andere Sprachen und Frameworks gilt der Abschnitt «Andere Sprachen und Frameworks».</p>
+<h2>Status je Knotenart</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Status</th><th>Knotenarten</th></tr></thead>
+<tbody>
+<tr><td><strong>Generated</strong></td><td>navigate, type, click, select, doubleClick, hover, check, pressKey, scroll, selectCombobox, hoverAndClick, goBack, goForward, reload, rightClick, dragDrop, extractText, wait, assert, screenshot, Testdaten-Knoten (acquire, release, persist, resume), die sechs Kern-Tabellenknoten, apiRequest, apiVerify, apiExtract, ifCondition, loop, callSubWorkflow</td></tr>
+<tr><td><strong>Partial</strong></td><td>waitFor (nur «appears» und «disappears»), timeGap (im Test ohne Wartezeit), assert mit Bedingung «sorted» (kein Playwright-Gegenstück)</td></tr>
+<tr><td><strong>Framework</strong></td><td>openBrowser, closeBrowser, webhookTrigger, getInputVariables, subWorkflowParameters, setOutputVariables. Erscheinen als neutraler Kommentar (Auslöser bzw. Schnittstelle des Sub-Workflows), ohne Warnung.</td></tr>
+<tr><td><strong>Not generated</strong></td><td>Mobile Geräteaktionen (Appium-Export ist ein eigener Pfad); die übrigen Tabellenknoten; switchTab, closeTab, switchFrame, exitFrame, switchSession (wechseln den Kontext aller folgenden Schritte); handleDialog (Listener muss vor der Aktion stehen); uploadFile (Dateipfad liegt auf dem Autemos-Host); captureDownload; executeScript und customCode; easyTestData, httpRequest, runApiCollection, pdfCompare, verifyBlock (serverseitige Dienste)</td></tr>
+</tbody>
+</table>
+</div>
+<h2>Andere Sprachen und Frameworks</h2>
+<p>Für Java/Selenium sowie TypeScript, Python und C# (je Playwright oder Selenium) erzeugt Autemos weniger:</p>
+<ul class="feature-list">
+<li><strong>Als Code erzeugt:</strong> navigate; type, click und select, wenn der Schritt ein PageObject-Element anspricht; wait; screenshot; die Testdaten-Knoten. Eine Zusicherung (assert) wird nur als Gleichheitsvergleich erzeugt, mit einem Platzhalter für den Istwert und einer Warnung; ohne Erwartungswert entsteht eine Lücke. Rahmen-Knoten und timeGap erscheinen als Kommentar.</li>
+<li><strong>Lücke mit Kommentar «NICHT GENERIERT» und Warnung:</strong> alle übrigen Knotenarten (z. B. doubleClick, hover, check, pressKey, scroll, selectCombobox, hoverAndClick, goBack, goForward, reload, rightClick, dragDrop, waitFor, extractText, Tabellen-, API- und Ablaufknoten wie ifCondition, loop, callSubWorkflow) sowie type, click und select ohne PageObject-Element (Hinweis «Locator-Form nur für java/playwright»).</li>
+</ul>
+<h2>Neue Aktionen</h2>
+<ul class="feature-list">
+<li><strong>selectCombobox:</strong> natives <code>&lt;select&gt;</code> per Label, sonst Öffnen und Auswahl der Option mit exaktem Label (Rückfall Teiltext).</li>
+<li><strong>hoverAndClick, goBack, goForward, reload, rightClick, dragDrop</strong> als je eine Aktion; <strong>waitFor</strong> für «appears» und «disappears»; <strong>extractText</strong> speichert Text oder Attribut in eine Workflow-Variable.</li>
+<li>Ziele sind ein Selektor oder ein Feld eines PageObjects. Fehlt beides oder gibt es das PageObject nicht im Projekt, entsteht eine begründete Lücke statt eines Zugriffs ins Leere.</li>
+<li><strong>wait:</strong> Die Einheit des Knotens (ms oder s) wird korrekt umgerechnet; Variablen als Dauer werden zur Laufzeit gelesen.</li>
+<li><strong>Start-URL:</strong> Der Test startet mit der URL des ersten openBrowser-Knotens, sonst des ersten navigate-Knotens, sonst mit <code>about:blank</code>. Enthält die URL eine Variable, wird <code>about:blank</code> verwendet und die Variable beim Navigieren aufgelöst.</li>
+</ul>
+<h2>Gekennzeichnete Lücken</h2>
+<p>Enthält ein Test mindestens eine Lücke, steht als erste Zeile der Testmethode der Kommentar <code>UNVOLLSTAENDIG: n Schritt(e) nicht generiert – siehe GENERATION_ERRORS.txt</code>. Die Datei <code>GENERATION_ERRORS.txt</code> im Export nennt je Workflow, wie viele Schritte fehlen, und für jede Lücke den Grund. Die Seite «Supported changes» der In-App-Dokumentation enthält die Tabelle <strong>Code generation support</strong> mit einer Zeile je Knotenart.</p>
+</section>
+
+<!-- EXPORT: API -->
+<section id="codegen-export-api" class="doc-section">
+<span class="section-label">Code-Export</span>
+<h1>API-Schritte im Export</h1>
+<p>Der Java/Playwright-Export erzeugt für die Knoten <strong>apiRequest</strong>, <strong>apiVerify</strong> und <strong>apiExtract</strong> lauffähigen Code statt «NICHT GENERIERT». Für andere Sprachen und Frameworks bleibt es bei der Warnung «API-Schritte werden derzeit nur für java/playwright erzeugt».</p>
+<ul class="feature-list">
+<li><strong>Gemeinsame Sitzung:</strong> Alle API-Requests laufen über denselben Browser-Kontext wie der Browser. Cookies gelten dadurch in beide Richtungen, z. B. Login per API und danach eingeloggt im Browser. Ein Client-Zertifikat des Workflows gilt automatisch auch für API-Requests.</li>
+<li><strong>Authentifizierung</strong> kommt aus dem Knoten oder der Auth-Konfiguration: Bearer, Basic, API Key und OAuth2 (Client Credentials, mit einmaligem Wiederholen bei 401).</li>
+<li><strong>Geheimnisse</strong> stehen nie im Code. Ein Secret wird als Umgebungsvariable <code>AUTEMOS_SECRET_&lt;NAME&gt;</code> referenziert, der Name in Grossbuchstaben. Klartext-Werte sensibler Header (z. B. Authorization, Cookie, X-Api-Key) werden nicht übernommen, sondern als Umgebungsvariable <code>AUTEMOS_HEADER_&lt;NAME&gt;</code> erzeugt, mit Warnung. Fehlt eine Variable, bricht der Test mit einer klaren Meldung ab; die benötigten Variablen stehen im Kopfkommentar der Testmethode.</li>
+<li><strong>Gemerkte Werte:</strong> Per apiExtract gespeicherte Werte (Tokens, IDs) landen in den Workflow-Variablen und stehen späteren Schritten, auch Browser-Schritten, zur Verfügung. Die Antwort ist unter ihrem Alias und unter <code>lastResponse</code> abrufbar.</li>
+<li><strong>apiVerify</strong> unterstützt Status, JSONPath (mit denselben Operatoren wie die Laufzeit), teilweisen und exakten Body-Vergleich sowie eine maximale Antwortzeit. Die Prüfart «schema» (JSON-Schema) bleibt «NICHT GENERIERT» mit Warnung. Bei «soft failure» werden Fehler gesammelt und am Ende geworfen.</li>
+<li>Der Export enthält die benötigte JSONPath-Bibliothek in der <code>pom.xml</code>. Nicht auflösbare Auth-Konfigurationen führen zu einer Lücke mit Warnung, nie zu geratenem Code.</li>
+</ul>
+</section>
+
+<!-- EXPORT: TABELLEN -->
+<section id="codegen-export-tables" class="doc-section">
+<span class="section-label">Code-Export</span>
+<h1>Tabellenknoten im Export</h1>
+<p>Der Code Generation Hub übersetzt Workflows mit den sechs Kern-Tabellenknoten für Java/Playwright in lauffähigen Code. Bisher stand für diese Knoten «NICHT GENERIERT».</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Knoten</th><th>Wirkung im erzeugten Test</th></tr></thead>
+<tbody>
+<tr><td><strong>tableFindRow</strong></td><td>Sucht eine Zeile anhand von Kriterien (Spalte, Operator, Wert; alle oder beliebige) und speichert sie in einer Variable.</td></tr>
+<tr><td><strong>tableCellValue</strong></td><td>Liest den Wert einer Zelle der gefundenen Zeile.</td></tr>
+<tr><td><strong>tableVerify</strong></td><td>Prüft Zellwert, Existenz einer Zeile, Zeilenanzahl, alle oder mindestens eine Zeile, Kopfzeilen oder Existenz einer Spalte.</td></tr>
+<tr><td><strong>tableRows</strong></td><td>Zählt, liest oder prüft passende Zeilen (alle Modi ausser denen für ausgewählte Zeilen).</td></tr>
+<tr><td><strong>tableClickRow</strong></td><td>Klickt in die gefundene Zeile.</td></tr>
+<tr><td><strong>tableRunRowAction</strong></td><td>Führt eine definierte Zeilenaktion aus.</td></tr>
+</tbody>
+</table>
+</div>
+<ul class="feature-list">
+<li>Die Tabellendefinition wird als JSON-Ressource (<code>src/test/resources/tables/…</code>) mitgeliefert, die Tabellen-Bibliothek als Quelltext im Export. Der Export baut und läuft ohne Handarbeit.</li>
+<li>Suchverhalten, maximale Seitenzahl und Zeitlimit des Knotens (Blättern, Lazy Loading) werden übernommen; Werte können Variablen enthalten.</li>
+<li>Nicht abgedeckte Teilmodi, die übrigen Tabellenknoten und andere Ziele bleiben «NICHT GENERIERT» mit Warnung und Modusname, nie als stiller Platzhalter. Alle anderen Exporte bleiben unverändert.</li>
+</ul>
+</section>
+
 </div><!-- /content-wrap -->
+
+<!-- EXPORT: SELEKTOR-LITERALE -->
+<section id="codegen-export-selectors" class="doc-section">
+<span class="section-label">Code-Export</span>
+<h1>Selektoren im erzeugten Code</h1>
+<p>Steht ein Selektor im erzeugten PageObject-Code, schreibt Autemos ihn als gültiges Literal der Zielsprache, dessen Wert zur Laufzeit genau dem gespeicherten Selektor entspricht. Sonderzeichen im Selektor machen den Code nicht mehr unübersetzbar.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Ziel</th><th>Maskiert werden</th></tr></thead>
+<tbody>
+<tr><td>TypeScript (Backtick-Literal)</td><td>Backslash, Backtick und <code>${</code></td></tr>
+<tr><td>Java und C# (Literal in doppelten Anführungszeichen)</td><td>Backslash und doppeltes Anführungszeichen</td></tr>
+<tr><td>Python (Literal in einfachen Anführungszeichen)</td><td>Backslash und einfaches Anführungszeichen</td></tr>
+</tbody>
+</table>
+</div>
+<ul class="feature-list">
+<li>Das gilt für alle Selektorfelder der PageObjects, also auch für Android- und iOS-Locatoren und für Felder, die aus Ihrer Feldvorlage entstehen.</li>
+<li>Der Code-Sync liest diese maskierten Literale wieder zurück. Ein unmaskiertes <code>${…}</code> in einem TypeScript-Backtick-Literal (Interpolation) oder eine andere Maskierung wird als nicht synchronisierbar gemeldet.</li>
+<li>Zeilenumbrüche und Tabulatoren in Selektoren werden nicht maskiert.</li>
+</ul>
+</section>

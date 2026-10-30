@@ -56,6 +56,7 @@
     <table class="param-table">
       <thead><tr><th>Column</th><th>Description</th></tr></thead>
       <tbody>
+        <tr><td>Preview</td><td>Thumbnail of the stored screenshot, see <a href="#page-screenshots">Page Screenshots</a></td></tr>
         <tr><td>Name</td><td>Unique PageObject name</td></tr>
         <tr><td>Description</td><td>Optional page description</td></tr>
         <tr><td>URLs</td><td>Linked URLs</td></tr>
@@ -98,6 +99,7 @@
         <tr><td><strong>Description</strong></td><td>Optional explanation of the page's purpose</td></tr>
         <tr><td><strong>URLs</strong></td><td>One or more URLs associated with the page</td></tr>
         <tr><td><strong>Status</strong></td><td>Enable or disable the PageObject</td></tr>
+        <tr><td><strong>Screenshot</strong></td><td>Optional screenshot of the page (PNG or JPEG, at most 5 MB)</td></tr>
         <tr><td><strong>Locator Strategy</strong></td><td>Locator-based selectors compatible with XPath and CSS</td></tr>
       </tbody>
     </table>
@@ -120,6 +122,7 @@
     <table class="param-table">
       <thead><tr><th>Section</th><th>Description</th></tr></thead>
       <tbody>
+        <tr><td><strong>Screenshot</strong></td><td>Screenshot of the page, if stored</td></tr>
         <tr><td><strong>URL Section</strong></td><td>All URLs associated with the PageObject</td></tr>
         <tr><td><strong>Definition Tables</strong></td><td>Linked reusable table definitions</td></tr>
         <tr><td><strong>Fields Section</strong></td><td>All reusable selectors and fields</td></tr>
@@ -408,4 +411,51 @@
         <tr><td><strong>Business Abstraction</strong></td><td>Workflow users interact with business concepts, not raw selectors</td></tr>
         <tr><td><strong>AI-Assisted</strong></td><td>Recorder and AI generate technical assets automatically</td></tr>
         <tr><td><strong>Scalability</strong></td><td>Manage thousands of selectors consistently across large projects</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<section class="doc-section" id="page-screenshots">
+  <div class="node-header">
+    <div>
+      <h1>Page Screenshots</h1>
+      <span class="badge badge-pages">Pages</span>
+    </div>
+  </div>
+  <p>A screenshot can be stored for every page. This makes it immediately clear which page is meant: large in the detail view and as a thumbnail in the Pages list. The image can be uploaded by hand or is created automatically during a recording.</p>
+  <h2>Storing a screenshot</h2>
+  <ul class="feature-list">
+    <li>In the <strong>Create New Page</strong> and <strong>Edit Page</strong> dialogs, the <strong>Screenshot</strong> field selects a PNG or JPEG file (at most 5 MB). After selection, the dialog shows a small preview.</li>
+    <li><strong>Create</strong> or <strong>Update</strong> saves the page first and then uploads the image. If the upload fails (for example "File too large (max. 5 MB)" or "Not a valid PNG/JPEG image"), the dialog stays open and states the reason; the page data is then already saved and an existing image stays unchanged.</li>
+    <li>The file type is detected from the content, not the extension. Autemos compresses the image (JPEG, at most 1280 pixels wide) and creates a thumbnail; an image that is still larger than 1 MB afterwards is rejected.</li>
+    <li>A new image in <strong>Edit Page</strong> replaces the old one (no history). <strong>Remove screenshot</strong> (only visible if an image exists) removes it on the next <strong>Update</strong>. When the page is deleted, the image disappears too.</li>
+    <li>The same permissions apply as for editing the page.</li>
+  </ul>
+  <h2>Display</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Location</th><th>Presentation</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pages list</strong></td><td>New column <strong>Preview</strong> after the selection column with the thumbnail; without an image a subtle icon is shown ("No screenshot"). Clicking the thumbnail opens the detail view. Thumbnails are loaded only after the table is built and only for the displayed page.</td></tr>
+        <tr><td><strong>Page Details</strong></td><td>The <strong>Screenshot</strong> section above the accordions shows the image at full width. A click opens it at original size; below are date, dimensions and file size. Without an image: "No screenshot yet. Add one via Edit Page."</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Automatically while recording</h2>
+  <p>If a recorder creates a page during recording or uses a page without an image, it stores an image of the page the recording took place on in the background. An existing image, whether manual or automatic, is never overwritten. The recording is not slowed down; an error with the image aborts nothing and shows no message.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Recorder</th><th>Behavior</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Passive Recorder (web)</strong></td><td>On the first event on a new page, the image of that page is queued (at most 20 per session) and stored when the pages are saved. In a multi-page recording, each page shows its own page.</td></tr>
+        <tr><td><strong>AI Recorder (web)</strong></td><td>A newly assigned page receives an image of its page. If the action navigates away, no wrong image is created; it is made up for at the next assignment.</td></tr>
+        <tr><td><strong>Mobile Recorder</strong></td><td>If an element in a page without an image is tapped during recording, the device image from before the tap is stored (also on long press). No image is created for the generic page "IOSPage" or outside a recording.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip">
+    <span class="tip-icon">&#x1F4A1;</span>
+    An automatically created image can be replaced by your own at any time via <strong>Edit Page</strong>.
+  </div>
 </section>

@@ -13,7 +13,8 @@
   <div class="concept-grid">
     <div class="concept-card"><h3>LLM Integration</h3><p>Configuration of Large Language Models for AI functionality.</p></div>
     <div class="concept-card"><h3>Security</h3><p>Authentication, password policies, and access control.</p></div>
-    <div class="concept-card"><h3>Notifications</h3><p>Email and Slack-based notifications.</p></div>
+    <div class="concept-card"><h3>Notifications</h3><p>Mail connection (SMTP or Microsoft Graph) for notifications and system emails.</p></div>
+    <div class="concept-card"><h3>Audit Logs</h3><p>Read-only overview of all audit events.</p></div>
     <div class="concept-card"><h3>Storage</h3><p>Data policies, retention, and backups.</p></div>
     <div class="concept-card"><h3>Selenium Grid</h3><p>Distributed browser execution infrastructure.</p></div>
     <div class="concept-card"><h3>Cloud Providers</h3><p>External test platform integrations.</p></div>
@@ -103,43 +104,28 @@
     </table>
   </div>
 </section>
-<section class="doc-section" id="settings-notifications">
+<section id="settings-notifications" class="doc-section">
   <span class="section-label">Communication</span>
   <h1>Notification Settings</h1>
-  <p>The <strong>Notifications</strong> area manages system-wide communication channels for notifications and alerts.</p>
-  <div class="screenshot-wrap">
-    <img alt="Notification Settings" src="./autemos_settings_screenshots/image_5.png"/>
-    <div class="screenshot-caption">Notifications — SMTP configuration and Slack integration for email- and webhook-based notifications.</div>
-  </div>
-  <h2>Email Notifications — SMTP Configuration</h2>
+  <p>The <strong>Notifications</strong> tab centrally configures the platform's <strong>mail connection</strong>. It is used for test run notifications (see the <a href="#notifications-email">Notifications</a> module) and for all system emails. Further channels such as Microsoft Teams follow separately.</p>
+  <h2>"Email" section</h2>
   <div class="param-table-wrap">
     <table class="param-table">
-      <thead><tr><th>Field</th><th>Description</th></tr></thead>
+      <thead><tr><th>Setting</th><th>Description</th></tr></thead>
       <tbody>
-        <tr><td><strong>SMTP Server</strong></td><td>Hostname of the SMTP server</td></tr>
-        <tr><td><strong>SMTP Port</strong></td><td>SMTP server port (e.g., 587)</td></tr>
-        <tr><td><strong>Authentication</strong></td><td>Authentication credentials (encrypted storage)</td></tr>
-        <tr><td><strong>Sender Address</strong></td><td>Sender address for outgoing emails</td></tr>
-        <tr><td><strong>Admin Recipients</strong></td><td>Admin notification addresses</td></tr>
+        <tr><td><strong>Enable email notifications</strong></td><td>Switches email notifications for test runs on or off. System emails do not depend on this switch, only on a complete mail configuration.</td></tr>
+        <tr><td><strong>Mail provider</strong></td><td>Choose between <strong>SMTP</strong> and <strong>Microsoft Graph</strong> (Microsoft 365 / Outlook).</td></tr>
+        <tr><td><strong>SMTP</strong></td><td>Server, port, Security (STARTTLS, SSL/TLS or None), username, password and sender address. If the SMTP server field is left empty, Autemos uses the server's mail configuration ("Leave SMTP server empty to use the server mail configuration").</td></tr>
+        <tr><td><strong>Microsoft Graph</strong></td><td>Tenant ID, client ID, client secret and sender address of an app registration with the application permission <code>Mail.Send</code>.</td></tr>
+        <tr><td><strong>Send test email</strong></td><td>Sends a test email to your own address — using the <em>saved</em> settings. The response reports success or a short reason, never a secret or a stack trace.</td></tr>
       </tbody>
     </table>
   </div>
-  <h2>Email Features</h2>
-  <ul class="feature-list">
-    <li>System notifications</li>
-    <li>Execution alerts</li>
-    <li>Error reports</li>
-    <li>Administrative messages</li>
-  </ul>
-  <h2>Slack Integration</h2>
-  <p>Autemos supports Slack integration via webhooks. Webhook URLs are stored encrypted.</p>
-  <ul class="feature-list">
-    <li>Real-time notifications</li>
-    <li>Execution alerts</li>
-    <li>Error reports</li>
-    <li>Team communication</li>
-  </ul>
-  <div class="tip"><span class="tip-icon">🔒</span>Sensitive data such as passwords and webhook URLs are always stored encrypted in the backend.</div>
+  <div class="tip"><span class="tip-icon">🔒</span>Passwords and client secrets are stored encrypted and never returned in plain text. Stored values appear as "•••• (stored)".</div>
+  <h2>"Recipients" section</h2>
+  <p>With the <strong>Also notify project admins on failed runs</strong> switch (default: off), the project's admins also receive a notification when a run fails. The recipient logic is described in the <a href="#notifications-recipients">Notifications</a> module.</p>
+  <h2>System emails</h2>
+  <p>Password reset, "password changed", invitations and admin reset links are sent through the connection configured here as soon as it is complete for the chosen provider. Otherwise Autemos uses the server's mail configuration. If the chosen route fails, there is no second attempt via another route — the error is logged without the email content.</p>
 </section>
 <section class="doc-section" id="settings-storage">
   <span class="section-label">Infrastructure</span>
@@ -306,6 +292,42 @@
     <li>Secure credential storage</li>
     <li>Hidden UI values</li>
     <li>Secure API communication</li>
+  </ul>
+</section>
+
+<section id="settings-audit" class="doc-section">
+  <span class="section-label">Platform</span>
+  <h1>Audit Logs</h1>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Administrators only —</strong> The <strong>Audit Logs</strong> page is reserved for global administrators. Other users are redirected to the dashboard.
+  </div>
+  <p>The admin navigation shows <strong>Audit Logs</strong> below <strong>Global Settings</strong>. The page is a <strong>read-only record</strong> of all user and system actions — for example code sync, settings changes, secret actions, screenshot clean-up runs and password changes.</p>
+  <div class="screenshot-wrap">
+    <img alt="Audit Logs" src="./autemos_settings_screenshots/doku-audit-logs.png"/>
+    <div class="screenshot-caption">Audit Logs — filters, table and Export CSV.</div>
+  </div>
+  <h2>Filters and search</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Filter</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Search</strong></td><td>Free-text search; works together with the other filters.</td></tr>
+        <tr><td><strong>From / To</strong></td><td>Period in whole days.</td></tr>
+        <tr><td><strong>Result</strong></td><td>Successful or failed actions.</td></tr>
+        <tr><td><strong>User, Event, Category, Project</strong></td><td>List filters; "All" removes the filter.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Filtering and sorting happen on the server; the list is paged (default 50 entries, at most 200 per page) and sorted by time, newest first, by default. If no entry matches, "No audit events match the current filters" appears.</p>
+  <h2>Table and details</h2>
+  <p>The table shows <strong>Timestamp, User, Event, Category, Object, Action, Result</strong> and a <strong>Details</strong> button. The details dialog additionally names the event ID, project, error message, technical details (method, path, IP, source), the sanitised parameters, and old and new values where present. Categories include <em>Code Sync</em>, <em>Administration</em>, <em>Security</em> and <em>Test Management</em>; events without an assignment appear under <em>Other</em>. Background events without a sign-in carry the user "System".</p>
+  <h2>Export</h2>
+  <p><strong>Export CSV</strong> downloads <em>all</em> entries matching the active filters — not only the visible page — with a header row.</p>
+  <h2>Security</h2>
+  <ul class="feature-list">
+    <li>The page offers no edit and no delete; the database prevents later changes to entries.</li>
+    <li>Passwords, tokens and encrypted setting values appear neither in the table nor in the dialog nor in the CSV export; they are masked.</li>
+    <li>A failure while writing the audit entry does not abort the actual action.</li>
   </ul>
 </section>
 <section class="doc-section" id="settings-status">

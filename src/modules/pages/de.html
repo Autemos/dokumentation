@@ -61,6 +61,7 @@
     <table class="param-table">
       <thead><tr><th>Spalte</th><th>Beschreibung</th></tr></thead>
       <tbody>
+        <tr><td>Preview</td><td>Vorschaubild des hinterlegten Screenshots, siehe <a href="#page-screenshots">Page-Screenshots</a></td></tr>
         <tr><td>Name</td><td>Eindeutiger PageObject-Name</td></tr>
         <tr><td>Description</td><td>Optionale Page-Beschreibung</td></tr>
         <tr><td>URLs</td><td>Verknüpfte URLs</td></tr>
@@ -105,6 +106,7 @@
         <tr><td><strong>Description</strong></td><td>Optionale Erläuterung zum Zweck der Page</td></tr>
         <tr><td><strong>URLs</strong></td><td>Eine oder mehrere der Page zugeordnete URLs</td></tr>
         <tr><td><strong>Status</strong></td><td>PageObject aktivieren oder deaktivieren</td></tr>
+        <tr><td><strong>Screenshot</strong></td><td>Optionales Bildschirmfoto der Seite (PNG oder JPEG, höchstens 5 MB)</td></tr>
         <tr><td><strong>Locator Strategy</strong></td><td>Locator-basierte Selektoren kompatibel mit XPath und CSS</td></tr>
       </tbody>
     </table>
@@ -129,6 +131,7 @@
     <table class="param-table">
       <thead><tr><th>Abschnitt</th><th>Beschreibung</th></tr></thead>
       <tbody>
+        <tr><td><strong>Screenshot</strong></td><td>Bildschirmfoto der Page, sofern hinterlegt</td></tr>
         <tr><td><strong>URL Section</strong></td><td>Alle dem PageObject zugeordneten URLs</td></tr>
         <tr><td><strong>Definition Tables</strong></td><td>Verknüpfte wiederverwendbare Table Definitions</td></tr>
         <tr><td><strong>Fields Section</strong></td><td>Alle wiederverwendbaren Selektoren und Felder</td></tr>
@@ -435,6 +438,52 @@
         <tr><td><strong>Skalierbarkeit</strong></td><td>Tausende von Selektoren konsistent über grosse Projekte hinweg verwalten</td></tr>
       </tbody>
     </table>
+  </div>
+</section>
+
+
+<!-- PAGE SCREENSHOTS -->
+<section id="page-screenshots" class="doc-section">
+  <div class="node-header">
+    <div>
+      <h1>Page-Screenshots</h1>
+      <span class="badge badge-pages">Pages</span>
+    </div>
+  </div>
+  <p>Zu jeder Page lässt sich ein Bildschirmfoto hinterlegen. So ist ohne Rätseln klar, welche Seite gemeint ist: gross in der Detailansicht und als Vorschaubild in der Pages-Liste. Das Bild kann von Hand hochgeladen werden oder entsteht automatisch während einer Aufnahme.</p>
+  <h2>Screenshot hinterlegen</h2>
+  <ul class="feature-list">
+    <li>In den Dialogen <strong>Create New Page</strong> und <strong>Edit Page</strong> wählt das Feld <strong>Screenshot</strong> eine PNG- oder JPEG-Datei (höchstens 5 MB). Nach der Auswahl zeigt der Dialog eine kleine Vorschau.</li>
+    <li><strong>Create</strong> beziehungsweise <strong>Update</strong> speichert zuerst die Page und lädt danach das Bild hoch. Scheitert der Upload (z. B. «File too large (max. 5 MB)» oder «Not a valid PNG/JPEG image»), bleibt der Dialog offen und nennt den Grund; die Page-Daten sind dann bereits gespeichert, ein vorhandenes Bild bleibt unverändert.</li>
+    <li>Der Dateityp wird am Inhalt erkannt, nicht an der Endung. Autemos komprimiert das Bild (JPEG, höchstens 1280 Pixel breit) und erzeugt ein Vorschaubild; ein Bild, das danach noch grösser als 1 MB ist, wird abgelehnt.</li>
+    <li>Ein neues Bild in <strong>Edit Page</strong> ersetzt das alte (ohne Historie). <strong>Remove screenshot</strong> (nur sichtbar, wenn ein Bild existiert) entfernt es beim nächsten <strong>Update</strong>. Wird die Page gelöscht, verschwindet auch das Bild.</li>
+    <li>Es gelten dieselben Rechte wie beim Bearbeiten der Page.</li>
+  </ul>
+  <h2>Anzeige</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Ort</th><th>Darstellung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Pages-Liste</strong></td><td>Neue Spalte <strong>Preview</strong> nach der Auswahlspalte mit dem Vorschaubild; ohne Bild steht ein dezentes Symbol («No screenshot»). Ein Klick auf das Vorschaubild öffnet die Detailansicht. Vorschaubilder werden erst nach dem Aufbau der Tabelle und nur für die angezeigte Seite geladen.</td></tr>
+        <tr><td><strong>Page Details</strong></td><td>Der Abschnitt <strong>Screenshot</strong> über den Akkordeons zeigt das Bild in voller Breite. Ein Klick öffnet es in Originalgrösse; darunter stehen Datum, Abmessungen und Dateigrösse. Ohne Bild: «No screenshot yet. Add one via Edit Page.»</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <h2>Automatisch beim Aufnehmen</h2>
+  <p>Legt ein Recorder beim Aufnehmen eine Page an oder verwendet er eine Page ohne Bild, hinterlegt er im Hintergrund automatisch ein Bild der Seite, auf der aufgenommen wurde. Ein vorhandenes Bild, ob von Hand oder automatisch, wird dabei nie überschrieben. Die Aufnahme wird nicht ausgebremst; ein Fehler beim Bild bricht nichts ab und zeigt keine Meldung.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Recorder</th><th>Verhalten</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Passive Recorder (Web)</strong></td><td>Beim ersten Ereignis auf einer neuen Page wird das Bild dieser Seite vorgemerkt (höchstens 20 je Sitzung) und beim Speichern der Pages abgelegt. Bei einer mehrseitigen Aufnahme zeigt jede Page ihre eigene Seite.</td></tr>
+        <tr><td><strong>KI-Recorder (Web)</strong></td><td>Eine neu zugeordnete Page erhält ein Bild ihrer Seite. Navigiert die Aktion weg, entsteht kein falsches Bild; es wird bei der nächsten Zuordnung nachgeholt.</td></tr>
+        <tr><td><strong>Mobil-Recorder</strong></td><td>Tippt man während der Aufnahme ein Element an, das in einer Page ohne Bild liegt, wird das Geräte-Bild von vor dem Tap abgelegt (auch beim langen Drücken). Für die generische Page «IOSPage» und ausserhalb der Aufnahme entsteht kein Bild.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="tip">
+    <span class="tip-icon">&#x1F4A1;</span>
+    Ein automatisch erzeugtes Bild lässt sich jederzeit über <strong>Edit Page</strong> durch ein eigenes Bild ersetzen.
   </div>
 </section>
 

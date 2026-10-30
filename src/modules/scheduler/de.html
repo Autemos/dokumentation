@@ -150,6 +150,68 @@
   </div>
 </section>
 
+<section id="scheduler-testdata" class="doc-section">
+  <span class="section-label">Scheduler</span>
+  <h1>Testdaten im Zeitplan</h1>
+  <p>In <strong>Create New Schedule</strong> und <strong>Edit Schedule</strong> legen Sie beim Anhaken eines Workflows direkt fest, mit welchen Testdaten er läuft — mit denselben Möglichkeiten wie beim manuellen Lauf <a href="#testdata-datadriven">Data-driven execution…</a>.</p>
+  <h2>Auswahl im Dialog</h2>
+  <ul class="feature-list">
+    <li>Unter der Liste der Workflows erscheint für jeden angehakten Workflow ein Block <strong>Test data for «Workflow»</strong>. Abhaken entfernt den Block samt Auswahl. Im Block schalten Sie mit der Checkbox <strong>Data-driven execution</strong> die Datensatz-Auswahl ein. Verweist der Workflow auf kein Data-driven Binding, erscheint stattdessen ein Hinweis mit dem Link <em>Set up a data-driven binding</em>.</li>
+    <li>Als Modus stehen <strong>Single dataset</strong>, <strong>All datasets</strong>, <strong>Selected datasets</strong>, <strong>First N datasets</strong> und <strong>By tags</strong> zur Verfügung (Tags siehe <a href="#testdata-easy">Test Data Easy</a>).</li>
+    <li>Ist die Auswahl unvollständig, bleiben <strong>Create Schedule</strong> bzw. <strong>Save Changes</strong> gesperrt.</li>
+    <li>Die Auswahl gilt nur für Zeitpläne mit dem Ziel Workflows, nicht für Collections. Ohne Auswahl läuft der Workflow wie bisher einmal.</li>
+  </ul>
+  <h2>Bearbeiten</h2>
+  <p>Im Edit-Dialog sind die dem Zeitplan zugeordneten Tests angehakt und zeigen ihre gespeicherte Auswahl. Neu angehakte Tests werden beim Speichern hinzugefügt, geänderte Auswahlen aktualisiert. <strong>Abhaken entfernt den Test beim Speichern aus dem Zeitplan</strong> („Unchecking removes the test from this schedule when you save.“).</p>
+  <h2>Detailseite und Lauf</h2>
+  <ul class="feature-list">
+    <li>Die Detailseite fasst die Auswahl je Test in einer Zeile zusammen, z. B. „Data-driven execution: country · First 10 datasets · Tags: Smoke · Source: Easy Test Data“.</li>
+    <li>Beim Lauf startet der Zeitplan einen Batch mit einem Run je Datensatz; der Run-Verlauf zeigt den Datensatz je Lauf.</li>
+    <li>Fehlt einem Datensatz ein vom Workflow benötigtes Feld, wird der Test mit einer Meldung als <em>FAILED</em> beendet, ohne dass ein Run startet.</li>
+  </ul>
+</section>
+
+<section id="scheduler-xray" class="doc-section">
+  <span class="section-label">Scheduler</span>
+  <h1>Xray-Reporting pro Zeitplan</h1>
+  <p>Jeder Workflow-Zeitplan entscheidet selbst, ob seine Ergebnisse nach Jira Xray gemeldet werden. Technische Kontrollläufe, Entwicklungstests oder häufig ausgeführte Regressionstests erzeugen so keine unnötigen Test Executions.</p>
+  <h2>Einstellungen im Dialog</h2>
+  <p>Der Abschnitt <em>Reporting</em> erscheint in Create/Edit Schedule, wenn das Projekt eine Jira-Zuordnung hat und das Ziel Workflows ist (nicht Collections).</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Element</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Report results to Jira Xray</strong></td><td>Schalter, Standard <strong>aus</strong>. Hilfetext: „Creates a new Xray test execution for every scheduled run.“ Bestehende Zeitpläne bleiben aus.</td></tr>
+        <tr><td><strong>Xray Test Plan</strong></td><td>Erscheint nur bei eingeschaltetem Schalter. Ein Jira-Schlüssel wie <code>SB-381</code>. Leer übernimmt den Test Plan, den das Projekt als Standard hinterlegt hat („Leave empty to use the project default (KEY)“). Hat das Projekt keinen Standard, ist das Feld Pflicht.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="feature-list">
+    <li>Gespeichert wird nur mit gültiger Konfiguration: ohne Jira-Zuordnung des Projekts erscheint „Reporting to Jira Xray needs a Jira mapping for this project.“, ohne Test Plan „A test plan is required to report results to Jira Xray. …“, bei ungültigem Schlüssel „… is not a valid Jira issue key.“</li>
+    <li>Ausschalten ist immer möglich. Der eingetragene Plan bleibt erhalten, wird aber nicht benutzt.</li>
+  </ul>
+  <h2>Was bei jedem Lauf passiert</h2>
+  <p>Ist der Schalter an, legt Autemos nach dem Ende jedes Zeitplan-Laufs eine <strong>neue Xray Test Execution</strong> im Test Plan an. Der Titel lautet „Autemos – &lt;Zeitplanname&gt; – &lt;Datum Uhrzeit&gt; (run &lt;Kennung&gt;)“. Gemeldet werden die Xray-Tests, die mit den Workflows des Zeitplans verknüpft sind — in einer einzigen Anfrage mit den echten Ergebnissen. Ältere Läufe behalten ihre eigene Execution und werden nie überschrieben.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Ergebnis in Autemos</th><th>Status in Xray</th><th>Kommentar</th></tr></thead>
+      <tbody>
+        <tr><td>bestanden</td><td>PASSED</td><td>nur Testname und Status</td></tr>
+        <tr><td>fehlgeschlagen</td><td>FAILED</td><td>Fehlertext</td></tr>
+        <tr><td>technischer Fehler (Startfehler, Abbruch, Timeout)</td><td>FAILED</td><td>„Technical error: …“</td></tr>
+        <tr><td>nicht gelaufen (Abhängigkeit fehlgeschlagen)</td><td>TODO</td><td>„Not run: dependency failed“</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="feature-list">
+    <li>Ist ein Xray-Test mit mehreren Workflows verknüpft, gilt der schlechteste Status; bei Wiederholungen zählt der letzte Versuch.</li>
+    <li>Der Kommentar je Test enthält den Link zum Report des Laufs.</li>
+    <li>Sind keine Xray-Tests verknüpft, wird nichts nach Jira gesendet.</li>
+    <li>Scheitert die Meldung (z. B. Jira nicht erreichbar), ändert das weder Ergebnis noch Status des Zeitplan-Laufs.</li>
+    <li>Die Detailseite zeigt den Stand („Reporting to Jira Xray: On“ oder „Off“) und den wirksamen Test Plan („Test Plan: KEY“, „Test Plan: KEY (from project)“ oder „No test plan set.“).</li>
+  </ul>
+</section>
+
 <!-- UPCOMING RUNS -->
 <section id="upcoming-runs" class="doc-section">
   <div class="node-header">

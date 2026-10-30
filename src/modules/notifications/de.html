@@ -1,0 +1,112 @@
+<div class="content-wrap">
+
+<!-- OVERVIEW -->
+<section id="notifications-overview" class="doc-section">
+  <span class="section-label">Erste Schritte</span>
+  <h1>Notifications</h1>
+  <p>Autemos meldet das Ergebnis eines Testlaufs von selbst: Wer einen Lauf gestartet hat, muss das Ergebnis nicht mehr in Autemos nachschauen gehen. Nach dem Ende jedes Laufs erscheint eine Meldung in der <strong>Glocke</strong> der Kopfzeile und — je nach Einstellung — eine <strong>E-Mail</strong>.</p>
+  <h2>Kanäle</h2>
+  <div class="concept-grid">
+    <div class="concept-card"><h3>In-App (Glocke)</h3><p>Meldung mit Workflow, Ergebnis, Zeit und Link zum Bericht — auf jeder Seite der Anwendung.</p></div>
+    <div class="concept-card"><h3>E-Mail</h3><p>Versand über SMTP oder Microsoft Graph (Microsoft 365 / Outlook), zentral vom Administrator konfiguriert.</p></div>
+  </div>
+  <p>Weitere Kanäle, etwa Microsoft Teams, folgen separat.</p>
+  <h2>Ergebnisse</h2>
+  <p>Gemeldet werden die drei Ergebnisse <strong>Passed</strong>, <strong>Failed</strong> und <strong>Cancelled</strong> (gestoppter Lauf). Jeder Benutzer legt selbst fest, welches Ergebnis er über welchen Kanal erhalten möchte.</p>
+  <h2>Wo finde ich was?</h2>
+  <ul class="feature-list">
+    <li><a href="#notifications-bell">Glocke</a> — Meldungen lesen und zum Bericht springen</li>
+    <li><a href="#notifications-preferences">Einstellungen im Profil</a> — pro Benutzer wählen, was ankommt</li>
+    <li><a href="#notifications-recipients">Empfänger &amp; Ergebnisse</a> — wer bei welchem Lauf benachrichtigt wird</li>
+    <li><a href="#notifications-email">E-Mail-Versand</a> — Inhalt der Mail und Einrichtung durch Administratoren</li>
+  </ul>
+</section>
+
+<!-- BELL -->
+<section id="notifications-bell" class="doc-section">
+  <span class="section-label">Für Benutzer</span>
+  <h1>Die Glocke</h1>
+  <p>Die Glocke steht auf jeder Seite in der Kopfzeile, zwischen dem Theme-Umschalter und dem Avatar. Ihr Zähler zeigt ungelesene Meldungen, ohne dass Sie irgendwo hin navigieren müssen.</p>
+  <h2>Zähler und Panel</h2>
+  <ul class="feature-list">
+    <li>Der Knopf heisst <strong>Notifications</strong>, bei ungelesenen Meldungen <strong>Notifications (N unread)</strong>. Ein Badge zeigt die Zahl; ab 100 steht „99+“. Bei 0 gibt es kein Badge.</li>
+    <li>Ein Klick öffnet das Panel <strong>Notifications</strong>. <strong>Mark all as read</strong> setzt alle Meldungen auf gelesen (deaktiviert, wenn keine ungelesen sind). Escape oder ein Klick ausserhalb schliesst das Panel.</li>
+    <li>Der Zähler aktualisiert sich ohne Neuladen spätestens nach 30 Sekunden, solange der Browser-Tab sichtbar ist; beim Öffnen des Panels wird die Liste sofort neu geladen.</li>
+  </ul>
+  <h2>Ein Eintrag</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Element</th><th>Beschreibung</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Workflow-Name</strong></td><td>Eine Zeile; der volle Name steht als Tooltip.</td></tr>
+        <tr><td><strong>Ergebnis</strong></td><td>Badge <em>Passed</em> (grün), <em>Failed</em> (rot) oder <em>Cancelled</em> (grau).</td></tr>
+        <tr><td><strong>Zeit</strong></td><td>Relativ (z. B. „2 min ago“); der genaue Zeitpunkt steht als Tooltip.</td></tr>
+        <tr><td><strong>Ungelesen</strong></td><td>Punkt links und fette Schrift.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Ein Klick auf den Eintrag öffnet den <strong>Bericht genau dieses Laufs</strong> und markiert die Meldung als gelesen — auch nach dem Neuladen. Ohne Lauf-Kennung führt der Eintrag zur Laufübersicht des Projekts.</p>
+  <h2>Leer- und Fehlerzustand</h2>
+  <p>Ohne Meldungen steht „No notifications yet“. Lässt sich die Liste nicht laden, erscheint „Notifications could not be loaded“ mit dem Knopf <strong>Retry</strong>.</p>
+  <div class="tip"><span class="tip-icon">🔒</span>Jeder Benutzer sieht nur seine eigenen Meldungen.</div>
+</section>
+
+<!-- PREFERENCES -->
+<section id="notifications-preferences" class="doc-section">
+  <span class="section-label">Für Benutzer</span>
+  <h1>Einstellungen im Profil</h1>
+  <p>In den <strong>Personal Settings</strong> (Avatar-Menü) hat der Reiter <strong>Notifications</strong> eine Tabelle: Zeilen sind die Ergebnisse <strong>Passed</strong>, <strong>Failed</strong> und <strong>Cancelled</strong>, Spalten sind die Kanäle <strong>In-App</strong> und <strong>E-Mail</strong>. Jede Zelle ist ein Schalter, z. B. „E-Mail – Failed“.</p>
+  <h2>Verhalten</h2>
+  <ul class="feature-list">
+    <li>Ein Schalter speichert <strong>sofort</strong>. Schlägt das Speichern fehl, springt er zurück, und eine Meldung erscheint.</li>
+    <li>Die Standardwerte ohne eigene Einstellung: <strong>In-App</strong> für alle drei Ergebnisse an; <strong>E-Mail</strong> nur für <em>Failed</em>.</li>
+    <li>Hat der Administrator die E-Mail-Anbindung nicht eingerichtet, ist die Spalte <em>E-Mail</em> gesperrt und zeigt „Not configured by your administrator“. Ihre Auswahl bleibt erhalten und gilt, sobald die Anbindung steht.</li>
+    <li>Lässt sich die Tabelle nicht laden, bietet <strong>Retry</strong> einen neuen Versuch.</li>
+  </ul>
+</section>
+
+<!-- RECIPIENTS -->
+<section id="notifications-recipients" class="doc-section">
+  <span class="section-label">Regeln &amp; Versand</span>
+  <h1>Empfänger &amp; Ergebnisse</h1>
+  <p>Nach dem Ende jedes Laufs ermittelt Autemos die Empfänger und prüft für jeden einzeln dessen persönliche Einstellung je Kanal und Ergebnis.</p>
+  <h2>Wer wird benachrichtigt?</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Empfänger</th><th>Wann</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Starter</strong></td><td>Der angemeldete Benutzer, der den Lauf gestartet hat.</td></tr>
+        <tr><td><strong>Zeitplan-Owner</strong></td><td>Bei Läufen, die ein Zeitplan startet: der Benutzer, der den Zeitplan angelegt hat.</td></tr>
+        <tr><td><strong>Projekt-Admins</strong></td><td>Zusätzlich bei <em>Failed</em>, wenn ein Administrator in den Global Settings <em>Also notify project admins on failed runs</em> eingeschaltet hat (Standard: aus).</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="feature-list">
+    <li>Ist jemand in mehreren Rollen Empfänger, erhält er die Meldung nur einmal.</li>
+    <li>Läufe ohne zuordenbaren Benutzer — etwa über einen API-Schlüssel gestartete — erzeugen keine Meldung.</li>
+  </ul>
+  <h2>Ergebnisse</h2>
+  <ul class="feature-list">
+    <li><strong>Passed</strong> und <strong>Failed</strong> entsprechen dem Ergebnis des Laufs.</li>
+    <li><strong>Cancelled</strong> steht für einen gestoppten Lauf. Ein Stopp, der erst im letzten Knoten eintrifft, geht nicht mehr verloren — der Lauf endet als gestoppt.</li>
+  </ul>
+  <h2>Ausfälle</h2>
+  <p>Der Versand läuft im Hintergrund. Scheitert ein Kanal, bleiben die anderen Kanäle, die anderen Empfänger und der Lauf selbst unberührt.</p>
+</section>
+
+<!-- EMAIL -->
+<section id="notifications-email" class="doc-section">
+  <span class="section-label">Regeln &amp; Versand</span>
+  <h1>E-Mail-Versand</h1>
+  <h2>Inhalt der Mail</h2>
+  <ul class="feature-list">
+    <li><strong>Betreff:</strong> „[Autemos] Passed|Failed|Cancelled: &lt;Workflow&gt;“</li>
+    <li><strong>Text:</strong> Workflow-Name, Ergebnis, Zeitpunkt des Laufendes (mit Zeitzonen-Versatz), Projekt und ein <strong>direkter Link zum Testbericht</strong>. Gibt es keinen Bericht, steht ein entsprechender Hinweis.</li>
+    <li><strong>Empfängeradresse:</strong> die E-Mail-Adresse des Benutzers. Fehlt sie, wird keine Mail versandt.</li>
+  </ul>
+  <h2>Einrichtung durch Administratoren</h2>
+  <p>Die Mail-Anbindung wird einmal zentral in den <a href="#settings-notifications">Global Settings → Notifications</a> eingerichtet: Provider <strong>SMTP</strong> oder <strong>Microsoft Graph</strong>, die Zugangsdaten (verschlüsselt gespeichert) und der Absender. Mit <strong>Send test email</strong> prüfen Administratoren die Anbindung. Solange die Anbindung unvollständig ist, bleibt der E-Mail-Kanal für alle Benutzer gesperrt.</p>
+  <div class="tip"><span class="tip-icon">💡</span>Dieselbe Anbindung versendet auch die System-Mails (Passwort-Reset, Einladung usw.), siehe <a href="#users-login">Anmeldung &amp; Passwort vergessen</a>.</div>
+</section>
+
+</div>

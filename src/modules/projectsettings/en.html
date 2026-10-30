@@ -134,6 +134,19 @@
     <li>Remove inactive users</li>
   </ul>
 </section>
+
+<section id="projectsettings-testruns" class="doc-section">
+  <span class="section-label">Configuration</span>
+  <h1>Test Runs</h1>
+  <p>The <strong>Test Runs</strong> tab of the project settings is visible to project admins and sets defaults for the project's run reports.</p>
+  <h2>Screenshots in the report</h2>
+  <ul class="feature-list">
+    <li>The switch <strong>Show screenshots by default</strong> sets the screenshot default (default: off). It saves immediately.</li>
+    <li>Every run report of the project opens with this state of the <strong>Screenshots</strong> switch.</li>
+    <li>In the report, you can still toggle for the current view; the toggle applies only to that view and does not change the project setting.</li>
+    <li>The switch only controls the <em>display</em> in the report. Whether screenshots are captured during the run is governed by the global setting.</li>
+  </ul>
+</section>
 <section class="doc-section" id="projectsettings-apikeys">
   <span class="section-label">Integration &amp; Security</span>
   <h1>API Keys</h1>
@@ -256,6 +269,14 @@
     <li>Changes apply automatically across dependent requests</li>
     <li>Credentials are never exposed in workflows</li>
   </ul>
+  <h2>Deleting secrets</h2>
+  <p>A secret <strong>cannot be deleted while it is used anywhere</strong>. This applies to project, global and personal secrets. Uses in workflows, in the input mappings of sub-workflows, in embedded sub-workflows and in auth configurations are taken into account.</p>
+  <ul class="feature-list">
+    <li>The delete dialog states the <strong>number</strong> and <strong>locations</strong> of the usage ("Secret "KEY" cannot be deleted: it is still referenced in N places. Remove or replace these references first, then delete the secret."); the <em>Delete</em> button stays disabled.</li>
+    <li>Workflow locations lead to the editor; locations in auth configurations lead to the project's Auth &amp; Secrets tab or, for global configurations, to Global Settings.</li>
+    <li>Once the secret is no longer referenced anywhere, it can be deleted.</li>
+  </ul>
+  <div class="tip"><span class="tip-icon">🔒</span>Showing the plain text of a secret is reserved for global administrators; project admins do not see this function (see <a href="#users-roles">Roles &amp; Permissions</a>).</div>
 </section>
 <section class="doc-section" id="projectsettings-best-practices">
   <span class="section-label">Usage</span>

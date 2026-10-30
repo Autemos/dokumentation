@@ -9,12 +9,12 @@ Statische HTML-Produktdokumentation für die Testautomatisierungsplattform Autem
 | `autemos.html` | Hauptdatei der Dokumentation (Single-Page, generiert) |
 | `autemos_favicon.svg` | Favicon |
 | `autemos_bot.png` | Avatar des Chatbots „ask Autemos“ |
-| `autemos_en_*.js` | Englische Übersetzungen (21 Dateien, generiert, eine pro Modul) |
+| `autemos_en_*.js` | Englische Übersetzungen (22 Dateien, generiert, eine pro Modul) |
 | `autemos_*` / `Pages_Module_Assets` / `Test_Scheduler_Documentation` (Ordner) | Screenshots aller Module |
 | `src/` | Quellen von `autemos.html` und `autemos_en_*.js` (wird nicht deployt) |
 | `build.py` / `extract.py` | Build-Skript / Skript der einmaligen Migration (werden nicht deployt) |
 
-**Gesamt**: 1 HTML + 1 SVG + 1 PNG + 21 JS-Dateien + 21 Bildordner. Nur `autemos.html` und die 21 JS-Dateien werden aus `src/` generiert; Screenshots, Favicon und Chatbot-Avatar werden direkt gepflegt.
+**Gesamt**: 1 HTML + 1 SVG + 1 PNG + 22 JS-Dateien + 21 Bildordner. Nur `autemos.html` und die 22 JS-Dateien werden aus `src/` generiert; Screenshots, Favicon und Chatbot-Avatar werden direkt gepflegt.
 
 ## 🚀 Deployment
 
@@ -54,9 +54,9 @@ Anschliessend `http://localhost:8080/autemos.html` öffnen.
 
 - **Zweisprachig** — Umschalter DE / EN oben rechts im Header. Die Auswahl wird im localStorage gespeichert.
 - **Sidebar-Navigation** — Einklappbare Gruppen (Management / Project / Settings / Deployment). Der Zustand wird gespeichert.
-- **Modulwechsel** — 21 Module mit jeweils eigener Unternavigation.
+- **Modulwechsel** — 22 Module mit jeweils eigener Unternavigation.
 - **Modulübergreifende Suche** — Das Suchfeld mit Lupe im Header durchsucht alle Module in beiden Sprachen.
-- **Chatbot „ask Autemos“** — Schwebendes Widget unten rechts. Clientseitige Stichwortsuche über alle 259 Sektionen.
+- **Chatbot „ask Autemos“** — Schwebendes Widget unten rechts. Clientseitige Stichwortsuche über alle 317 Sektionen.
 - **Keine externen CDN-Abhängigkeiten** für Inhalte — nur Google Fonts (Inter). Ansonsten in sich geschlossen.
 
 ## 🛠️ Wartung

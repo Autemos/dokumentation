@@ -154,6 +154,33 @@
     <li>Rotate certificates regularly</li>
   </ul>
 </section>
+
+<section id="personalsettings-security" class="doc-section">
+  <span class="section-label">Account</span>
+  <h1>Security &amp; Change Password</h1>
+  <p>In the <strong>Security</strong> tab of Personal Settings, you change your password in the <strong>Change Password</strong> area.</p>
+  <h2>Fields</h2>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Field</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Current Password</strong></td><td>Your current password as proof.</td></tr>
+        <tr><td><strong>New Password</strong></td><td>The new password. Below it, the <em>Password requirements</em> list shows the rules (see below).</td></tr>
+        <tr><td><strong>Confirm New Password</strong></td><td>Repetition of the new password.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>Each field has an eye icon that reveals the input. Errors appear directly at the affected field: wrong current password, mismatching confirmation, a violation of the password rules, or a new password that equals the current one.</p>
+  <h2>Password rules</h2>
+  <p>By default: at least 8 and at most 128 characters, at least one letter and at least one digit ("At least 8 characters, including a letter and a number"). Below <strong>New Password</strong> is the <strong>Password requirements</strong> list with one entry per rule. Each entry shows by text — <strong>Met</strong> or <strong>Not met</strong> — whether the rule is satisfied and updates with every keystroke. The same list appears on the password reset page.</p>
+  <h2>After the change</h2>
+  <ul class="feature-list">
+    <li>All other sessions of the user become invalid; they have to sign in again.</li>
+    <li>The current session stays signed in.</li>
+    <li>The change appears as a security event in the <a href="#settings-audit">Audit Log</a> — without the passwords themselves.</li>
+  </ul>
+</section>
+
 <section class="doc-section" id="personalsettings-logout">
   <span class="section-label">Account</span>
   <h1>Logout</h1>
@@ -164,4 +191,46 @@
     <li>The active user context is cleared</li>
     <li>The user returns to the login screen</li>
   </ul>
+</section>
+
+<section id="personalsettings-tours" class="doc-section">
+  <span class="section-label">Help</span>
+  <h1>Guided Tours</h1>
+  <p>Guided tours explain interfaces step by step. A tour highlights one element at a time and explains it in a small dialog.</p>
+  <h2>Getting started</h2>
+  <p>The avatar menu has the entry <strong>Start guided tour</strong> between <em>Settings</em> and <em>Logout</em>. The <strong>Getting started</strong> tour walks you through the frame of the application.</p>
+  <ul class="feature-list">
+    <li><strong>Next</strong>, <strong>Back</strong> and <strong>Done</strong> move through the steps; a counter shows progress.</li>
+    <li><strong>Skip tour</strong>, the Escape key or a click outside ends the tour.</li>
+    <li>The tour <strong>never starts automatically</strong>. Whether you have seen or skipped it is remembered on the server per user; tours not yet seen carry a "New" badge on the menu entry. It can be restarted any number of times.</li>
+  </ul>
+  <h2>Feature tours</h2>
+  <p>Larger areas have their own tour, which you start with the <strong>Tour</strong> button in the page header. Currently there is the <strong>Recorder tour</strong> (Recorder) and the <strong>Workflow tour</strong> (workflow list, in all tabs, for all roles).</p>
+  <ul class="feature-list">
+    <li>Feature tours are <strong>interactive</strong>: some steps wait for you to click the highlighted element ("Click … to continue") or to open a dialog.</li>
+    <li>They span pages and dialogs. With <strong>Back</strong>, the tour restores the previous state; a dialog opened for that step (for example <em>Add Session</em>) is closed again.</li>
+    <li>A click outside does <em>not</em> end the tour, so you can work with the page during the tour. If you leave the feature's area, the tour ends.</li>
+    <li>If an element is not present, the tour explains the step centred or skips it.</li>
+  </ul>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>A tour never starts anything by itself —</strong> neither a session nor a recording nor an execution. In the "Start Session" step of the Recorder tour, the button is highlighted but a click starts nothing; a note in the dialog ("Session start is paused while a tour is running…") explains this. Finish or skip the tour, then start the session as usual. The tour also explains where a recording is stopped on the toolbar.
+  </div>
+</section>
+
+<section id="personalsettings-buildinfo" class="doc-section">
+  <span class="section-label">Help</span>
+  <h1>Build Info &amp; Support ID</h1>
+  <p>Below <strong>Logout</strong>, the avatar menu shows a footer with the details that support needs for enquiries.</p>
+  <div class="param-table-wrap">
+    <table class="param-table">
+      <thead><tr><th>Entry</th><th>Description</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Frontend build</strong></td><td>Build time of the UI in the format "Build DD.MM.YYYY HH:MM UTC - sha7" (sha7 = the first seven characters of the code version; if it is missing, for example in local builds, that part is omitted).</td></tr>
+        <tr><td><strong>Backend build</strong></td><td>The same information for the server. If it is not known, "—" is shown.</td></tr>
+        <tr><td><strong>Support ID</strong></td><td>An identifier per browser tab; a new tab has a new ID. It can be copied.</td></tr>
+        <tr><td><strong>Copy for support</strong></td><td>Copies version, build, browser, support ID and current time to the clipboard — to paste into a support request.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p>The support ID is sent to the server with every request. This lets support find the matching server log entries for your report.</p>
 </section>
