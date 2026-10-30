@@ -106,7 +106,7 @@
     <thead><tr><th>State / button</th><th>Effect</th></tr></thead>
     <tbody>
       <tr><td><strong>Not recording</strong> / <strong>Start recording</strong></td><td>Interactions are recorded neither as events, nor as nodes, nor as Page Object fields. <strong>Start recording</strong> switches to Recording.</td></tr>
-      <tr><td><strong>Recording</strong> / <strong>Pause recording</strong></td><td>Every interaction appears in the event list. <strong>Pause recording</strong> switches to Paused.</td></tr>
+      <tr><td><strong>Recording</strong> / <strong>Pause recording</strong></td><td>Every interaction appears in the event list. <strong>Pause recording</strong> switches to Paused. The button is disabled while the AI is working or a question is open.</td></tr>
       <tr><td><strong>Paused</strong> / <strong>Resume recording</strong></td><td>Interactions are not recorded; existing entries are kept. <strong>Resume recording</strong> switches back to Recording.</td></tr>
     </tbody>
   </table>
@@ -126,7 +126,7 @@
   <li>Without a running session, there is no button.</li>
 </ul>
 <h2>Loss of the Browser Session</h2>
-<p>If the browser session of a web recording is lost (for example because the browser was closed externally), the Recorder detects it by itself within about 15 seconds:</p>
+<p>If the browser session of a web recording is lost (for example because the browser was closed externally), the Recorder normally detects it by itself within about 15 seconds:</p>
 <ul class="feature-list">
   <li>The browser area shows the message <strong>Browser session disconnected</strong> with the cause and the <strong>Start a new session</strong> button, which opens the Add Session dialog.</li>
   <li>The tab shows a red dot ("Disconnected"); recording for this session ends in a controlled way. For the last live session, the state switches to Not recording and <strong>Start recording</strong> stays locked until a live session exists again.</li>
@@ -165,7 +165,7 @@
   <li>Normal typing (also with Shift), Backspace and Delete inside a field do not produce Press Key nodes.</li>
 </ul>
 <h2>Checkbox and Radio</h2>
-<p>Ticking a checkbox or choosing a radio button is recorded as a <strong>Check</strong> node with the target state (on or off, label <code>Check "&lt;text&gt;"</code>), not as a click. On replay a click only happens if the state differs from the target state. If it is already as desired, the step passes (log "already set"). This keeps the checkbox ticked even when the recording is replayed repeatedly. If the state still differs after the click, the step fails with measured values.</p>
+<p>Ticking a checkbox or choosing a radio button is recorded as a <strong>Set Checkbox</strong> node with the target state (on or off, step name <code>Check "&lt;text&gt;"</code> or <code>Uncheck "&lt;text&gt;"</code>), not as a click. On replay a click only happens if the state differs from the target state. If it is already as desired, the step passes (log "already set"). This keeps the checkbox ticked even when the recording is replayed repeatedly. If the state still differs after the click, the step fails with measured values.</p>
 <p>Existing workflows with Click nodes on checkboxes run unchanged.</p>
 <h2>Rich-Text Fields</h2>
 <p>Input into editable areas (<code>contenteditable</code>) is recorded as a Type node with the entered text; replay fills the element.</p>
@@ -235,7 +235,7 @@
   <li>A step whose goal already held before the action counts as "done, but NOT verified" if it is a real action. Pure check and wait steps with an already-true goal count as verified.</li>
   <li>Steps that cannot be verified (for example connecting the device) appear separately and neutrally in the plan report instead of in the "NOT verified" count. A report then reads, for example, "6 of 7 steps verified" plus a note for the step that cannot be verified.</li>
   <li>On the device, the server verifies the goal itself after every action, without the AI having to report it. Once the goal is reached, the step is completed before the next action reaches the device.</li>
-  <li>A tap on an element outside the visible area scrolls it into view by itself (in both directions, limited to at most 10 swipes). If the element cannot be reached, the step ends with "element not visible" instead of a tap.</li>
+  <li>A tap on an element outside the visible area scrolls it into view by itself (in both directions, limited to at most 10 swipes). If the element cannot be reached, the step ends with the message "ELEMENT_NOT_VISIBLE … is outside the viewport and could not be scrolled into view" instead of a tap.</li>
 </ul>
 <h2>Steps That Cannot Be Executed</h2>
 <p>If a step cannot be executed in the running session, it is recorded as a gap, <strong>not recorded</strong>, with the reason and the next best alternative (chat and plan). The plan continues with the remaining steps. The closing message <strong>Plan finished</strong> lists all gaps ("Not recorded: step N …") and all failures ("Failed: step N …"). If the AI asks a question instead of acting, the step becomes a gap with the question as the reason.</p>
@@ -256,7 +256,7 @@
 <h1>Questions and Session Mode</h1>
 <p>If the recording deviates from the plan, the AI Recorder stops and asks instead of silently continuing. No AI call takes place during the pause.</p>
 <h2>Session mode</h2>
-<p>On the Recorder page, the <strong>Session mode</strong> option group lets you choose between <strong>Interactive</strong> (default) and <strong>Unattended</strong>.</p>
+<p>In the header of the <strong>AI Chat</strong>, the <strong>Session mode</strong> option group lets you choose between <strong>Interactive</strong> (default) and <strong>Unattended</strong>.</p>
 <div class="param-table-wrap">
   <table class="param-table">
     <thead><tr><th>Mode</th><th>Behaviour when the time limit passes without an answer</th></tr></thead>
@@ -375,7 +375,7 @@
 <ul class="feature-list">
   <li><strong>Scroll to</strong>: "scroll until I see About phone" produces one node with text or XPath. If the target does not exist, the step ends after the defined maximum number of swipes, or when the screen stays unchanged, with a message naming target and swipe count; the node is failed, there is no endless run.</li>
   <li><strong>Swipe</strong>: direction, element (swiping within an element, for example a carousel) and percentage instead of pixels.</li>
-  <li><strong>Long Press</strong>: "I long press on About phone" produces a Long Press node with selector and duration (at least 500 ms). In the manual recorder, holding the mouse for 600 ms or more becomes a Long Press step; a short click stays a tap, dragging stays a swipe.</li>
+  <li><strong>Long Press</strong>: "I long press on About phone" produces a <strong>Long press</strong> node with selector and duration (at least 500 ms). In the manual recorder, holding the mouse for 600 ms or more becomes a Long Press step; a short click stays a tap, dragging stays a swipe.</li>
   <li>Older workflows with Swipe nodes run unchanged.</li>
 </ul>
 <h2>Device Actions</h2>
@@ -473,13 +473,13 @@
   </div>
 </div>
 <h2>Existing Page Objects for the Page</h2>
-<p>In the Pages tab, the <strong>Existing page objects for this page</strong> area shows which Page Objects and fields already exist for the opened page, with all field names and without expanding. The area follows the current URL; if nothing exists for the page it reads "No existing page objects for this page." For a mobile session with an app package it shows the Page Objects of that app; without a package or bundle ID, "No app context …" appears. The AI can also query the existing Page Objects of a page.</p>
+<p>In the Pages tab, the <strong>On this page</strong> area (with the current URL) shows which Page Objects and fields already exist for the opened page, with all field names and without expanding. The area follows the current URL; if nothing exists for the page it reads "No existing page objects for this page." For a mobile session with an app package it shows the Page Objects of that app; without a package or bundle ID, "No app context …" appears. The AI can also query the existing Page Objects of a page.</p>
 <h2>Reuse by Selector</h2>
 <p>All recorders (AI, passive, auto-mapping) reuse an existing field with the same selector instead of creating it under a new name; the workflow node references the existing field. The passive recorder names a recording on a URL with exactly one existing Page Object after that Page Object.</p>
 <h2>Checking Existing Fields on Open</h2>
-<p>When the AI opens a page or app for which Page Objects exist, all stored selectors are checked live in a single read-only pass (about 2 seconds at most, without changing the page). Each field gets a result: <code>confirmed</code> (exactly one visible match), <code>not found</code> or <code>ambiguous (n)</code>. The AI adopts confirmed fields unchanged and builds new selectors only for unconfirmed elements. This saves failed attempts on outdated fields. For outdated fields, exactly one chat note "not found" appears per page open. If the time limit is exceeded, "not checked live (timeout)" is shown and recording continues without error.</p>
+<p>When the AI opens a page or app for which Page Objects exist, all stored selectors are checked live in a single read-only pass (about 2 seconds at most, without changing the page). Each field gets a result: confirmed (exactly one visible match), not found or ambiguous (several matches). The AI adopts confirmed fields unchanged and builds new selectors only for unconfirmed elements. This saves failed attempts on outdated fields. If fields are outdated, exactly one chat note of the form "&lt;Page&gt;: N of M stored fields confirmed on this page; not found: …" appears per page open; the fields are repaired when recorded. If the time limit is exceeded, recording continues without error.</p>
 <h2>Selector Repair</h2>
-<p>Before an existing field receives a new selector, the stored selector is checked live. If it matches, it stays. If it does not, it is overwritten and the repair is reported: the <strong>Selector repairs</strong> area names the field, the old and new selector and the affected workflows. If no live check was possible (no session), it reads "(not checked live)"; an overwrite never happens silently.</p>
+<p>Before an existing field receives a new selector, the stored selector is checked live. If it matches, it stays. If it does not, it is overwritten and the repair is reported: the <strong>Selector repairs</strong> area names, per field, the old and new selector and the number of workflows that use the field ("used in N workflows"). If no live check was possible (no session), it reads "(not checked live)"; an overwrite never happens silently.</p>
 <h2>Automatic Page Screenshots</h2>
 <p>When the web recorder (passive or AI) creates a Page that has no screenshot yet, a screenshot of the recorded page is stored automatically in the background, in the same place as a manual upload (image and preview are reduced and compressed as with an upload).</p>
 <ul class="feature-list">
@@ -524,6 +524,13 @@
   <li>If you enter at the last node "Close Browser", the run parks before it, and the dialog shows "Insert before: Close Browser".</li>
   <li>If someone has changed the workflow in the meantime (version conflict), the dialog stays open with a conflict notice and the two ways out.</li>
 </ul>
+<h2>Resuming Mobile Workflows</h2>
+<p>If you enter a mobile workflow via <strong>Edit live from here</strong>, the Live Device View shows the image of the device on which the run is standing at the insertion point. The controls of the Live Device View (tap, swipe, long press, keys such as HOME and BACK, rotate, keyboard, typing text) act on exactly this device.</p>
+<ul class="feature-list">
+  <li>Your own tap in the device image appears immediately in the Events tab and is inserted into the workflow exactly once behind the anchor at <strong>Finish run</strong>. <strong>Start recording</strong> is not needed for this.</li>
+  <li>The device belongs to the run: the Live Device View does not end its session.</li>
+  <li>After <strong>Finish run</strong>, after <strong>Clear</strong> and once the edit session has expired, the last image stays, the controls are hidden, and input no longer reaches the device.</li>
+</ul>
 <h2>Expired Edit Session</h2>
 <ul class="feature-list">
   <li>If the edit session has expired or ended, the Recorder says so in plain text. The save dialog stays open and the recording is preserved.</li>
@@ -547,6 +554,27 @@
 <h2>A New AI Conversation Starts Empty</h2>
 <p>If, after an AI conversation has ended (Stop), you begin a new one with the next command, the AI Recorder starts with an empty node list. The Workflow tab and every save path contain only the nodes of the new conversation, and the Variables tab holds no variables of the previous one. If there were still unsaved steps, a line in the chat says they were discarded. Within the same conversation (further commands, pause/resume) nothing is emptied. "Stop, then save" without a new command still saves the nodes of the stopped conversation.</p>
 </section>
+<section class="doc-section" id="recorder-replay-rules">
+<span class="section-label">Output &amp; Integration</span>
+<h1>Replay: Selection Lists and Multiple Matches</h1>
+<h2>Selection lists (Select)</h2>
+<ul class="feature-list">
+  <li>A selection in a dropdown (Playwright) fails within <strong>one</strong> time limit, no longer after two in a row. The limit is the node's <strong>timeout</strong>; if none is set, 15 seconds apply.</li>
+  <li>The option is chosen by value or label. If the element exists but no option matches, the error reads <code>Option '&lt;text&gt;' not found; available: …</code> with up to 10 existing labels.</li>
+  <li>If the element itself is missing, the previous message ("waiting for locator …") stays; optional steps are then skipped and self-healing applies as before.</li>
+</ul>
+<h2>Click with several visible matches</h2>
+<p>If the selector of a click (also Hover and Click) matches several visible elements, the worker clicks the one whose own text or accessible name (<code>aria-label</code>, <code>title</code>, <code>alt</code>) equals the text in the selector exactly (case-insensitive). If none does, the best-scored visible match applies as before. For example, "Run" is clicked rather than "More run options".</p>
+<ul class="feature-list">
+  <li>Recognised as text anchors are <code>text=…</code>, <code>:has-text("…")</code>, <code>role=…[name="…"]</code> and XPath expressions with <code>contains(., '…')</code>, <code>text()='…'</code> or <code>normalize-space()='…'</code>. CSS selectors, <code>#id</code>, <code>[data-testid]</code>, links via <code>href</code> and positional selectors have no anchor; nothing changes there.</li>
+</ul>
+<h2>AI recording and self-healing</h2>
+<ul class="feature-list">
+  <li>A screenshot taken by the AI no longer waits for the page to settle.</li>
+  <li>Self-healing sees the worker's page tree up to a length of 36,000 characters, not just an excerpt of it.</li>
+</ul>
+</section>
+
 <section class="doc-section" id="recorder-output">
 <span class="section-label">Output &amp; Integration</span>
 <h1>Recorder Output</h1>

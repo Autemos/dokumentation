@@ -148,7 +148,7 @@
   <p>Der Reiter <strong>Test Runs</strong> der Projekt-Settings ist für Projekt-Admins sichtbar und legt Voreinstellungen für die Run-Berichte des Projekts fest.</p>
   <h2>Screenshots im Report</h2>
   <ul class="feature-list">
-    <li>Ein Schalter bestimmt den <strong>Screenshot-Standard</strong> (Vorgabe: aus). Er speichert sofort.</li>
+    <li>Der Schalter <strong>Show screenshots by default</strong> bestimmt den Screenshot-Standard (Vorgabe: aus). Er speichert sofort.</li>
     <li>Jeder Run-Report des Projekts öffnet sich mit diesem Zustand des Schalters <strong>Screenshots</strong>.</li>
     <li>Im Report kann weiterhin für die aktuelle Ansicht umgeschaltet werden; die Umschaltung gilt nur für diese Ansicht und verändert die Projekt-Einstellung nicht.</li>
     <li>Der Schalter steuert nur die <em>Anzeige</em> im Report. Ob beim Lauf Screenshots aufgenommen werden, regelt die globale Einstellung.</li>
@@ -283,7 +283,7 @@
   <h2>Secrets löschen</h2>
   <p>Ein Secret lässt sich <strong>nicht löschen, solange es irgendwo verwendet wird</strong>. Das gilt für Projekt-, globale und persönliche Secrets. Berücksichtigt werden Verwendungen in Workflows, in den Input-Mappings von Sub-Workflows, in eingebetteten Sub-Workflows und in Auth-Konfigurationen.</p>
   <ul class="feature-list">
-    <li>Der Dialog nennt die <strong>Anzahl</strong> und die <strong>Fundstellen</strong> der Verwendung („Secret 'KEY' cannot be deleted: it is still referenced in N place(s) (workflows, sub-workflows or auth configurations). Remove these references first.“).</li>
+    <li>Der Löschdialog nennt die <strong>Anzahl</strong> und die <strong>Fundstellen</strong> der Verwendung („Secret "KEY" cannot be deleted: it is still referenced in N places. Remove or replace these references first, then delete the secret.“); der Knopf <em>Delete</em> bleibt gesperrt.</li>
     <li>Workflow-Fundstellen führen in den Editor, Fundstellen in Auth-Konfigurationen zum Reiter Auth &amp; Secrets des Projekts bzw. bei globalen Konfigurationen zu den Global Settings.</li>
     <li>Ist das Secret nirgends mehr referenziert, lässt es sich löschen.</li>
   </ul>

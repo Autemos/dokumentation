@@ -294,7 +294,7 @@
   <p><strong>Beispiele:</strong> Gutscheincodes · Einmal-User · eindeutige Registrierungen</p>
   <div class="tip"><span class="tip-icon">💡</span>Verhindert Datenkonflikte in parallelen Tests.</div>
   <h2 id="testdata-easy-tags">Tags</h2>
-  <p>Jeder Datensatz kann <strong>beliebig viele Tags</strong> tragen. Tags sind frei vergebbare Begriffe (z. B. <code>Smoke</code>, <code>High</code> oder ein Release-Name) und dienen dazu, grosse Datenbestände fachlich oder organisatorisch zu ordnen. Eine eigene Logik (z. B. eine Prioritätssteuerung) hängt an einem Tag nicht — der Begriff bleibt frei.</p>
+  <p>Jeder Datensatz kann <strong>beliebig viele Tags</strong> tragen. Tags sind frei vergebbare Begriffe (z. B. <code>Smoke</code>, <code>High</code> oder ein Release-Name) und dienen dazu, grosse Datenbestände fachlich oder organisatorisch zu ordnen. Tags haben von sich aus keine Wirkung; nur die datengetriebene Ausführung wertet sie aus (Tags match all und Priority tag, siehe <a href="#testdata-datadriven">Data-driven Execution</a>).</p>
   <h3>Tags vergeben</h3>
   <ul class="feature-list">
     <li>Im Dialog <strong>New/Edit Easy Test Data Dataset</strong> steht unter <em>Description</em> das Feld <strong>Tags</strong> (Platzhalter „Create or reuse a tag“).</li>
@@ -384,17 +384,20 @@
       <thead><tr><th>Bereich</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><strong>Data source / Binding</strong></td><td>Referenziert der Workflow genau ein Pool-Binding, zeigt der Dialog „Data-driven binding: country“ und die Quelle („Source: Easy Test Data“). Bei mehreren wählen Sie unter <em>Data-driven binding</em>. Gibt es keins, erklärt ein Hinweis, wie man eins anlegt, mit dem Link <em>Set up a data-driven binding</em>.</td></tr>
-        <tr><td><strong>Dataset selection</strong></td><td>Welche Datensätze laufen: All datasets, Single dataset, Selected datasets, First N datasets oder By tags (alle Datensätze mit den gewählten Tags).</td></tr>
+        <tr><td><strong>Dataset selection</strong></td><td>Welche Datensätze laufen: All datasets, Single dataset, Selected datasets, First N datasets oder By tags (alle Datensätze mit den gewählten Tags). Unter <strong>Tags (match all)</strong> wählen Sie die Tags; nur Datensätze, die alle tragen, laufen. Das Feld <strong>Priority tag</strong> (Any priority, High, Medium, Low) schränkt zusätzlich auf Datensätze mit dem Tag High, Medium bzw. Low ein. Die Datensätze laufen nach Name sortiert, ein Lauf je Datensatz (nicht je Zeile).</td></tr>
         <tr><td><strong>Execution preview</strong></td><td>Nennt vorab die Run-Zahl, z. B. „4 datasets selected – 4 test runs will be created“, und listet die gewählten Datensätze.</td></tr>
       </tbody>
     </table>
   </div>
   <div class="warning">
-    <span class="tip-icon">⚠️</span><strong>Start wird verweigert —</strong> Fehlt einem Datensatz ein Feld, das der Workflow benötigt, startet nichts. Die Meldung nennt Datensatz und Feld (z. B. „Dataset 'AUT66-03-France' lacks field(s) expectedTitle required by {{country.expectedTitle}}“). Es wird weder ein Batch angelegt noch ein Run gestartet.
+    <span class="tip-icon">⚠️</span><strong>Start wird verweigert —</strong> Fehlt einem Datensatz ein Feld, das der Workflow benötigt, startet nichts. Die Meldung nennt Datensatz und Feld (im Dialog z. B. „Dataset 'AUT66-03-France' lacks field(s) expectedTitle required by this workflow.“; die Antwort der Schnittstelle nennt statt „this workflow“ den Platzhalter, z. B. {{country.expectedTitle}}). Es wird weder ein Batch angelegt noch ein Run gestartet.
+  </div>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Warnung bei weiteren Datenquellen —</strong> Liest der Workflow ausser der durchlaufenen Quelle weitere Data-driven Bindings oder Easy-Tabellen (ohne One-Time-Use), liefern diese in jedem Lauf denselben ersten Datensatz bzw. dieselbe Zeile 1. Der Dialog zeigt dazu je Quelle eine Warnung, z. B. „Data-driven binding 'Country' (expectedTitle) is not iterated: every run uses its first dataset 'France'.“ oder „Test data table 'Cities' ({{cities}}: name) is not iterated: every run uses row 1.“ Die Warnung sperrt den Start nicht; dieselbe Warnung steht in der Antwort der Schnittstelle und im Server-Log des Zeitplans, und das Lauf-Log vermerkt den Datensatz.
   </div>
   <h2>Rechte und Zeitpläne</h2>
   <ul class="feature-list">
-    <li>Die Datensatzauswahl lesen alle Projektmitglieder; <strong>Starten und Abbrechen</strong> einer datengetriebenen Ausführung verlangt mindestens die Projektrolle Editor (siehe <a href="#users-roles">Rollen &amp; Rechte</a>).</li>
+    <li>Die Datensatzauswahl lesen alle Projektmitglieder; <strong>Starten und Abbrechen</strong> einer datengetriebenen Ausführung verlangt Schreibrecht im Projekt (Rolle MEMBER oder höher; die Rolle VIEW darf nicht starten, siehe <a href="#users-roles">Rollen &amp; Rechte</a>).</li>
     <li>Dieselbe Auswahl lässt sich in Zeitplänen festlegen — siehe <a href="#scheduler-testdata">Testdaten im Zeitplan</a>.</li>
   </ul>
 </section>

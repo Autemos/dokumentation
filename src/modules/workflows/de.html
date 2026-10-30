@@ -211,9 +211,9 @@
 <h2>Execution Log</h2>
 <p>Das Execution Log liefert schrittweise Statusaktualisierungen, Ausführungszeiten und detaillierte Fehlerinformationen. Verwenden Sie es, um genau zu ermitteln, welcher Schritt fehlgeschlagen ist und warum.</p>
 <h3>Logs kopieren</h3>
-<p>Im Kopf des Panels <strong>Execution Log</strong> kopiert der Knopf <strong>Copy logs</strong> (vor <strong>Clear logs</strong>) mit einem Klick alle Einträge des aktuellen Laufs in die Zwischenablage, eine Zeile je Eintrag im Format <code>[HH:MM:SS.mmm] +verstrichen STUFE [Node] Nachricht</code>. Das Panel bleibt dabei offen. Im Laufbericht gibt es denselben Knopf am aufgeklappten Log-Block eines Schritts (<strong>Copy logs of &lt;Schritt&gt;</strong>); er kopiert genau dessen Zeilen im Format <code>[Zeit] STUFE Nachricht</code>.</p>
+<p>Im Kopf des Panels <strong>Execution Log</strong> kopiert der Knopf <strong>Copy logs</strong> (vor <strong>Clear logs</strong>) mit einem Klick alle Einträge des aktuellen Laufs in die Zwischenablage, eine Zeile je Eintrag im Format <code>[HH:MM:SS.mmm] +verstrichen STUFE [Node] Nachricht</code> (STUFE ist INFO, WARN, ERROR oder OK). Das Panel bleibt dabei offen. Im Laufbericht gibt es denselben Knopf am aufgeklappten Log-Block eines Schritts (<strong>Copy logs of &lt;Schritt&gt;</strong>); er kopiert genau dessen Zeilen im Format <code>[Zeit] STUFE Nachricht</code>.</p>
 <h3>Secrets im Log</h3>
-<p>Secret-Werte erscheinen im Execution Log, in der Status-Antwort, im Laufbericht und im API-Request-Protokoll vollständig als <code>***</code>, ohne ein Zeichen Klartext. Secrets mit weniger als 4 Zeichen werden nicht maskiert (der Lauf warnt davor).</p>
+<p>Secret-Werte erscheinen im Execution Log, in der Status-Antwort, im Laufbericht und im API-Request-Protokoll vollständig als <code>***</code>, ohne ein Zeichen Klartext. Werte unter 4 Zeichen lassen sich in Texten nicht zuverlässig als Secret erkennen und werden dort nicht maskiert; der Server vermerkt das in seinem Log.</p>
 <h2>Live-Ausführungsansicht</h2>
 <div class="screenshot-wrap">
 <img alt="Live Device View" src="./autemos_images/image10.png"/>
@@ -413,8 +413,14 @@
 <h2>Undo und Redo</h2>
 <p>Ein Klick auf <strong>Undo</strong> nimmt genau eine Aktion zurück, und schon die erste Aktion nach dem Öffnen oder Speichern lässt sich rückgängig machen. <strong>Redo</strong> stellt den Zustand nach der Aktion wieder her.</p>
 
-<h2>Data-driven execution</h2>
-<p>Im Run-Menü startet <strong>Run</strong> einen normalen Einzellauf. <strong>Data-driven execution…</strong> öffnet direkt den Dialog <strong>Data-driven execution</strong>: Dort sind <strong>Test data source</strong>, <strong>Data variable</strong> und <strong>Dataset selection</strong> (Standard <strong>All datasets</strong>) sofort sichtbar, ohne dass vorher eine Checkbox angehakt werden muss. Der Lauf startet mit <strong>Run</strong> im Dialog. In den Dialogen des Schedulers steuert dagegen die Checkbox <strong>Data-driven execution</strong>, ob ein Zeitplan-Test je Datensatz ausgeführt wird.</p>
+<h2>Run und Data-driven execution</h2>
+<p>Im Run-Menü startet <strong>Run</strong> sofort genau einen Lauf mit den Standard-Testdaten des Workflows, ohne Auswahldialog: Ein Test Data Binding wird mit seinem ersten Datensatz aufgelöst, bei Easy Test Data gilt Zeile 1 (bei One-Time-Use die nächste freie Zeile). Das Execution Log nennt, welcher Datensatz verwendet wurde. Fehlt ein Datensatz, meldet der Test-Data-Check das vor dem Start.</p>
+<p>Jede Auswahl von Zeilen oder Datensätzen liegt in <strong>Data-driven execution…</strong>. Der Eintrag öffnet direkt den Dialog <strong>Data-driven execution</strong>. Gibt es sowohl Datensätze eines datengetriebenen Bindings als auch Zeilen eines Test-Data-Sets, wählen Sie unter <strong>Run by</strong> zwischen <strong>Datasets of a data-driven binding</strong> und <strong>Rows of a test data set</strong>.</p>
+<ul class="feature-list">
+<li><strong>Datasets</strong>: <strong>Test data source</strong>, <strong>Data variable</strong> und <strong>Dataset selection</strong> (Standard <strong>All datasets</strong>) sind sofort sichtbar, ohne dass vorher eine Checkbox angehakt werden muss.</li>
+<li><strong>Rows</strong>: <strong>Test data set</strong> (bei mehreren Quellen) und <strong>Run mode</strong> mit <strong>Single Row</strong>, <strong>Selected Rows</strong> oder <strong>All Rows</strong>; die Tabelle <strong>Data rows</strong> zeigt die Zeilen, eine Statuszeile nennt die Zahl der Zeilen und der entstehenden Testläufe (je Zeile ein Lauf). Vorgewählt sind Single Row und Zeile 1.</li>
+</ul>
+<p>Der Lauf startet mit <strong>Run</strong> im Dialog. Die Auswahl gilt nur für diesen Dialog; ein späteres <strong>Run</strong> ist davon unberührt. In den Dialogen des Schedulers steuert dagegen die Checkbox <strong>Data-driven execution</strong>, ob ein Zeitplan-Test je Datensatz ausgeführt wird.</p>
 
 <h2>Schedule: Workflow direkt einem Zeitplan zuweisen</h2>
 <p>Der Knopf <strong>Schedule</strong> (Kalender-Icon) erscheint bei gespeicherten Haupt-Workflows, nicht bei Sub-Workflows. Bei einem noch nie gespeicherten Workflow ist er gesperrt (Tooltip „Save the workflow first to assign it to a schedule").</p>
@@ -480,25 +486,37 @@
 </ul>
 
 </section>
+<section class="doc-section" id="wf-po-locator">
+<span class="section-label">Editor &amp; Ausführung</span>
+<h1>Page-Object-Locator nach Self-Healing</h1>
+
+<p>Speichert Self-Healing für ein Page-Object-Feld einen neuen Locator (im Self-Healing-Report „saved to repository"), gilt dieser Wert überall, ohne dass Sie Nodes neu verknüpfen müssen.</p>
+<ul class="feature-list">
+<li>Die Pages-Verwaltung, die Feldauswahl im Workflow-Editor und die Node-Details zeigen denselben aktuellen Locator, auch nach dem Neuladen der Seite.</li>
+<li>Ein neu gewähltes Feld und aus Page Objects erzeugte Workflows übernehmen den aktuellen Wert, nicht den Stand vor der Heilung.</li>
+<li>In der Ausführung gewinnt der aktuelle Locator des Page Objects gegen einen abweichenden, älteren Selektor im Node, wenn das Page Object für genau eine Web-Adresse steht und das Feld zu der gerade geöffneten Seite passt. Auf einer fremden Seite bleibt der Selektor des Nodes massgebend.</li>
+</ul>
+
+</section>
 <section class="doc-section" id="wf-expressions">
 <span class="section-label">Editor &amp; Ausführung</span>
 <h1>Datums- und Rechenausdrücke in Platzhaltern</h1>
 
-<p>Zusätzlich zu Variablen und Testdaten akzeptieren die <code>{{…}}</code>-Platzhalter zwei Arten von Ausdrücken, die zur <strong>Laufzeit</strong> ausgewertet werden. Ein Workflow, der an einem anderen Tag abgespielt wird, liefert deshalb das richtige Datum und nicht ein eingefrorenes Literal.</p>
+<p>Neben Variablen und Testdaten kennen die <code>{{…}}</code>-Platzhalter eine Schreibweise für Datum und einfache Rechnungen. Ein Workflow, der an einem anderen Tag abgespielt wird, soll so das richtige Datum liefern und nicht ein eingefrorenes Literal.</p>
+<div class="warn-box"><strong>Stand heute:</strong> Ausgewertet werden diese Ausdrücke beim Lauf einer API Collection. Im Lauf eines Workflows (Editor, Zeitplan, Collection) bleibt ein Ausdruck wie <code>{{today+3d}}</code> unverändert als Text stehen und wird so in ein Feld eingegeben; Variablen und Testdaten werden dort normal aufgelöst.</div>
 <div class="param-table-wrap">
 <table class="param-table">
 <thead><tr><th>Ausdruck</th><th>Bedeutung</th><th>Beispiel</th></tr></thead>
 <tbody>
-<tr><td><code>{{today}}</code>, <code>{{now}}</code></td><td>Heutiges Datum bzw. aktueller Zeitpunkt</td><td><code>{{today}}</code></td></tr>
+<tr><td><code>{{today}}</code>, <code>{{now}}</code></td><td>Heutiges Datum (<code>dd.MM.yyyy</code>) bzw. aktueller Zeitpunkt (<code>dd.MM.yyyy HH:mm:ss</code>)</td><td><code>{{today}}</code></td></tr>
 <tr><td><code>{{today+3d}}</code></td><td>Versatz <code>±N</code> mit Einheit <code>d</code> (Tage), <code>w</code> (Wochen), <code>m</code> (Monate) oder <code>y</code> (Jahre)</td><td><code>{{today-1w}}</code></td></tr>
 <tr><td><code>{{today+3d|dd.MM.yyyy}}</code></td><td>Optionales Ausgabeformat hinter <code>|</code> (Datumsmuster)</td><td>Lieferdatum in 3 Tagen als <code>dd.MM.yyyy</code></td></tr>
-<tr><td><code>{{a+b}}</code>, <code>{{price*2}}</code></td><td>Einfache Arithmetik mit Zahlen und numerischen Variablen</td><td><code>{{2+3}}</code></td></tr>
+<tr><td><code>{{a+b}}</code>, <code>{{price*2}}</code></td><td>Einfache Arithmetik mit Zahlen und numerischen Variablen, von links nach rechts gerechnet</td><td><code>{{2+3}}</code></td></tr>
 </tbody>
 </table>
 </div>
 <ul class="feature-list">
 <li>Eine gewöhnliche Variable hat immer Vorrang: Heisst eine Variable <code>today</code>, wird ihr Wert verwendet und nicht das Datum.</li>
-<li>Der KI-Recorder schreibt einen relativen Datumswunsch („Lieferdatum in 3 Tagen") als Ausdruck, nicht als aufgelöstes Datum.</li>
 <li>Es gibt keine vollständige Formelsprache: keine Klammern und keine Funktionen über die genannten Formen hinaus.</li>
 <li>Bereits aufgenommene Workflows mit eingefrorenen Datumswerten werden nicht umgeschrieben.</li>
 </ul>
@@ -704,7 +722,7 @@
 <li>Im Testlauf gilt die Einstellung für die ganze Browser-Sitzung; das Execution Log vermerkt, dass Zertifikatsfehler ignoriert werden.</li>
 <li>Der Code-Export <strong>java/playwright</strong> erzeugt die Option im Browser-Kontext. Für andere Export-Ziele entsteht kein Code, sondern eine Warnung: Der exportierte Test würde nicht vertrauenswürdige Zertifikate ablehnen.</li>
 <li>Bei mehreren Open-Browser-Nodes zählt der erste Web-Node; weicht ein späterer ab, erscheint eine Warnung.</li>
-<li>Der Schalter gilt nicht für API-Nodes.</li>
+<li>Der Schalter gilt nicht für API-Nodes und wirkt nur bei Browser-Sitzungen auf dem Desktop, nicht bei Web-Sitzungen auf Mobilgeräten.</li>
 </ul>
 <div class="warn-box"><strong>Nur für Testumgebungen:</strong> Mit dieser Option wird die Zertifikatsprüfung bewusst abgeschaltet. Verwenden Sie sie nicht gegen Produktivsysteme.</div>
 <h2>Ausgabe</h2>
@@ -1814,13 +1832,13 @@
 </div><p>Elemente in <strong>geschlossenen</strong> Shadow-Roots (<code>attachShadow({ mode: 'closed' })</code>) werden mit denselben Selektoren gefunden und bedient wie Elemente in offenen: CSS (<code>#ziel-4</code>), Text (<code>text=Ziel 4 anklicken</code>) und Rolle (<code>role=button[...]</code>). Es gibt keine eigene Selektorsyntax und keinen Workaround in Page Objects; Recorder, Self-Healing und Code-Export arbeiten unverändert.</p></div>
 <h2>So funktioniert es</h2>
 <ul class="feature-list">
-<li>Der Node <a href="#open-browser">Open Browser</a> installiert in Playwright-Web-Sitzungen einen kleinen Hook, der geschlossene Shadow-Roots intern offen anlegt. Er wirkt für alle Seiten und Frames, die danach geladen werden.</li>
+<li>Der Node <a href="#open-browser">Open Browser</a> installiert in Web-Sitzungen einen kleinen Hook, der geschlossene Shadow-Roots intern offen anlegt. In Playwright-Sitzungen wirkt er für alle Seiten und Frames, die danach geladen werden; in Selenium-Sitzungen (auch mobiles Web) setzt der Node ihn per Browser-Befehl.</li>
 <li>Das Host-Element trägt anschliessend das Attribut <code>data-stk-shadow-was-closed</code>, damit die ursprüngliche Kapselung erkennbar bleibt.</li>
 <li>Im Lauf-Log vermerkt der Worker, dass die Funktion aktiv ist.</li>
 </ul>
 <h2>Grenzen</h2>
 <ul class="feature-list">
-<li>Gilt für Chromium und Edge (über das Grid); der Selenium-Modus und Mobile-Sitzungen sind nicht betroffen.</li>
+<li>Der Selenium-Weg gilt nur für Chrome und Edge; Firefox und Safari auf iOS sind ausgenommen, ebenso native Mobile-App-Sitzungen. Dort wirkt der Hook nur auf der Registerkarte der Sitzung, neue Tabs und Fenster bekommen ihn nicht.</li>
 <li>Die Zielseite sieht den Root als offen. Seiten, die prüfen, ob <code>shadowRoot</code> <code>null</code> ist, verhalten sich möglicherweise anders.</li>
 <li>Ein bereits geladenes Dokument wird erst bei der nächsten Navigation erfasst.</li>
 <li>Ein Playwright-Test ausserhalb von Autemos, der diesen Hook nicht installiert, findet diese Elemente nicht.</li>
@@ -2300,30 +2318,18 @@
 <table class="param-table">
 <thead><tr><th>Parameter</th><th>Description</th><th>Required</th><th>Example</th></tr></thead>
 <tbody>
-<tr><td><strong>Condition</strong></td><td>Definiert, was ausgewertet werden soll</td><td>Yes</td><td><code>visible</code></td></tr>
+<tr><td><strong>Condition</strong></td><td>Linke Seite des Vergleichs: meist eine Variable wie <code>{{status}}</code> oder ein fester Text. Ein Element wird hier nicht geprüft.</td><td>Yes</td><td><code>{{status}}</code></td></tr>
 <tr><td><strong>Operator</strong></td><td>Definiert, wie die Bedingung ausgewertet wird</td><td>Yes</td><td><code>equals</code></td></tr>
 <tr><td><strong>Compare Value</strong></td><td>Wert für den Vergleich (falls erforderlich)</td><td>No</td><td><code>Success</code></td></tr>
 <tr><td><strong>Bindings</strong></td><td>Erlaubt dynamische Werte über Variablen</td><td>No</td><td><code>${expectedValue}</code></td></tr>
 </tbody>
 </table>
 </div>
-<p class="param-note">* Compare Value ist nur für Bedingungen erforderlich, die Werte vergleichen.</p>
-<p><strong>Verfügbare Bedingungen</strong></p>
-<div class="param-table-wrap">
-<table class="param-table">
-<thead><tr><th>Option</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><code>visible</code></td><td>Element ist auf dem Bildschirm sichtbar</td></tr>
-<tr><td><code>hidden</code></td><td>Element ist nicht sichtbar</td></tr>
-<tr><td><code>exists</code></td><td>Element existiert im DOM/UI</td></tr>
-<tr><td><code>notExists</code></td><td>Element existiert nicht</td></tr>
-<tr><td><code>textEquals</code></td><td>Elementtext stimmt exakt überein</td></tr>
-<tr><td><code>textContains</code></td><td>Elementtext enthält einen Wert</td></tr>
-<tr><td><code>valueEquals</code></td><td>Elementwert stimmt mit erwarteter Eingabe überein</td></tr>
-</tbody>
-</table>
-</div>
-<p><strong>Verfügbare Operatoren</strong></p>
+<p class="param-note">* Compare Value ist nur für Operatoren erforderlich, die zwei Werte vergleichen (nicht bei <code>isEmpty</code> und <code>isNotEmpty</code>).</p>
+<h2>Vergleich</h2>
+<p>Der If-Node vergleicht den Wert aus <strong>Condition</strong> mit <strong>Compare Value</strong> über den gewählten <strong>Operator</strong>. Beide Seiten werden vorher aufgelöst: <code>{{variable}}</code> ist also schon durch den Wert ersetzt. Sind beide Seiten Zahlen, wird numerisch verglichen (10 ist grösser als 9), sonst als Text.</p>
+<p>Der If-Node prüft kein Element der Seite. Soll ein Zweig vom Inhalt eines Elements abhängen, lesen Sie den Wert zuerst mit <a href="#extract-text">Extract Text</a> in eine Variable und tragen diese in <strong>Condition</strong> ein.</p>
+<p><strong>Operatoren</strong></p>
 <div class="param-table-wrap">
 <table class="param-table">
 <thead><tr><th>Option</th><th>Beschreibung</th></tr></thead>
@@ -2340,11 +2346,14 @@
 </div>
 <h2>Verhalten</h2>
 <ul class="feature-list">
-<li>Wertet die definierte Bedingung zur Laufzeit aus</li>
-<li>Vergleicht das Ergebnis mit dem ausgewählten Operator</li>
-<li>Leitet die Ausführung in den True-Zweig (Bedingung erfüllt) oder False-Zweig (Bedingung nicht erfüllt)</li>
-<li>Nur der ausgewählte Zweig wird ausgeführt</li>
+<li>Wertet <strong>Condition</strong> und <strong>Compare Value</strong> zur Laufzeit mit dem gewählten Operator aus</li>
+<li>Trifft der Vergleich zu, läuft der Weg am Ausgang <strong>True</strong> (grün), sonst der am Ausgang <strong>False</strong> (rot). Nur dieser Zweig wird ausgeführt.</li>
+<li>Die Nodes des nicht gewählten Zweigs erhalten den Status <strong>Skipped</strong>; das Execution Log nennt „Branch not taken – skipped (If '&lt;Name&gt;' = true)" bzw. „= false". Der Abschluss lautet z. B. „all 2 nodes passed (1 skipped: branch not taken)".</li>
+<li>Ein Node, den mehrere Wege erreichen (Zusammenführung), läuft, sobald mindestens einer der eingehenden Wege aktiv ist.</li>
+<li>Eine Verbindung, die an keinem der beiden Ausgänge hängt, gilt als <strong>True</strong>; das Log warnt davor.</li>
+<li>Bei ungültiger Eingabe schlägt der Node fehl, z. B. wenn bei <code>greaterThan</code> oder <code>lessThan</code> eine Seite keine Zahl ist („greaterThan requires numeric operands, got left="abc", right="9"") oder der Operator unbekannt ist.</li>
 </ul>
+<p>Der KI-Recorder kann zusätzlich die Operatoren <code>notContains</code>, <code>greaterOrEqual</code>, <code>lessOrEqual</code> und <code>regex</code> setzen; die Auswahlliste im Editor bietet sie nicht an.</p>
 <h2>Ausgabe</h2>
 <p>Keine Ausgabe. Der Node steuert den Workflow-Ausführungsfluss, indem er in den True- oder False-Zweig weiterleitet.</p>
 <div class="meta-grid">
@@ -2352,13 +2361,14 @@
 <div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
 </div>
 <div class="example-block">
-<h3>Beispiel — Eine optionale Fehlermeldung behandeln</h3>
-<p>Nur fortfahren, wenn keine Fehlermeldung angezeigt wird:</p>
+<h3>Beispiel — Nur bei einem bestimmten Status fortfahren</h3>
+<p>Die Variable <code>status</code> wurde zuvor mit Extract Text gefüllt:</p>
 <div class="param-table-wrap"><table class="param-table"><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
-<tr><td><strong>Condition</strong></td><td><code>notExists</code></td></tr>
+<tr><td><strong>Condition</strong></td><td><code>{{status}}</code></td></tr>
 <tr><td><strong>Operator</strong></td><td><code>equals</code></td></tr>
+<tr><td><strong>Compare Value</strong></td><td><code>Bezahlt</code></td></tr>
 </tbody></table></div>
-<p><strong>True-Zweig:</strong> Workflow fortsetzen  |  <strong>False-Zweig:</strong> Fehler behandeln (z. B. Screenshot aufnehmen, Test stoppen)</p>
+<p><strong>True-Zweig:</strong> Workflow fortsetzen  |  <strong>False-Zweig:</strong> Fehler behandeln (z. B. Screenshot aufnehmen, Test stoppen)</p>
 </div>
 <h2>Best Practices</h2>
 <ul class="best-practices">
@@ -2391,23 +2401,37 @@
 <table class="param-table">
 <thead><tr><th>Parameter</th><th>Description</th><th>Required</th><th>Example</th></tr></thead>
 <tbody>
-<tr><td><strong>Data Source</strong></td><td>Zu iterierende Datensammlung</td><td>Yes</td><td><code>${users}</code></td></tr>
+<tr><td><strong>Data Source</strong></td><td>Was durchlaufen wird: ein Zahlenbereich oder eine Werteliste, siehe Abschnitt Datenquelle. Das Feld nimmt Text und <code>{{variable}}</code>.</td><td>Yes</td><td><code>${users}</code></td></tr>
 <tr><td><strong>Save As</strong></td><td>Variablenname für das aktuelle Element in jeder Iteration</td><td>Yes</td><td><code>item</code></td></tr>
-<tr><td><strong>Max Iterations</strong></td><td>Maximale Anzahl von Schleifendurchläufen</td><td>No</td><td><code>100</code></td></tr>
+<tr><td><strong>Max Iterations</strong></td><td>Höchstzahl der Durchläufe (Vorgabe im Editor: 100). Weitere Werte werden abgeschnitten; das Execution Log warnt („10 values capped to maxIterations 2").</td><td>No</td><td><code>100</code></td></tr>
 <tr><td><strong>Bindings</strong></td><td>Erlaubt dynamische Datenquellen und Variablennamen</td><td>No</td><td><code>${dataSet}</code></td></tr>
 </tbody>
 </table>
 </div>
-<h2>Behavior</h2>
+<h2>Datenquelle</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Art</th><th>Eingabe in Data Source</th><th>Durchläufe</th></tr></thead>
+<tbody>
+<tr><td>Zahlenbereich</td><td><code>{"type":"range","from":0,"to":3,"step":1}</code></td><td>Von <code>from</code> (eingeschlossen) bis <code>to</code> (ausgeschlossen) in Schritten von <code>step</code> (Vorgabe 1): hier 0, 1, 2. <code>step</code> darf nicht 0 sein; geht der Bereich in die falsche Richtung, gibt es keinen Durchlauf.</td></tr>
+<tr><td>Werteliste</td><td><code>{"type":"dataset","values":["x","y"]}</code></td><td>Ein Durchlauf je Eintrag. Einträge können Objekte sein; im Körper greifen Sie mit <code>{{user.name}}</code> auf ein Feld zu.</td></tr>
+<tr><td>Liste</td><td>eine Liste, z. B. <code>["x","y"]</code> oder eine Variable, die eine Liste enthält</td><td>Wie eine Werteliste</td></tr>
+</tbody>
+</table>
+</div>
+<p>Ist <strong>Data Source</strong> leer oder von unbekannter Art, schlägt der Node fehl („Missing dataSource" bzw. „Unknown dataSource.type").</p>
+<h2>Verhalten</h2>
 <ul class="feature-list">
-<li>Liest die bereitgestellte Datenquelle</li>
-<li>Iteriert über jedes Element in der Sammlung</li>
-<li>Speichert das aktuelle Element in der in <strong>Save As</strong> definierten Variable</li>
-<li>Führt alle Nodes innerhalb der Schleife für jedes Element aus</li>
-<li>Stoppt, wenn alle Elemente verarbeitet sind oder das Limit der Max Iterations erreicht ist</li>
+<li>Der Loop hat zwei Ausgänge: Am Ausgang <strong>True</strong> (grün) hängt der Schleifenkörper, am Ausgang <strong>False</strong> (rot) der Weg, der nach der Schleife genau einmal weiterläuft.</li>
+<li>Der Körper läuft einmal je Wert. Vor jedem Durchlauf wird der Wert in der Variable aus <strong>Save As</strong> abgelegt; das Execution Log nennt „Loop 'Loop': iteration 2 of 3 (i = 1)".</li>
+<li>Nach der Schleife ist die Variable wieder auf ihrem früheren Stand (oder entfernt).</li>
+<li>If- und Loop-Nodes im Körper werden je Durchlauf neu ausgewertet.</li>
+<li>Gibt es keinen Durchlauf, wird der Körper übersprungen (<strong>Skipped</strong>, „ran 0 iterations – skipped") und der Lauf geht am Ausgang <strong>False</strong> weiter.</li>
+<li>Ein Fehler im Körper bricht den Lauf ab; die Meldung nennt den Durchlauf („Failed at node: … (Loop 'Loop': iteration 2 of 3)").</li>
+<li>Im Bericht zeigt ein Node des Körpers den Stand seines letzten Durchlaufs.</li>
 </ul>
 <h2>Ausgabe</h2>
-<p>Keine direkte Ausgabe. Die Save As-Variable ist innerhalb der Schleife für jede Iteration verfügbar.</p>
+<p>Keine direkte Ausgabe. Die <strong>Save As</strong>-Variable ist im Schleifenkörper in jedem Durchlauf verfügbar.</p>
 <div class="meta-grid">
 <div class="meta-card"><div class="meta-label">Input Variables</div><div class="meta-value"><span class="meta-pill pill-yes">Yes</span></div></div>
 <div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>

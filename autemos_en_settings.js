@@ -116,7 +116,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
       <tbody>
         <tr><td><strong>Enable email notifications</strong></td><td>Switches email notifications for test runs on or off. System emails do not depend on this switch, only on a complete mail configuration.</td></tr>
         <tr><td><strong>Mail provider</strong></td><td>Choose between <strong>SMTP</strong> and <strong>Microsoft Graph</strong> (Microsoft 365 / Outlook).</td></tr>
-        <tr><td><strong>SMTP</strong></td><td>Server, port, encryption (STARTTLS, SSL or none), username, password and sender address. If the SMTP server field is left empty, Autemos uses the server's mail configuration ("Leave SMTP server empty to use the server mail configuration").</td></tr>
+        <tr><td><strong>SMTP</strong></td><td>Server, port, Security (STARTTLS, SSL/TLS or None), username, password and sender address. If the SMTP server field is left empty, Autemos uses the server's mail configuration ("Leave SMTP server empty to use the server mail configuration").</td></tr>
         <tr><td><strong>Microsoft Graph</strong></td><td>Tenant ID, client ID, client secret and sender address of an app registration with the application permission <code>Mail.Send</code>.</td></tr>
         <tr><td><strong>Send test email</strong></td><td>Sends a test email to your own address — using the <em>saved</em> settings. The response reports success or a short reason, never a secret or a stack trace.</td></tr>
       </tbody>
@@ -302,6 +302,10 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
     <span class="tip-icon">⚠️</span><strong>Administrators only —</strong> The <strong>Audit Logs</strong> page is reserved for global administrators. Other users are redirected to the dashboard.
   </div>
   <p>The admin navigation shows <strong>Audit Logs</strong> below <strong>Global Settings</strong>. The page is a <strong>read-only record</strong> of all user and system actions — for example code sync, settings changes, secret actions, screenshot clean-up runs and password changes.</p>
+  <div class="screenshot-wrap">
+    <img alt="Audit Logs" src="./autemos_settings_screenshots/doku-audit-logs.png"/>
+    <div class="screenshot-caption">Audit Logs — filters, table and Export CSV.</div>
+  </div>
   <h2>Filters and search</h2>
   <div class="param-table-wrap">
     <table class="param-table">

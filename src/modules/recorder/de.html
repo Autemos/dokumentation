@@ -110,7 +110,7 @@
     <thead><tr><th>Zustand / Knopf</th><th>Wirkung</th></tr></thead>
     <tbody>
       <tr><td><strong>Not recording</strong> / <strong>Start recording</strong></td><td>Interaktionen werden weder als Event noch als Node noch als Page-Object-Feld aufgezeichnet. <strong>Start recording</strong> schaltet auf Recording.</td></tr>
-      <tr><td><strong>Recording</strong> / <strong>Pause recording</strong></td><td>Jede Interaktion erscheint in der Event-Liste. <strong>Pause recording</strong> schaltet auf Paused.</td></tr>
+      <tr><td><strong>Recording</strong> / <strong>Pause recording</strong></td><td>Jede Interaktion erscheint in der Event-Liste. <strong>Pause recording</strong> schaltet auf Paused. Der Knopf ist gesperrt, solange die KI arbeitet oder eine Rückfrage offen ist.</td></tr>
       <tr><td><strong>Paused</strong> / <strong>Resume recording</strong></td><td>Interaktionen werden nicht aufgezeichnet, bisherige Einträge bleiben erhalten. <strong>Resume recording</strong> schaltet wieder auf Recording.</td></tr>
     </tbody>
   </table>
@@ -130,7 +130,7 @@
   <li>Ohne laufende Session gibt es den Knopf nicht.</li>
 </ul>
 <h2>Verlust der Browser-Session</h2>
-<p>Bricht die Browser-Session einer Web-Aufnahme weg (zum Beispiel weil der Browser extern beendet wurde), erkennt der Recorder das innerhalb von etwa 15 Sekunden von selbst:</p>
+<p>Bricht die Browser-Session einer Web-Aufnahme weg (zum Beispiel weil der Browser extern beendet wurde), erkennt der Recorder das in der Regel innerhalb von etwa 15 Sekunden von selbst:</p>
 <ul class="feature-list">
   <li>In der Browserfläche erscheint die Meldung <strong>Browser session disconnected</strong> mit der Ursache und dem Knopf <strong>Start a new session</strong>, der den Add-Session-Dialog öffnet.</li>
   <li>Der Tab zeigt einen roten Punkt („Disconnected"); die Aufnahme dieser Session wird kontrolliert beendet. Bei der letzten lebenden Session steht der Zustand auf Not recording, und <strong>Start recording</strong> ist gesperrt, bis wieder eine lebende Session existiert.</li>
@@ -170,7 +170,7 @@
   <li>Normales Tippen (auch mit Shift), Backspace und Delete im Feld erzeugen keine Press-Key-Nodes.</li>
 </ul>
 <h2>Checkbox und Radio</h2>
-<p>Das Anhaken einer Checkbox oder die Wahl eines Radio-Buttons wird als <strong>Check</strong>-Node mit dem Sollzustand aufgezeichnet (an oder aus, Label <code>Check "&lt;Text&gt;"</code>), nicht als Klick. Bei der Wiedergabe wird nur geklickt, wenn der Zustand vom Sollzustand abweicht. Ist er bereits wie gewünscht, ist der Schritt bestanden (Log „bereits gesetzt"). Damit bleibt die Checkbox auch bei mehrfacher Wiedergabe angehakt. Weicht der Zustand nach dem Klick ab, schlägt der Schritt mit Messwerten fehl.</p>
+<p>Das Anhaken einer Checkbox oder die Wahl eines Radio-Buttons wird als <strong>Set Checkbox</strong>-Node mit dem Sollzustand aufgezeichnet (an oder aus, Schrittname <code>Check "&lt;Text&gt;"</code> bzw. <code>Uncheck "&lt;Text&gt;"</code>), nicht als Klick. Bei der Wiedergabe wird nur geklickt, wenn der Zustand vom Sollzustand abweicht. Ist er bereits wie gewünscht, ist der Schritt bestanden (Log „bereits gesetzt"). Damit bleibt die Checkbox auch bei mehrfacher Wiedergabe angehakt. Weicht der Zustand nach dem Klick ab, schlägt der Schritt mit Messwerten fehl.</p>
 <p>Bestehende Workflows mit Klick-Nodes auf Checkboxen laufen unverändert.</p>
 <h2>Rich-Text-Felder</h2>
 <p>Eingaben in editierbare Bereiche (<code>contenteditable</code>) werden als Type-Node mit dem eingegebenen Text aufgezeichnet; die Wiedergabe füllt das Element.</p>
@@ -241,7 +241,7 @@
   <li>Ein Schritt, dessen Ziel schon vor der Handlung galt, zählt als „done, but NOT verified", wenn er eine echte Handlung ist. Reine Prüf- und Warteschritte mit bereits geltendem Ziel zählen als verifiziert.</li>
   <li>Nicht prüfbare Schritte (zum Beispiel das Verbinden des Geräts) erscheinen im Plan-Bericht getrennt und neutral statt in der Zahl „NOT verified". Ein Bericht lautet dann zum Beispiel „6 of 7 steps verified" plus eine Angabe für den nicht prüfbaren Schritt.</li>
   <li>Auf dem Gerät prüft der Server das Ziel nach jeder Handlung selbst, ohne dass die KI es melden muss. Ist das Ziel erreicht, wird der Schritt abgeschlossen, bevor die nächste Handlung ans Gerät geht.</li>
-  <li>Ein Tap auf ein Element ausserhalb des sichtbaren Bereichs scrollt selbst herein (in beide Richtungen, begrenzt auf höchstens 10 Wischbewegungen). Ist das Element nicht erreichbar, endet der Schritt mit „element not visible" statt mit einem Tap.</li>
+  <li>Ein Tap auf ein Element ausserhalb des sichtbaren Bereichs scrollt selbst herein (in beide Richtungen, begrenzt auf höchstens 10 Wischbewegungen). Ist das Element nicht erreichbar, endet der Schritt mit der Meldung „ELEMENT_NOT_VISIBLE … is outside the viewport and could not be scrolled into view" statt mit einem Tap.</li>
 </ul>
 <h2>Nicht ausführbare Schritte</h2>
 <p>Ist ein Schritt in der laufenden Session nicht ausführbar, wird er als Lücke <strong>not recorded</strong> festgehalten, mit dem Grund und der nächstbesten Alternative (Chat und Plan). Der Plan läuft mit den übrigen Schritten weiter. Die Schlussmeldung <strong>Plan finished</strong> listet alle Lücken („Not recorded: step N …") und alle Fehlschläge („Failed: step N …"). Stellt die KI statt einer Handlung eine Rückfrage, wird der Schritt zur Lücke mit der Rückfrage als Grund.</p>
@@ -262,7 +262,7 @@
 <h1>Rückfragen und Sitzungsmodus</h1>
 <p>Weicht die Aufnahme vom Plan ab, hält der AI Recorder an und fragt nach, statt still weiterzulaufen. Während der Pause findet kein KI-Aufruf statt.</p>
 <h2>Session mode</h2>
-<p>Auf der Recorder-Seite wählen Sie über die Optionsgruppe <strong>Session mode</strong> zwischen <strong>Interactive</strong> (Vorgabe) und <strong>Unattended</strong>.</p>
+<p>Im Kopf des <strong>AI Chat</strong> wählen Sie über die Optionsgruppe <strong>Session mode</strong> zwischen <strong>Interactive</strong> (Vorgabe) und <strong>Unattended</strong>.</p>
 <div class="param-table-wrap">
   <table class="param-table">
     <thead><tr><th>Modus</th><th>Verhalten bei Fristablauf ohne Antwort</th></tr></thead>
@@ -381,7 +381,7 @@
 <ul class="feature-list">
   <li><strong>Scroll to</strong>: „scroll until I see About phone" ergibt einen Node mit Text oder XPath. Gibt es das Ziel nicht, endet der Schritt nach der festgelegten Höchstzahl an Wischbewegungen oder bei unverändertem Bildschirm mit einer Meldung, die Ziel und Wischanzahl nennt; der Node ist failed, es gibt keinen Endlos-Lauf.</li>
   <li><strong>Swipe</strong>: Richtung, Element (Wischen innerhalb eines Elements, zum Beispiel eines Karussells) und Prozent statt Pixel.</li>
-  <li><strong>Long Press</strong>: „I long press on About phone" ergibt einen Long-Press-Node mit Selektor und Dauer (mindestens 500 ms). Im manuellen Recorder wird ein Halten der Maus ab 600 ms zu einem Long-Press-Schritt; ein kurzer Klick bleibt ein Tap, Ziehen bleibt ein Swipe.</li>
+  <li><strong>Long Press</strong>: „I long press on About phone" ergibt einen Node <strong>Long press</strong> mit Selektor und Dauer (mindestens 500 ms). Im manuellen Recorder wird ein Halten der Maus ab 600 ms zu einem Long-Press-Schritt; ein kurzer Klick bleibt ein Tap, Ziehen bleibt ein Swipe.</li>
   <li>Ältere Workflows mit Swipe-Nodes laufen unverändert.</li>
 </ul>
 <h2>Geräte-Aktionen</h2>
@@ -482,13 +482,13 @@
   </div>
 </div>
 <h2>Vorhandene Page Objects zur Seite</h2>
-<p>Im Pages-Tab zeigt der Bereich <strong>Existing page objects for this page</strong>, welche Page Objects und Felder es zur geöffneten Seite bereits gibt, mit allen Feldnamen und ohne Aufklappen. Der Bereich folgt der aktuellen URL; gibt es zur Seite nichts, steht dort „No existing page objects for this page." Bei einer Mobile-Session mit App-Paket zeigt er die Page Objects dieser App; ohne Paket bzw. Bundle-ID erscheint „No app context …". Auch die KI kann die vorhandenen Page Objects zu einer Seite abfragen.</p>
+<p>Im Pages-Tab zeigt der Bereich <strong>On this page</strong> (mit der aktuellen URL), welche Page Objects und Felder es zur geöffneten Seite bereits gibt, mit allen Feldnamen und ohne Aufklappen. Der Bereich folgt der aktuellen URL; gibt es zur Seite nichts, steht dort „No existing page objects for this page." Bei einer Mobile-Session mit App-Paket zeigt er die Page Objects dieser App; ohne Paket bzw. Bundle-ID erscheint „No app context …". Auch die KI kann die vorhandenen Page Objects zu einer Seite abfragen.</p>
 <h2>Wiederverwendung über den Selektor</h2>
 <p>Alle Recorder (KI, passiv, Auto-Mapping) verwenden ein vorhandenes Feld mit gleichem Selektor wieder, statt es unter einem neuen Namen anzulegen; der Workflow-Node verweist auf das vorhandene Feld. Der passive Recorder benennt eine Aufnahme auf einer URL mit genau einem vorhandenen Page Object nach diesem.</p>
 <h2>Vorhandene Felder beim Öffnen prüfen</h2>
-<p>Öffnet die KI eine Seite oder App, zu der Page Objects existieren, werden alle gespeicherten Selektoren in einem einzigen lesenden Durchgang live geprüft (höchstens etwa 2 Sekunden, ohne die Seite zu verändern). Jedes Feld erhält einen Befund: <code>confirmed</code> (genau ein sichtbarer Treffer), <code>not found</code> oder <code>ambiguous (n)</code>. Bestätigte Felder übernimmt die KI unverändert, neue Selektoren baut sie nur für nicht bestätigte Elemente. Das spart Fehlversuche an veralteten Feldern. Bei veralteten Feldern erscheint pro Seitenöffnung genau eine Chat-Notiz „not found". Wird das Zeitlimit überschritten, steht „not checked live (timeout)" und die Aufnahme läuft ohne Fehler weiter.</p>
+<p>Öffnet die KI eine Seite oder App, zu der Page Objects existieren, werden alle gespeicherten Selektoren in einem einzigen lesenden Durchgang live geprüft (höchstens etwa 2 Sekunden, ohne die Seite zu verändern). Jedes Feld erhält einen Befund: bestätigt (genau ein sichtbarer Treffer), nicht gefunden oder mehrdeutig (mehrere Treffer). Bestätigte Felder übernimmt die KI unverändert, neue Selektoren baut sie nur für nicht bestätigte Elemente. Das spart Fehlversuche an veralteten Feldern. Sind Felder veraltet, erscheint pro Seitenöffnung genau eine Chat-Notiz der Form „&lt;Page&gt;: N of M stored fields confirmed on this page; not found: …“; die Felder werden bei der Aufnahme repariert. Wird das Zeitlimit überschritten, läuft die Aufnahme ohne Fehler weiter.</p>
 <h2>Selektor-Reparatur</h2>
-<p>Bevor ein vorhandenes Feld einen neuen Selektor bekommt, wird der gespeicherte Selektor live geprüft. Trifft er, bleibt er stehen. Trifft er nicht, wird er überschrieben und die Reparatur gemeldet: Der Bereich <strong>Selector repairs</strong> nennt Feld, alten und neuen Selektor und die betroffenen Workflows. Konnte nicht live geprüft werden (keine Session), steht dort „(not checked live)"; eine Überschreibung geschieht nie still.</p>
+<p>Bevor ein vorhandenes Feld einen neuen Selektor bekommt, wird der gespeicherte Selektor live geprüft. Trifft er, bleibt er stehen. Trifft er nicht, wird er überschrieben und die Reparatur gemeldet: Der Bereich <strong>Selector repairs</strong> nennt je Feld den alten und den neuen Selektor und die Zahl der Workflows, die das Feld verwenden („used in N workflows“). Konnte nicht live geprüft werden (keine Session), steht dort „(not checked live)"; eine Überschreibung geschieht nie still.</p>
 <h2>Automatische Page-Screenshots</h2>
 <p>Legt der Web-Recorder (passiv oder KI) eine Page an, die noch keinen Screenshot hat, wird im Hintergrund automatisch ein Screenshot der aufgenommenen Seite hinterlegt, in derselben Ablage wie ein manueller Upload (Bild und Vorschau werden wie beim Upload verkleinert und komprimiert).</p>
 <ul class="feature-list">
@@ -533,6 +533,13 @@
   <li>Steigen Sie am letzten Node „Close Browser" ein, parkt der Lauf davor, und der Dialog zeigt „Insert before: Close Browser".</li>
   <li>Hat jemand den Workflow inzwischen geändert (Versionskonflikt), bleibt der Dialog mit einem Konflikthinweis und den zwei Auswegen offen.</li>
 </ul>
+<h2>Mobile Workflows fortsetzen</h2>
+<p>Steigen Sie bei einem mobilen Workflow über <strong>Edit live from here</strong> ein, zeigt die Live Device View das Bild des Geräts, auf dem der Lauf am Einfügepunkt steht. Die Bedienknöpfe der Live Device View (Tippen, Wischen, langes Drücken, Tasten wie HOME und BACK, Drehen, Tastatur, Tippen von Text) wirken auf genau dieses Gerät.</p>
+<ul class="feature-list">
+  <li>Ein eigener Tap im Gerätebild erscheint sofort im Events-Tab und wird bei <strong>Finish run</strong> genau einmal hinter dem Anker in den Workflow eingefügt. <strong>Start recording</strong> ist dafür nicht nötig.</li>
+  <li>Das Gerät gehört dem Lauf: Die Live Device View beendet seine Sitzung nicht.</li>
+  <li>Nach <strong>Finish run</strong>, nach <strong>Clear</strong> und nach Ablauf der Bearbeitungssitzung bleibt das letzte Bild stehen, die Bedienknöpfe sind ausgeblendet, und Eingaben erreichen das Gerät nicht mehr.</li>
+</ul>
 <h2>Abgelaufene Bearbeitungssitzung</h2>
 <ul class="feature-list">
   <li>Ist die Bearbeitungssitzung abgelaufen oder beendet, meldet der Recorder das in Klartext. Der Speicherdialog bleibt offen und die Aufnahme erhalten.</li>
@@ -555,6 +562,27 @@
 </ul>
 <h2>Neue KI-Konversation beginnt leer</h2>
 <p>Beginnen Sie nach dem Ende einer KI-Konversation (Stop) mit dem nächsten Befehl eine neue, startet der AI Recorder mit einer leeren Knotenliste. Der Tab Workflow und jeder Speicherweg enthalten nur die Nodes der neuen Konversation, und der Variablen-Tab enthält keine Variablen der vorigen. Waren noch ungespeicherte Schritte da, steht im Chat eine Zeile, dass sie verworfen wurden. Innerhalb derselben Konversation (weitere Befehle, Pause/Weiter) wird nichts geleert. „Stop, dann Speichern" ohne neuen Befehl speichert weiterhin die Nodes der gestoppten Konversation.</p>
+</section>
+
+<section class="doc-section" id="recorder-replay-rules">
+<span class="section-label">Ausgabe &amp; Integration</span>
+<h1>Wiedergabe: Auswahllisten und mehrere Treffer</h1>
+<h2>Auswahllisten (Select)</h2>
+<ul class="feature-list">
+  <li>Eine Auswahl in einem Dropdown (Playwright) scheitert innerhalb <strong>einer</strong> Frist, nicht mehr nach zwei hintereinander. Die Frist ist der <strong>timeout</strong> des Nodes; ohne Angabe gelten 15 Sekunden.</li>
+  <li>Die Option wird über Wert oder Beschriftung gewählt. Gibt es das Element, aber keine passende Option, lautet der Fehler <code>Option '&lt;Text&gt;' not found; available: …</code> mit bis zu 10 vorhandenen Beschriftungen.</li>
+  <li>Fehlt das Element selbst, bleibt es bei der bisherigen Meldung („waiting for locator …"); optionale Schritte werden dann übersprungen und die Selbstheilung greift wie bisher.</li>
+</ul>
+<h2>Klick bei mehreren sichtbaren Treffern</h2>
+<p>Trifft der Selektor eines Klicks (auch bei Hover and Click) mehrere sichtbare Elemente, klickt der Worker dasjenige, dessen eigener Text oder dessen zugänglicher Name (<code>aria-label</code>, <code>title</code>, <code>alt</code>) dem Text im Selektor genau entspricht (Gross-/Kleinschreibung egal). Gibt es keinen solchen Treffer, gilt wie bisher der am besten bewertete sichtbare Treffer. So wird zum Beispiel „Run" statt „More run options" geklickt.</p>
+<ul class="feature-list">
+  <li>Als Textanker erkannt werden <code>text=…</code>, <code>:has-text("…")</code>, <code>role=…[name="…"]</code> sowie XPath-Ausdrücke mit <code>contains(., '…')</code>, <code>text()='…'</code> oder <code>normalize-space()='…'</code>. CSS-Selektoren, <code>#id</code>, <code>[data-testid]</code>, Links über <code>href</code> und Positions-Selektoren haben keinen Anker; dort ändert sich nichts.</li>
+</ul>
+<h2>KI-Aufnahme und Selbstheilung</h2>
+<ul class="feature-list">
+  <li>Ein Screenshot der KI wartet nicht mehr darauf, dass die Seite zur Ruhe kommt.</li>
+  <li>Die Selbstheilung sieht den Seitenbaum des Workers bis zu einer Länge von 36&nbsp;000 Zeichen und nicht mehr nur einen Ausschnitt davon.</li>
+</ul>
 </section>
 
 <section class="doc-section" id="recorder-output">

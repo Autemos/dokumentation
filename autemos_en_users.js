@@ -186,7 +186,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
     <span class="tip-icon">⚠️</span><strong>Important Notes —</strong> When deleting a user, <strong>permissions are removed immediately</strong>. Historical test assignments may be retained, and audit logs may still store references.
   </div>
   <h2>Reset Link</h2>
-  <p>With the <strong>Reset Link</strong> action, administrators create a link for a user to set a new password. The link is <strong>shown as the response</strong>, so it can be passed on even if mail delivery is not possible; it is additionally sent by email if the mail connection is configured (see <a href="#settings-notifications">Notification Settings</a>).</p>
+  <p>With the <strong>Reset Link</strong> action, administrators create a link for a user to set a new password. The link is <strong>shown as the response</strong>, so it can be passed on even if mail delivery is not possible; it is additionally sent by email if the mail connection is configured (see <a href="#settings-notifications">Notification Settings</a>). The action first asks in the <em>Password Reset Link</em> dialog; only <strong>Generate Link</strong> creates the link.</p>
   <ul class="feature-list">
     <li>The link is valid for 24 hours. Older links of the same user expire as soon as a new one is created.</li>
     <li>The action also works for invited users who have not yet set a password.</li>
@@ -202,6 +202,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
     <li>The <strong>username</strong> at login is case-insensitive: "Admin", "ADMIN" and "admin" sign in the same user. The spelling chosen at creation is still what is displayed.</li>
     <li>The same rule applies to the uniqueness check when inviting: a name that differs from an existing one only by upper/lower case is rejected as a duplicate.</li>
     <li>If an installation already has accounts that differ only in spelling, the exactly written name signs in the matching account; an ambiguous name is rejected.</li>
+    <li>Instead of the username, the email address can be entered (field <em>Username or email</em>).</li>
     <li>The <strong>password</strong> remains case-sensitive.</li>
   </ul>
   <h2>Forgot Password</h2>
@@ -213,7 +214,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
     <li>After saving, "Password updated. You can now sign in with your new password." appears and the sign-in page opens.</li>
   </ul>
   <ul class="feature-list">
-    <li>The link is <strong>time-limited and single-use</strong>. An invalid, expired or already used link leads to the message "This password reset link is invalid, has expired or has already been used. Please request a new one." with the link <em>Request a new link</em>.</li>
+    <li>The link is <strong>time-limited and single-use</strong>. An invalid, expired or already used link leads, when the new password is submitted, to the message "This password reset link is invalid, has expired or has already been used. Please request a new one." with the link <em>Request a new link</em>.</li>
     <li>The number of requests is limited per email address and per network address; when exceeded, "Too many requests. Please wait a few minutes and try again." appears.</li>
     <li>For accounts that must not be reset (directory-managed or locked), no link is sent — the answer still stays neutral.</li>
     <li>After a reset, the account owner is notified by email that their password was changed.</li>
@@ -230,8 +231,8 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
       <thead><tr><th>Who</th><th>Read in the project</th><th>Write in the project</th></tr></thead>
       <tbody>
         <tr><td><strong>Global admin, project owner</strong></td><td>yes</td><td>yes</td></tr>
-        <tr><td><strong>Project role Admin / Editor / Member</strong></td><td>yes</td><td>yes</td></tr>
-        <tr><td><strong>Project role Viewer</strong></td><td>yes</td><td>no</td></tr>
+        <tr><td><strong>Project role ADMIN / MEMBER (and EDITOR)</strong></td><td>yes</td><td>yes</td></tr>
+        <tr><td><strong>Project role VIEW (Viewer)</strong></td><td>yes</td><td>no</td></tr>
         <tr><td><strong>Signed in, but not a member</strong></td><td>no</td><td>no</td></tr>
         <tr><td><strong>Not signed in</strong></td><td>no (sign-in required)</td><td>no (sign-in required)</td></tr>
         <tr><td><strong>Project-bound API key</strong></td><td>yes</td><td>yes, except at the places listed below</td></tr>
@@ -239,7 +240,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
     </table>
   </div>
   <h2>Viewer</h2>
-  <p>A user with the <strong>Viewer</strong> project role may only read a project. Every write action — for example creating or changing secrets or auth configurations, changing the Xray link or the project mapping, changing test data, workflows or recorder sessions — is rejected. The user then sees an error message or the "Forbidden" page; there is no success notice and nothing is changed. Reading remains fully possible, including the project settings page.</p>
+  <p>A user with the <strong>VIEW</strong> (Viewer) project role may only read a project. Every write action — for example creating or changing secrets or auth configurations, changing the Xray link or the project mapping, changing test data, workflows or recorder sessions — is rejected. The user then sees an error message or the "You don't have access to this" page; there is no success notice and nothing is changed. Reading remains fully possible, including the project settings page.</p>
   <h2>Non-members</h2>
   <p>A user who is signed in but has no role in the project gets neither read nor write access to that project's data. This includes test data (Easy datasets and their rows), recorder sessions, live views and the control of running executions. For unknown or foreign resources there is no information about whether they exist. Without signing in, these areas are no longer reachable.</p>
   <h2>Further rules</h2>
@@ -247,7 +248,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
     <li><strong>Recorder:</strong> When saving page objects from a recorder session, only objects of that session's project are written. If the request refers to another project, it is rejected before anything is saved.</li>
     <li><strong>Healing:</strong> Validation against a worker session requires read access in the project; for a foreign or unknown session it is rejected and returns no results.</li>
     <li><strong>Project admins:</strong> A project admin without the global admin role can use all tabs of the project settings. Members without the admin role cannot change anything there. Showing the plain text of a secret remains reserved for global administrators; the button is therefore not offered to project admins.</li>
-    <li><strong>API keys:</strong> At some places API keys are not allowed: creating, changing or deleting project secrets or showing their value, personal secrets, creating schedules, changing user data, and individual dashboard, search and AI recorder functions. There Autemos answers with a clear message ("API keys are not allowed at this endpoint") instead of a server error.</li>
+    <li><strong>API keys:</strong> At some places API keys are not allowed: creating, changing or deleting project secrets or showing their value, personal secrets, creating schedules, changing user data, and individual dashboard, search and AI recorder functions. There Autemos answers with a clear message ("API keys are not allowed on this endpoint") instead of a server error.</li>
   </ul>
   <div class="tip"><span class="tip-icon">💡</span>Anyone who may not perform an action needs a higher project role — administrators assign it under <a href="#users-projects">Projects &amp; Roles</a>.</div>
 `,

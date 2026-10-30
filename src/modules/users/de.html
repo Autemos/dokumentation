@@ -196,7 +196,7 @@
     <span class="tip-icon">⚠️</span><strong>Wichtige Hinweise —</strong> Beim Löschen eines Benutzers werden <strong>Berechtigungen sofort entfernt</strong>. Historische Test-Zuweisungen können erhalten bleiben, und Audit-Logs können weiterhin Referenzen speichern.
   </div>
   <h2>Reset Link</h2>
-  <p>Mit der Aktion <strong>Reset Link</strong> erzeugen Administratoren für einen Benutzer einen Link, über den dieser ein neues Passwort setzt. Der Link wird <strong>als Antwort angezeigt</strong>, sodass er auch dann weitergegeben werden kann, wenn der Mailversand nicht möglich ist; zusätzlich wird er per Mail versandt, sofern die Mail-Anbindung konfiguriert ist (siehe <a href="#settings-notifications">Notification Settings</a>).</p>
+  <p>Mit der Aktion <strong>Reset Link</strong> erzeugen Administratoren für einen Benutzer einen Link, über den dieser ein neues Passwort setzt. Der Link wird <strong>als Antwort angezeigt</strong>, sodass er auch dann weitergegeben werden kann, wenn der Mailversand nicht möglich ist; zusätzlich wird er per Mail versandt, sofern die Mail-Anbindung konfiguriert ist (siehe <a href="#settings-notifications">Notification Settings</a>). Die Aktion fragt zuerst im Dialog <em>Password Reset Link</em> nach; erst <strong>Generate Link</strong> erzeugt den Link.</p>
   <ul class="feature-list">
     <li>Der Link gilt 24 Stunden. Ältere Links desselben Benutzers verfallen, sobald ein neuer erzeugt wird.</li>
     <li>Für eingeladene Benutzer, die noch kein Passwort gesetzt haben, funktioniert die Aktion ebenfalls.</li>
@@ -213,6 +213,7 @@
     <li>Der <strong>Benutzername</strong> beim Login ist unabhängig von Gross-/Kleinschreibung: „Admin“, „ADMIN“ und „admin“ melden denselben Benutzer an. Angezeigt wird weiterhin die Schreibweise, die bei der Anlage gewählt wurde.</li>
     <li>Dieselbe Regel gilt für die Eindeutigkeitsprüfung beim Einladen: Ein Name, der sich nur durch Gross-/Kleinschreibung von einem bestehenden unterscheidet, wird als Dublette abgewiesen.</li>
     <li>Bestehen in einer Installation bereits Konten, die sich nur durch die Schreibweise unterscheiden, meldet der exakt geschriebene Name das passende Konto an; ein mehrdeutiger Name wird abgewiesen.</li>
+    <li>Statt des Benutzernamens kann auch die E-Mail-Adresse eingegeben werden (Feld <em>Username or email</em>).</li>
     <li>Das <strong>Passwort</strong> bleibt gross-/klein-empfindlich.</li>
   </ul>
   <h2>Forgot Password</h2>
@@ -224,7 +225,7 @@
     <li>Nach dem Speichern erscheint „Password updated. You can now sign in with your new password.“ und die Anmeldeseite öffnet sich.</li>
   </ul>
   <ul class="feature-list">
-    <li>Der Link ist <strong>zeitlich begrenzt und einmalig</strong>. Ein ungültiger, abgelaufener oder bereits benutzter Link führt zur Meldung „This password reset link is invalid, has expired or has already been used. Please request a new one.“ mit dem Link <em>Request a new link</em>.</li>
+    <li>Der Link ist <strong>zeitlich begrenzt und einmalig</strong>. Ein ungültiger, abgelaufener oder bereits benutzter Link führt beim Absenden des neuen Passworts zur Meldung „This password reset link is invalid, has expired or has already been used. Please request a new one.“ mit dem Link <em>Request a new link</em>.</li>
     <li>Die Anzahl der Anfragen ist je E-Mail-Adresse und je Netzwerkadresse begrenzt; bei Überschreitung erscheint „Too many requests. Please wait a few minutes and try again.“</li>
     <li>Für Konten, die nicht zurückgesetzt werden dürfen (verzeichnisverwaltet oder gesperrt), wird kein Link versandt — die Antwort bleibt trotzdem neutral.</li>
     <li>Der Kontoinhaber wird nach dem Zurücksetzen per Mail benachrichtigt, dass sein Passwort geändert wurde.</li>
@@ -242,8 +243,8 @@
       <thead><tr><th>Wer</th><th>Lesen im Projekt</th><th>Schreiben im Projekt</th></tr></thead>
       <tbody>
         <tr><td><strong>Globaler Admin, Projekt-Eigentümer</strong></td><td>ja</td><td>ja</td></tr>
-        <tr><td><strong>Projektrolle Admin / Editor / Member</strong></td><td>ja</td><td>ja</td></tr>
-        <tr><td><strong>Projektrolle Viewer</strong></td><td>ja</td><td>nein</td></tr>
+        <tr><td><strong>Projektrolle ADMIN / MEMBER (sowie EDITOR)</strong></td><td>ja</td><td>ja</td></tr>
+        <tr><td><strong>Projektrolle VIEW (Viewer)</strong></td><td>ja</td><td>nein</td></tr>
         <tr><td><strong>Angemeldet, aber kein Mitglied</strong></td><td>nein</td><td>nein</td></tr>
         <tr><td><strong>Nicht angemeldet</strong></td><td>nein (Anmeldung erforderlich)</td><td>nein (Anmeldung erforderlich)</td></tr>
         <tr><td><strong>Projektgebundener API-Schlüssel</strong></td><td>ja</td><td>ja, ausser an den unten genannten Stellen</td></tr>
@@ -251,7 +252,7 @@
     </table>
   </div>
   <h2>Viewer</h2>
-  <p>Ein Benutzer mit der Projektrolle <strong>Viewer</strong> darf ein Projekt nur lesen. Jede schreibende Aktion — etwa Secrets oder Auth-Konfigurationen anlegen und ändern, die Xray-Verknüpfung oder das Projekt-Mapping ändern, Testdaten, Workflows oder Recorder-Sitzungen verändern — wird abgewiesen. Der Benutzer sieht dann eine Fehlermeldung bzw. die Seite „Forbidden“; es gibt keinen Erfolgshinweis, und es wird nichts verändert. Lesen bleibt vollständig möglich, auch die Seite der Projekt-Settings.</p>
+  <p>Ein Benutzer mit der Projektrolle <strong>VIEW</strong> (Viewer) darf ein Projekt nur lesen. Jede schreibende Aktion — etwa Secrets oder Auth-Konfigurationen anlegen und ändern, die Xray-Verknüpfung oder das Projekt-Mapping ändern, Testdaten, Workflows oder Recorder-Sitzungen verändern — wird abgewiesen. Der Benutzer sieht dann eine Fehlermeldung bzw. die Seite „You don't have access to this“; es gibt keinen Erfolgshinweis, und es wird nichts verändert. Lesen bleibt vollständig möglich, auch die Seite der Projekt-Settings.</p>
   <h2>Nicht-Mitglieder</h2>
   <p>Wer angemeldet ist, aber keine Rolle im Projekt hat, erhält für Daten dieses Projekts weder Lese- noch Schreibzugriff. Das gilt auch für die Testdaten (Easy-Datensätze und ihre Zeilen), Recorder-Sitzungen, Live-Ansichten und die Steuerung laufender Ausführungen. Für unbekannte oder fremde Ressourcen gibt es keine Auskunft, ob sie existieren. Ohne Anmeldung sind diese Bereiche nicht mehr erreichbar.</p>
   <h2>Weitere Regeln</h2>

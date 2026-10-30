@@ -284,7 +284,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   <p><strong>Examples:</strong> Coupon codes · one-time users · unique registrations</p>
   <div class="tip"><span class="tip-icon">💡</span>Prevents data conflicts in parallel tests.</div>
   <h2 id="testdata-easy-tags">Tags</h2>
-  <p>Each dataset can carry <strong>any number of tags</strong>. Tags are free-form terms (for example <code>Smoke</code>, <code>High</code> or a release name) used to organise large data collections by topic or ownership. A tag does not trigger any logic of its own (such as priority handling) — the term stays free.</p>
+  <p>Each dataset can carry <strong>any number of tags</strong>. Tags are free-form terms (for example <code>Smoke</code>, <code>High</code> or a release name) used to organise large data collections by topic or ownership. Tags have no effect of their own; only data-driven execution evaluates them (Tags match all and Priority tag, see <a href="#testdata-datadriven">Data-driven Execution</a>).</p>
   <h3>Assigning tags</h3>
   <ul class="feature-list">
     <li>In the <strong>New/Edit Easy Test Data Dataset</strong> dialog, the <strong>Tags</strong> field sits below <em>Description</em> (placeholder "Create or reuse a tag").</li>
@@ -372,17 +372,20 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
       <thead><tr><th>Area</th><th>Description</th></tr></thead>
       <tbody>
         <tr><td><strong>Data source / Binding</strong></td><td>If the workflow references exactly one pool binding, the dialog shows "Data-driven binding: country" and the source ("Source: Easy Test Data"). With several, choose under <em>Data-driven binding</em>. If there is none, a note explains how to create one, with the link <em>Set up a data-driven binding</em>.</td></tr>
-        <tr><td><strong>Dataset selection</strong></td><td>Which datasets run: All datasets, Single dataset, Selected datasets, First N datasets or By tags (all datasets with the chosen tags).</td></tr>
+        <tr><td><strong>Dataset selection</strong></td><td>Which datasets run: All datasets, Single dataset, Selected datasets, First N datasets or By tags (all datasets with the chosen tags). Under <strong>Tags (match all)</strong> you choose the tags; only datasets that carry all of them run. The <strong>Priority tag</strong> field (Any priority, High, Medium, Low) additionally restricts to datasets with the tag High, Medium or Low. Datasets run sorted by name, one run per dataset (not per row).</td></tr>
         <tr><td><strong>Execution preview</strong></td><td>States the number of runs up front, for example "4 datasets selected – 4 test runs will be created", and lists the selected datasets.</td></tr>
       </tbody>
     </table>
   </div>
   <div class="warning">
-    <span class="tip-icon">⚠️</span><strong>Start is refused —</strong> If a dataset lacks a field the workflow needs, nothing starts. The message names dataset and field (for example "Dataset 'AUT66-03-France' lacks field(s) expectedTitle required by {{country.expectedTitle}}"). No batch is created and no run is started.
+    <span class="tip-icon">⚠️</span><strong>Start is refused —</strong> If a dataset lacks a field the workflow needs, nothing starts. The message names dataset and field (in the dialog, for example "Dataset 'AUT66-03-France' lacks field(s) expectedTitle required by this workflow."; the API response names the placeholder instead of "this workflow", for example {{country.expectedTitle}}). No batch is created and no run is started.
+  </div>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Warning for further data sources —</strong> If the workflow reads further data-driven bindings or Easy tables (without One-Time-Use) besides the iterated source, they supply the same first dataset or row 1 in every run. The dialog shows a warning for each such source, for example "Data-driven binding 'Country' (expectedTitle) is not iterated: every run uses its first dataset 'France'." or "Test data table 'Cities' ({{cities}}: name) is not iterated: every run uses row 1." The warning does not block the start; the same warning is in the API response and in the server log of the schedule, and the run log notes the dataset.
   </div>
   <h2>Permissions and schedules</h2>
   <ul class="feature-list">
-    <li>All project members can read the dataset selection; <strong>starting and cancelling</strong> a data-driven execution requires at least the Editor project role (see <a href="#users-roles">Roles &amp; Permissions</a>).</li>
+    <li>All project members can read the dataset selection; <strong>starting and cancelling</strong> a data-driven execution requires write access in the project (role MEMBER or higher; the VIEW role may not start, see <a href="#users-roles">Roles &amp; Permissions</a>).</li>
     <li>The same selection can be set in schedules — see <a href="#scheduler-testdata">Test data in a schedule</a>.</li>
   </ul>
 `,

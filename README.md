@@ -56,7 +56,7 @@ Anschliessend `http://localhost:8080/autemos.html` öffnen.
 - **Sidebar-Navigation** — Einklappbare Gruppen (Management / Project / Settings / Deployment). Der Zustand wird gespeichert.
 - **Modulwechsel** — 22 Module mit jeweils eigener Unternavigation.
 - **Modulübergreifende Suche** — Das Suchfeld mit Lupe im Header durchsucht alle Module in beiden Sprachen.
-- **Chatbot „ask Autemos“** — Schwebendes Widget unten rechts. Clientseitige Stichwortsuche über alle 259 Sektionen.
+- **Chatbot „ask Autemos“** — Schwebendes Widget unten rechts. Clientseitige Stichwortsuche über alle 317 Sektionen.
 - **Keine externen CDN-Abhängigkeiten** für Inhalte — nur Google Fonts (Inter). Ansonsten in sich geschlossen.
 
 ## 🛠️ Wartung

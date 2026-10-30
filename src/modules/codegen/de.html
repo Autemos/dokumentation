@@ -357,9 +357,9 @@
 </div>
 <p>Die Prüfung vergleicht ausschliesslich die Testdateien des jeweiligen Workflows; Commits an anderen Dateien lösen kein «Out of sync» aus. Das Ergebnis wird rund 10 Minuten zwischengespeichert. Mit dem Knopf <strong>Check now</strong> in der Kopfzeile der Liste lässt sich die Prüfung sofort auslösen.</p>
 <h2>Hinweis im Workflow-Editor</h2>
-<p>Im Workflow-Editor zeigt der Indikator «Code sync: …» den aktuellen Zustand. Bei einer Änderung im Repository erscheint der Hinweis <strong>There are changes in the underlying code</strong> mit Commit, Autor und Zeitpunkt sowie dem Knopf <strong>View changes</strong>. Wurde die Änderung ignoriert, bleibt der Hinweis dezenter und erscheint bei einem neuen Commit wieder in voller Form. Ist der Stand unbekannt, erscheint <strong>Code sync state unknown</strong> mit dem Grund.</p>
+<p>Im Workflow-Editor zeigt der Indikator «Code sync» in der Werkzeugleiste den aktuellen Zustand (Symbol; Tooltip «Code sync: …» mit Zustand, Zeitpunkt der letzten Prüfung und letztem Commit). Bei einer Änderung im Repository erscheint der Hinweis <strong>There are changes in the underlying code</strong> mit Commit, Autor und Zeitpunkt sowie dem Knopf <strong>View changes</strong>. Wurde die Änderung ignoriert, bleibt der Hinweis dezenter und erscheint bei einem neuen Commit wieder in voller Form. Ist der Stand unbekannt, erscheint <strong>Code sync state unknown</strong> mit dem Grund.</p>
 <h2>Dialog «Code changes»</h2>
-<p>Der Dialog zeigt oben den Bereich <strong>Workflow changes</strong>: die erkannten Änderungen pro Workflow-Knoten (Knotenname, Parameter, alter und neuer Wert). Darunter steht der Textvergleich des Codes zwischen der zuletzt synchronisierten Version und dem aktuellen Repository-Stand, je Datei als hinzugefügt, entfernt oder geändert gekennzeichnet. Nicht übernehmbare Änderungen sind ausdrücklich gekennzeichnet und nennen den Grund; reine Kommentar- und Leerzeilenänderungen werden als unwesentlich markiert. Ein Link <strong>Supported changes</strong> öffnet in einem neuen Tab die in Autemos ausgelieferte Dokumentation der unterstützten Änderungen (Sprachen, Frameworks, Knotenarten, Einschränkungen); er benötigt keinen Zugriff auf GitHub.</p>
+<p>Der Dialog zeigt links den zuletzt synchronisierten Code und rechts den aktuellen Stand im Repository. Oben steht der Bereich <strong>Workflow changes</strong>: die erkannten Änderungen pro Workflow-Knoten (Knotenname, Parameter, alter und neuer Wert). Darunter steht der Textvergleich des Codes zwischen der zuletzt synchronisierten Version und dem aktuellen Repository-Stand, je Datei als hinzugefügt, entfernt oder geändert gekennzeichnet. Farbig markiert sind genau die Zeilen, die auch ein <code>git diff</code> als hinzugefügt (grün, rechts) oder entfernt (rot, links) meldet; ein neu ergänzter Knotenblock wird mit allen seinen Zeilen markiert, die Zeile davor bleibt unmarkiert. Unter dem Vergleich zeigt <strong>Changed lines (from line n)</strong> die geänderten Zeilen als Liste. Nicht übernehmbare Änderungen sind ausdrücklich gekennzeichnet und nennen den Grund; reine Kommentar- und Leerzeilenänderungen werden als unwesentlich markiert. Ein Link <strong>Supported changes</strong> öffnet in einem neuen Tab die in Autemos ausgelieferte Dokumentation der unterstützten Änderungen (Sprachen, Frameworks, Knotenarten, Einschränkungen); er benötigt keinen Zugriff auf GitHub.</p>
 <h2>Entscheidungen</h2>
 <div class="param-table-wrap">
 <table class="param-table">
@@ -368,6 +368,8 @@
 <tr><td><strong>Ignore changes</strong></td><td>Der Workflow bleibt unverändert. Der Zustand bleibt «Out of sync (ignored)», bis ein neuer Commit hinzukommt.</td></tr>
 <tr><td><strong>Accept baseline only</strong></td><td>Der Repository-Stand wird als neue Basis übernommen, der Workflow bleibt unverändert. Der Zustand lautet «Baseline accepted», nicht «In sync».</td></tr>
 <tr><td><strong>Apply to workflow</strong></td><td>Übernimmt die erkannten Änderungen in den Workflow. Nach einer Bestätigung («Apply code changes to workflow?») wird der Workflow aktualisiert; der Zustand wechselt auf «In sync».</td></tr>
+<tr><td><strong>Check now</strong></td><td>Prüft das Repository sofort erneut und aktualisiert Zustand und Vorschau.</td></tr>
+<tr><td><strong>Push to Git</strong></td><td>Erzeugt den Code des Workflows neu und öffnet den Pull-Request-Dialog (siehe «Push to Git im Editor»).</td></tr>
 <tr><td><strong>Close</strong></td><td>Schliesst den Dialog, ohne etwas zu ändern.</td></tr>
 </tbody>
 </table>
@@ -383,6 +385,15 @@
 <li>Vorschau darf, wer Mitglied des Projekts ist. Übernehmen und Entscheiden setzen Editor-Rechte voraus. Alle Schritte (Vorschau angesehen, übernommen, Konflikt, wiederhergestellt, Entscheidung) erscheinen in der Audit-Übersicht in der Kategorie «Code Sync».</li>
 </ul>
 <div class="tip"><span class="tip-icon">💡</span>Ausgeführt wird immer der Workflow in Autemos, nie der Code aus dem Repository. Ein «Out of sync»-Workflow läuft daher unverändert weiter, bis die Änderungen übernommen wurden.</div>
+<h2>Hinweis nach «Apply to workflow»: neue Knoten-IDs</h2>
+<p>Hat «Apply to workflow» neue Schritte angelegt, steht im Code im Repository noch <code>node=new</code>, während die neuen Knoten in Autemos bereits eine eindeutige ID tragen. Bis der Code erneut übertragen wurde, zeigt der Workflow-Editor oberhalb des Workflows einen bleibenden Hinweis: <strong>Workflow updated. New nodes have been assigned unique IDs.</strong> mit dem Satz «Please synchronize the generated code with GitHub before making further external changes.» und dem Knopf <strong>Sync code now</strong>.</p>
+<ul class="feature-list">
+<li><strong>Sync code now</strong> öffnet den Dialog «Push to Git» für diesen Workflow. Der Lauf startet erst mit Ihrem Klick auf <strong>Create Pull Request</strong>; Autemos ändert das Repository nie von selbst. Der Knopf ist gesperrt (mit Begründung), wenn der Workflow ungespeicherte Änderungen hat oder die Projektrolle keine Editor-Rechte erlaubt.</li>
+<li>Der Hinweis bleibt nach dem Neuladen und für andere Benutzer stehen, auch im Zustand «In sync». Er verschwindet, sobald der Pull Request erzeugt wurde (Zustand «PR open» zeigt ihn nicht an). Eine spätere Übernahme, die nur Parameter ändert, löscht ihn nicht.</li>
+<li>Der Hinweis erscheint nur, wenn mindestens ein neuer Schritt übernommen wurde; nach reinen Änderungen oder Löschungen erscheint er nicht.</li>
+<li>Solange er steht, warnt der Dialog «Code changes» oberhalb von «Workflow changes»: Schritte aus einer früheren Übernahme tragen im Repository noch <code>node=new</code>, deshalb können sie bei weiteren externen Änderungen als hinzugefügt und zugleich entfernt erscheinen. Übernehmen bleibt möglich; synchronisieren Sie zuerst den Code.</li>
+<li>Nach der Übernahme meldet ein kurzer Hinweis: «Sync the generated code with GitHub – see the notice above the workflow.»</li>
+</ul>
 </section>
 
 <!-- CODE-SYNC: PUSH AUS DEM EDITOR -->
@@ -445,9 +456,10 @@
 </table>
 </div>
 <h3>Neue Schritte</h3>
-<p>Neue Schritte (ADDED) werden für navigate, wait, ifCondition, loop, callSubWorkflow sowie in der <code>page.locator</code>-Form für click, doubleClick, hover, check, pressKey, scroll, type, select und assert übernommen. Der neue Knoten erhält den Selektor aus dem Statement. Ein neuer Schritt, der ein PageObject-Element anspricht, ist nicht übernehmbar («new steps via a page object need the element mapping»), weil Autemos das Element nicht aus dem Code zuordnen kann; verwenden Sie die <code>page.locator("…")</code>-Form oder legen Sie den Schritt in Autemos an.</p>
+<p>Neue Schritte (ADDED) werden für navigate und wait in allen Sprachen übernommen. Nur bei Java/Playwright kommen ifCondition, loop und callSubWorkflow sowie in der <code>page.locator</code>-Form click, doubleClick, hover, check, pressKey, scroll, type, select und assert hinzu. Der neue Knoten erhält den Selektor aus dem Statement. Ein neuer Schritt, der ein PageObject-Element anspricht, ist nicht übernehmbar («new steps via a page object need the element mapping»), weil Autemos das Element nicht aus dem Code zuordnen kann; verwenden Sie die <code>page.locator("…")</code>-Form oder legen Sie den Schritt in Autemos an.</p>
 <h3>Selektoren in PageObject-Dateien</h3>
 <p>Ändert jemand den Selektor eines Felds in einer von Autemos erzeugten PageObject-Datei, zeigt der Sync die Änderung an jedem Knoten, der dieses Feld nutzt. <strong>Apply to workflow</strong> schreibt den neuen Selektor in das PageObject-Feld in Autemos. Das gilt für Web-PageObjects mit Playwright in Java, TypeScript, Python und C#. Felder werden über Marker <code>@autemos pageObjectField=…</code> zugeordnet; Felder werden in Autemos angelegt, umbenannt und entfernt, nicht im Code (ein doppelter Marker oder ein verändertes Locator-Literal wird als Problem gemeldet). In TypeScript sind Felder mit Mehrplattform-Locatoren (z. B. nur Android- oder iOS-Locator) nicht synchronisierbar. Selektoränderungen direkt im Test (<code>page.locator("…")</code>) werden erkannt, aber nicht übernommen.</p>
+<p>Jeder Workflow beobachtet die PageObject-Datei in seinem eigenen Zielordner. Haben Sie dasselbe PageObject aus zwei Workflows in unterschiedliche Zielordner übertragen, sind das zwei getrennte Dateien: Eine Änderung in der einen Datei zeigt nur der Workflow an, dessen Ordner sie betrifft, und eine spätere erneute Änderung desselben Felds wird mit <strong>Check now</strong> ebenfalls erkannt. Nutzen mehrere Workflows dasselbe PageObject, nennt der Grund der Änderung die anderen Workflows (<code>also used by: …</code>, höchstens fünf Namen, dann <code>+n more</code>), weil <strong>Apply to workflow</strong> den Selektor für alle diese Workflows ändert.</p>
 </section>
 
 <!-- CODE-SYNC: ASSERTIONS -->
@@ -533,7 +545,7 @@
 <section id="codegen-export-coverage" class="doc-section">
 <span class="section-label">Code-Export</span>
 <h1>Umfang des Java/Playwright-Exports</h1>
-<p>Der Java/Playwright-Export erzeugt für jede Knotenart des Katalogs entweder ausführbaren, gleichwertigen Code oder meldet eine begründete Lücke. Es gibt keine stillen Fehlübersetzungen und keine TODO-Platzhalter mehr. Für andere Sprachen und Frameworks bleiben Kommentar «NICHT GENERIERT» und Warnung bestehen (Hinweis «Locator-Form nur für java/playwright»).</p>
+<p>Der Java/Playwright-Export erzeugt für jede Knotenart des Katalogs entweder ausführbaren, gleichwertigen Code oder meldet eine begründete Lücke. Es gibt keine stillen Fehlübersetzungen und keine TODO-Platzhalter mehr. Die Tabelle unten gilt nur für Java/Playwright. Für andere Sprachen und Frameworks gilt der Abschnitt «Andere Sprachen und Frameworks».</p>
 <h2>Status je Knotenart</h2>
 <div class="param-table-wrap">
 <table class="param-table">
@@ -546,6 +558,12 @@
 </tbody>
 </table>
 </div>
+<h2>Andere Sprachen und Frameworks</h2>
+<p>Für Java/Selenium sowie TypeScript, Python und C# (je Playwright oder Selenium) erzeugt Autemos weniger:</p>
+<ul class="feature-list">
+<li><strong>Als Code erzeugt:</strong> navigate; type, click und select, wenn der Schritt ein PageObject-Element anspricht; wait; screenshot; die Testdaten-Knoten. Eine Zusicherung (assert) wird nur als Gleichheitsvergleich erzeugt, mit einem Platzhalter für den Istwert und einer Warnung; ohne Erwartungswert entsteht eine Lücke. Rahmen-Knoten und timeGap erscheinen als Kommentar.</li>
+<li><strong>Lücke mit Kommentar «NICHT GENERIERT» und Warnung:</strong> alle übrigen Knotenarten (z. B. doubleClick, hover, check, pressKey, scroll, selectCombobox, hoverAndClick, goBack, goForward, reload, rightClick, dragDrop, waitFor, extractText, Tabellen-, API- und Ablaufknoten wie ifCondition, loop, callSubWorkflow) sowie type, click und select ohne PageObject-Element (Hinweis «Locator-Form nur für java/playwright»).</li>
+</ul>
 <h2>Neue Aktionen</h2>
 <ul class="feature-list">
 <li><strong>selectCombobox:</strong> natives <code>&lt;select&gt;</code> per Label, sonst Öffnen und Auswahl der Option mit exaktem Label (Rückfall Teiltext).</li>
@@ -599,3 +617,25 @@
 </section>
 
 </div><!-- /content-wrap -->
+
+<!-- EXPORT: SELEKTOR-LITERALE -->
+<section id="codegen-export-selectors" class="doc-section">
+<span class="section-label">Code-Export</span>
+<h1>Selektoren im erzeugten Code</h1>
+<p>Steht ein Selektor im erzeugten PageObject-Code, schreibt Autemos ihn als gültiges Literal der Zielsprache, dessen Wert zur Laufzeit genau dem gespeicherten Selektor entspricht. Sonderzeichen im Selektor machen den Code nicht mehr unübersetzbar.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Ziel</th><th>Maskiert werden</th></tr></thead>
+<tbody>
+<tr><td>TypeScript (Backtick-Literal)</td><td>Backslash, Backtick und <code>${</code></td></tr>
+<tr><td>Java und C# (Literal in doppelten Anführungszeichen)</td><td>Backslash und doppeltes Anführungszeichen</td></tr>
+<tr><td>Python (Literal in einfachen Anführungszeichen)</td><td>Backslash und einfaches Anführungszeichen</td></tr>
+</tbody>
+</table>
+</div>
+<ul class="feature-list">
+<li>Das gilt für alle Selektorfelder der PageObjects, also auch für Android- und iOS-Locatoren und für Felder, die aus Ihrer Feldvorlage entstehen.</li>
+<li>Der Code-Sync liest diese maskierten Literale wieder zurück. Ein unmaskiertes <code>${…}</code> in einem TypeScript-Backtick-Literal (Interpolation) oder eine andere Maskierung wird als nicht synchronisierbar gemeldet.</li>
+<li>Zeilenumbrüche und Tabulatoren in Selektoren werden nicht maskiert.</li>
+</ul>
+</section>

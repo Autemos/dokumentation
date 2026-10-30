@@ -914,6 +914,7 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
       <a class="nav-link" href="#wf-auto-connect">Auto Connect</a>
       <a class="nav-link" href="#wf-validation-hints">Rot markierte Nodes</a>
       <a class="nav-link" href="#wf-version-restore">Version wiederherstellen</a>
+      <a class="nav-link" href="#wf-po-locator">Page-Object-Locator nach Self-Healing</a>
       <a class="nav-link" href="#wf-expressions">Datums- und Rechenausdrücke</a>
     </div>
     <div class="nav-section">
@@ -1213,6 +1214,7 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
     <a class="nav-link" href="#codegen-export-coverage"><span class="nav-dot dot-codegen"></span>Umfang des Exports</a>
     <a class="nav-link sub" href="#codegen-export-api">API-Schritte</a>
     <a class="nav-link sub" href="#codegen-export-tables">Tabellenknoten</a>
+    <a class="nav-link sub" href="#codegen-export-selectors">Selektoren im Code</a>
   </div>
 </div>
 
@@ -1253,6 +1255,7 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
     <span class="nav-section-title">Ausgabe &amp; Integration</span>
     <a class="nav-link" href="#recorder-resume"><span class="nav-dot dot-recorder"></span>Workflow fortsetzen</a>
     <a class="nav-link" href="#recorder-save-rules"><span class="nav-dot dot-recorder"></span>Beim Speichern</a>
+    <a class="nav-link" href="#recorder-replay-rules"><span class="nav-dot dot-recorder"></span>Wiedergabe-Regeln</a>
     <a class="nav-link" href="#recorder-output"><span class="nav-dot dot-recorder"></span>Recorder Output</a>
   </div>
 </div>
@@ -2747,7 +2750,7 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
     <span class="tip-icon">⚠️</span><strong>Wichtige Hinweise —</strong> Beim Löschen eines Benutzers werden <strong>Berechtigungen sofort entfernt</strong>. Historische Test-Zuweisungen können erhalten bleiben, und Audit-Logs können weiterhin Referenzen speichern.
   </div>
   <h2>Reset Link</h2>
-  <p>Mit der Aktion <strong>Reset Link</strong> erzeugen Administratoren für einen Benutzer einen Link, über den dieser ein neues Passwort setzt. Der Link wird <strong>als Antwort angezeigt</strong>, sodass er auch dann weitergegeben werden kann, wenn der Mailversand nicht möglich ist; zusätzlich wird er per Mail versandt, sofern die Mail-Anbindung konfiguriert ist (siehe <a href="#settings-notifications">Notification Settings</a>).</p>
+  <p>Mit der Aktion <strong>Reset Link</strong> erzeugen Administratoren für einen Benutzer einen Link, über den dieser ein neues Passwort setzt. Der Link wird <strong>als Antwort angezeigt</strong>, sodass er auch dann weitergegeben werden kann, wenn der Mailversand nicht möglich ist; zusätzlich wird er per Mail versandt, sofern die Mail-Anbindung konfiguriert ist (siehe <a href="#settings-notifications">Notification Settings</a>). Die Aktion fragt zuerst im Dialog <em>Password Reset Link</em> nach; erst <strong>Generate Link</strong> erzeugt den Link.</p>
   <ul class="feature-list">
     <li>Der Link gilt 24 Stunden. Ältere Links desselben Benutzers verfallen, sobald ein neuer erzeugt wird.</li>
     <li>Für eingeladene Benutzer, die noch kein Passwort gesetzt haben, funktioniert die Aktion ebenfalls.</li>
@@ -2764,6 +2767,7 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
     <li>Der <strong>Benutzername</strong> beim Login ist unabhängig von Gross-/Kleinschreibung: „Admin“, „ADMIN“ und „admin“ melden denselben Benutzer an. Angezeigt wird weiterhin die Schreibweise, die bei der Anlage gewählt wurde.</li>
     <li>Dieselbe Regel gilt für die Eindeutigkeitsprüfung beim Einladen: Ein Name, der sich nur durch Gross-/Kleinschreibung von einem bestehenden unterscheidet, wird als Dublette abgewiesen.</li>
     <li>Bestehen in einer Installation bereits Konten, die sich nur durch die Schreibweise unterscheiden, meldet der exakt geschriebene Name das passende Konto an; ein mehrdeutiger Name wird abgewiesen.</li>
+    <li>Statt des Benutzernamens kann auch die E-Mail-Adresse eingegeben werden (Feld <em>Username or email</em>).</li>
     <li>Das <strong>Passwort</strong> bleibt gross-/klein-empfindlich.</li>
   </ul>
   <h2>Forgot Password</h2>
@@ -2775,7 +2779,7 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
     <li>Nach dem Speichern erscheint „Password updated. You can now sign in with your new password.“ und die Anmeldeseite öffnet sich.</li>
   </ul>
   <ul class="feature-list">
-    <li>Der Link ist <strong>zeitlich begrenzt und einmalig</strong>. Ein ungültiger, abgelaufener oder bereits benutzter Link führt zur Meldung „This password reset link is invalid, has expired or has already been used. Please request a new one.“ mit dem Link <em>Request a new link</em>.</li>
+    <li>Der Link ist <strong>zeitlich begrenzt und einmalig</strong>. Ein ungültiger, abgelaufener oder bereits benutzter Link führt beim Absenden des neuen Passworts zur Meldung „This password reset link is invalid, has expired or has already been used. Please request a new one.“ mit dem Link <em>Request a new link</em>.</li>
     <li>Die Anzahl der Anfragen ist je E-Mail-Adresse und je Netzwerkadresse begrenzt; bei Überschreitung erscheint „Too many requests. Please wait a few minutes and try again.“</li>
     <li>Für Konten, die nicht zurückgesetzt werden dürfen (verzeichnisverwaltet oder gesperrt), wird kein Link versandt — die Antwort bleibt trotzdem neutral.</li>
     <li>Der Kontoinhaber wird nach dem Zurücksetzen per Mail benachrichtigt, dass sein Passwort geändert wurde.</li>
@@ -2793,8 +2797,8 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
       <thead><tr><th>Wer</th><th>Lesen im Projekt</th><th>Schreiben im Projekt</th></tr></thead>
       <tbody>
         <tr><td><strong>Globaler Admin, Projekt-Eigentümer</strong></td><td>ja</td><td>ja</td></tr>
-        <tr><td><strong>Projektrolle Admin / Editor / Member</strong></td><td>ja</td><td>ja</td></tr>
-        <tr><td><strong>Projektrolle Viewer</strong></td><td>ja</td><td>nein</td></tr>
+        <tr><td><strong>Projektrolle ADMIN / MEMBER (sowie EDITOR)</strong></td><td>ja</td><td>ja</td></tr>
+        <tr><td><strong>Projektrolle VIEW (Viewer)</strong></td><td>ja</td><td>nein</td></tr>
         <tr><td><strong>Angemeldet, aber kein Mitglied</strong></td><td>nein</td><td>nein</td></tr>
         <tr><td><strong>Nicht angemeldet</strong></td><td>nein (Anmeldung erforderlich)</td><td>nein (Anmeldung erforderlich)</td></tr>
         <tr><td><strong>Projektgebundener API-Schlüssel</strong></td><td>ja</td><td>ja, ausser an den unten genannten Stellen</td></tr>
@@ -2802,7 +2806,7 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
     </table>
   </div>
   <h2>Viewer</h2>
-  <p>Ein Benutzer mit der Projektrolle <strong>Viewer</strong> darf ein Projekt nur lesen. Jede schreibende Aktion — etwa Secrets oder Auth-Konfigurationen anlegen und ändern, die Xray-Verknüpfung oder das Projekt-Mapping ändern, Testdaten, Workflows oder Recorder-Sitzungen verändern — wird abgewiesen. Der Benutzer sieht dann eine Fehlermeldung bzw. die Seite „Forbidden“; es gibt keinen Erfolgshinweis, und es wird nichts verändert. Lesen bleibt vollständig möglich, auch die Seite der Projekt-Settings.</p>
+  <p>Ein Benutzer mit der Projektrolle <strong>VIEW</strong> (Viewer) darf ein Projekt nur lesen. Jede schreibende Aktion — etwa Secrets oder Auth-Konfigurationen anlegen und ändern, die Xray-Verknüpfung oder das Projekt-Mapping ändern, Testdaten, Workflows oder Recorder-Sitzungen verändern — wird abgewiesen. Der Benutzer sieht dann eine Fehlermeldung bzw. die Seite „You don't have access to this“; es gibt keinen Erfolgshinweis, und es wird nichts verändert. Lesen bleibt vollständig möglich, auch die Seite der Projekt-Settings.</p>
   <h2>Nicht-Mitglieder</h2>
   <p>Wer angemeldet ist, aber keine Rolle im Projekt hat, erhält für Daten dieses Projekts weder Lese- noch Schreibzugriff. Das gilt auch für die Testdaten (Easy-Datensätze und ihre Zeilen), Recorder-Sitzungen, Live-Ansichten und die Steuerung laufender Ausführungen. Für unbekannte oder fremde Ressourcen gibt es keine Auskunft, ob sie existieren. Ohne Anmeldung sind diese Bereiche nicht mehr erreichbar.</p>
   <h2>Weitere Regeln</h2>
@@ -3366,9 +3370,9 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
 <h2>Execution Log</h2>
 <p>Das Execution Log liefert schrittweise Statusaktualisierungen, Ausführungszeiten und detaillierte Fehlerinformationen. Verwenden Sie es, um genau zu ermitteln, welcher Schritt fehlgeschlagen ist und warum.</p>
 <h3>Logs kopieren</h3>
-<p>Im Kopf des Panels <strong>Execution Log</strong> kopiert der Knopf <strong>Copy logs</strong> (vor <strong>Clear logs</strong>) mit einem Klick alle Einträge des aktuellen Laufs in die Zwischenablage, eine Zeile je Eintrag im Format <code>[HH:MM:SS.mmm] +verstrichen STUFE [Node] Nachricht</code>. Das Panel bleibt dabei offen. Im Laufbericht gibt es denselben Knopf am aufgeklappten Log-Block eines Schritts (<strong>Copy logs of &lt;Schritt&gt;</strong>); er kopiert genau dessen Zeilen im Format <code>[Zeit] STUFE Nachricht</code>.</p>
+<p>Im Kopf des Panels <strong>Execution Log</strong> kopiert der Knopf <strong>Copy logs</strong> (vor <strong>Clear logs</strong>) mit einem Klick alle Einträge des aktuellen Laufs in die Zwischenablage, eine Zeile je Eintrag im Format <code>[HH:MM:SS.mmm] +verstrichen STUFE [Node] Nachricht</code> (STUFE ist INFO, WARN, ERROR oder OK). Das Panel bleibt dabei offen. Im Laufbericht gibt es denselben Knopf am aufgeklappten Log-Block eines Schritts (<strong>Copy logs of &lt;Schritt&gt;</strong>); er kopiert genau dessen Zeilen im Format <code>[Zeit] STUFE Nachricht</code>.</p>
 <h3>Secrets im Log</h3>
-<p>Secret-Werte erscheinen im Execution Log, in der Status-Antwort, im Laufbericht und im API-Request-Protokoll vollständig als <code>***</code>, ohne ein Zeichen Klartext. Secrets mit weniger als 4 Zeichen werden nicht maskiert (der Lauf warnt davor).</p>
+<p>Secret-Werte erscheinen im Execution Log, in der Status-Antwort, im Laufbericht und im API-Request-Protokoll vollständig als <code>***</code>, ohne ein Zeichen Klartext. Werte unter 4 Zeichen lassen sich in Texten nicht zuverlässig als Secret erkennen und werden dort nicht maskiert; der Server vermerkt das in seinem Log.</p>
 <h2>Live-Ausführungsansicht</h2>
 <div class="screenshot-wrap">
 <img alt="Live Device View" src="./autemos_images/image10.png"/>
@@ -3568,8 +3572,14 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
 <h2>Undo und Redo</h2>
 <p>Ein Klick auf <strong>Undo</strong> nimmt genau eine Aktion zurück, und schon die erste Aktion nach dem Öffnen oder Speichern lässt sich rückgängig machen. <strong>Redo</strong> stellt den Zustand nach der Aktion wieder her.</p>
 
-<h2>Data-driven execution</h2>
-<p>Im Run-Menü startet <strong>Run</strong> einen normalen Einzellauf. <strong>Data-driven execution…</strong> öffnet direkt den Dialog <strong>Data-driven execution</strong>: Dort sind <strong>Test data source</strong>, <strong>Data variable</strong> und <strong>Dataset selection</strong> (Standard <strong>All datasets</strong>) sofort sichtbar, ohne dass vorher eine Checkbox angehakt werden muss. Der Lauf startet mit <strong>Run</strong> im Dialog. In den Dialogen des Schedulers steuert dagegen die Checkbox <strong>Data-driven execution</strong>, ob ein Zeitplan-Test je Datensatz ausgeführt wird.</p>
+<h2>Run und Data-driven execution</h2>
+<p>Im Run-Menü startet <strong>Run</strong> sofort genau einen Lauf mit den Standard-Testdaten des Workflows, ohne Auswahldialog: Ein Test Data Binding wird mit seinem ersten Datensatz aufgelöst, bei Easy Test Data gilt Zeile 1 (bei One-Time-Use die nächste freie Zeile). Das Execution Log nennt, welcher Datensatz verwendet wurde. Fehlt ein Datensatz, meldet der Test-Data-Check das vor dem Start.</p>
+<p>Jede Auswahl von Zeilen oder Datensätzen liegt in <strong>Data-driven execution…</strong>. Der Eintrag öffnet direkt den Dialog <strong>Data-driven execution</strong>. Gibt es sowohl Datensätze eines datengetriebenen Bindings als auch Zeilen eines Test-Data-Sets, wählen Sie unter <strong>Run by</strong> zwischen <strong>Datasets of a data-driven binding</strong> und <strong>Rows of a test data set</strong>.</p>
+<ul class="feature-list">
+<li><strong>Datasets</strong>: <strong>Test data source</strong>, <strong>Data variable</strong> und <strong>Dataset selection</strong> (Standard <strong>All datasets</strong>) sind sofort sichtbar, ohne dass vorher eine Checkbox angehakt werden muss.</li>
+<li><strong>Rows</strong>: <strong>Test data set</strong> (bei mehreren Quellen) und <strong>Run mode</strong> mit <strong>Single Row</strong>, <strong>Selected Rows</strong> oder <strong>All Rows</strong>; die Tabelle <strong>Data rows</strong> zeigt die Zeilen, eine Statuszeile nennt die Zahl der Zeilen und der entstehenden Testläufe (je Zeile ein Lauf). Vorgewählt sind Single Row und Zeile 1.</li>
+</ul>
+<p>Der Lauf startet mit <strong>Run</strong> im Dialog. Die Auswahl gilt nur für diesen Dialog; ein späteres <strong>Run</strong> ist davon unberührt. In den Dialogen des Schedulers steuert dagegen die Checkbox <strong>Data-driven execution</strong>, ob ein Zeitplan-Test je Datensatz ausgeführt wird.</p>
 
 <h2>Schedule: Workflow direkt einem Zeitplan zuweisen</h2>
 <p>Der Knopf <strong>Schedule</strong> (Kalender-Icon) erscheint bei gespeicherten Haupt-Workflows, nicht bei Sub-Workflows. Bei einem noch nie gespeicherten Workflow ist er gesperrt (Tooltip „Save the workflow first to assign it to a schedule").</p>
@@ -3635,25 +3645,37 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
 </ul>
 
 </section>
+<section class="doc-section" id="wf-po-locator">
+<span class="section-label">Editor &amp; Ausführung</span>
+<h1>Page-Object-Locator nach Self-Healing</h1>
+
+<p>Speichert Self-Healing für ein Page-Object-Feld einen neuen Locator (im Self-Healing-Report „saved to repository"), gilt dieser Wert überall, ohne dass Sie Nodes neu verknüpfen müssen.</p>
+<ul class="feature-list">
+<li>Die Pages-Verwaltung, die Feldauswahl im Workflow-Editor und die Node-Details zeigen denselben aktuellen Locator, auch nach dem Neuladen der Seite.</li>
+<li>Ein neu gewähltes Feld und aus Page Objects erzeugte Workflows übernehmen den aktuellen Wert, nicht den Stand vor der Heilung.</li>
+<li>In der Ausführung gewinnt der aktuelle Locator des Page Objects gegen einen abweichenden, älteren Selektor im Node, wenn das Page Object für genau eine Web-Adresse steht und das Feld zu der gerade geöffneten Seite passt. Auf einer fremden Seite bleibt der Selektor des Nodes massgebend.</li>
+</ul>
+
+</section>
 <section class="doc-section" id="wf-expressions">
 <span class="section-label">Editor &amp; Ausführung</span>
 <h1>Datums- und Rechenausdrücke in Platzhaltern</h1>
 
-<p>Zusätzlich zu Variablen und Testdaten akzeptieren die <code>{{…}}</code>-Platzhalter zwei Arten von Ausdrücken, die zur <strong>Laufzeit</strong> ausgewertet werden. Ein Workflow, der an einem anderen Tag abgespielt wird, liefert deshalb das richtige Datum und nicht ein eingefrorenes Literal.</p>
+<p>Neben Variablen und Testdaten kennen die <code>{{…}}</code>-Platzhalter eine Schreibweise für Datum und einfache Rechnungen. Ein Workflow, der an einem anderen Tag abgespielt wird, soll so das richtige Datum liefern und nicht ein eingefrorenes Literal.</p>
+<div class="warn-box"><strong>Stand heute:</strong> Ausgewertet werden diese Ausdrücke beim Lauf einer API Collection. Im Lauf eines Workflows (Editor, Zeitplan, Collection) bleibt ein Ausdruck wie <code>{{today+3d}}</code> unverändert als Text stehen und wird so in ein Feld eingegeben; Variablen und Testdaten werden dort normal aufgelöst.</div>
 <div class="param-table-wrap">
 <table class="param-table">
 <thead><tr><th>Ausdruck</th><th>Bedeutung</th><th>Beispiel</th></tr></thead>
 <tbody>
-<tr><td><code>{{today}}</code>, <code>{{now}}</code></td><td>Heutiges Datum bzw. aktueller Zeitpunkt</td><td><code>{{today}}</code></td></tr>
+<tr><td><code>{{today}}</code>, <code>{{now}}</code></td><td>Heutiges Datum (<code>dd.MM.yyyy</code>) bzw. aktueller Zeitpunkt (<code>dd.MM.yyyy HH:mm:ss</code>)</td><td><code>{{today}}</code></td></tr>
 <tr><td><code>{{today+3d}}</code></td><td>Versatz <code>±N</code> mit Einheit <code>d</code> (Tage), <code>w</code> (Wochen), <code>m</code> (Monate) oder <code>y</code> (Jahre)</td><td><code>{{today-1w}}</code></td></tr>
 <tr><td><code>{{today+3d|dd.MM.yyyy}}</code></td><td>Optionales Ausgabeformat hinter <code>|</code> (Datumsmuster)</td><td>Lieferdatum in 3 Tagen als <code>dd.MM.yyyy</code></td></tr>
-<tr><td><code>{{a+b}}</code>, <code>{{price*2}}</code></td><td>Einfache Arithmetik mit Zahlen und numerischen Variablen</td><td><code>{{2+3}}</code></td></tr>
+<tr><td><code>{{a+b}}</code>, <code>{{price*2}}</code></td><td>Einfache Arithmetik mit Zahlen und numerischen Variablen, von links nach rechts gerechnet</td><td><code>{{2+3}}</code></td></tr>
 </tbody>
 </table>
 </div>
 <ul class="feature-list">
 <li>Eine gewöhnliche Variable hat immer Vorrang: Heisst eine Variable <code>today</code>, wird ihr Wert verwendet und nicht das Datum.</li>
-<li>Der KI-Recorder schreibt einen relativen Datumswunsch („Lieferdatum in 3 Tagen") als Ausdruck, nicht als aufgelöstes Datum.</li>
 <li>Es gibt keine vollständige Formelsprache: keine Klammern und keine Funktionen über die genannten Formen hinaus.</li>
 <li>Bereits aufgenommene Workflows mit eingefrorenen Datumswerten werden nicht umgeschrieben.</li>
 </ul>
@@ -3859,7 +3881,7 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
 <li>Im Testlauf gilt die Einstellung für die ganze Browser-Sitzung; das Execution Log vermerkt, dass Zertifikatsfehler ignoriert werden.</li>
 <li>Der Code-Export <strong>java/playwright</strong> erzeugt die Option im Browser-Kontext. Für andere Export-Ziele entsteht kein Code, sondern eine Warnung: Der exportierte Test würde nicht vertrauenswürdige Zertifikate ablehnen.</li>
 <li>Bei mehreren Open-Browser-Nodes zählt der erste Web-Node; weicht ein späterer ab, erscheint eine Warnung.</li>
-<li>Der Schalter gilt nicht für API-Nodes.</li>
+<li>Der Schalter gilt nicht für API-Nodes und wirkt nur bei Browser-Sitzungen auf dem Desktop, nicht bei Web-Sitzungen auf Mobilgeräten.</li>
 </ul>
 <div class="warn-box"><strong>Nur für Testumgebungen:</strong> Mit dieser Option wird die Zertifikatsprüfung bewusst abgeschaltet. Verwenden Sie sie nicht gegen Produktivsysteme.</div>
 <h2>Ausgabe</h2>
@@ -4969,13 +4991,13 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
 </div><p>Elemente in <strong>geschlossenen</strong> Shadow-Roots (<code>attachShadow({ mode: 'closed' })</code>) werden mit denselben Selektoren gefunden und bedient wie Elemente in offenen: CSS (<code>#ziel-4</code>), Text (<code>text=Ziel 4 anklicken</code>) und Rolle (<code>role=button[...]</code>). Es gibt keine eigene Selektorsyntax und keinen Workaround in Page Objects; Recorder, Self-Healing und Code-Export arbeiten unverändert.</p></div>
 <h2>So funktioniert es</h2>
 <ul class="feature-list">
-<li>Der Node <a href="#open-browser">Open Browser</a> installiert in Playwright-Web-Sitzungen einen kleinen Hook, der geschlossene Shadow-Roots intern offen anlegt. Er wirkt für alle Seiten und Frames, die danach geladen werden.</li>
+<li>Der Node <a href="#open-browser">Open Browser</a> installiert in Web-Sitzungen einen kleinen Hook, der geschlossene Shadow-Roots intern offen anlegt. In Playwright-Sitzungen wirkt er für alle Seiten und Frames, die danach geladen werden; in Selenium-Sitzungen (auch mobiles Web) setzt der Node ihn per Browser-Befehl.</li>
 <li>Das Host-Element trägt anschliessend das Attribut <code>data-stk-shadow-was-closed</code>, damit die ursprüngliche Kapselung erkennbar bleibt.</li>
 <li>Im Lauf-Log vermerkt der Worker, dass die Funktion aktiv ist.</li>
 </ul>
 <h2>Grenzen</h2>
 <ul class="feature-list">
-<li>Gilt für Chromium und Edge (über das Grid); der Selenium-Modus und Mobile-Sitzungen sind nicht betroffen.</li>
+<li>Der Selenium-Weg gilt nur für Chrome und Edge; Firefox und Safari auf iOS sind ausgenommen, ebenso native Mobile-App-Sitzungen. Dort wirkt der Hook nur auf der Registerkarte der Sitzung, neue Tabs und Fenster bekommen ihn nicht.</li>
 <li>Die Zielseite sieht den Root als offen. Seiten, die prüfen, ob <code>shadowRoot</code> <code>null</code> ist, verhalten sich möglicherweise anders.</li>
 <li>Ein bereits geladenes Dokument wird erst bei der nächsten Navigation erfasst.</li>
 <li>Ein Playwright-Test ausserhalb von Autemos, der diesen Hook nicht installiert, findet diese Elemente nicht.</li>
@@ -5455,30 +5477,18 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
 <table class="param-table">
 <thead><tr><th>Parameter</th><th>Description</th><th>Required</th><th>Example</th></tr></thead>
 <tbody>
-<tr><td><strong>Condition</strong></td><td>Definiert, was ausgewertet werden soll</td><td>Yes</td><td><code>visible</code></td></tr>
+<tr><td><strong>Condition</strong></td><td>Linke Seite des Vergleichs: meist eine Variable wie <code>{{status}}</code> oder ein fester Text. Ein Element wird hier nicht geprüft.</td><td>Yes</td><td><code>{{status}}</code></td></tr>
 <tr><td><strong>Operator</strong></td><td>Definiert, wie die Bedingung ausgewertet wird</td><td>Yes</td><td><code>equals</code></td></tr>
 <tr><td><strong>Compare Value</strong></td><td>Wert für den Vergleich (falls erforderlich)</td><td>No</td><td><code>Success</code></td></tr>
 <tr><td><strong>Bindings</strong></td><td>Erlaubt dynamische Werte über Variablen</td><td>No</td><td><code>${expectedValue}</code></td></tr>
 </tbody>
 </table>
 </div>
-<p class="param-note">* Compare Value ist nur für Bedingungen erforderlich, die Werte vergleichen.</p>
-<p><strong>Verfügbare Bedingungen</strong></p>
-<div class="param-table-wrap">
-<table class="param-table">
-<thead><tr><th>Option</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><code>visible</code></td><td>Element ist auf dem Bildschirm sichtbar</td></tr>
-<tr><td><code>hidden</code></td><td>Element ist nicht sichtbar</td></tr>
-<tr><td><code>exists</code></td><td>Element existiert im DOM/UI</td></tr>
-<tr><td><code>notExists</code></td><td>Element existiert nicht</td></tr>
-<tr><td><code>textEquals</code></td><td>Elementtext stimmt exakt überein</td></tr>
-<tr><td><code>textContains</code></td><td>Elementtext enthält einen Wert</td></tr>
-<tr><td><code>valueEquals</code></td><td>Elementwert stimmt mit erwarteter Eingabe überein</td></tr>
-</tbody>
-</table>
-</div>
-<p><strong>Verfügbare Operatoren</strong></p>
+<p class="param-note">* Compare Value ist nur für Operatoren erforderlich, die zwei Werte vergleichen (nicht bei <code>isEmpty</code> und <code>isNotEmpty</code>).</p>
+<h2>Vergleich</h2>
+<p>Der If-Node vergleicht den Wert aus <strong>Condition</strong> mit <strong>Compare Value</strong> über den gewählten <strong>Operator</strong>. Beide Seiten werden vorher aufgelöst: <code>{{variable}}</code> ist also schon durch den Wert ersetzt. Sind beide Seiten Zahlen, wird numerisch verglichen (10 ist grösser als 9), sonst als Text.</p>
+<p>Der If-Node prüft kein Element der Seite. Soll ein Zweig vom Inhalt eines Elements abhängen, lesen Sie den Wert zuerst mit <a href="#extract-text">Extract Text</a> in eine Variable und tragen diese in <strong>Condition</strong> ein.</p>
+<p><strong>Operatoren</strong></p>
 <div class="param-table-wrap">
 <table class="param-table">
 <thead><tr><th>Option</th><th>Beschreibung</th></tr></thead>
@@ -5495,11 +5505,14 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
 </div>
 <h2>Verhalten</h2>
 <ul class="feature-list">
-<li>Wertet die definierte Bedingung zur Laufzeit aus</li>
-<li>Vergleicht das Ergebnis mit dem ausgewählten Operator</li>
-<li>Leitet die Ausführung in den True-Zweig (Bedingung erfüllt) oder False-Zweig (Bedingung nicht erfüllt)</li>
-<li>Nur der ausgewählte Zweig wird ausgeführt</li>
+<li>Wertet <strong>Condition</strong> und <strong>Compare Value</strong> zur Laufzeit mit dem gewählten Operator aus</li>
+<li>Trifft der Vergleich zu, läuft der Weg am Ausgang <strong>True</strong> (grün), sonst der am Ausgang <strong>False</strong> (rot). Nur dieser Zweig wird ausgeführt.</li>
+<li>Die Nodes des nicht gewählten Zweigs erhalten den Status <strong>Skipped</strong>; das Execution Log nennt „Branch not taken – skipped (If '&lt;Name&gt;' = true)" bzw. „= false". Der Abschluss lautet z. B. „all 2 nodes passed (1 skipped: branch not taken)".</li>
+<li>Ein Node, den mehrere Wege erreichen (Zusammenführung), läuft, sobald mindestens einer der eingehenden Wege aktiv ist.</li>
+<li>Eine Verbindung, die an keinem der beiden Ausgänge hängt, gilt als <strong>True</strong>; das Log warnt davor.</li>
+<li>Bei ungültiger Eingabe schlägt der Node fehl, z. B. wenn bei <code>greaterThan</code> oder <code>lessThan</code> eine Seite keine Zahl ist („greaterThan requires numeric operands, got left="abc", right="9"") oder der Operator unbekannt ist.</li>
 </ul>
+<p>Der KI-Recorder kann zusätzlich die Operatoren <code>notContains</code>, <code>greaterOrEqual</code>, <code>lessOrEqual</code> und <code>regex</code> setzen; die Auswahlliste im Editor bietet sie nicht an.</p>
 <h2>Ausgabe</h2>
 <p>Keine Ausgabe. Der Node steuert den Workflow-Ausführungsfluss, indem er in den True- oder False-Zweig weiterleitet.</p>
 <div class="meta-grid">
@@ -5507,13 +5520,14 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
 <div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
 </div>
 <div class="example-block">
-<h3>Beispiel — Eine optionale Fehlermeldung behandeln</h3>
-<p>Nur fortfahren, wenn keine Fehlermeldung angezeigt wird:</p>
+<h3>Beispiel — Nur bei einem bestimmten Status fortfahren</h3>
+<p>Die Variable <code>status</code> wurde zuvor mit Extract Text gefüllt:</p>
 <div class="param-table-wrap"><table class="param-table"><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
-<tr><td><strong>Condition</strong></td><td><code>notExists</code></td></tr>
+<tr><td><strong>Condition</strong></td><td><code>{{status}}</code></td></tr>
 <tr><td><strong>Operator</strong></td><td><code>equals</code></td></tr>
+<tr><td><strong>Compare Value</strong></td><td><code>Bezahlt</code></td></tr>
 </tbody></table></div>
-<p><strong>True-Zweig:</strong> Workflow fortsetzen  |  <strong>False-Zweig:</strong> Fehler behandeln (z. B. Screenshot aufnehmen, Test stoppen)</p>
+<p><strong>True-Zweig:</strong> Workflow fortsetzen  |  <strong>False-Zweig:</strong> Fehler behandeln (z. B. Screenshot aufnehmen, Test stoppen)</p>
 </div>
 <h2>Best Practices</h2>
 <ul class="best-practices">
@@ -5546,23 +5560,37 @@ pre code{background:none;border:none;padding:0;font-size:inherit;color:inherit}
 <table class="param-table">
 <thead><tr><th>Parameter</th><th>Description</th><th>Required</th><th>Example</th></tr></thead>
 <tbody>
-<tr><td><strong>Data Source</strong></td><td>Zu iterierende Datensammlung</td><td>Yes</td><td><code>${users}</code></td></tr>
+<tr><td><strong>Data Source</strong></td><td>Was durchlaufen wird: ein Zahlenbereich oder eine Werteliste, siehe Abschnitt Datenquelle. Das Feld nimmt Text und <code>{{variable}}</code>.</td><td>Yes</td><td><code>${users}</code></td></tr>
 <tr><td><strong>Save As</strong></td><td>Variablenname für das aktuelle Element in jeder Iteration</td><td>Yes</td><td><code>item</code></td></tr>
-<tr><td><strong>Max Iterations</strong></td><td>Maximale Anzahl von Schleifendurchläufen</td><td>No</td><td><code>100</code></td></tr>
+<tr><td><strong>Max Iterations</strong></td><td>Höchstzahl der Durchläufe (Vorgabe im Editor: 100). Weitere Werte werden abgeschnitten; das Execution Log warnt („10 values capped to maxIterations 2").</td><td>No</td><td><code>100</code></td></tr>
 <tr><td><strong>Bindings</strong></td><td>Erlaubt dynamische Datenquellen und Variablennamen</td><td>No</td><td><code>${dataSet}</code></td></tr>
 </tbody>
 </table>
 </div>
-<h2>Behavior</h2>
+<h2>Datenquelle</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Art</th><th>Eingabe in Data Source</th><th>Durchläufe</th></tr></thead>
+<tbody>
+<tr><td>Zahlenbereich</td><td><code>{"type":"range","from":0,"to":3,"step":1}</code></td><td>Von <code>from</code> (eingeschlossen) bis <code>to</code> (ausgeschlossen) in Schritten von <code>step</code> (Vorgabe 1): hier 0, 1, 2. <code>step</code> darf nicht 0 sein; geht der Bereich in die falsche Richtung, gibt es keinen Durchlauf.</td></tr>
+<tr><td>Werteliste</td><td><code>{"type":"dataset","values":["x","y"]}</code></td><td>Ein Durchlauf je Eintrag. Einträge können Objekte sein; im Körper greifen Sie mit <code>{{user.name}}</code> auf ein Feld zu.</td></tr>
+<tr><td>Liste</td><td>eine Liste, z. B. <code>["x","y"]</code> oder eine Variable, die eine Liste enthält</td><td>Wie eine Werteliste</td></tr>
+</tbody>
+</table>
+</div>
+<p>Ist <strong>Data Source</strong> leer oder von unbekannter Art, schlägt der Node fehl („Missing dataSource" bzw. „Unknown dataSource.type").</p>
+<h2>Verhalten</h2>
 <ul class="feature-list">
-<li>Liest die bereitgestellte Datenquelle</li>
-<li>Iteriert über jedes Element in der Sammlung</li>
-<li>Speichert das aktuelle Element in der in <strong>Save As</strong> definierten Variable</li>
-<li>Führt alle Nodes innerhalb der Schleife für jedes Element aus</li>
-<li>Stoppt, wenn alle Elemente verarbeitet sind oder das Limit der Max Iterations erreicht ist</li>
+<li>Der Loop hat zwei Ausgänge: Am Ausgang <strong>True</strong> (grün) hängt der Schleifenkörper, am Ausgang <strong>False</strong> (rot) der Weg, der nach der Schleife genau einmal weiterläuft.</li>
+<li>Der Körper läuft einmal je Wert. Vor jedem Durchlauf wird der Wert in der Variable aus <strong>Save As</strong> abgelegt; das Execution Log nennt „Loop 'Loop': iteration 2 of 3 (i = 1)".</li>
+<li>Nach der Schleife ist die Variable wieder auf ihrem früheren Stand (oder entfernt).</li>
+<li>If- und Loop-Nodes im Körper werden je Durchlauf neu ausgewertet.</li>
+<li>Gibt es keinen Durchlauf, wird der Körper übersprungen (<strong>Skipped</strong>, „ran 0 iterations – skipped") und der Lauf geht am Ausgang <strong>False</strong> weiter.</li>
+<li>Ein Fehler im Körper bricht den Lauf ab; die Meldung nennt den Durchlauf („Failed at node: … (Loop 'Loop': iteration 2 of 3)").</li>
+<li>Im Bericht zeigt ein Node des Körpers den Stand seines letzten Durchlaufs.</li>
 </ul>
 <h2>Ausgabe</h2>
-<p>Keine direkte Ausgabe. Die Save As-Variable ist innerhalb der Schleife für jede Iteration verfügbar.</p>
+<p>Keine direkte Ausgabe. Die <strong>Save As</strong>-Variable ist im Schleifenkörper in jedem Durchlauf verfügbar.</p>
 <div class="meta-grid">
 <div class="meta-card"><div class="meta-label">Input Variables</div><div class="meta-value"><span class="meta-pill pill-yes">Yes</span></div></div>
 <div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
@@ -8847,7 +8875,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
     <span class="tip-icon">💡</span>
     Verwenden Sie den <strong>Propose Only</strong>-Modus für kritische Produktions-Workflows, bei denen automatische Selector-Änderungen eine Governance-Prüfung erfordern, bevor sie angewendet werden.
   </div>
-  <p>Steht der effektive Modus auf <strong>Disabled</strong>, startet im Lauf keine Heilung: Der Schritt mit kaputtem Selektor scheitert am Original-Selektor, und das Lauf-Log nennt den Grund («SKIPPED: healing mode is set to Disabled for this project»). Das gilt auch für die proaktive Prüfung. Wird Self-Healing selbst abgeschaltet, lautet der Grund «self-healing is switched off for this project». Ohne gespeicherte Einstellung gilt <strong>Automatic</strong>.</p>
+  <p>Steht der effektive Modus auf <strong>Disabled</strong>, startet im Lauf keine Heilung: Der Schritt mit kaputtem Selektor scheitert am Original-Selektor, und das Lauf-Log nennt den Grund (Ergebnis «SKIPPED», Grund «healing mode is set to Disabled for this project»). Das gilt auch für die proaktive Prüfung. Wird Self-Healing selbst abgeschaltet, lautet der Grund «self-healing is switched off for this project». Ohne gespeicherte Einstellung gilt <strong>Automatic</strong>.</p>
 </section>
 
 <!-- THRESHOLDS -->
@@ -9274,7 +9302,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
   <p><strong>Beispiele:</strong> Gutscheincodes · Einmal-User · eindeutige Registrierungen</p>
   <div class="tip"><span class="tip-icon">💡</span>Verhindert Datenkonflikte in parallelen Tests.</div>
   <h2 id="testdata-easy-tags">Tags</h2>
-  <p>Jeder Datensatz kann <strong>beliebig viele Tags</strong> tragen. Tags sind frei vergebbare Begriffe (z. B. <code>Smoke</code>, <code>High</code> oder ein Release-Name) und dienen dazu, grosse Datenbestände fachlich oder organisatorisch zu ordnen. Eine eigene Logik (z. B. eine Prioritätssteuerung) hängt an einem Tag nicht — der Begriff bleibt frei.</p>
+  <p>Jeder Datensatz kann <strong>beliebig viele Tags</strong> tragen. Tags sind frei vergebbare Begriffe (z. B. <code>Smoke</code>, <code>High</code> oder ein Release-Name) und dienen dazu, grosse Datenbestände fachlich oder organisatorisch zu ordnen. Tags haben von sich aus keine Wirkung; nur die datengetriebene Ausführung wertet sie aus (Tags match all und Priority tag, siehe <a href="#testdata-datadriven">Data-driven Execution</a>).</p>
   <h3>Tags vergeben</h3>
   <ul class="feature-list">
     <li>Im Dialog <strong>New/Edit Easy Test Data Dataset</strong> steht unter <em>Description</em> das Feld <strong>Tags</strong> (Platzhalter „Create or reuse a tag“).</li>
@@ -9364,17 +9392,20 @@ return { welcome: banner.textContent.trim() };</code></pre>
       <thead><tr><th>Bereich</th><th>Beschreibung</th></tr></thead>
       <tbody>
         <tr><td><strong>Data source / Binding</strong></td><td>Referenziert der Workflow genau ein Pool-Binding, zeigt der Dialog „Data-driven binding: country“ und die Quelle („Source: Easy Test Data“). Bei mehreren wählen Sie unter <em>Data-driven binding</em>. Gibt es keins, erklärt ein Hinweis, wie man eins anlegt, mit dem Link <em>Set up a data-driven binding</em>.</td></tr>
-        <tr><td><strong>Dataset selection</strong></td><td>Welche Datensätze laufen: All datasets, Single dataset, Selected datasets, First N datasets oder By tags (alle Datensätze mit den gewählten Tags).</td></tr>
+        <tr><td><strong>Dataset selection</strong></td><td>Welche Datensätze laufen: All datasets, Single dataset, Selected datasets, First N datasets oder By tags (alle Datensätze mit den gewählten Tags). Unter <strong>Tags (match all)</strong> wählen Sie die Tags; nur Datensätze, die alle tragen, laufen. Das Feld <strong>Priority tag</strong> (Any priority, High, Medium, Low) schränkt zusätzlich auf Datensätze mit dem Tag High, Medium bzw. Low ein. Die Datensätze laufen nach Name sortiert, ein Lauf je Datensatz (nicht je Zeile).</td></tr>
         <tr><td><strong>Execution preview</strong></td><td>Nennt vorab die Run-Zahl, z. B. „4 datasets selected – 4 test runs will be created“, und listet die gewählten Datensätze.</td></tr>
       </tbody>
     </table>
   </div>
   <div class="warning">
-    <span class="tip-icon">⚠️</span><strong>Start wird verweigert —</strong> Fehlt einem Datensatz ein Feld, das der Workflow benötigt, startet nichts. Die Meldung nennt Datensatz und Feld (z. B. „Dataset 'AUT66-03-France' lacks field(s) expectedTitle required by {{country.expectedTitle}}“). Es wird weder ein Batch angelegt noch ein Run gestartet.
+    <span class="tip-icon">⚠️</span><strong>Start wird verweigert —</strong> Fehlt einem Datensatz ein Feld, das der Workflow benötigt, startet nichts. Die Meldung nennt Datensatz und Feld (im Dialog z. B. „Dataset 'AUT66-03-France' lacks field(s) expectedTitle required by this workflow.“; die Antwort der Schnittstelle nennt statt „this workflow“ den Platzhalter, z. B. {{country.expectedTitle}}). Es wird weder ein Batch angelegt noch ein Run gestartet.
+  </div>
+  <div class="warning">
+    <span class="tip-icon">⚠️</span><strong>Warnung bei weiteren Datenquellen —</strong> Liest der Workflow ausser der durchlaufenen Quelle weitere Data-driven Bindings oder Easy-Tabellen (ohne One-Time-Use), liefern diese in jedem Lauf denselben ersten Datensatz bzw. dieselbe Zeile 1. Der Dialog zeigt dazu je Quelle eine Warnung, z. B. „Data-driven binding 'Country' (expectedTitle) is not iterated: every run uses its first dataset 'France'.“ oder „Test data table 'Cities' ({{cities}}: name) is not iterated: every run uses row 1.“ Die Warnung sperrt den Start nicht; dieselbe Warnung steht in der Antwort der Schnittstelle und im Server-Log des Zeitplans, und das Lauf-Log vermerkt den Datensatz.
   </div>
   <h2>Rechte und Zeitpläne</h2>
   <ul class="feature-list">
-    <li>Die Datensatzauswahl lesen alle Projektmitglieder; <strong>Starten und Abbrechen</strong> einer datengetriebenen Ausführung verlangt mindestens die Projektrolle Editor (siehe <a href="#users-roles">Rollen &amp; Rechte</a>).</li>
+    <li>Die Datensatzauswahl lesen alle Projektmitglieder; <strong>Starten und Abbrechen</strong> einer datengetriebenen Ausführung verlangt Schreibrecht im Projekt (Rolle MEMBER oder höher; die Rolle VIEW darf nicht starten, siehe <a href="#users-roles">Rollen &amp; Rechte</a>).</li>
     <li>Dieselbe Auswahl lässt sich in Zeitplänen festlegen — siehe <a href="#scheduler-testdata">Testdaten im Zeitplan</a>.</li>
   </ul>
 </section>
@@ -9802,7 +9833,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
   <p>In <strong>Create New Schedule</strong> und <strong>Edit Schedule</strong> legen Sie beim Anhaken eines Workflows direkt fest, mit welchen Testdaten er läuft — mit denselben Möglichkeiten wie beim manuellen Lauf <a href="#testdata-datadriven">Data-driven execution…</a>.</p>
   <h2>Auswahl im Dialog</h2>
   <ul class="feature-list">
-    <li>Unter der Liste der Workflows erscheint für jeden angehakten Workflow ein Block <strong>Test data for «Workflow»</strong>. Abhaken entfernt den Block samt Auswahl.</li>
+    <li>Unter der Liste der Workflows erscheint für jeden angehakten Workflow ein Block <strong>Test data for «Workflow»</strong>. Abhaken entfernt den Block samt Auswahl. Im Block schalten Sie mit der Checkbox <strong>Data-driven execution</strong> die Datensatz-Auswahl ein. Verweist der Workflow auf kein Data-driven Binding, erscheint stattdessen ein Hinweis mit dem Link <em>Set up a data-driven binding</em>.</li>
     <li>Als Modus stehen <strong>Single dataset</strong>, <strong>All datasets</strong>, <strong>Selected datasets</strong>, <strong>First N datasets</strong> und <strong>By tags</strong> zur Verfügung (Tags siehe <a href="#testdata-easy">Test Data Easy</a>).</li>
     <li>Ist die Auswahl unvollständig, bleiben <strong>Create Schedule</strong> bzw. <strong>Save Changes</strong> gesperrt.</li>
     <li>Die Auswahl gilt nur für Zeitpläne mit dem Ziel Workflows, nicht für Collections. Ohne Auswahl läuft der Workflow wie bisher einmal.</li>
@@ -9811,7 +9842,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
   <p>Im Edit-Dialog sind die dem Zeitplan zugeordneten Tests angehakt und zeigen ihre gespeicherte Auswahl. Neu angehakte Tests werden beim Speichern hinzugefügt, geänderte Auswahlen aktualisiert. <strong>Abhaken entfernt den Test beim Speichern aus dem Zeitplan</strong> („Unchecking removes the test from this schedule when you save.“).</p>
   <h2>Detailseite und Lauf</h2>
   <ul class="feature-list">
-    <li>Die Detailseite fasst die Auswahl je Test in einer Zeile zusammen, z. B. „Run once per dataset: First 10 datasets · Tags: Smoke · Source: Test Data Easy“.</li>
+    <li>Die Detailseite fasst die Auswahl je Test in einer Zeile zusammen, z. B. „Data-driven execution: country · First 10 datasets · Tags: Smoke · Source: Easy Test Data“.</li>
     <li>Beim Lauf startet der Zeitplan einen Batch mit einem Run je Datensatz; der Run-Verlauf zeigt den Datensatz je Lauf.</li>
     <li>Fehlt einem Datensatz ein vom Workflow benötigtes Feld, wird der Test mit einer Meldung als <em>FAILED</em> beendet, ohne dass ein Run startet.</li>
   </ul>
@@ -9842,7 +9873,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
     <table class="param-table">
       <thead><tr><th>Ergebnis in Autemos</th><th>Status in Xray</th><th>Kommentar</th></tr></thead>
       <tbody>
-        <tr><td>bestanden</td><td>PASSED</td><td>—</td></tr>
+        <tr><td>bestanden</td><td>PASSED</td><td>nur Testname und Status</td></tr>
         <tr><td>fehlgeschlagen</td><td>FAILED</td><td>Fehlertext</td></tr>
         <tr><td>technischer Fehler (Startfehler, Abbruch, Timeout)</td><td>FAILED</td><td>„Technical error: …“</td></tr>
         <tr><td>nicht gelaufen (Abhängigkeit fehlgeschlagen)</td><td>TODO</td><td>„Not run: dependency failed“</td></tr>
@@ -9854,7 +9885,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
     <li>Der Kommentar je Test enthält den Link zum Report des Laufs.</li>
     <li>Sind keine Xray-Tests verknüpft, wird nichts nach Jira gesendet.</li>
     <li>Scheitert die Meldung (z. B. Jira nicht erreichbar), ändert das weder Ergebnis noch Status des Zeitplan-Laufs.</li>
-    <li>Die Detailseite zeigt den Stand, z. B. „Reporting to Jira Xray: On – Test Plan X (from project)“ oder „Off“.</li>
+    <li>Die Detailseite zeigt den Stand („Reporting to Jira Xray: On“ oder „Off“) und den wirksamen Test Plan („Test Plan: KEY“, „Test Plan: KEY (from project)“ oder „No test plan set.“).</li>
   </ul>
 </section>
 
@@ -10421,9 +10452,9 @@ return { welcome: banner.textContent.trim() };</code></pre>
 </div>
 <p>Die Prüfung vergleicht ausschliesslich die Testdateien des jeweiligen Workflows; Commits an anderen Dateien lösen kein «Out of sync» aus. Das Ergebnis wird rund 10 Minuten zwischengespeichert. Mit dem Knopf <strong>Check now</strong> in der Kopfzeile der Liste lässt sich die Prüfung sofort auslösen.</p>
 <h2>Hinweis im Workflow-Editor</h2>
-<p>Im Workflow-Editor zeigt der Indikator «Code sync: …» den aktuellen Zustand. Bei einer Änderung im Repository erscheint der Hinweis <strong>There are changes in the underlying code</strong> mit Commit, Autor und Zeitpunkt sowie dem Knopf <strong>View changes</strong>. Wurde die Änderung ignoriert, bleibt der Hinweis dezenter und erscheint bei einem neuen Commit wieder in voller Form. Ist der Stand unbekannt, erscheint <strong>Code sync state unknown</strong> mit dem Grund.</p>
+<p>Im Workflow-Editor zeigt der Indikator «Code sync» in der Werkzeugleiste den aktuellen Zustand (Symbol; Tooltip «Code sync: …» mit Zustand, Zeitpunkt der letzten Prüfung und letztem Commit). Bei einer Änderung im Repository erscheint der Hinweis <strong>There are changes in the underlying code</strong> mit Commit, Autor und Zeitpunkt sowie dem Knopf <strong>View changes</strong>. Wurde die Änderung ignoriert, bleibt der Hinweis dezenter und erscheint bei einem neuen Commit wieder in voller Form. Ist der Stand unbekannt, erscheint <strong>Code sync state unknown</strong> mit dem Grund.</p>
 <h2>Dialog «Code changes»</h2>
-<p>Der Dialog zeigt oben den Bereich <strong>Workflow changes</strong>: die erkannten Änderungen pro Workflow-Knoten (Knotenname, Parameter, alter und neuer Wert). Darunter steht der Textvergleich des Codes zwischen der zuletzt synchronisierten Version und dem aktuellen Repository-Stand, je Datei als hinzugefügt, entfernt oder geändert gekennzeichnet. Nicht übernehmbare Änderungen sind ausdrücklich gekennzeichnet und nennen den Grund; reine Kommentar- und Leerzeilenänderungen werden als unwesentlich markiert. Ein Link <strong>Supported changes</strong> öffnet in einem neuen Tab die in Autemos ausgelieferte Dokumentation der unterstützten Änderungen (Sprachen, Frameworks, Knotenarten, Einschränkungen); er benötigt keinen Zugriff auf GitHub.</p>
+<p>Der Dialog zeigt links den zuletzt synchronisierten Code und rechts den aktuellen Stand im Repository. Oben steht der Bereich <strong>Workflow changes</strong>: die erkannten Änderungen pro Workflow-Knoten (Knotenname, Parameter, alter und neuer Wert). Darunter steht der Textvergleich des Codes zwischen der zuletzt synchronisierten Version und dem aktuellen Repository-Stand, je Datei als hinzugefügt, entfernt oder geändert gekennzeichnet. Farbig markiert sind genau die Zeilen, die auch ein <code>git diff</code> als hinzugefügt (grün, rechts) oder entfernt (rot, links) meldet; ein neu ergänzter Knotenblock wird mit allen seinen Zeilen markiert, die Zeile davor bleibt unmarkiert. Unter dem Vergleich zeigt <strong>Changed lines (from line n)</strong> die geänderten Zeilen als Liste. Nicht übernehmbare Änderungen sind ausdrücklich gekennzeichnet und nennen den Grund; reine Kommentar- und Leerzeilenänderungen werden als unwesentlich markiert. Ein Link <strong>Supported changes</strong> öffnet in einem neuen Tab die in Autemos ausgelieferte Dokumentation der unterstützten Änderungen (Sprachen, Frameworks, Knotenarten, Einschränkungen); er benötigt keinen Zugriff auf GitHub.</p>
 <h2>Entscheidungen</h2>
 <div class="param-table-wrap">
 <table class="param-table">
@@ -10432,6 +10463,8 @@ return { welcome: banner.textContent.trim() };</code></pre>
 <tr><td><strong>Ignore changes</strong></td><td>Der Workflow bleibt unverändert. Der Zustand bleibt «Out of sync (ignored)», bis ein neuer Commit hinzukommt.</td></tr>
 <tr><td><strong>Accept baseline only</strong></td><td>Der Repository-Stand wird als neue Basis übernommen, der Workflow bleibt unverändert. Der Zustand lautet «Baseline accepted», nicht «In sync».</td></tr>
 <tr><td><strong>Apply to workflow</strong></td><td>Übernimmt die erkannten Änderungen in den Workflow. Nach einer Bestätigung («Apply code changes to workflow?») wird der Workflow aktualisiert; der Zustand wechselt auf «In sync».</td></tr>
+<tr><td><strong>Check now</strong></td><td>Prüft das Repository sofort erneut und aktualisiert Zustand und Vorschau.</td></tr>
+<tr><td><strong>Push to Git</strong></td><td>Erzeugt den Code des Workflows neu und öffnet den Pull-Request-Dialog (siehe «Push to Git im Editor»).</td></tr>
 <tr><td><strong>Close</strong></td><td>Schliesst den Dialog, ohne etwas zu ändern.</td></tr>
 </tbody>
 </table>
@@ -10447,6 +10480,15 @@ return { welcome: banner.textContent.trim() };</code></pre>
 <li>Vorschau darf, wer Mitglied des Projekts ist. Übernehmen und Entscheiden setzen Editor-Rechte voraus. Alle Schritte (Vorschau angesehen, übernommen, Konflikt, wiederhergestellt, Entscheidung) erscheinen in der Audit-Übersicht in der Kategorie «Code Sync».</li>
 </ul>
 <div class="tip"><span class="tip-icon">💡</span>Ausgeführt wird immer der Workflow in Autemos, nie der Code aus dem Repository. Ein «Out of sync»-Workflow läuft daher unverändert weiter, bis die Änderungen übernommen wurden.</div>
+<h2>Hinweis nach «Apply to workflow»: neue Knoten-IDs</h2>
+<p>Hat «Apply to workflow» neue Schritte angelegt, steht im Code im Repository noch <code>node=new</code>, während die neuen Knoten in Autemos bereits eine eindeutige ID tragen. Bis der Code erneut übertragen wurde, zeigt der Workflow-Editor oberhalb des Workflows einen bleibenden Hinweis: <strong>Workflow updated. New nodes have been assigned unique IDs.</strong> mit dem Satz «Please synchronize the generated code with GitHub before making further external changes.» und dem Knopf <strong>Sync code now</strong>.</p>
+<ul class="feature-list">
+<li><strong>Sync code now</strong> öffnet den Dialog «Push to Git» für diesen Workflow. Der Lauf startet erst mit Ihrem Klick auf <strong>Create Pull Request</strong>; Autemos ändert das Repository nie von selbst. Der Knopf ist gesperrt (mit Begründung), wenn der Workflow ungespeicherte Änderungen hat oder die Projektrolle keine Editor-Rechte erlaubt.</li>
+<li>Der Hinweis bleibt nach dem Neuladen und für andere Benutzer stehen, auch im Zustand «In sync». Er verschwindet, sobald der Pull Request erzeugt wurde (Zustand «PR open» zeigt ihn nicht an). Eine spätere Übernahme, die nur Parameter ändert, löscht ihn nicht.</li>
+<li>Der Hinweis erscheint nur, wenn mindestens ein neuer Schritt übernommen wurde; nach reinen Änderungen oder Löschungen erscheint er nicht.</li>
+<li>Solange er steht, warnt der Dialog «Code changes» oberhalb von «Workflow changes»: Schritte aus einer früheren Übernahme tragen im Repository noch <code>node=new</code>, deshalb können sie bei weiteren externen Änderungen als hinzugefügt und zugleich entfernt erscheinen. Übernehmen bleibt möglich; synchronisieren Sie zuerst den Code.</li>
+<li>Nach der Übernahme meldet ein kurzer Hinweis: «Sync the generated code with GitHub – see the notice above the workflow.»</li>
+</ul>
 </section>
 
 <!-- CODE-SYNC: PUSH AUS DEM EDITOR -->
@@ -10509,9 +10551,10 @@ return { welcome: banner.textContent.trim() };</code></pre>
 </table>
 </div>
 <h3>Neue Schritte</h3>
-<p>Neue Schritte (ADDED) werden für navigate, wait, ifCondition, loop, callSubWorkflow sowie in der <code>page.locator</code>-Form für click, doubleClick, hover, check, pressKey, scroll, type, select und assert übernommen. Der neue Knoten erhält den Selektor aus dem Statement. Ein neuer Schritt, der ein PageObject-Element anspricht, ist nicht übernehmbar («new steps via a page object need the element mapping»), weil Autemos das Element nicht aus dem Code zuordnen kann; verwenden Sie die <code>page.locator("…")</code>-Form oder legen Sie den Schritt in Autemos an.</p>
+<p>Neue Schritte (ADDED) werden für navigate und wait in allen Sprachen übernommen. Nur bei Java/Playwright kommen ifCondition, loop und callSubWorkflow sowie in der <code>page.locator</code>-Form click, doubleClick, hover, check, pressKey, scroll, type, select und assert hinzu. Der neue Knoten erhält den Selektor aus dem Statement. Ein neuer Schritt, der ein PageObject-Element anspricht, ist nicht übernehmbar («new steps via a page object need the element mapping»), weil Autemos das Element nicht aus dem Code zuordnen kann; verwenden Sie die <code>page.locator("…")</code>-Form oder legen Sie den Schritt in Autemos an.</p>
 <h3>Selektoren in PageObject-Dateien</h3>
 <p>Ändert jemand den Selektor eines Felds in einer von Autemos erzeugten PageObject-Datei, zeigt der Sync die Änderung an jedem Knoten, der dieses Feld nutzt. <strong>Apply to workflow</strong> schreibt den neuen Selektor in das PageObject-Feld in Autemos. Das gilt für Web-PageObjects mit Playwright in Java, TypeScript, Python und C#. Felder werden über Marker <code>@autemos pageObjectField=…</code> zugeordnet; Felder werden in Autemos angelegt, umbenannt und entfernt, nicht im Code (ein doppelter Marker oder ein verändertes Locator-Literal wird als Problem gemeldet). In TypeScript sind Felder mit Mehrplattform-Locatoren (z. B. nur Android- oder iOS-Locator) nicht synchronisierbar. Selektoränderungen direkt im Test (<code>page.locator("…")</code>) werden erkannt, aber nicht übernommen.</p>
+<p>Jeder Workflow beobachtet die PageObject-Datei in seinem eigenen Zielordner. Haben Sie dasselbe PageObject aus zwei Workflows in unterschiedliche Zielordner übertragen, sind das zwei getrennte Dateien: Eine Änderung in der einen Datei zeigt nur der Workflow an, dessen Ordner sie betrifft, und eine spätere erneute Änderung desselben Felds wird mit <strong>Check now</strong> ebenfalls erkannt. Nutzen mehrere Workflows dasselbe PageObject, nennt der Grund der Änderung die anderen Workflows (<code>also used by: …</code>, höchstens fünf Namen, dann <code>+n more</code>), weil <strong>Apply to workflow</strong> den Selektor für alle diese Workflows ändert.</p>
 </section>
 
 <!-- CODE-SYNC: ASSERTIONS -->
@@ -10597,7 +10640,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
 <section id="codegen-export-coverage" class="doc-section">
 <span class="section-label">Code-Export</span>
 <h1>Umfang des Java/Playwright-Exports</h1>
-<p>Der Java/Playwright-Export erzeugt für jede Knotenart des Katalogs entweder ausführbaren, gleichwertigen Code oder meldet eine begründete Lücke. Es gibt keine stillen Fehlübersetzungen und keine TODO-Platzhalter mehr. Für andere Sprachen und Frameworks bleiben Kommentar «NICHT GENERIERT» und Warnung bestehen (Hinweis «Locator-Form nur für java/playwright»).</p>
+<p>Der Java/Playwright-Export erzeugt für jede Knotenart des Katalogs entweder ausführbaren, gleichwertigen Code oder meldet eine begründete Lücke. Es gibt keine stillen Fehlübersetzungen und keine TODO-Platzhalter mehr. Die Tabelle unten gilt nur für Java/Playwright. Für andere Sprachen und Frameworks gilt der Abschnitt «Andere Sprachen und Frameworks».</p>
 <h2>Status je Knotenart</h2>
 <div class="param-table-wrap">
 <table class="param-table">
@@ -10610,6 +10653,12 @@ return { welcome: banner.textContent.trim() };</code></pre>
 </tbody>
 </table>
 </div>
+<h2>Andere Sprachen und Frameworks</h2>
+<p>Für Java/Selenium sowie TypeScript, Python und C# (je Playwright oder Selenium) erzeugt Autemos weniger:</p>
+<ul class="feature-list">
+<li><strong>Als Code erzeugt:</strong> navigate; type, click und select, wenn der Schritt ein PageObject-Element anspricht; wait; screenshot; die Testdaten-Knoten. Eine Zusicherung (assert) wird nur als Gleichheitsvergleich erzeugt, mit einem Platzhalter für den Istwert und einer Warnung; ohne Erwartungswert entsteht eine Lücke. Rahmen-Knoten und timeGap erscheinen als Kommentar.</li>
+<li><strong>Lücke mit Kommentar «NICHT GENERIERT» und Warnung:</strong> alle übrigen Knotenarten (z. B. doubleClick, hover, check, pressKey, scroll, selectCombobox, hoverAndClick, goBack, goForward, reload, rightClick, dragDrop, waitFor, extractText, Tabellen-, API- und Ablaufknoten wie ifCondition, loop, callSubWorkflow) sowie type, click und select ohne PageObject-Element (Hinweis «Locator-Form nur für java/playwright»).</li>
+</ul>
 <h2>Neue Aktionen</h2>
 <ul class="feature-list">
 <li><strong>selectCombobox:</strong> natives <code>&lt;select&gt;</code> per Label, sonst Öffnen und Auswahl der Option mit exaktem Label (Rückfall Teiltext).</li>
@@ -10663,6 +10712,28 @@ return { welcome: banner.textContent.trim() };</code></pre>
 </section>
 
 </div><!-- /content-wrap -->
+
+<!-- EXPORT: SELEKTOR-LITERALE -->
+<section id="codegen-export-selectors" class="doc-section">
+<span class="section-label">Code-Export</span>
+<h1>Selektoren im erzeugten Code</h1>
+<p>Steht ein Selektor im erzeugten PageObject-Code, schreibt Autemos ihn als gültiges Literal der Zielsprache, dessen Wert zur Laufzeit genau dem gespeicherten Selektor entspricht. Sonderzeichen im Selektor machen den Code nicht mehr unübersetzbar.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Ziel</th><th>Maskiert werden</th></tr></thead>
+<tbody>
+<tr><td>TypeScript (Backtick-Literal)</td><td>Backslash, Backtick und <code>${</code></td></tr>
+<tr><td>Java und C# (Literal in doppelten Anführungszeichen)</td><td>Backslash und doppeltes Anführungszeichen</td></tr>
+<tr><td>Python (Literal in einfachen Anführungszeichen)</td><td>Backslash und einfaches Anführungszeichen</td></tr>
+</tbody>
+</table>
+</div>
+<ul class="feature-list">
+<li>Das gilt für alle Selektorfelder der PageObjects, also auch für Android- und iOS-Locatoren und für Felder, die aus Ihrer Feldvorlage entstehen.</li>
+<li>Der Code-Sync liest diese maskierten Literale wieder zurück. Ein unmaskiertes <code>${…}</code> in einem TypeScript-Backtick-Literal (Interpolation) oder eine andere Maskierung wird als nicht synchronisierbar gemeldet.</li>
+<li>Zeilenumbrüche und Tabulatoren in Selektoren werden nicht maskiert.</li>
+</ul>
+</section>
 </div>
 
 <div id="module-recorder" class="module-content" style="display:none">
@@ -10778,7 +10849,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
     <thead><tr><th>Zustand / Knopf</th><th>Wirkung</th></tr></thead>
     <tbody>
       <tr><td><strong>Not recording</strong> / <strong>Start recording</strong></td><td>Interaktionen werden weder als Event noch als Node noch als Page-Object-Feld aufgezeichnet. <strong>Start recording</strong> schaltet auf Recording.</td></tr>
-      <tr><td><strong>Recording</strong> / <strong>Pause recording</strong></td><td>Jede Interaktion erscheint in der Event-Liste. <strong>Pause recording</strong> schaltet auf Paused.</td></tr>
+      <tr><td><strong>Recording</strong> / <strong>Pause recording</strong></td><td>Jede Interaktion erscheint in der Event-Liste. <strong>Pause recording</strong> schaltet auf Paused. Der Knopf ist gesperrt, solange die KI arbeitet oder eine Rückfrage offen ist.</td></tr>
       <tr><td><strong>Paused</strong> / <strong>Resume recording</strong></td><td>Interaktionen werden nicht aufgezeichnet, bisherige Einträge bleiben erhalten. <strong>Resume recording</strong> schaltet wieder auf Recording.</td></tr>
     </tbody>
   </table>
@@ -10798,7 +10869,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
   <li>Ohne laufende Session gibt es den Knopf nicht.</li>
 </ul>
 <h2>Verlust der Browser-Session</h2>
-<p>Bricht die Browser-Session einer Web-Aufnahme weg (zum Beispiel weil der Browser extern beendet wurde), erkennt der Recorder das innerhalb von etwa 15 Sekunden von selbst:</p>
+<p>Bricht die Browser-Session einer Web-Aufnahme weg (zum Beispiel weil der Browser extern beendet wurde), erkennt der Recorder das in der Regel innerhalb von etwa 15 Sekunden von selbst:</p>
 <ul class="feature-list">
   <li>In der Browserfläche erscheint die Meldung <strong>Browser session disconnected</strong> mit der Ursache und dem Knopf <strong>Start a new session</strong>, der den Add-Session-Dialog öffnet.</li>
   <li>Der Tab zeigt einen roten Punkt („Disconnected"); die Aufnahme dieser Session wird kontrolliert beendet. Bei der letzten lebenden Session steht der Zustand auf Not recording, und <strong>Start recording</strong> ist gesperrt, bis wieder eine lebende Session existiert.</li>
@@ -10838,7 +10909,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
   <li>Normales Tippen (auch mit Shift), Backspace und Delete im Feld erzeugen keine Press-Key-Nodes.</li>
 </ul>
 <h2>Checkbox und Radio</h2>
-<p>Das Anhaken einer Checkbox oder die Wahl eines Radio-Buttons wird als <strong>Check</strong>-Node mit dem Sollzustand aufgezeichnet (an oder aus, Label <code>Check "&lt;Text&gt;"</code>), nicht als Klick. Bei der Wiedergabe wird nur geklickt, wenn der Zustand vom Sollzustand abweicht. Ist er bereits wie gewünscht, ist der Schritt bestanden (Log „bereits gesetzt"). Damit bleibt die Checkbox auch bei mehrfacher Wiedergabe angehakt. Weicht der Zustand nach dem Klick ab, schlägt der Schritt mit Messwerten fehl.</p>
+<p>Das Anhaken einer Checkbox oder die Wahl eines Radio-Buttons wird als <strong>Set Checkbox</strong>-Node mit dem Sollzustand aufgezeichnet (an oder aus, Schrittname <code>Check "&lt;Text&gt;"</code> bzw. <code>Uncheck "&lt;Text&gt;"</code>), nicht als Klick. Bei der Wiedergabe wird nur geklickt, wenn der Zustand vom Sollzustand abweicht. Ist er bereits wie gewünscht, ist der Schritt bestanden (Log „bereits gesetzt"). Damit bleibt die Checkbox auch bei mehrfacher Wiedergabe angehakt. Weicht der Zustand nach dem Klick ab, schlägt der Schritt mit Messwerten fehl.</p>
 <p>Bestehende Workflows mit Klick-Nodes auf Checkboxen laufen unverändert.</p>
 <h2>Rich-Text-Felder</h2>
 <p>Eingaben in editierbare Bereiche (<code>contenteditable</code>) werden als Type-Node mit dem eingegebenen Text aufgezeichnet; die Wiedergabe füllt das Element.</p>
@@ -10909,7 +10980,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
   <li>Ein Schritt, dessen Ziel schon vor der Handlung galt, zählt als „done, but NOT verified", wenn er eine echte Handlung ist. Reine Prüf- und Warteschritte mit bereits geltendem Ziel zählen als verifiziert.</li>
   <li>Nicht prüfbare Schritte (zum Beispiel das Verbinden des Geräts) erscheinen im Plan-Bericht getrennt und neutral statt in der Zahl „NOT verified". Ein Bericht lautet dann zum Beispiel „6 of 7 steps verified" plus eine Angabe für den nicht prüfbaren Schritt.</li>
   <li>Auf dem Gerät prüft der Server das Ziel nach jeder Handlung selbst, ohne dass die KI es melden muss. Ist das Ziel erreicht, wird der Schritt abgeschlossen, bevor die nächste Handlung ans Gerät geht.</li>
-  <li>Ein Tap auf ein Element ausserhalb des sichtbaren Bereichs scrollt selbst herein (in beide Richtungen, begrenzt auf höchstens 10 Wischbewegungen). Ist das Element nicht erreichbar, endet der Schritt mit „element not visible" statt mit einem Tap.</li>
+  <li>Ein Tap auf ein Element ausserhalb des sichtbaren Bereichs scrollt selbst herein (in beide Richtungen, begrenzt auf höchstens 10 Wischbewegungen). Ist das Element nicht erreichbar, endet der Schritt mit der Meldung „ELEMENT_NOT_VISIBLE … is outside the viewport and could not be scrolled into view" statt mit einem Tap.</li>
 </ul>
 <h2>Nicht ausführbare Schritte</h2>
 <p>Ist ein Schritt in der laufenden Session nicht ausführbar, wird er als Lücke <strong>not recorded</strong> festgehalten, mit dem Grund und der nächstbesten Alternative (Chat und Plan). Der Plan läuft mit den übrigen Schritten weiter. Die Schlussmeldung <strong>Plan finished</strong> listet alle Lücken („Not recorded: step N …") und alle Fehlschläge („Failed: step N …"). Stellt die KI statt einer Handlung eine Rückfrage, wird der Schritt zur Lücke mit der Rückfrage als Grund.</p>
@@ -10930,7 +11001,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
 <h1>Rückfragen und Sitzungsmodus</h1>
 <p>Weicht die Aufnahme vom Plan ab, hält der AI Recorder an und fragt nach, statt still weiterzulaufen. Während der Pause findet kein KI-Aufruf statt.</p>
 <h2>Session mode</h2>
-<p>Auf der Recorder-Seite wählen Sie über die Optionsgruppe <strong>Session mode</strong> zwischen <strong>Interactive</strong> (Vorgabe) und <strong>Unattended</strong>.</p>
+<p>Im Kopf des <strong>AI Chat</strong> wählen Sie über die Optionsgruppe <strong>Session mode</strong> zwischen <strong>Interactive</strong> (Vorgabe) und <strong>Unattended</strong>.</p>
 <div class="param-table-wrap">
   <table class="param-table">
     <thead><tr><th>Modus</th><th>Verhalten bei Fristablauf ohne Antwort</th></tr></thead>
@@ -11049,7 +11120,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
 <ul class="feature-list">
   <li><strong>Scroll to</strong>: „scroll until I see About phone" ergibt einen Node mit Text oder XPath. Gibt es das Ziel nicht, endet der Schritt nach der festgelegten Höchstzahl an Wischbewegungen oder bei unverändertem Bildschirm mit einer Meldung, die Ziel und Wischanzahl nennt; der Node ist failed, es gibt keinen Endlos-Lauf.</li>
   <li><strong>Swipe</strong>: Richtung, Element (Wischen innerhalb eines Elements, zum Beispiel eines Karussells) und Prozent statt Pixel.</li>
-  <li><strong>Long Press</strong>: „I long press on About phone" ergibt einen Long-Press-Node mit Selektor und Dauer (mindestens 500 ms). Im manuellen Recorder wird ein Halten der Maus ab 600 ms zu einem Long-Press-Schritt; ein kurzer Klick bleibt ein Tap, Ziehen bleibt ein Swipe.</li>
+  <li><strong>Long Press</strong>: „I long press on About phone" ergibt einen Node <strong>Long press</strong> mit Selektor und Dauer (mindestens 500 ms). Im manuellen Recorder wird ein Halten der Maus ab 600 ms zu einem Long-Press-Schritt; ein kurzer Klick bleibt ein Tap, Ziehen bleibt ein Swipe.</li>
   <li>Ältere Workflows mit Swipe-Nodes laufen unverändert.</li>
 </ul>
 <h2>Geräte-Aktionen</h2>
@@ -11150,13 +11221,13 @@ return { welcome: banner.textContent.trim() };</code></pre>
   </div>
 </div>
 <h2>Vorhandene Page Objects zur Seite</h2>
-<p>Im Pages-Tab zeigt der Bereich <strong>Existing page objects for this page</strong>, welche Page Objects und Felder es zur geöffneten Seite bereits gibt, mit allen Feldnamen und ohne Aufklappen. Der Bereich folgt der aktuellen URL; gibt es zur Seite nichts, steht dort „No existing page objects for this page." Bei einer Mobile-Session mit App-Paket zeigt er die Page Objects dieser App; ohne Paket bzw. Bundle-ID erscheint „No app context …". Auch die KI kann die vorhandenen Page Objects zu einer Seite abfragen.</p>
+<p>Im Pages-Tab zeigt der Bereich <strong>On this page</strong> (mit der aktuellen URL), welche Page Objects und Felder es zur geöffneten Seite bereits gibt, mit allen Feldnamen und ohne Aufklappen. Der Bereich folgt der aktuellen URL; gibt es zur Seite nichts, steht dort „No existing page objects for this page." Bei einer Mobile-Session mit App-Paket zeigt er die Page Objects dieser App; ohne Paket bzw. Bundle-ID erscheint „No app context …". Auch die KI kann die vorhandenen Page Objects zu einer Seite abfragen.</p>
 <h2>Wiederverwendung über den Selektor</h2>
 <p>Alle Recorder (KI, passiv, Auto-Mapping) verwenden ein vorhandenes Feld mit gleichem Selektor wieder, statt es unter einem neuen Namen anzulegen; der Workflow-Node verweist auf das vorhandene Feld. Der passive Recorder benennt eine Aufnahme auf einer URL mit genau einem vorhandenen Page Object nach diesem.</p>
 <h2>Vorhandene Felder beim Öffnen prüfen</h2>
-<p>Öffnet die KI eine Seite oder App, zu der Page Objects existieren, werden alle gespeicherten Selektoren in einem einzigen lesenden Durchgang live geprüft (höchstens etwa 2 Sekunden, ohne die Seite zu verändern). Jedes Feld erhält einen Befund: <code>confirmed</code> (genau ein sichtbarer Treffer), <code>not found</code> oder <code>ambiguous (n)</code>. Bestätigte Felder übernimmt die KI unverändert, neue Selektoren baut sie nur für nicht bestätigte Elemente. Das spart Fehlversuche an veralteten Feldern. Bei veralteten Feldern erscheint pro Seitenöffnung genau eine Chat-Notiz „not found". Wird das Zeitlimit überschritten, steht „not checked live (timeout)" und die Aufnahme läuft ohne Fehler weiter.</p>
+<p>Öffnet die KI eine Seite oder App, zu der Page Objects existieren, werden alle gespeicherten Selektoren in einem einzigen lesenden Durchgang live geprüft (höchstens etwa 2 Sekunden, ohne die Seite zu verändern). Jedes Feld erhält einen Befund: bestätigt (genau ein sichtbarer Treffer), nicht gefunden oder mehrdeutig (mehrere Treffer). Bestätigte Felder übernimmt die KI unverändert, neue Selektoren baut sie nur für nicht bestätigte Elemente. Das spart Fehlversuche an veralteten Feldern. Sind Felder veraltet, erscheint pro Seitenöffnung genau eine Chat-Notiz der Form „&lt;Page&gt;: N of M stored fields confirmed on this page; not found: …“; die Felder werden bei der Aufnahme repariert. Wird das Zeitlimit überschritten, läuft die Aufnahme ohne Fehler weiter.</p>
 <h2>Selektor-Reparatur</h2>
-<p>Bevor ein vorhandenes Feld einen neuen Selektor bekommt, wird der gespeicherte Selektor live geprüft. Trifft er, bleibt er stehen. Trifft er nicht, wird er überschrieben und die Reparatur gemeldet: Der Bereich <strong>Selector repairs</strong> nennt Feld, alten und neuen Selektor und die betroffenen Workflows. Konnte nicht live geprüft werden (keine Session), steht dort „(not checked live)"; eine Überschreibung geschieht nie still.</p>
+<p>Bevor ein vorhandenes Feld einen neuen Selektor bekommt, wird der gespeicherte Selektor live geprüft. Trifft er, bleibt er stehen. Trifft er nicht, wird er überschrieben und die Reparatur gemeldet: Der Bereich <strong>Selector repairs</strong> nennt je Feld den alten und den neuen Selektor und die Zahl der Workflows, die das Feld verwenden („used in N workflows“). Konnte nicht live geprüft werden (keine Session), steht dort „(not checked live)"; eine Überschreibung geschieht nie still.</p>
 <h2>Automatische Page-Screenshots</h2>
 <p>Legt der Web-Recorder (passiv oder KI) eine Page an, die noch keinen Screenshot hat, wird im Hintergrund automatisch ein Screenshot der aufgenommenen Seite hinterlegt, in derselben Ablage wie ein manueller Upload (Bild und Vorschau werden wie beim Upload verkleinert und komprimiert).</p>
 <ul class="feature-list">
@@ -11201,6 +11272,13 @@ return { welcome: banner.textContent.trim() };</code></pre>
   <li>Steigen Sie am letzten Node „Close Browser" ein, parkt der Lauf davor, und der Dialog zeigt „Insert before: Close Browser".</li>
   <li>Hat jemand den Workflow inzwischen geändert (Versionskonflikt), bleibt der Dialog mit einem Konflikthinweis und den zwei Auswegen offen.</li>
 </ul>
+<h2>Mobile Workflows fortsetzen</h2>
+<p>Steigen Sie bei einem mobilen Workflow über <strong>Edit live from here</strong> ein, zeigt die Live Device View das Bild des Geräts, auf dem der Lauf am Einfügepunkt steht. Die Bedienknöpfe der Live Device View (Tippen, Wischen, langes Drücken, Tasten wie HOME und BACK, Drehen, Tastatur, Tippen von Text) wirken auf genau dieses Gerät.</p>
+<ul class="feature-list">
+  <li>Ein eigener Tap im Gerätebild erscheint sofort im Events-Tab und wird bei <strong>Finish run</strong> genau einmal hinter dem Anker in den Workflow eingefügt. <strong>Start recording</strong> ist dafür nicht nötig.</li>
+  <li>Das Gerät gehört dem Lauf: Die Live Device View beendet seine Sitzung nicht.</li>
+  <li>Nach <strong>Finish run</strong>, nach <strong>Clear</strong> und nach Ablauf der Bearbeitungssitzung bleibt das letzte Bild stehen, die Bedienknöpfe sind ausgeblendet, und Eingaben erreichen das Gerät nicht mehr.</li>
+</ul>
 <h2>Abgelaufene Bearbeitungssitzung</h2>
 <ul class="feature-list">
   <li>Ist die Bearbeitungssitzung abgelaufen oder beendet, meldet der Recorder das in Klartext. Der Speicherdialog bleibt offen und die Aufnahme erhalten.</li>
@@ -11223,6 +11301,27 @@ return { welcome: banner.textContent.trim() };</code></pre>
 </ul>
 <h2>Neue KI-Konversation beginnt leer</h2>
 <p>Beginnen Sie nach dem Ende einer KI-Konversation (Stop) mit dem nächsten Befehl eine neue, startet der AI Recorder mit einer leeren Knotenliste. Der Tab Workflow und jeder Speicherweg enthalten nur die Nodes der neuen Konversation, und der Variablen-Tab enthält keine Variablen der vorigen. Waren noch ungespeicherte Schritte da, steht im Chat eine Zeile, dass sie verworfen wurden. Innerhalb derselben Konversation (weitere Befehle, Pause/Weiter) wird nichts geleert. „Stop, dann Speichern" ohne neuen Befehl speichert weiterhin die Nodes der gestoppten Konversation.</p>
+</section>
+
+<section class="doc-section" id="recorder-replay-rules">
+<span class="section-label">Ausgabe &amp; Integration</span>
+<h1>Wiedergabe: Auswahllisten und mehrere Treffer</h1>
+<h2>Auswahllisten (Select)</h2>
+<ul class="feature-list">
+  <li>Eine Auswahl in einem Dropdown (Playwright) scheitert innerhalb <strong>einer</strong> Frist, nicht mehr nach zwei hintereinander. Die Frist ist der <strong>timeout</strong> des Nodes; ohne Angabe gelten 15 Sekunden.</li>
+  <li>Die Option wird über Wert oder Beschriftung gewählt. Gibt es das Element, aber keine passende Option, lautet der Fehler <code>Option '&lt;Text&gt;' not found; available: …</code> mit bis zu 10 vorhandenen Beschriftungen.</li>
+  <li>Fehlt das Element selbst, bleibt es bei der bisherigen Meldung („waiting for locator …"); optionale Schritte werden dann übersprungen und die Selbstheilung greift wie bisher.</li>
+</ul>
+<h2>Klick bei mehreren sichtbaren Treffern</h2>
+<p>Trifft der Selektor eines Klicks (auch bei Hover and Click) mehrere sichtbare Elemente, klickt der Worker dasjenige, dessen eigener Text oder dessen zugänglicher Name (<code>aria-label</code>, <code>title</code>, <code>alt</code>) dem Text im Selektor genau entspricht (Gross-/Kleinschreibung egal). Gibt es keinen solchen Treffer, gilt wie bisher der am besten bewertete sichtbare Treffer. So wird zum Beispiel „Run" statt „More run options" geklickt.</p>
+<ul class="feature-list">
+  <li>Als Textanker erkannt werden <code>text=…</code>, <code>:has-text("…")</code>, <code>role=…[name="…"]</code> sowie XPath-Ausdrücke mit <code>contains(., '…')</code>, <code>text()='…'</code> oder <code>normalize-space()='…'</code>. CSS-Selektoren, <code>#id</code>, <code>[data-testid]</code>, Links über <code>href</code> und Positions-Selektoren haben keinen Anker; dort ändert sich nichts.</li>
+</ul>
+<h2>KI-Aufnahme und Selbstheilung</h2>
+<ul class="feature-list">
+  <li>Ein Screenshot der KI wartet nicht mehr darauf, dass die Seite zur Ruhe kommt.</li>
+  <li>Die Selbstheilung sieht den Seitenbaum des Workers bis zu einer Länge von 36&nbsp;000 Zeichen und nicht mehr nur einen Ausschnitt davon.</li>
+</ul>
 </section>
 
 <section class="doc-section" id="recorder-output">
@@ -11764,7 +11863,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
 <h1>Priorität: Jira und Autemos</h1>
 <p>Jeder verknüpfte Workflow hat genau eine für die Testdurchführung massgebliche <strong>Autemos-Priorität</strong>. Der Xray-Reiter zeigt sie getrennt von der <strong>Jira priority</strong> (dem Rohwert aus Jira), in der Gruppe <strong>Autemos priority</strong> mit der Quelle «from Jira» oder «managed in Autemos». Weicht ein manuell geführter Wert von Jira ab, steht zusätzlich «Jira: High».</p>
 <h2>Regel pro Projekt</h2>
-<p>In der Karte «Jira/Xray-Zuordnung» der Projekteinstellungen legt das Feld <strong>Priority handling</strong> fest, woher die Priorität kommt:</p>
+<p>In der Karte «Jira» der Projekteinstellungen (Karte mit dem Jira Project Key) legt das Feld <strong>Priority handling</strong> fest, woher die Priorität kommt:</p>
 <div class="param-table-wrap">
 <table class="param-table">
 <thead><tr><th>Einstellung</th><th>Wirkung</th></tr></thead>
@@ -12396,7 +12495,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
   <p>Der Reiter <strong>Test Runs</strong> der Projekt-Settings ist für Projekt-Admins sichtbar und legt Voreinstellungen für die Run-Berichte des Projekts fest.</p>
   <h2>Screenshots im Report</h2>
   <ul class="feature-list">
-    <li>Ein Schalter bestimmt den <strong>Screenshot-Standard</strong> (Vorgabe: aus). Er speichert sofort.</li>
+    <li>Der Schalter <strong>Show screenshots by default</strong> bestimmt den Screenshot-Standard (Vorgabe: aus). Er speichert sofort.</li>
     <li>Jeder Run-Report des Projekts öffnet sich mit diesem Zustand des Schalters <strong>Screenshots</strong>.</li>
     <li>Im Report kann weiterhin für die aktuelle Ansicht umgeschaltet werden; die Umschaltung gilt nur für diese Ansicht und verändert die Projekt-Einstellung nicht.</li>
     <li>Der Schalter steuert nur die <em>Anzeige</em> im Report. Ob beim Lauf Screenshots aufgenommen werden, regelt die globale Einstellung.</li>
@@ -12531,7 +12630,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
   <h2>Secrets löschen</h2>
   <p>Ein Secret lässt sich <strong>nicht löschen, solange es irgendwo verwendet wird</strong>. Das gilt für Projekt-, globale und persönliche Secrets. Berücksichtigt werden Verwendungen in Workflows, in den Input-Mappings von Sub-Workflows, in eingebetteten Sub-Workflows und in Auth-Konfigurationen.</p>
   <ul class="feature-list">
-    <li>Der Dialog nennt die <strong>Anzahl</strong> und die <strong>Fundstellen</strong> der Verwendung („Secret 'KEY' cannot be deleted: it is still referenced in N place(s) (workflows, sub-workflows or auth configurations). Remove these references first.“).</li>
+    <li>Der Löschdialog nennt die <strong>Anzahl</strong> und die <strong>Fundstellen</strong> der Verwendung („Secret "KEY" cannot be deleted: it is still referenced in N places. Remove or replace these references first, then delete the secret.“); der Knopf <em>Delete</em> bleibt gesperrt.</li>
     <li>Workflow-Fundstellen führen in den Editor, Fundstellen in Auth-Konfigurationen zum Reiter Auth &amp; Secrets des Projekts bzw. bei globalen Konfigurationen zu den Global Settings.</li>
     <li>Ist das Secret nirgends mehr referenziert, lässt es sich löschen.</li>
   </ul>
@@ -13073,8 +13172,8 @@ return { welcome: banner.textContent.trim() };</code></pre>
     <table class="param-table">
       <thead><tr><th>Eintrag</th><th>Beschreibung</th></tr></thead>
       <tbody>
-        <tr><td><strong>Frontend-Build</strong></td><td>Bauzeit der Oberfläche im Format „Build TT.MM.JJJJ HH:MM UTC - sha7“ (sha7 = die ersten sieben Zeichen der Code-Version; fehlt sie, z. B. bei lokalen Builds, entfällt dieser Teil).</td></tr>
-        <tr><td><strong>Backend-Build</strong></td><td>Dieselbe Angabe für den Server.</td></tr>
+        <tr><td><strong>Frontend build</strong></td><td>Bauzeit der Oberfläche im Format „Build TT.MM.JJJJ HH:MM UTC - sha7“ (sha7 = die ersten sieben Zeichen der Code-Version; fehlt sie, z. B. bei lokalen Builds, entfällt dieser Teil).</td></tr>
+        <tr><td><strong>Backend build</strong></td><td>Dieselbe Angabe für den Server. Ist sie nicht bekannt, steht „—“.</td></tr>
         <tr><td><strong>Support-ID</strong></td><td>Eine Kennung pro Browser-Tab; ein neuer Tab hat eine neue ID. Sie lässt sich kopieren.</td></tr>
         <tr><td><strong>Copy for support</strong></td><td>Kopiert Version, Build, Browser, Support-ID und aktuelle Zeit in die Zwischenablage — zum Einfügen in eine Supportanfrage.</td></tr>
       </tbody>
@@ -13330,7 +13429,7 @@ return { welcome: banner.textContent.trim() };</code></pre>
       <tbody>
         <tr><td><strong>Enable email notifications</strong></td><td>Schaltet E-Mail-Benachrichtigungen zu Testläufen ein oder aus. System-Mails hängen nicht an diesem Schalter, sondern nur an einer vollständigen Mail-Konfiguration.</td></tr>
         <tr><td><strong>Mail provider</strong></td><td>Auswahl zwischen <strong>SMTP</strong> und <strong>Microsoft Graph</strong> (Microsoft 365 / Outlook).</td></tr>
-        <tr><td><strong>SMTP</strong></td><td>Server, Port, Verschlüsselung (STARTTLS, SSL oder keine), Benutzername, Passwort und Absenderadresse. Bleibt das Feld für den SMTP-Server leer, verwendet Autemos die Mail-Konfiguration des Servers („Leave SMTP server empty to use the server mail configuration“).</td></tr>
+        <tr><td><strong>SMTP</strong></td><td>Server, Port, Security (STARTTLS, SSL/TLS oder None), Benutzername, Passwort und Absenderadresse. Bleibt das Feld für den SMTP-Server leer, verwendet Autemos die Mail-Konfiguration des Servers („Leave SMTP server empty to use the server mail configuration“).</td></tr>
         <tr><td><strong>Microsoft Graph</strong></td><td>Tenant-ID, Client-ID, Client-Secret und Absenderadresse einer App-Registrierung mit der Anwendungsberechtigung <code>Mail.Send</code>.</td></tr>
         <tr><td><strong>Send test email</strong></td><td>Versendet eine Testmail an Ihre eigene Adresse — mit den <em>gespeicherten</em> Einstellungen. Die Antwort meldet Erfolg oder einen kurzen Grund, nie ein Geheimnis oder einen Stacktrace.</td></tr>
       </tbody>
@@ -13525,6 +13624,10 @@ return { welcome: banner.textContent.trim() };</code></pre>
     <span class="tip-icon">⚠️</span><strong>Nur für Administratoren —</strong> Die Seite <strong>Audit Logs</strong> ist globalen Administratoren vorbehalten. Andere Benutzer werden zum Dashboard umgeleitet.
   </div>
   <p>Die Admin-Navigation zeigt unter <strong>Global Settings</strong> den Punkt <strong>Audit Logs</strong>. Die Seite ist ein <strong>schreibgeschütztes Protokoll</strong> aller Benutzer- und Systemaktionen — etwa Code-Sync, Einstellungsänderungen, Secret-Aktionen, Screenshot-Aufräumläufe und Passwortänderungen.</p>
+  <div class="screenshot-wrap">
+    <img alt="Audit Logs" src="./autemos_settings_screenshots/doku-audit-logs.png"/>
+    <div class="screenshot-caption">Audit Logs — Filter, Tabelle und Export CSV.</div>
+  </div>
   <h2>Filter und Suche</h2>
   <div class="param-table-wrap">
     <table class="param-table">
@@ -13982,14 +14085,14 @@ const PROJECTS_IDS = new Set(['projects-overview','projects-cards','projects-sea
 const SEARCH_IDS = new Set(['search-overview','search-filters','search-table','search-details','search-cross-project','search-use-cases']);
 const USERS_IDS = new Set(['users-overview','users-list','users-invite','users-edit','users-actions','users-login','users-roles','users-projects','users-use-cases']);
 const TEMPLATES_IDS = new Set(['templates-overview','templates-selection','templates-editor','templates-nodes','templates-methods','templates-config','templates-use-cases']);
-const WORKFLOWS_IDS = new Set(['overview','key-concepts','quick-start','debugging','error-handling','self-healing','related-modules','wf-collections','wf-editor-toolbar','wf-auto-connect','wf-validation-hints','wf-version-restore','wf-expressions','subworkflows-overview','subworkflows-create','subworkflows-parameters','subworkflows-snapshots','open-browser','navigate','wf-reload','wf-go-forward','close-browser','type','click','double-click','right-click','hover','drag-drop','press-key','scroll','select','screenshot','upload-file','switch-session','switch-frame','exit-frame','wf-closed-shadow','mobile-press-key','swipe','assert','extract-json','api-request','verify-response','if','loop','wait','wf-wait-for','time-gap','call-sub-workflow','acquire-test-data','extract-text','persist-test-data','release-test-data','resume-test-data','http-request','execute-javascript','wf-custom-code','wf-custom-code-commands','wf-custom-code-page','table-handling-overview','cell-value','check-table-state','click-row','filter-table','find-row','table-inspect','load-scroll-table','change-table-page','rows','run-cell-action','run-row-action','set-row-selection','sort-table','table-verify']);
+const WORKFLOWS_IDS = new Set(['overview','key-concepts','quick-start','debugging','error-handling','self-healing','related-modules','wf-collections','wf-editor-toolbar','wf-auto-connect','wf-validation-hints','wf-version-restore','wf-po-locator','wf-expressions','subworkflows-overview','subworkflows-create','subworkflows-parameters','subworkflows-snapshots','open-browser','navigate','wf-reload','wf-go-forward','close-browser','type','click','double-click','right-click','hover','drag-drop','press-key','scroll','select','screenshot','upload-file','switch-session','switch-frame','exit-frame','wf-closed-shadow','mobile-press-key','swipe','assert','extract-json','api-request','verify-response','if','loop','wait','wf-wait-for','time-gap','call-sub-workflow','acquire-test-data','extract-text','persist-test-data','release-test-data','resume-test-data','http-request','execute-javascript','wf-custom-code','wf-custom-code-commands','wf-custom-code-page','table-handling-overview','cell-value','check-table-state','click-row','filter-table','find-row','table-inspect','load-scroll-table','change-table-page','rows','run-cell-action','run-row-action','set-row-selection','sort-table','table-verify']);
 const TESTRUNS_IDS = new Set(['testruns-overview','test-run-overview','tests-tab','runs-tab','search-filtering','test-details','available-metrics','execution-history','execution-popup','run-details','execution-summary','step-flow','error-details','healing-details','use-cases','best-practices']);
 const PAGES_IDS = new Set(['pages-overview','pages-management','create-page','page-details','fields-management','edit-field','table-definitions','table-wizard','wizard-basics','wizard-columns','wizard-actions','wizard-review','expert-mode','project-settings','page-settings','ai-integration','page-screenshots']);
 const HEALING_IDS = new Set(['healing-overview','llm-dashboard','recent-proposals','healing-monitoring','circuit-breaker','field-reliability','healing-config','healing-modes','thresholds','locator-priority','healing-safeguards']);
 const TESTDATA_IDS = new Set(['testdata-overview','testdata-dashboard','testdata-sources','testdata-bindings','testdata-easy','testdata-easy-tags','testdata-easy-shortname','testdata-run-selection','testdata-datadriven','testdata-playground','testdata-scope','testdata-runtime','testdata-settings','testdata-best-practices']);
 const SCHEDULER_IDS = new Set(['scheduler-overview','schedules-list','create-schedule','trigger-types','scheduler-testdata','scheduler-xray','upcoming-runs','execution-history','schedule-details','schedule-tests','schedule-upcoming','schedule-history','external-integration']);
-const CODEGEN_IDS = new Set(['codegen-overview','codegen-dashboard','codegen-setup','codegen-wizard','codegen-structure','codegen-templates','codegen-sync-profiles','codegen-generate','codegen-git-sync','codegen-sync-state','codegen-sync-push','codegen-sync-supported','codegen-sync-assertions','codegen-sync-structure','codegen-export-coverage','codegen-export-api','codegen-export-tables']);
-const RECORDER_IDS = new Set(['recorder-overview','recorder-dashboard','recorder-session','recorder-recording-state','recorder-manual','recorder-web-interactions','recorder-origin','recorder-ai','recorder-ai-plan','recorder-ai-questions','recorder-ai-values','recorder-ai-testcase','recorder-mobile-apps','recorder-mobile-actions','recorder-events','recorder-workflow','recorder-pages','recorder-resume','recorder-save-rules','recorder-output']);
+const CODEGEN_IDS = new Set(['codegen-overview','codegen-dashboard','codegen-setup','codegen-wizard','codegen-structure','codegen-templates','codegen-sync-profiles','codegen-generate','codegen-git-sync','codegen-sync-state','codegen-sync-push','codegen-sync-supported','codegen-sync-assertions','codegen-sync-structure','codegen-export-coverage','codegen-export-api','codegen-export-tables','codegen-export-selectors']);
+const RECORDER_IDS = new Set(['recorder-overview','recorder-dashboard','recorder-session','recorder-recording-state','recorder-manual','recorder-web-interactions','recorder-origin','recorder-ai','recorder-ai-plan','recorder-ai-questions','recorder-ai-values','recorder-ai-testcase','recorder-mobile-apps','recorder-mobile-actions','recorder-events','recorder-workflow','recorder-pages','recorder-resume','recorder-save-rules','recorder-replay-rules','recorder-output']);
 const APICOLLECTIONS_IDS = new Set(['apicollections-overview','apicollections-import','apicollections-import-config','apicollections-schema-validation','apicollections-list','apicollections-runtime','apicollections-run','apicollections-workflows','apicollections-endpoint','apicollections-auto-config','apicollections-verify-nodes','apicollections-run-node','apicollections-combine','apicollections-use-cases','apicollections-best-practices','apicollections-related']);
 const JIRAXRAY_IDS = new Set(['jiraxray-overview','jiraxray-select','jiraxray-manual','jiraxray-cucumber','jiraxray-progress','jiraxray-link','jiraxray-context','jiraxray-open','jiraxray-change','jiraxray-priority','jiraxray-sync','jiraxray-runs','jiraxray-collections','jiraxray-collection-runs','jiraxray-scope','jiraxray-use-cases','jiraxray-best-practices','jiraxray-related']);
 const PDFCOMPARE_IDS = new Set(['pdfcompare-overview','pdfcompare-baselines','pdfcompare-upload','pdfcompare-versions','pdfcompare-capture','pdfcompare-node','pdfcompare-config','pdfcompare-types','pdfcompare-pagecount','pdfcompare-text','pdfcompare-visual','pdfcompare-gating','pdfcompare-zones','pdfcompare-patterns','pdfcompare-report','pdfcompare-diff','pdfcompare-use-cases','pdfcompare-best-practices','pdfcompare-related']);

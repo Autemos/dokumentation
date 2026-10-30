@@ -194,9 +194,9 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 <h2>Execution Log</h2>
 <p>The execution log provides step-by-step status updates, execution times, and detailed error information. Use it to pinpoint exactly which step failed and why.</p>
 <h3>Copying Logs</h3>
-<p>In the header of the <strong>Execution Log</strong> panel, the <strong>Copy logs</strong> button (before <strong>Clear logs</strong>) copies all entries of the current run to the clipboard with one click, one line per entry in the format <code>[HH:MM:SS.mmm] +elapsed LEVEL [node] message</code>. The panel stays open. In the run report the same button sits at the expanded log block of a step (<strong>Copy logs of &lt;step&gt;</strong>); it copies exactly that step’s lines in the format <code>[time] LEVEL message</code>.</p>
+<p>In the header of the <strong>Execution Log</strong> panel, the <strong>Copy logs</strong> button (before <strong>Clear logs</strong>) copies all entries of the current run to the clipboard with one click, one line per entry in the format <code>[HH:MM:SS.mmm] +elapsed LEVEL [node] message</code> (LEVEL is INFO, WARN, ERROR or OK). The panel stays open. In the run report the same button sits at the expanded log block of a step (<strong>Copy logs of &lt;step&gt;</strong>); it copies exactly that step’s lines in the format <code>[time] LEVEL message</code>.</p>
 <h3>Secrets in the Log</h3>
-<p>Secret values appear in the Execution Log, the status response, the run report and the API request log entirely as <code>***</code>, without a single character of clear text. Secrets shorter than 4 characters are not masked (the run warns about this).</p>
+<p>Secret values appear in the Execution Log, the status response, the run report and the API request log entirely as <code>***</code>, without a single character of clear text. Values shorter than 4 characters cannot be reliably recognised as a secret in text and are not masked there; the server notes this in its log.</p>
 <h2>Live Execution View</h2>
 <div class="screenshot-wrap">
 <img alt="Live Device View" src="./autemos_images/image10.png"/>
@@ -379,8 +379,14 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 <h2>Undo and Redo</h2>
 <p>One click on <strong>Undo</strong> reverts exactly one action, and even the first action after opening or saving can be undone. <strong>Redo</strong> restores the state after the action.</p>
 
-<h2>Data-driven execution</h2>
-<p>In the Run menu, <strong>Run</strong> starts a normal single run. <strong>Data-driven execution…</strong> opens the <strong>Data-driven execution</strong> dialog directly: <strong>Test data source</strong>, <strong>Data variable</strong> and <strong>Dataset selection</strong> (default <strong>All datasets</strong>) are visible immediately, without ticking a checkbox first. The run starts with <strong>Run</strong> in the dialog. In the Scheduler dialogs, the <strong>Data-driven execution</strong> checkbox controls whether a scheduled test runs once per dataset.</p>
+<h2>Run and Data-driven Execution</h2>
+<p>In the Run menu, <strong>Run</strong> immediately starts exactly one run with the workflow’s default test data, without a selection dialog: a Test Data Binding is resolved with its first dataset, Easy Test Data uses row 1 (with one-time use, the next free row). The Execution Log names the dataset that was used. If a dataset is missing, the test data check reports it before the start.</p>
+<p>Every selection of rows or datasets lives in <strong>Data-driven execution…</strong>. The entry opens the <strong>Data-driven execution</strong> dialog directly. If there are both datasets of a data-driven binding and rows of a test data set, choose under <strong>Run by</strong> between <strong>Datasets of a data-driven binding</strong> and <strong>Rows of a test data set</strong>.</p>
+<ul class="feature-list">
+<li><strong>Datasets</strong>: <strong>Test data source</strong>, <strong>Data variable</strong> and <strong>Dataset selection</strong> (default <strong>All datasets</strong>) are visible immediately, without ticking a checkbox first.</li>
+<li><strong>Rows</strong>: <strong>Test data set</strong> (with several sources) and <strong>Run mode</strong> with <strong>Single Row</strong>, <strong>Selected Rows</strong> or <strong>All Rows</strong>; the <strong>Data rows</strong> table shows the rows, and a status line gives the number of rows and of resulting test runs (one run per row). Single Row and row 1 are preselected.</li>
+</ul>
+<p>The run starts with <strong>Run</strong> in the dialog. The selection only applies to that dialog; a later <strong>Run</strong> is unaffected. In the Scheduler dialogs, the <strong>Data-driven execution</strong> checkbox controls whether a scheduled test runs once per dataset.</p>
 
 <h2>Schedule: Assign a Workflow Directly to a Schedule</h2>
 <p>The <strong>Schedule</strong> button (calendar icon) appears for saved main workflows, not for sub-workflows. For a workflow that has never been saved it is disabled (tooltip “Save the workflow first to assign it to a schedule”).</p>
@@ -443,24 +449,35 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 </ul>
 
 `,
+  "wf-po-locator": `<span class="section-label">Editor &amp; Execution</span>
+<h1>Page Object Locator after Self-Healing</h1>
+
+<p>When self-healing saves a new locator for a page object field (“saved to repository” in the self-healing report), that value applies everywhere, without relinking any nodes.</p>
+<ul class="feature-list">
+<li>The Pages management, the field picker in the workflow editor and the node details show the same current locator, also after reloading the page.</li>
+<li>A newly chosen field and workflows generated from page objects take over the current value, not the state before healing.</li>
+<li>During execution, the page object’s current locator wins over a differing, older selector in the node if the page object stands for exactly one web address and the field matches the page that is open. On a foreign page, the node’s selector stays authoritative.</li>
+</ul>
+
+`,
   "wf-expressions": `<span class="section-label">Editor &amp; Execution</span>
 <h1>Date and Calculation Expressions in Placeholders</h1>
 
-<p>In addition to variables and test data, the <code>{{…}}</code> placeholders accept two kinds of expressions that are evaluated at <strong>run time</strong>. A workflow replayed on another day therefore yields the correct date instead of a frozen literal.</p>
+<p>Besides variables and test data, the <code>{{…}}</code> placeholders know a notation for dates and simple calculations. A workflow replayed on another day should thus yield the correct date instead of a frozen literal.</p>
+<div class="warn-box"><strong>Current state:</strong> These expressions are evaluated when an API Collection runs. When a workflow runs (editor, schedule, collection), an expression such as <code>{{today+3d}}</code> stays unchanged as text and is entered as such into a field; variables and test data are resolved normally there.</div>
 <div class="param-table-wrap">
 <table class="param-table">
 <thead><tr><th>Expression</th><th>Meaning</th><th>Example</th></tr></thead>
 <tbody>
-<tr><td><code>{{today}}</code>, <code>{{now}}</code></td><td>Today’s date or the current point in time</td><td><code>{{today}}</code></td></tr>
+<tr><td><code>{{today}}</code>, <code>{{now}}</code></td><td>Today’s date (<code>dd.MM.yyyy</code>) or the current point in time (<code>dd.MM.yyyy HH:mm:ss</code>)</td><td><code>{{today}}</code></td></tr>
 <tr><td><code>{{today+3d}}</code></td><td>Offset <code>±N</code> with unit <code>d</code> (days), <code>w</code> (weeks), <code>m</code> (months) or <code>y</code> (years)</td><td><code>{{today-1w}}</code></td></tr>
 <tr><td><code>{{today+3d|dd.MM.yyyy}}</code></td><td>Optional output format after <code>|</code> (date pattern)</td><td>Delivery date in 3 days as <code>dd.MM.yyyy</code></td></tr>
-<tr><td><code>{{a+b}}</code>, <code>{{price*2}}</code></td><td>Simple arithmetic with numbers and numeric variables</td><td><code>{{2+3}}</code></td></tr>
+<tr><td><code>{{a+b}}</code>, <code>{{price*2}}</code></td><td>Simple arithmetic with numbers and numeric variables, calculated from left to right</td><td><code>{{2+3}}</code></td></tr>
 </tbody>
 </table>
 </div>
 <ul class="feature-list">
 <li>An ordinary variable always takes precedence: if a variable is called <code>today</code>, its value is used rather than the date.</li>
-<li>The AI recorder writes a relative date request (“delivery date in 3 days”) as an expression, not as a resolved date.</li>
 <li>There is no full formula language: no parentheses and no functions beyond the forms listed.</li>
 <li>Workflows already recorded with frozen date values are not rewritten.</li>
 </ul>
@@ -659,7 +676,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 <li>In a test run the setting applies to the whole browser session; the Execution Log notes that certificate errors are ignored.</li>
 <li>The <strong>java/playwright</strong> code export generates the option in the browser context. For other export targets no code is generated, but a warning: the exported test would reject untrusted certificates.</li>
 <li>With several Open Browser nodes, the first web node counts; if a later one differs, a warning appears.</li>
-<li>The switch does not apply to API nodes.</li>
+<li>The switch does not apply to API nodes and only takes effect for desktop browser sessions, not for web sessions on mobile devices.</li>
 </ul>
 <div class="warn-box"><strong>Test environments only:</strong> this option deliberately switches off certificate validation. Do not use it against production systems.</div>
 <h2>Output</h2>
@@ -1715,13 +1732,13 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 </div><p>Elements in <strong>closed</strong> shadow roots (<code>attachShadow({ mode: 'closed' })</code>) are found and operated with the same selectors as elements in open ones: CSS (<code>#target-4</code>), text (<code>text=Click target 4</code>) and role (<code>role=button[...]</code>). There is no separate selector syntax and no workaround in page objects; recorder, self-healing and code export work unchanged.</p></div>
 <h2>How It Works</h2>
 <ul class="feature-list">
-<li>The <a href="#open-browser">Open Browser</a> node installs a small hook in Playwright web sessions that creates closed shadow roots as open ones internally. It applies to all pages and frames loaded afterwards.</li>
+<li>The <a href="#open-browser">Open Browser</a> node installs a small hook in web sessions that creates closed shadow roots as open ones internally. In Playwright sessions it applies to all pages and frames loaded afterwards; in Selenium sessions (including mobile web) the node sets it through a browser command.</li>
 <li>The host element then carries the attribute <code>data-stk-shadow-was-closed</code>, so the original encapsulation remains recognisable.</li>
 <li>The worker notes in the run log that the feature is active.</li>
 </ul>
 <h2>Limits</h2>
 <ul class="feature-list">
-<li>Applies to Chromium and Edge (via the grid); Selenium mode and mobile sessions are not affected.</li>
+<li>The Selenium path applies to Chrome and Edge only; Firefox and Safari on iOS are excluded, as are native mobile app sessions. There the hook only affects the session’s tab; new tabs and windows do not get it.</li>
 <li>The target page sees the root as open. Pages that check whether <code>shadowRoot</code> is <code>null</code> may behave differently.</li>
 <li>A document that is already loaded is only covered from the next navigation.</li>
 <li>A Playwright test outside Autemos that does not install this hook does not find these elements.</li>
@@ -2174,30 +2191,18 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 <table class="param-table">
 <thead><tr><th>Parameter</th><th>Description</th><th>Required</th><th>Example</th></tr></thead>
 <tbody>
-<tr><td><strong>Condition</strong></td><td>Defines what to evaluate</td><td>Yes</td><td><code>visible</code></td></tr>
+<tr><td><strong>Condition</strong></td><td>Left side of the comparison: usually a variable such as <code>{{status}}</code> or a fixed text. No page element is checked here.</td><td>Yes</td><td><code>{{status}}</code></td></tr>
 <tr><td><strong>Operator</strong></td><td>Defines how the condition is evaluated</td><td>Yes</td><td><code>equals</code></td></tr>
 <tr><td><strong>Compare Value</strong></td><td>Value for comparison (if required)</td><td>No</td><td><code>Success</code></td></tr>
 <tr><td><strong>Bindings</strong></td><td>Allows dynamic values via variables</td><td>No</td><td><code>\${expectedValue}</code></td></tr>
 </tbody>
 </table>
 </div>
-<p class="param-note">* Compare Value is only required for conditions that compare values.</p>
-<p><strong>Available conditions</strong></p>
-<div class="param-table-wrap">
-<table class="param-table">
-<thead><tr><th>Option</th><th>Description</th></tr></thead>
-<tbody>
-<tr><td><code>visible</code></td><td>Element is visible on the screen</td></tr>
-<tr><td><code>hidden</code></td><td>Element is not visible</td></tr>
-<tr><td><code>exists</code></td><td>Element exists in the DOM/UI</td></tr>
-<tr><td><code>notExists</code></td><td>Element does not exist</td></tr>
-<tr><td><code>textEquals</code></td><td>Element text matches exactly</td></tr>
-<tr><td><code>textContains</code></td><td>Element text contains a value</td></tr>
-<tr><td><code>valueEquals</code></td><td>Element value matches expected input</td></tr>
-</tbody>
-</table>
-</div>
-<p><strong>Available operators</strong></p>
+<p class="param-note">* Compare Value is only required for operators that compare two values (not for <code>isEmpty</code> and <code>isNotEmpty</code>).</p>
+<h2>Comparison</h2>
+<p>The If node compares the value in <strong>Condition</strong> with <strong>Compare Value</strong> using the selected <strong>Operator</strong>. Both sides are resolved first: <code>{{variable}}</code> has already been replaced by its value. If both sides are numbers, they are compared numerically (10 is greater than 9), otherwise as text.</p>
+<p>The If node does not check any element on the page. If a branch should depend on the content of an element, first read the value into a variable with <a href="#extract-text">Extract Text</a> and enter that variable in <strong>Condition</strong>.</p>
+<p><strong>Operators</strong></p>
 <div class="param-table-wrap">
 <table class="param-table">
 <thead><tr><th>Option</th><th>Description</th></tr></thead>
@@ -2214,11 +2219,14 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 </div>
 <h2>Behavior</h2>
 <ul class="feature-list">
-<li>Evaluates the defined condition at runtime</li>
-<li>Compares the result using the selected operator</li>
-<li>Routes execution into the True branch (condition met) or False branch (condition not met)</li>
-<li>Only the selected branch is executed</li>
+<li>Evaluates <strong>Condition</strong> and <strong>Compare Value</strong> at runtime using the selected operator</li>
+<li>If the comparison holds, the path at the <strong>True</strong> output (green) runs, otherwise the path at the <strong>False</strong> output (red). Only this branch is executed.</li>
+<li>The nodes of the branch not taken receive the status <strong>Skipped</strong>; the Execution Log says “Branch not taken – skipped (If '&lt;name&gt;' = true)” or “= false”. The closing line reads, for example, “all 2 nodes passed (1 skipped: branch not taken)”.</li>
+<li>A node reached by several paths (a merge) runs as soon as at least one of its incoming paths is active.</li>
+<li>A connection attached to neither output is treated as <strong>True</strong>; the log warns about it.</li>
+<li>Invalid input makes the node fail, for example when a side of <code>greaterThan</code> or <code>lessThan</code> is not a number (“greaterThan requires numeric operands, got left="abc", right="9"”) or the operator is unknown.</li>
 </ul>
+<p>The AI recorder can additionally set the operators <code>notContains</code>, <code>greaterOrEqual</code>, <code>lessOrEqual</code> and <code>regex</code>; the selection list in the editor does not offer them.</p>
 <h2>Output</h2>
 <p>No output. The node controls the workflow execution flow by routing into the True or False branch.</p>
 <div class="meta-grid">
@@ -2226,11 +2234,12 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 <div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>
 </div>
 <div class="example-block">
-<h3>Example — Handling an optional error message</h3>
-<p>Only continue if no error message is displayed:</p>
+<h3>Example — Only continue for a specific status</h3>
+<p>The variable <code>status</code> was filled earlier with Extract Text:</p>
 <div class="param-table-wrap"><table class="param-table"><thead><tr><th>Parameter</th><th>Value</th></tr></thead><tbody>
-<tr><td><strong>Condition</strong></td><td><code>notExists</code></td></tr>
+<tr><td><strong>Condition</strong></td><td><code>{{status}}</code></td></tr>
 <tr><td><strong>Operator</strong></td><td><code>equals</code></td></tr>
+<tr><td><strong>Compare Value</strong></td><td><code>Paid</code></td></tr>
 </tbody></table></div>
 <p><strong>True branch:</strong> Continue workflow  |  <strong>False branch:</strong> Handle error (e.g. capture screenshot, stop test)</p>
 </div>
@@ -2261,23 +2270,37 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 <table class="param-table">
 <thead><tr><th>Parameter</th><th>Description</th><th>Required</th><th>Example</th></tr></thead>
 <tbody>
-<tr><td><strong>Data Source</strong></td><td>Data collection to iterate over</td><td>Yes</td><td><code>\${users}</code></td></tr>
+<tr><td><strong>Data Source</strong></td><td>What to iterate over: a number range or a list of values, see the Data Source section. The field takes text and <code>{{variable}}</code>.</td><td>Yes</td><td><code>\${users}</code></td></tr>
 <tr><td><strong>Save As</strong></td><td>Variable name for the current item in each iteration</td><td>Yes</td><td><code>item</code></td></tr>
-<tr><td><strong>Max Iterations</strong></td><td>Maximum number of loop runs</td><td>No</td><td><code>100</code></td></tr>
+<tr><td><strong>Max Iterations</strong></td><td>Maximum number of runs (editor default: 100). Further values are cut off; the Execution Log warns (“10 values capped to maxIterations 2”).</td><td>No</td><td><code>100</code></td></tr>
 <tr><td><strong>Bindings</strong></td><td>Allows dynamic data sources and variable names</td><td>No</td><td><code>\${dataSet}</code></td></tr>
 </tbody>
 </table>
 </div>
+<h2>Data Source</h2>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Kind</th><th>Entry in Data Source</th><th>Runs</th></tr></thead>
+<tbody>
+<tr><td>Number range</td><td><code>{"type":"range","from":0,"to":3,"step":1}</code></td><td>From <code>from</code> (inclusive) to <code>to</code> (exclusive) in steps of <code>step</code> (default 1): here 0, 1, 2. <code>step</code> must not be 0; a range in the wrong direction gives no run.</td></tr>
+<tr><td>List of values</td><td><code>{"type":"dataset","values":["x","y"]}</code></td><td>One run per entry. Entries can be objects; inside the body you reach a field with <code>{{user.name}}</code>.</td></tr>
+<tr><td>List</td><td>a list, e.g. <code>["x","y"]</code> or a variable that holds a list</td><td>Like a list of values</td></tr>
+</tbody>
+</table>
+</div>
+<p>If <strong>Data Source</strong> is empty or of an unknown kind, the node fails (“Missing dataSource” or “Unknown dataSource.type”).</p>
 <h2>Behavior</h2>
 <ul class="feature-list">
-<li>Reads the provided data source</li>
-<li>Iterates over each item in the collection</li>
-<li>Stores the current item in the variable defined in <strong>Save As</strong></li>
-<li>Executes all nodes inside the loop for each item</li>
-<li>Stops when all items have been processed or the Max Iterations limit is reached</li>
+<li>The Loop has two outputs: the loop body hangs at the <strong>True</strong> output (green), and the path that continues exactly once after the loop hangs at the <strong>False</strong> output (red).</li>
+<li>The body runs once per value. Before each run the value is stored in the variable from <strong>Save As</strong>; the Execution Log says “Loop 'Loop': iteration 2 of 3 (i = 1)”.</li>
+<li>After the loop the variable is back to its earlier state (or removed).</li>
+<li>If and Loop nodes inside the body are evaluated anew in each run.</li>
+<li>If there is no run, the body is skipped (<strong>Skipped</strong>, “ran 0 iterations – skipped”) and the run continues at the <strong>False</strong> output.</li>
+<li>An error in the body aborts the run; the message names the iteration (“Failed at node: … (Loop 'Loop': iteration 2 of 3)”).</li>
+<li>In the report, a node of the body shows the state of its last run.</li>
 </ul>
 <h2>Output</h2>
-<p>No direct output. The Save As variable is available within the loop for each iteration.</p>
+<p>No direct output. The <strong>Save As</strong> variable is available in the loop body in every run.</p>
 <div class="meta-grid">
 <div class="meta-card"><div class="meta-label">Input Variables</div><div class="meta-value"><span class="meta-pill pill-yes">Yes</span></div></div>
 <div class="meta-card"><div class="meta-label">Output Variables</div><div class="meta-value"><span class="meta-pill pill-no">No</span></div></div>

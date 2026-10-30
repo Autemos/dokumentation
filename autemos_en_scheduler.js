@@ -147,7 +147,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   <p>In <strong>Create New Schedule</strong> and <strong>Edit Schedule</strong>, ticking a workflow lets you set directly which test data it runs with — with the same options as the manual <a href="#testdata-datadriven">Data-driven execution…</a>.</p>
   <h2>Selection in the dialog</h2>
   <ul class="feature-list">
-    <li>Below the workflow list, each ticked workflow gets a block <strong>Test data for «Workflow»</strong>. Unticking removes the block together with its selection.</li>
+    <li>Below the workflow list, each ticked workflow gets a block <strong>Test data for «Workflow»</strong>. Unticking removes the block together with its selection. In the block, the checkbox <strong>Data-driven execution</strong> switches the dataset selection on. If the workflow references no data-driven binding, a hint with the link <em>Set up a data-driven binding</em> appears instead.</li>
     <li>The available modes are <strong>Single dataset</strong>, <strong>All datasets</strong>, <strong>Selected datasets</strong>, <strong>First N datasets</strong> and <strong>By tags</strong> (for tags see <a href="#testdata-easy">Test Data Easy</a>).</li>
     <li>If the selection is incomplete, <strong>Create Schedule</strong> or <strong>Save Changes</strong> stays disabled.</li>
     <li>The selection applies only to schedules targeting workflows, not collections. Without a selection, the workflow runs once as before.</li>
@@ -156,7 +156,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   <p>In the Edit dialog, the tests assigned to the schedule are ticked and show their saved selection. Newly ticked tests are added on save, changed selections are updated. <strong>Unticking removes the test from the schedule when you save</strong> ("Unchecking removes the test from this schedule when you save.").</p>
   <h2>Detail page and run</h2>
   <ul class="feature-list">
-    <li>The detail page summarises the selection per test in one line, for example "Run once per dataset: First 10 datasets · Tags: Smoke · Source: Test Data Easy".</li>
+    <li>The detail page summarises the selection per test in one line, for example "Data-driven execution: country · First 10 datasets · Tags: Smoke · Source: Easy Test Data".</li>
     <li>On execution, the schedule starts a batch with one run per dataset; the run history shows the dataset for each run.</li>
     <li>If a dataset lacks a field the workflow needs, the test ends as <em>FAILED</em> with a message, without a run starting.</li>
   </ul>
@@ -186,7 +186,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
     <table class="param-table">
       <thead><tr><th>Result in Autemos</th><th>Status in Xray</th><th>Comment</th></tr></thead>
       <tbody>
-        <tr><td>passed</td><td>PASSED</td><td>—</td></tr>
+        <tr><td>passed</td><td>PASSED</td><td>test name and status only</td></tr>
         <tr><td>failed</td><td>FAILED</td><td>Error text</td></tr>
         <tr><td>technical error (start error, abort, timeout)</td><td>FAILED</td><td>"Technical error: …"</td></tr>
         <tr><td>not run (dependency failed)</td><td>TODO</td><td>"Not run: dependency failed"</td></tr>
@@ -198,7 +198,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
     <li>The comment per test contains the link to the run's report.</li>
     <li>If no Xray tests are linked, nothing is sent to Jira.</li>
     <li>If reporting fails (for example Jira is unreachable), neither result nor status of the schedule run changes.</li>
-    <li>The detail page shows the state, for example "Reporting to Jira Xray: On – Test Plan X (from project)" or "Off".</li>
+    <li>The detail page shows the state ("Reporting to Jira Xray: On" or "Off") and the effective test plan ("Test Plan: KEY", "Test Plan: KEY (from project)" or "No test plan set.").</li>
   </ul>
 `,
   "upcoming-runs": `

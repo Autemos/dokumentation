@@ -146,7 +146,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 <h1>Priority: Jira and Autemos</h1>
 <p>Every linked workflow has exactly one <strong>Autemos priority</strong> that is authoritative for test execution. The Xray tab shows it separately from the <strong>Jira priority</strong> (the raw value from Jira), in the <strong>Autemos priority</strong> group with the source "from Jira" or "managed in Autemos". If a manually managed value differs from Jira, "Jira: High" is shown in addition.</p>
 <h2>Rule per project</h2>
-<p>In the "Jira/Xray mapping" card of the project settings, the <strong>Priority handling</strong> field determines where the priority comes from:</p>
+<p>In the "Jira" card of the project settings (the card with the Jira Project Key), the <strong>Priority handling</strong> field determines where the priority comes from:</p>
 <div class="param-table-wrap">
 <table class="param-table">
 <thead><tr><th>Setting</th><th>Effect</th></tr></thead>

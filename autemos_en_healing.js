@@ -266,7 +266,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
     <span class="tip-icon">💡</span>
     Use <strong>Propose Only</strong> mode for critical production workflows where automatic selector changes require governance review before being applied.
   </div>
-  <p>If the effective mode is <strong>Disabled</strong>, no heal starts during a run: the step with the broken selector fails on the original selector, and the run log states the reason ("SKIPPED: healing mode is set to Disabled for this project"). This also applies to the proactive check. If Self-Healing itself is switched off, the reason is "self-healing is switched off for this project". Without a stored setting, <strong>Automatic</strong> applies.</p>
+  <p>If the effective mode is <strong>Disabled</strong>, no heal starts during a run: the step with the broken selector fails on the original selector, and the run log states the reason (result "SKIPPED", reason "healing mode is set to Disabled for this project"). This also applies to the proactive check. If Self-Healing itself is switched off, the reason is "self-healing is switched off for this project". Without a stored setting, <strong>Automatic</strong> applies.</p>
 `,
   "thresholds": `
   <div class="node-header">

@@ -141,7 +141,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   <p>The <strong>Test Runs</strong> tab of the project settings is visible to project admins and sets defaults for the project's run reports.</p>
   <h2>Screenshots in the report</h2>
   <ul class="feature-list">
-    <li>A switch sets the <strong>screenshot default</strong> (default: off). It saves immediately.</li>
+    <li>The switch <strong>Show screenshots by default</strong> sets the screenshot default (default: off). It saves immediately.</li>
     <li>Every run report of the project opens with this state of the <strong>Screenshots</strong> switch.</li>
     <li>In the report, you can still toggle for the current view; the toggle applies only to that view and does not change the project setting.</li>
     <li>The switch only controls the <em>display</em> in the report. Whether screenshots are captured during the run is governed by the global setting.</li>
@@ -272,7 +272,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   <h2>Deleting secrets</h2>
   <p>A secret <strong>cannot be deleted while it is used anywhere</strong>. This applies to project, global and personal secrets. Uses in workflows, in the input mappings of sub-workflows, in embedded sub-workflows and in auth configurations are taken into account.</p>
   <ul class="feature-list">
-    <li>The dialog states the <strong>number</strong> and <strong>locations</strong> of the usage ("Secret 'KEY' cannot be deleted: it is still referenced in N place(s) (workflows, sub-workflows or auth configurations). Remove these references first.").</li>
+    <li>The delete dialog states the <strong>number</strong> and <strong>locations</strong> of the usage ("Secret "KEY" cannot be deleted: it is still referenced in N places. Remove or replace these references first, then delete the secret."); the <em>Delete</em> button stays disabled.</li>
     <li>Workflow locations lead to the editor; locations in auth configurations lead to the project's Auth &amp; Secrets tab or, for global configurations, to Global Settings.</li>
     <li>Once the secret is no longer referenced anywhere, it can be deleted.</li>
   </ul>

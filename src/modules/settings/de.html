@@ -124,7 +124,7 @@
       <tbody>
         <tr><td><strong>Enable email notifications</strong></td><td>Schaltet E-Mail-Benachrichtigungen zu Testläufen ein oder aus. System-Mails hängen nicht an diesem Schalter, sondern nur an einer vollständigen Mail-Konfiguration.</td></tr>
         <tr><td><strong>Mail provider</strong></td><td>Auswahl zwischen <strong>SMTP</strong> und <strong>Microsoft Graph</strong> (Microsoft 365 / Outlook).</td></tr>
-        <tr><td><strong>SMTP</strong></td><td>Server, Port, Verschlüsselung (STARTTLS, SSL oder keine), Benutzername, Passwort und Absenderadresse. Bleibt das Feld für den SMTP-Server leer, verwendet Autemos die Mail-Konfiguration des Servers („Leave SMTP server empty to use the server mail configuration“).</td></tr>
+        <tr><td><strong>SMTP</strong></td><td>Server, Port, Security (STARTTLS, SSL/TLS oder None), Benutzername, Passwort und Absenderadresse. Bleibt das Feld für den SMTP-Server leer, verwendet Autemos die Mail-Konfiguration des Servers („Leave SMTP server empty to use the server mail configuration“).</td></tr>
         <tr><td><strong>Microsoft Graph</strong></td><td>Tenant-ID, Client-ID, Client-Secret und Absenderadresse einer App-Registrierung mit der Anwendungsberechtigung <code>Mail.Send</code>.</td></tr>
         <tr><td><strong>Send test email</strong></td><td>Versendet eine Testmail an Ihre eigene Adresse — mit den <em>gespeicherten</em> Einstellungen. Die Antwort meldet Erfolg oder einen kurzen Grund, nie ein Geheimnis oder einen Stacktrace.</td></tr>
       </tbody>
@@ -319,6 +319,10 @@
     <span class="tip-icon">⚠️</span><strong>Nur für Administratoren —</strong> Die Seite <strong>Audit Logs</strong> ist globalen Administratoren vorbehalten. Andere Benutzer werden zum Dashboard umgeleitet.
   </div>
   <p>Die Admin-Navigation zeigt unter <strong>Global Settings</strong> den Punkt <strong>Audit Logs</strong>. Die Seite ist ein <strong>schreibgeschütztes Protokoll</strong> aller Benutzer- und Systemaktionen — etwa Code-Sync, Einstellungsänderungen, Secret-Aktionen, Screenshot-Aufräumläufe und Passwortänderungen.</p>
+  <div class="screenshot-wrap">
+    <img alt="Audit Logs" src="./autemos_settings_screenshots/doku-audit-logs.png"/>
+    <div class="screenshot-caption">Audit Logs — Filter, Tabelle und Export CSV.</div>
+  </div>
   <h2>Filter und Suche</h2>
   <div class="param-table-wrap">
     <table class="param-table">

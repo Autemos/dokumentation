@@ -338,9 +338,9 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 </div>
 <p>The check only compares the test files of the respective workflow; commits to other files do not cause "Out of sync". The result is cached for about 10 minutes. The <strong>Check now</strong> button in the list header triggers the check immediately.</p>
 <h2>Notice in the workflow editor</h2>
-<p>In the workflow editor, the "Code sync: …" indicator shows the current state. If the repository has changed, the notice <strong>There are changes in the underlying code</strong> appears with commit, author and time, plus a <strong>View changes</strong> button. If the change was ignored, the notice is more subtle and appears in full again after a new commit. If the state is unknown, <strong>Code sync state unknown</strong> appears with the reason.</p>
+<p>In the workflow editor, the "Code sync" indicator in the toolbar shows the current state (an icon; the "Code sync: …" tooltip shows the state, the time of the last check and the latest commit). If the repository has changed, the notice <strong>There are changes in the underlying code</strong> appears with commit, author and time, plus a <strong>View changes</strong> button. If the change was ignored, the notice is more subtle and appears in full again after a new commit. If the state is unknown, <strong>Code sync state unknown</strong> appears with the reason.</p>
 <h2>"Code changes" dialog</h2>
-<p>At the top, the dialog shows the <strong>Workflow changes</strong> area: the detected changes per workflow node (node name, parameter, old and new value). Below it is the text diff of the code between the last synchronized version and the current repository state, marked per file as added, removed or changed. Changes that cannot be applied are marked explicitly with the reason; pure comment and blank-line changes are marked as insignificant. The <strong>Supported changes</strong> link opens, in a new tab, the documentation shipped with Autemos for the supported changes (languages, frameworks, node types, limits); it does not need access to GitHub.</p>
+<p>The dialog shows the last synchronized code on the left and the current state in the repository on the right. At the top is the <strong>Workflow changes</strong> area: the detected changes per workflow node (node name, parameter, old and new value). Below it is the text diff of the code between the last synchronized version and the current repository state, marked per file as added, removed or changed. Exactly the lines that a <code>git diff</code> reports as added (green, right) or removed (red, left) are highlighted; a newly added node block is highlighted with all its lines, and the line before it stays unmarked. Below the comparison, <strong>Changed lines (from line n)</strong> lists the changed lines. Changes that cannot be applied are marked explicitly with the reason; pure comment and blank-line changes are marked as insignificant. The <strong>Supported changes</strong> link opens, in a new tab, the documentation shipped with Autemos for the supported changes (languages, frameworks, node types, limits); it does not need access to GitHub.</p>
 <h2>Decisions</h2>
 <div class="param-table-wrap">
 <table class="param-table">
@@ -349,6 +349,8 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 <tr><td><strong>Ignore changes</strong></td><td>The workflow stays unchanged. The state remains "Out of sync (ignored)" until a new commit arrives.</td></tr>
 <tr><td><strong>Accept baseline only</strong></td><td>The repository state becomes the new baseline; the workflow stays unchanged. The state is "Baseline accepted", not "In sync".</td></tr>
 <tr><td><strong>Apply to workflow</strong></td><td>Applies the detected changes to the workflow. After a confirmation ("Apply code changes to workflow?") the workflow is updated and the state changes to "In sync".</td></tr>
+<tr><td><strong>Check now</strong></td><td>Checks the repository again immediately and updates state and preview.</td></tr>
+<tr><td><strong>Push to Git</strong></td><td>Regenerates the workflow code and opens the pull request dialog (see "Push to Git from the editor").</td></tr>
 <tr><td><strong>Close</strong></td><td>Closes the dialog without changing anything.</td></tr>
 </tbody>
 </table>
@@ -364,6 +366,15 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 <li>Project members can view the preview. Applying and deciding require editor rights. All steps (preview viewed, applied, conflict, restored, decision) appear in the audit overview in the "Code Sync" category.</li>
 </ul>
 <div class="tip"><span class="tip-icon">💡</span>What runs is always the workflow in Autemos, never the code from the repository. An "Out of sync" workflow therefore keeps running unchanged until the changes have been applied.</div>
+<h2>Notice after "Apply to workflow": new node IDs</h2>
+<p>If "Apply to workflow" created new steps, the code in the repository still says <code>node=new</code>, while the new nodes in Autemos already carry a unique ID. Until the code has been transferred again, the workflow editor shows a lasting notice above the workflow: <strong>Workflow updated. New nodes have been assigned unique IDs.</strong> with the sentence "Please synchronize the generated code with GitHub before making further external changes." and the <strong>Sync code now</strong> button.</p>
+<ul class="feature-list">
+<li><strong>Sync code now</strong> opens the "Push to Git" dialog for this workflow. The run only starts when you click <strong>Create Pull Request</strong>; Autemos never changes the repository by itself. The button is disabled (with a reason) if the workflow has unsaved changes or the project role does not allow editing.</li>
+<li>The notice stays after a reload and for other users, also in the state "In sync". It disappears as soon as the pull request has been created (the state "PR open" does not show it). A later apply that only changes parameters does not clear it.</li>
+<li>The notice appears only if at least one new step was applied; it does not appear after pure changes or removals.</li>
+<li>As long as it is shown, the "Code changes" dialog warns above "Workflow changes": steps from an earlier apply still carry <code>node=new</code> in the repository, so with further external changes they may appear as added and removed at the same time. Applying remains possible; synchronize the code first.</li>
+<li>After the apply, a short message says: "Sync the generated code with GitHub – see the notice above the workflow."</li>
+</ul>
 `,
   "codegen-sync-push": `
 <span class="section-label">Code Sync</span>
@@ -422,9 +433,10 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 </table>
 </div>
 <h3>New steps</h3>
-<p>New steps (ADDED) are applied for navigate, wait, ifCondition, loop, callSubWorkflow and, in the <code>page.locator</code> form, for click, doubleClick, hover, check, pressKey, scroll, type, select and assert. The new node receives the selector from the statement. A new step that addresses a PageObject element cannot be applied ("new steps via a page object need the element mapping"), because Autemos cannot assign the element from the code; use the <code>page.locator("…")</code> form or create the step in Autemos.</p>
+<p>New steps (ADDED) are applied for navigate and wait in all languages. Only for Java/Playwright, ifCondition, loop and callSubWorkflow are added, and, in the <code>page.locator</code> form, click, doubleClick, hover, check, pressKey, scroll, type, select and assert. The new node receives the selector from the statement. A new step that addresses a PageObject element cannot be applied ("new steps via a page object need the element mapping"), because Autemos cannot assign the element from the code; use the <code>page.locator("…")</code> form or create the step in Autemos.</p>
 <h3>Selectors in PageObject files</h3>
 <p>If someone changes the selector of a field in a PageObject file generated by Autemos, the sync shows the change on every node that uses this field. <strong>Apply to workflow</strong> writes the new selector to the PageObject field in Autemos. This applies to web PageObjects with Playwright in Java, TypeScript, Python and C#. Fields are assigned through <code>@autemos pageObjectField=…</code> markers; fields are created, renamed and removed in Autemos, not in the code (a duplicated marker or a modified locator literal is reported as a problem). In TypeScript, fields with multi-platform locators (for example only an Android or iOS locator) cannot be synchronized. Selector changes directly in the test (<code>page.locator("…")</code>) are recognized but not applied.</p>
+<p>Each workflow watches the PageObject file in its own target folder. If you transferred the same PageObject from two workflows into different target folders, these are two separate files: a change in one file is shown only by the workflow whose folder it concerns, and a later further change to the same field is also detected with <strong>Check now</strong>. If several workflows use the same PageObject, the reason of the change names the other workflows (<code>also used by: …</code>, at most five names, then <code>+n more</code>), because <strong>Apply to workflow</strong> changes the selector for all of these workflows.</p>
 `,
   "codegen-sync-assertions": `
 <span class="section-label">Code Sync</span>
@@ -504,7 +516,7 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
   "codegen-export-coverage": `
 <span class="section-label">Code Export</span>
 <h1>Scope of the Java/Playwright Export</h1>
-<p>For every node type of the catalog, the Java/Playwright export produces either executable, equivalent code or reports a justified gap. There are no silent mistranslations and no TODO placeholders any more. For other languages and frameworks, the comment "NICHT GENERIERT" and the warning remain (note "Locator form only for java/playwright").</p>
+<p>For every node type of the catalog, the Java/Playwright export produces either executable, equivalent code or reports a justified gap. There are no silent mistranslations and no TODO placeholders any more. The table below applies to Java/Playwright only. For other languages and frameworks, see "Other languages and frameworks".</p>
 <h2>Status per node type</h2>
 <div class="param-table-wrap">
 <table class="param-table">
@@ -517,6 +529,12 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 </tbody>
 </table>
 </div>
+<h2>Other languages and frameworks</h2>
+<p>For Java/Selenium and for TypeScript, Python and C# (each with Playwright or Selenium), Autemos generates less:</p>
+<ul class="feature-list">
+<li><strong>Generated as code:</strong> navigate; type, click and select when the step addresses a PageObject element; wait; screenshot; the test data nodes. An assertion (assert) is generated only as an equality comparison, with a placeholder for the actual value and a warning; without an expected value a gap results. Framework nodes and timeGap appear as a comment.</li>
+<li><strong>Gap with the comment "NICHT GENERIERT" and a warning:</strong> all other node types (for example doubleClick, hover, check, pressKey, scroll, selectCombobox, hoverAndClick, goBack, goForward, reload, rightClick, dragDrop, waitFor, extractText, table, API and flow nodes such as ifCondition, loop, callSubWorkflow) as well as type, click and select without a PageObject element (note "Locator form only for java/playwright").</li>
+</ul>
 <h2>New actions</h2>
 <ul class="feature-list">
 <li><strong>selectCombobox:</strong> native <code>&lt;select&gt;</code> by label, otherwise open the control and choose the option with the exact label (fallback: partial text).</li>
@@ -562,6 +580,26 @@ window.TRANSLATIONS_EN = Object.assign(window.TRANSLATIONS_EN || {}, {
 <li>The table definition ships as a JSON resource (<code>src/test/resources/tables/…</code>) and the table library as source code in the export. The export builds and runs without manual work.</li>
 <li>Search behavior, maximum page count and time limit of the node (paging, lazy loading) are carried over; values can contain variables.</li>
 <li>Sub-modes not covered, the remaining table nodes and other targets stay "NICHT GENERIERT" with a warning and the mode name, never a silent placeholder. All other exports stay unchanged.</li>
+</ul>
+`,
+  "codegen-export-selectors": `
+<span class="section-label">Code Export</span>
+<h1>Selectors in the Generated Code</h1>
+<p>When a selector appears in the generated PageObject code, Autemos writes it as a valid literal of the target language whose value at runtime is exactly the stored selector. Special characters in the selector no longer make the code uncompilable.</p>
+<div class="param-table-wrap">
+<table class="param-table">
+<thead><tr><th>Target</th><th>Escaped</th></tr></thead>
+<tbody>
+<tr><td>TypeScript (backtick literal)</td><td>Backslash, backtick and <code>\${</code></td></tr>
+<tr><td>Java and C# (literal in double quotes)</td><td>Backslash and double quote</td></tr>
+<tr><td>Python (literal in single quotes)</td><td>Backslash and single quote</td></tr>
+</tbody>
+</table>
+</div>
+<ul class="feature-list">
+<li>This applies to all selector fields of PageObjects, including Android and iOS locators and fields created from your field template.</li>
+<li>The code sync reads these escaped literals back. An unescaped <code>\${…}</code> in a TypeScript backtick literal (interpolation) or any other escape is reported as not synchronizable.</li>
+<li>Line breaks and tabs in selectors are not escaped.</li>
 </ul>
 `,
 });
