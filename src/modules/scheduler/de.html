@@ -207,6 +207,7 @@
     <li>Ist ein Xray-Test mit mehreren Workflows verknüpft, gilt der schlechteste Status; bei Wiederholungen zählt der letzte Versuch.</li>
     <li>Der Kommentar je Test enthält den Link zum Report des Laufs.</li>
     <li>Sind keine Xray-Tests verknüpft, wird nichts nach Jira gesendet.</li>
+    <li>Mehrteilige Workflows (Time Gap) werden gemeldet, sobald die ganze Kette beendet ist; der Dialog weist bei eingeschaltetem Schalter darauf hin („Multi-part workflows (TimeGap) are reported once their chain has finished.“). Der Lauf-Eintrag vermerkt das Ergebnis mit „Delivered later: …“, bei einem Fehler mit „Not delivered later: …“. Steht für einen Test in Xray schon ein schlechterer Status, bleibt dieser erhalten.</li>
     <li>Scheitert die Meldung (z. B. Jira nicht erreichbar), ändert das weder Ergebnis noch Status des Zeitplan-Laufs.</li>
     <li>Die Detailseite zeigt den Stand („Reporting to Jira Xray: On“ oder „Off“) und den wirksamen Test Plan („Test Plan: KEY“, „Test Plan: KEY (from project)“ oder „No test plan set.“).</li>
   </ul>
@@ -364,6 +365,7 @@
   </div>
   <h3>Historie-Filter</h3>
   <p>Ausführungshistorie nach Status und Zeitraum (Last 24h, Last 7d, Last 30d) filtern, um Vorfälle schnell zu isolieren oder langfristige Trends zu analysieren.</p>
+  <p>Eine vom Zeitplan gestartete Kette (Workflow mit Time Gap) erscheint als eigene Zeile; ihr Endstatus steht fest, wenn alle Teile beendet sind.</p>
 </section>
 
 <!-- EXTERNAL INTEGRATION -->

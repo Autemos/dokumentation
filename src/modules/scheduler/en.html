@@ -198,6 +198,7 @@
     <li>If an Xray test is linked to several workflows, the worst status applies; for retries the last attempt counts.</li>
     <li>The comment per test contains the link to the run's report.</li>
     <li>If no Xray tests are linked, nothing is sent to Jira.</li>
+    <li>Multi-part workflows (Time Gap) are reported once the whole chain has finished; with the switch on, the dialog points this out ("Multi-part workflows (TimeGap) are reported once their chain has finished."). The run entry records the result as "Delivered later: …", or as "Not delivered later: …" on an error. If Xray already holds a worse status for a test, that status is kept.</li>
     <li>If reporting fails (for example Jira is unreachable), neither result nor status of the schedule run changes.</li>
     <li>The detail page shows the state ("Reporting to Jira Xray: On" or "Off") and the effective test plan ("Test Plan: KEY", "Test Plan: KEY (from project)" or "No test plan set.").</li>
   </ul>
@@ -343,6 +344,7 @@
   </div>
   <h3>History filters</h3>
   <p>Filter execution history by status and time range (Last 24h, Last 7d, Last 30d) to quickly isolate incidents or analyze long-term trends.</p>
+  <p>A chain started by the schedule (a workflow with a Time Gap) appears as its own row; its final status is set once all parts have finished.</p>
 </section>
 <section class="doc-section" id="external-integration">
   <div class="node-header">

@@ -2494,6 +2494,7 @@
     <li><strong>Part 2</strong> → Check shipment tracking</li>
   </ul>
 </div>
+<p>This also applies to duplicated and newly created workflows: a workflow with a Time Gap never silently runs in one piece. If it cannot be split into parts, the start fails with an error message.</p>
 <h2>Persistent Runtime State</h2>
 <p>Since execution is interrupted between workflow parts, the platform automatically persists all relevant workflow data:</p>
 <ul class="feature-list">
