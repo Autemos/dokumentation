@@ -414,7 +414,7 @@
 <p>Ein Klick auf <strong>Undo</strong> nimmt genau eine Aktion zurück, und schon die erste Aktion nach dem Öffnen oder Speichern lässt sich rückgängig machen. <strong>Redo</strong> stellt den Zustand nach der Aktion wieder her.</p>
 
 <h2>Run und Data-driven execution</h2>
-<p>Im Run-Menü startet <strong>Run</strong> sofort genau einen Lauf mit den Standard-Testdaten des Workflows, ohne Auswahldialog: Ein Test Data Binding wird mit seinem ersten Datensatz aufgelöst, bei Easy Test Data gilt Zeile 1 (bei One-Time-Use die nächste freie Zeile). Das Execution Log nennt, welcher Datensatz verwendet wurde. Fehlt ein Datensatz, meldet der Test-Data-Check das vor dem Start.</p>
+<p>Im Run-Menü startet <strong>Run</strong> sofort genau einen Lauf mit den Standard-Testdaten des Workflows, ohne Auswahldialog: Ein Test Data Binding wird mit seinem ersten Datensatz aufgelöst, bei Easy Test Data gilt Zeile 1 (bei One-Time-Use die nächste freie Zeile). Das Execution Log und der Block <strong>Test Data</strong> im Execution Report nennen, welcher Datensatz oder welche Zeile verwendet wurde, ohne Feldwerte. Fehlt ein Datensatz, meldet der Test-Data-Check das vor dem Start.</p>
 <p>Jede Auswahl von Zeilen oder Datensätzen liegt in <strong>Data-driven execution…</strong>. Der Eintrag öffnet direkt den Dialog <strong>Data-driven execution</strong>. Gibt es sowohl Datensätze eines datengetriebenen Bindings als auch Zeilen eines Test-Data-Sets, wählen Sie unter <strong>Run by</strong> zwischen <strong>Datasets of a data-driven binding</strong> und <strong>Rows of a test data set</strong>.</p>
 <ul class="feature-list">
 <li><strong>Datasets</strong>: <strong>Test data source</strong>, <strong>Data variable</strong> und <strong>Dataset selection</strong> (Standard <strong>All datasets</strong>) sind sofort sichtbar, ohne dass vorher eine Checkbox angehakt werden muss.</li>
@@ -503,7 +503,7 @@
 <h1>Datums- und Rechenausdrücke in Platzhaltern</h1>
 
 <p>Neben Variablen und Testdaten kennen die <code>{{…}}</code>-Platzhalter eine Schreibweise für Datum und einfache Rechnungen. Ein Workflow, der an einem anderen Tag abgespielt wird, soll so das richtige Datum liefern und nicht ein eingefrorenes Literal.</p>
-<div class="warn-box"><strong>Stand heute:</strong> Ausgewertet werden diese Ausdrücke beim Lauf einer API Collection. Im Lauf eines Workflows (Editor, Zeitplan, Collection) bleibt ein Ausdruck wie <code>{{today+3d}}</code> unverändert als Text stehen und wird so in ein Feld eingegeben; Variablen und Testdaten werden dort normal aufgelöst.</div>
+<p>Ausgewertet werden die Ausdrücke im Lauf eines Workflows (Editor, Supervised Run, Zeitplan) und beim Lauf einer API Collection. Ein unbekannter Platzhalter wie <code>{{petId}}</code> bleibt unverändert stehen. Datum und Zeit richten sich nach der Zeitzone des Servers. Ein Ergebnis, das aus einem Secret berechnet wurde, erscheint in Log und Report geschwärzt.</p>
 <div class="param-table-wrap">
 <table class="param-table">
 <thead><tr><th>Ausdruck</th><th>Bedeutung</th><th>Beispiel</th></tr></thead>

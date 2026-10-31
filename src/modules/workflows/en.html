@@ -379,7 +379,7 @@
 <p>One click on <strong>Undo</strong> reverts exactly one action, and even the first action after opening or saving can be undone. <strong>Redo</strong> restores the state after the action.</p>
 
 <h2>Run and Data-driven Execution</h2>
-<p>In the Run menu, <strong>Run</strong> immediately starts exactly one run with the workflow’s default test data, without a selection dialog: a Test Data Binding is resolved with its first dataset, Easy Test Data uses row 1 (with one-time use, the next free row). The Execution Log names the dataset that was used. If a dataset is missing, the test data check reports it before the start.</p>
+<p>In the Run menu, <strong>Run</strong> immediately starts exactly one run with the workflow’s default test data, without a selection dialog: a Test Data Binding is resolved with its first dataset, Easy Test Data uses row 1 (with one-time use, the next free row). The Execution Log and the <strong>Test Data</strong> block in the execution report name the dataset or row that was used, without field values. If a dataset is missing, the test data check reports it before the start.</p>
 <p>Every selection of rows or datasets lives in <strong>Data-driven execution…</strong>. The entry opens the <strong>Data-driven execution</strong> dialog directly. If there are both datasets of a data-driven binding and rows of a test data set, choose under <strong>Run by</strong> between <strong>Datasets of a data-driven binding</strong> and <strong>Rows of a test data set</strong>.</p>
 <ul class="feature-list">
 <li><strong>Datasets</strong>: <strong>Test data source</strong>, <strong>Data variable</strong> and <strong>Dataset selection</strong> (default <strong>All datasets</strong>) are visible immediately, without ticking a checkbox first.</li>
@@ -463,7 +463,7 @@
 <h1>Date and Calculation Expressions in Placeholders</h1>
 
 <p>Besides variables and test data, the <code>{{…}}</code> placeholders know a notation for dates and simple calculations. A workflow replayed on another day should thus yield the correct date instead of a frozen literal.</p>
-<div class="warn-box"><strong>Current state:</strong> These expressions are evaluated when an API Collection runs. When a workflow runs (editor, schedule, collection), an expression such as <code>{{today+3d}}</code> stays unchanged as text and is entered as such into a field; variables and test data are resolved normally there.</div>
+<p>The expressions are evaluated when a workflow runs (editor, Supervised Run, schedule) and when an API Collection runs. An unknown placeholder such as <code>{{petId}}</code> stays unchanged. Date and time follow the server time zone. A result calculated from a secret appears redacted in the log and report.</p>
 <div class="param-table-wrap">
 <table class="param-table">
 <thead><tr><th>Expression</th><th>Meaning</th><th>Example</th></tr></thead>
